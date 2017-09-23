@@ -11,8 +11,6 @@ import {
 import {
   getFeedContentFromState,
   getFeedLoadingFromState,
-  getUserFeedContentFromState,
-  getUserFeedLoadingFromState,
   getFeedHasMoreFromState,
 } from '../helpers/stateHelpers';
 import {
@@ -53,7 +51,6 @@ class SubFeed extends React.Component {
     getFeedContent: PropTypes.func,
     getMoreFeedContent: PropTypes.func,
     getUserFeedContent: PropTypes.func,
-    getMoreUserFeedContent: PropTypes.func,
   };
 
   static defaultProps = {
@@ -66,7 +63,7 @@ class SubFeed extends React.Component {
   componentDidMount() {
     const { authenticated, loaded, user, match } = this.props;
     const sortBy = match.params.sortBy || 'trending';
-    const category = match.params.category;
+    const category = 'utopian'; // @UTOPIAN forced category
 
     if (!loaded && Cookie.get('access_token')) return;
 
@@ -87,6 +84,7 @@ class SubFeed extends React.Component {
     const isAuthenticated = authenticated;
     const wasLoaded = this.props.loaded;
     const isLoaded = loaded;
+    const category = 'utopian'; // @UTOPIAN forced category
 
     if (!isLoaded && Cookie.get('access_token')) return;
 
@@ -97,13 +95,13 @@ class SubFeed extends React.Component {
     ) {
       this.props.getUserFeedContent(user.name);
     } else if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
-      this.props.getFeedContent(newSortBy || 'trending', match.params.category);
+      this.props.getFeedContent(newSortBy || 'trending', category);
     }
   }
 
   render() {
-    const { authenticated, loaded, user, feed, posts, match } = this.props;
-
+    const { loaded, feed, posts, match } = this.props;
+    /*
     let content = [];
     let isFetching = false;
     let hasMore = false;
@@ -121,6 +119,14 @@ class SubFeed extends React.Component {
       hasMore = getFeedHasMoreFromState(sortBy, match.params.category, feed);
       loadMoreContent = () => this.props.getMoreFeedContent(sortBy, match.params.category);
     }
+    */
+
+    const category = 'utopian'; // @UTOPIAN forced category
+    const sortBy = match.params.sortBy || 'trending';
+    const content = getFeedContentFromState(sortBy, category, feed, posts);
+    const isFetching = getFeedLoadingFromState(sortBy, category, feed);
+    const hasMore = getFeedHasMoreFromState(sortBy, category, feed);
+    const loadMoreContent = () => this.props.getMoreFeedContent(sortBy, category);
 
     return (
       <div>

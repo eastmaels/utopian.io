@@ -163,7 +163,7 @@ function makeConfig(options = {}) {
         // bundle the client for hot reloading
         // only- means to only hot reload for successful updates
       ] : []).concat([
-        path.join(options.baseDir, 'src/index.js')],
+        path.join(options.baseDir, 'src/index.js')]
       ),
     },
     output: {
@@ -181,9 +181,9 @@ function makeConfig(options = {}) {
             [
               {
                 loader: 'babel-loader',
-              },
-            ],
-          ),
+              }
+            ]
+          )
         },
         {
           test: /\.(eot|ttf|woff|woff2|svg)(\?.+)?$/,
