@@ -198,8 +198,8 @@ class Editor extends React.Component {
   };
 
   checkTopics = (rule, value, callback) => {
-    if (!value || value.length < 1 || value.length > 5) {
-      callback('You have to add 1 to 5 topics');
+    if (!value || value.length < 1 || value.length > 4) {
+      callback('You have to add 1 to 4 topics');
     }
 
     value

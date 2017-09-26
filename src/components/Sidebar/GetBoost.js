@@ -5,10 +5,10 @@ import './SidebarBlock.less';
 const GetBoost = () =>
   (<div className="SidebarBlock">
     <h3 className="SidebarBlock__title">
-      <FormattedMessage id="get_boost" defaultMessage="Get the Busy boost!" />
+      <FormattedMessage id="tell_story" defaultMessage="Tell us your story!" />
     </h3>
     <p>
-      <FormattedMessage id="get_boost_content" defaultMessage='Want to boost your post? Add the topic "busy" and get a like from us.' />
+      <FormattedMessage id="tell_story_concept" defaultMessage='Tell us the story behind your contributions to the Open Source community and get rewarded for your hard work!' />
     </p>
   </div>);
 

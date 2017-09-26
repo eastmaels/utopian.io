@@ -67,11 +67,14 @@ class SubFeed extends React.Component {
 
     if (!loaded && Cookie.get('access_token')) return;
 
+    /*
     if (match.url === '/' && authenticated) {
       this.props.getUserFeedContent(user.name);
     } else {
       this.props.getFeedContent(sortBy, category);
     }
+    */
+    this.props.getFeedContent(sortBy, category);
   }
 
   componentWillReceiveProps(nextProps) {

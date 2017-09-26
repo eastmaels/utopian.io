@@ -34,11 +34,13 @@ export default (
           </RequireLogin>
         )}
       />
+      {/*
       <Route path="/help" component={Help} />
       <Route path="/about" component={About} />
       <Route path="/team" component={Team} />
       <Route path="/tags" component={Tags} />
       <Route path="/donors" component={Donors} />
+      */}
       <Route
         path="/bookmarks"
         render={() => (

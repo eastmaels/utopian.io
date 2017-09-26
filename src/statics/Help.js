@@ -13,16 +13,16 @@ export default () =>
       <p>
         <FormattedMessage
           id="@statics/contact_if_problem_0"
-          defaultMessage="If you spot a problem with Busy, please"
+          defaultMessage="If you spot a problem with Utopian, please"
         />{' '}
-        <a href="mailto:contact@busy.org">
+        <a href="mailto:info@utopian.io">
           <FormattedMessage id="@statics/contact_if_problem_1" defaultMessage="contact us" />
         </a>{' '}
         <FormattedMessage
           id="@statics/contact_if_problem_2"
           defaultMessage="or submit an issue on"
         />{' '}
-        <a href="https://github.com/adcpm/busy/issues" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/utopian-io/utopian.io/issues" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>.
       </p>

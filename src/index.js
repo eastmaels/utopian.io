@@ -35,7 +35,7 @@ if (process.env.SENTRY_PUBLIC_DSN) {
 
 if (process.env.STEEMCONNECT_HOST) {
   steemconnect.init({
-    app: 'busy.app',
+    app: 'utopian.app',
     callbackURL: process.env.STEEMCONNECT_REDIRECT_URL,
   });
   const accessToken = Cookie.get('access_token');

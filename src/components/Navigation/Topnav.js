@@ -130,13 +130,13 @@ const Topnav = ({
       <div className="topnav-layout container">
         <div className="left">
           <Link className="Topnav__brand" to="/">
-            utopian.io
+            Utopian
           </Link>
         </div>
         <div className="center">
           <div className="Topnav__input-container">
             <Input
-              onPressEnter={event => window.open(`https://www.google.com/search?q=${encodeURIComponent(`site:steemit.com ${event.target.value}`)}`)}
+              onPressEnter={event => window.open(`https://www.google.com/search?q=${encodeURIComponent(`site:utopian.io ${event.target.value}`)}`)}
               placeholder={intl.formatMessage({ id: 'search_placeholder', defaultMessage: 'Search...' })}
             />
             <i className="iconfont icon-search" />

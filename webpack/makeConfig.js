@@ -90,7 +90,7 @@ function makePlugins(options) {
         filename: '../css/style.[contenthash].css',
       }),
       new HtmlWebpackPlugin({
-        title: 'Busy',
+        title: 'Utopian',
         filename: '../index.html',
         template: path.join(options.baseDir, '/templates/index.html'),
       }),

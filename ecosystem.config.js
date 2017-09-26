@@ -5,8 +5,8 @@ module.exports = {
    */
   apps: [
     {
-      name: 'busy',
-      script: 'busy.server.js',
+      name: 'utopian',
+      script: 'utopian.server.js',
       instances: 4,
       exec_mode: 'cluster',
       max_memory_restart: '600M'

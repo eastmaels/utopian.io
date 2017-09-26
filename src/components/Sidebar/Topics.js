@@ -38,6 +38,9 @@ class Topics extends React.Component {
 
     return (
       <div className="Topics">
+        Utopian.io <b>rewards Open Source contributors</b> for their hard work!
+      </div>
+      /*<div className="Topics">
         <h4>
           <FormattedMessage id={favorite ? 'favorite_topics' : 'trending_topics'} defaultMessage={favorite ? 'Favorite topics' : 'Trending topics'} />
         </h4>
@@ -59,7 +62,7 @@ class Topics extends React.Component {
             <FormattedMessage id="show_less" defaultMessage="View less" />
           </h5>
           : null}
-      </div>
+      </div>*/
     );
   }
 }

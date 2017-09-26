@@ -54,7 +54,7 @@ export default class Post extends React.Component {
 
   componentWillUnmount() {
     if (process.env.IS_BROWSER) {
-      global.document.title = 'Busy';
+      global.document.title = 'Utopian';
     }
   }
 

@@ -10,7 +10,7 @@ export default () =>
       </h1>
       <p className="container pb-5">
         <FormattedMessage
-          id="@statics/busy_mission"
+          id="@statics/utopian_mission"
           defaultMessage="The Busy project’s mission is to connect everyone to the next-gen decentralized social network that gives voice and value back to people, by building together a true sharing economy, a more free and trustworthy Internet without middleman."
         />
       </p>
@@ -24,11 +24,11 @@ export default () =>
           </h1>
           <p>
             <FormattedMessage
-              id="@statics/busy_mission_2"
+              id="@statics/utopian_mission_2"
               defaultMessage="Artists and User-generated content create billions dollars worth of value absorbed by the shareholders of these intermediaries and centralized services."
             />{' '}
             <FormattedMessage
-              id="@statics/busy_mission3"
+              id="@statics/utopian_mission3"
               defaultMessage="As a non-profit and decentralized organization, Busy provides the power of cryptocurrency and blockchain innovations within a platform that returns much of its value to the creators ensuring fair compensation."
             />
           </p>

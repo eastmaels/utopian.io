@@ -82,19 +82,22 @@ export default class UserProfile extends React.Component {
       limit,
     });
 
+    // @UTOPIAN forced category
+    const filteredContent = content.filter(post => post.category === "utopian");
+
     return (
       <div>
         <div className="profile">
           <Feed
-            content={content}
+            content={filteredContent}
             isFetching={isFetching}
             hasMore={hasMore}
             loadMoreContent={loadMoreContentAction}
           />
 
-          {content.length === 0 && !isFetching && isOwnProfile && <EmptyUserOwnProfile />}
+          {filteredContent.length === 0 && !isFetching && isOwnProfile && <EmptyUserOwnProfile />}
 
-          {content.length === 0 && !isFetching && !isOwnProfile && <EmptyUserProfile />}
+          {filteredContent.length === 0 && !isFetching && !isOwnProfile && <EmptyUserProfile />}
         </div>
       </div>
     );

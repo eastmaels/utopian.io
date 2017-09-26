@@ -143,7 +143,7 @@ class PostContent extends React.Component {
     } = this.props;
 
     const postMetaData = jsonParse(content.json_metadata);
-    const busyHost = global.postOrigin || 'https://busy.org';
+    const busyHost = global.postOrigin || 'http://utopian.io';
     let canonicalHost = busyHost;
     if (postMetaData.app && postMetaData.app.indexOf('steemit') === 0) {
       canonicalHost = 'https://steemit.com';
@@ -168,7 +168,7 @@ class PostContent extends React.Component {
     const image = postMetaImage || `${process.env.STEEMCONNECT_IMG_HOST}/@${author}`;
     const canonicalUrl = `${canonicalHost}${content.url}`;
     const url = `${busyHost}${content.url}`;
-    const metaTitle = `${title} - Busy`;
+    const metaTitle = `${title} - Utopian`;
 
     return (
       <div>
@@ -183,7 +183,7 @@ class PostContent extends React.Component {
           <meta property="og:url" content={url} />
           <meta property="og:image" content={image} />
           <meta property="og:description" content={desc} />
-          <meta property="og:site_name" content="Busy" />
+          <meta property="og:site_name" content="Utopian" />
           <meta property="article:tag" content={category} />
           <meta property="article:published_time" content={created} />
           <meta property="twitter:card" content={image ? 'summary_large_image' : 'summary'} />

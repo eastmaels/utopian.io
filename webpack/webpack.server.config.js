@@ -9,7 +9,7 @@ module.exports = {
   entry: path.resolve(baseDir, './server/index.js'),
 
   output: {
-    filename: 'busy.server.js',
+    filename: 'utopian.server.js',
   },
 
   target: 'node',

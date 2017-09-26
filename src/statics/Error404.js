@@ -18,9 +18,9 @@ const Error404 = () =>
         <p>
           <FormattedMessage
             id="@statics/is_a_problem_0"
-            defaultMessage="If you think this is a problem with Busy, please"
+            defaultMessage="If you think this is a problem with Utopian, please"
           />{' '}
-          <a rel="noopener noreferrer" href="https://busy.org" target="_blank">
+          <a rel="noopener noreferrer" href="http://utopian.io" target="_blank">
             <FormattedMessage id="@statics/is_a_problem_1" defaultMessage="tell us" />
           </a>
           .<br />
