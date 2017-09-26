@@ -130,7 +130,7 @@ const Topnav = ({
       <div className="topnav-layout container">
         <div className="left">
           <Link className="Topnav__brand" to="/">
-            busy
+            utopian
           </Link>
         </div>
         <div className="center">
