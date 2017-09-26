@@ -38,7 +38,8 @@ class Topics extends React.Component {
 
     return (
       <div className="Topics">
-        Utopian.io <b>rewards Open Source contributors</b> for their hard work!
+        <b>Do you often contribute to Open Source projects?</b>
+        Utopian.io rewards contributors like you for the hard work!
       </div>
       /*<div className="Topics">
         <h4>
