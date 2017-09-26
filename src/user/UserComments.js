@@ -51,7 +51,7 @@ export default class UserProfilePosts extends React.Component {
     const loadMoreContentAction = () => this.props.getMoreUserComments(username, limit);
 
     // @UTOPIAN forced category
-    const filteredContent = content.filter(post => post.category === "utopian");
+    const filteredContent = content.filter(post => post.category === "utopian-io");
 
     return (
       <Feed

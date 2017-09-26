@@ -63,7 +63,7 @@ class SubFeed extends React.Component {
   componentDidMount() {
     const { authenticated, loaded, user, match } = this.props;
     const sortBy = match.params.sortBy || 'trending';
-    const category = 'utopian'; // @UTOPIAN forced category
+    const category = 'utopian-io'; // @UTOPIAN forced category
 
     if (!loaded && Cookie.get('access_token')) return;
 
@@ -89,7 +89,7 @@ class SubFeed extends React.Component {
     const isAuthenticated = authenticated;
     const wasLoaded = this.props.loaded;
     const isLoaded = loaded;
-    const category = 'utopian'; // @UTOPIAN forced category
+    const category = 'utopian-io'; // @UTOPIAN forced category
 
     if (!isLoaded && Cookie.get('access_token')) return;
 
@@ -127,7 +127,7 @@ class SubFeed extends React.Component {
     }
     */
 
-    const category = 'utopian'; // @UTOPIAN forced category
+    const category = 'utopian-io'; // @UTOPIAN forced category
     const sortBy = match.params.sortBy || 'trending';
     const content = getFeedContentFromState(sortBy, category, feed, posts);
     const isFetching = getFeedLoadingFromState(sortBy, category, feed);

@@ -115,7 +115,7 @@ class Write extends React.Component {
     };
 
     // @UTOPIAN forcing category
-    data.jsonMetadata.tags = ["utopian", ...data.jsonMetadata.tags];
+    data.jsonMetadata.tags = ["utopian-io"];
 
     this.props.createPost(data);
   };
@@ -131,7 +131,7 @@ class Write extends React.Component {
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
 
-    const tags = form.topics;
+    const tags = form.topics || [];
     const users = [];
     const userRegex = /@([a-zA-Z.0-9-]+)/g;
     const links = [];

@@ -83,7 +83,7 @@ export default class UserProfile extends React.Component {
     });
 
     // @UTOPIAN forced category
-    const filteredContent = content.filter(post => post.category === "utopian");
+    const filteredContent = content.filter(post => post.category === "utopian-io");
 
     return (
       <div>

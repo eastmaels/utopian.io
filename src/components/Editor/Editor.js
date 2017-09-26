@@ -435,7 +435,8 @@ class Editor extends React.Component {
             />,
           )}
         </Form.Item>
-        <Form.Item
+
+        {/*<Form.Item
           label={
             <span className="Editor__label">
               <FormattedMessage id="topics" defaultMessage="Topics" />
@@ -475,7 +476,7 @@ class Editor extends React.Component {
               tokenSeparators={[' ', ',']}
             />,
           )}
-        </Form.Item>
+        </Form.Item>*/}
         <Form.Item
           validateStatus={this.state.noContent ? 'error' : ''}
           help={
