@@ -74,6 +74,8 @@ class SubFeed extends React.Component {
       this.props.getFeedContent(sortBy, category);
     }
     */
+
+    console.log("DID MOUNT")
     this.props.getFeedContent(sortBy, category);
   }
 
@@ -91,15 +93,16 @@ class SubFeed extends React.Component {
 
     if (!isLoaded && Cookie.get('access_token')) return;
 
-    if (
+    /*if (
       match.url === '/' &&
       ((match.url !== this.props.match.url && isAuthenticated) ||
         (isAuthenticated && !wasAuthenticated))
     ) {
       this.props.getUserFeedContent(user.name);
-    } else if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
+    } else */if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
       this.props.getFeedContent(newSortBy || 'trending', category);
     }
+    console.log("WILL RECEIVE PROPS")
   }
 
   render() {
