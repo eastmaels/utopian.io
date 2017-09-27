@@ -129,7 +129,7 @@ function makeStyleLoaders(options) {
     {
       test: /\.css|.less$/,
       loader: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
+        //fallback: 'style-loader',
         use: [
           {
             loader: 'css-loader',
