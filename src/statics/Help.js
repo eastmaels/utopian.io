@@ -1,30 +1,67 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import steemconnect from 'sc2-sdk';
 
-export default () =>
+import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
+import './Help.less';
+
+const next = window.location.pathname.length > 1 ? window.location.pathname : '';
+
+export default (props) =>
   (<div className="main-panel">
     <div className="container text-center my-5">
-      <h1>
-        <FormattedMessage id="help" defaultMessage="Help" />
-      </h1>
-      <h2>
-        <FormattedMessage id="@statics/report_issue" defaultMessage="Report an issue" />
+      {props.mustAuthenticate && <div
+        className="MustLogin"
+      >
+        You must login to access that page. <a href={steemconnect.getLoginURL(next)}>Log in</a> or <a target="_blank" rel="noopener noreferrer" href="https://steemit.com/pick_account">Sign up with Steemit</a>
+      </div>
+      }
+
+      <h2 id="utopian-steemit">
+        What is Utopian and Steemit?
       </h2>
       <p>
-        <FormattedMessage
-          id="@statics/contact_if_problem_0"
-          defaultMessage="If you spot a problem with Utopian, please"
-        />{' '}
-        <a href="mailto:info@utopian.io">
-          <FormattedMessage id="@statics/contact_if_problem_1" defaultMessage="contact us" />
-        </a>{' '}
-        <FormattedMessage
-          id="@statics/contact_if_problem_2"
-          defaultMessage="or submit an issue on"
-        />{' '}
-        <a href="https://github.com/utopian-io/utopian.io/issues" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </a>.
+        Utopian rewards Open Source contributors by allowing them to create <b>Contributor Reports</b>. The Contributor Reports are voted by the Utopian community members. The contributor receives <a href="https://steem.io" target="_blank">Steem</a> cryptocurrency as a reward based on the amount of votes received and the impact of each single vote (rank of the voting user in the platform). <a href="https://steemit.com" target="_blank">Steemit</a> is a social media platform where everyone gets paid for creating and curating content. It leverages a robust digital points system, called <a href="https://steem.io" target="_blank">Steem</a>, that supports real value for digital rewards through market price discovery and liquidity. Utopian uses the <a href="https://steem.io" target="_blank">Steem</a> blockchain to store and retrieve data and to reward its users.
       </p>
+
+      <h2 id="contributor-report">What is a Contributor Report?</h2>
+      <p>A Contributor Report or Contribution Report is exactly the same as a blog post where Open Source contributors share their work <b>once a week</b> for a particular Open Source project.</p>
+      <br />
+      <p>When creating a Contributor Report you have to specify the most meaningful contributions you made to a specific Open Source project, the reasons why are you contributing to it and the full story behind your contributions.</p>
+      <br />
+      <p>Contribution Reports are not intended to be cold reports of your work. They must tell a story.
+        Contributions must be verifiable and trustworthy.</p>
+      <br />
+      <p>
+        <b>You are requested to add:</b>
+        <li>- Links to pull requests/branches/forks if you are contributing to the development.</li>
+        <li>- Proof of social engagement if you have contributed by sharing on social media.</li>
+        <li>- Any other verifiable proof of your contributions.</li>
+      </p>
+      <br />
+      <p>
+        The Utopian community will vote and reward you for your contributions.
+      </p>
+      <p>
+        Contributors are invited to share their Contribution Reports no more than <b>once a week for a single project</b> and <b>never post contributions already posted</b> in previous Contribution Reports.
+      </p>
+      <br />
+      <p>
+        Read he very first Contribution Report of the Utopian platform: <a href="http://utopian.io/utopian-io/@elear/utopian-my-contribution-to-the-open-source-world">Utopian: My Contribution to the Open Source World.</a>
+      </p>
+
+      <h2 id="steem-signup">Why do I have to signup with Steemit?</h2>
+      <p>Utopian is based on <a href="https://steemit.com" target="_blank">Steemit</a>. Utopian does not have a separate signup system and only uses <a href="https://steemit.com" target="_blank">Steemit</a> and the <a href="https://steem.io" target="_blank">Steem</a> blockchain to store and retrieve data.
+        <a href="https://steem.io" target="_blank"> Steem</a> is also the cryptocurrency used to reward the Open Source contributors when their Contribution Reports are upvoted by the community. <em>The registration verification process in Steemit may take a few days.</em>
+      </p>
+
+      <h2 id="rewards">When do I get my rewards?</h2>
+      <p>Rewards are managed by the <a href="https://steemit.com" target="_blank">Steemit</a> platform and released after 7 days you have submitted and being upvoted for a Contributor Report.</p>
+
+      <h2 id="convert-steem">How do I convert Steem to real money?</h2>
+
+      <p>You can access your <a href="https://steemit.com" target="_blank">Steemit</a> wallet directly from the Steemit.com website and transfer your Steem funds into a standard currency.</p>
+
+
     </div>
   </div>);

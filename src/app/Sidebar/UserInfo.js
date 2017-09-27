@@ -59,8 +59,8 @@ const UserInfo = ({ intl, user, ...props }) => {
     {user && <Action
       style={{ margin: '5px 0' }}
       text={intl.formatMessage({
-        id: 'transfer',
-        defaultMessage: 'Transfer',
+        id: 'support',
+        defaultMessage: 'Support',
       })}
       onClick={() => props.openTransfer(user.name)}
     />}

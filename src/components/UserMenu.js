@@ -42,11 +42,11 @@ class UserMenu extends React.Component {
           <Scrollbars autoHide style={{ width: '100%', height: 46 }}>
             <ul className="UserMenu__menu center">
               <li className={this.getItemClasses('discussions')} onClick={this.handleClick} role="presentation" data-key="discussions">
-                <FormattedMessage id="discussions" defaultMessage="Discussions" />
+                <FormattedMessage id="contributions" defaultMessage="Contributions" />
               </li>
-              <li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
+              {/*<li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
                 <FormattedMessage id="comments" defaultMessage="Comments" />
-              </li>
+              </li>*/}
               <li className={this.getItemClasses('followers')} onClick={this.handleClick} role="presentation" data-key="followers">
                 <FormattedMessage id="followers" defaultMessage="Followers" />
                 <span className="UserMenu__badge">

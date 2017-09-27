@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import './Sidenav.less';
 
-const isNews = (match, location) => location.pathname !== '/';
+const isActive = (match, location) => true;
 
 const Sidenav = ({ username }) =>
   (<div>
@@ -16,16 +16,16 @@ const Sidenav = ({ username }) =>
             <FormattedMessage id="my_profile" defaultMessage="My profile" />
           </NavLink>
         </li>
-        <li>
+        {/*<li>
           <NavLink to="/" activeClassName="Sidenav__item--active" exact>
             <i className="iconfont icon-clock" />
             <FormattedMessage id="feed" defaultMessage="Feed" />
           </NavLink>
-        </li>
+        </li>*/}
         <li>
-          <NavLink to="/trending" activeClassName="Sidenav__item--active" isActive={isNews}>
+          <NavLink to="/trending" activeClassName="Sidenav__item--active" isActive={isActive}>
             <i className="iconfont icon-headlines" />
-            <FormattedMessage id="news" defaultMessage="News" />
+            <FormattedMessage id="contributions" defaultMessage="Contributions" />
           </NavLink>
         </li>
         <li>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getIsAuthFetching, getIsAuthenticated } from '../reducers';
 import Loading from '../components/Icon/Loading';
 import Error401 from '../statics/Error401';
+import Help from '../statics/Help';
 
 const RequiredLogin = ({ children, authenticated, fetching }) => {
   if (fetching) {
@@ -14,7 +15,8 @@ const RequiredLogin = ({ children, authenticated, fetching }) => {
     );
   }
   if (!authenticated) {
-    return <Error401 />;
+    //return <Error401 />;
+    return <Help mustAuthenticate={ true }/>
   }
   return children;
 };
@@ -22,7 +24,7 @@ const RequiredLogin = ({ children, authenticated, fetching }) => {
 RequiredLogin.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   fetching: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.element.isRequired
 };
 
 export default connect(state => ({

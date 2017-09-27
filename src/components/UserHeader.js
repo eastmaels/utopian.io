@@ -52,7 +52,7 @@ const UserHeader = ({
             content={
               <PopoverMenu onSelect={onSelect}>
                 <PopoverMenuItem key="transfer">
-                  <FormattedMessage id="transfer" defaultMessage="Transfer" />
+                  <FormattedMessage id="support" defaultMessage="Support" />
                 </PopoverMenuItem>
                 <PopoverMenuItem key="mute">
                   <FormattedMessage id="block_user" defaultMessage="Block this user" />

@@ -90,13 +90,14 @@ class Page extends React.Component {
               </div>
             </Affix>
             <div className="center">
+              {/*
               {shouldDisplaySelector && <TopicSelector
                 isSingle={false}
                 sort={this.state.currentKey}
                 topics={this.state.categories}
                 onSortChange={this.handleSortChange}
                 onTopicClose={this.handleTopicClose}
-              />}
+              />}*/}
               <Route path={`${match.path}:sortBy?/:category?`} component={SubFeed} />
             </div>
           </div>

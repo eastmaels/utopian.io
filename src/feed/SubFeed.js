@@ -11,6 +11,8 @@ import {
 import {
   getFeedContentFromState,
   getFeedLoadingFromState,
+  getUserFeedContentFromState,
+  getUserFeedLoadingFromState,
   getFeedHasMoreFromState,
 } from '../helpers/stateHelpers';
 import {
@@ -20,6 +22,7 @@ import {
   getFeed,
   getPosts,
 } from '../reducers';
+import { Link } from 'react-router-dom';
 import Feed from './Feed';
 import EmptyFeed from '../statics/EmptyFeed';
 import ScrollToTop from '../components/Utils/ScrollToTop';
@@ -51,6 +54,7 @@ class SubFeed extends React.Component {
     getFeedContent: PropTypes.func,
     getMoreFeedContent: PropTypes.func,
     getUserFeedContent: PropTypes.func,
+    getMoreUserFeedContent: PropTypes.func,
   };
 
   static defaultProps = {
@@ -63,19 +67,10 @@ class SubFeed extends React.Component {
   componentDidMount() {
     const { authenticated, loaded, user, match } = this.props;
     const sortBy = match.params.sortBy || 'trending';
-    const category = 'utopian-io'; // @UTOPIAN forced category
+    const category = match.params.category;
 
     if (!loaded && Cookie.get('access_token')) return;
 
-    /*
-    if (match.url === '/' && authenticated) {
-      this.props.getUserFeedContent(user.name);
-    } else {
-      this.props.getFeedContent(sortBy, category);
-    }
-    */
-
-    console.log("DID MOUNT")
     this.props.getFeedContent(sortBy, category);
   }
 
@@ -89,54 +84,48 @@ class SubFeed extends React.Component {
     const isAuthenticated = authenticated;
     const wasLoaded = this.props.loaded;
     const isLoaded = loaded;
-    const category = 'utopian-io'; // @UTOPIAN forced category
 
     if (!isLoaded && Cookie.get('access_token')) return;
 
-    /*if (
-      match.url === '/' &&
-      ((match.url !== this.props.match.url && isAuthenticated) ||
-        (isAuthenticated && !wasAuthenticated))
-    ) {
-      this.props.getUserFeedContent(user.name);
-    } else */if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
-      this.props.getFeedContent(newSortBy || 'trending', category);
+    if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
+      this.props.getFeedContent(newSortBy || 'trending', match.params.category);
     }
-    console.log("WILL RECEIVE PROPS")
   }
 
   render() {
-    const { loaded, feed, posts, match } = this.props;
-    /*
+    const { authenticated, loaded, user, feed, posts, match } = this.props;
+
     let content = [];
     let isFetching = false;
     let hasMore = false;
     let loadMoreContent = () => {};
 
-    if (authenticated && match.url === '/') {
-      content = getUserFeedContentFromState(user.name, feed, posts);
-      isFetching = getUserFeedLoadingFromState(user.name, feed);
-      hasMore = feed.created[user.name] ? feed.created[user.name].hasMore : true;
-      loadMoreContent = () => this.props.getMoreUserFeedContent(user.name);
-    } else {
-      const sortBy = match.params.sortBy || 'trending';
-      content = getFeedContentFromState(sortBy, match.params.category, feed, posts);
-      isFetching = getFeedLoadingFromState(sortBy, match.params.category, feed);
-      hasMore = getFeedHasMoreFromState(sortBy, match.params.category, feed);
-      loadMoreContent = () => this.props.getMoreFeedContent(sortBy, match.params.category);
-    }
-    */
-
-    const category = 'utopian-io'; // @UTOPIAN forced category
     const sortBy = match.params.sortBy || 'trending';
-    const content = getFeedContentFromState(sortBy, category, feed, posts);
-    const isFetching = getFeedLoadingFromState(sortBy, category, feed);
-    const hasMore = getFeedHasMoreFromState(sortBy, category, feed);
-    const loadMoreContent = () => this.props.getMoreFeedContent(sortBy, category);
+    content = getFeedContentFromState(sortBy, match.params.category, feed, posts);
+    isFetching = getFeedLoadingFromState(sortBy, match.params.category, feed);
+    hasMore = getFeedHasMoreFromState(sortBy, match.params.category, feed);
+    loadMoreContent = () => this.props.getMoreFeedContent(sortBy, match.params.category);
 
     return (
       <div>
         <ScrollToTop />
+
+        <div className="AddContribution">
+          <div>
+            <img src="/img/utopian-logo-120x120.png" />
+          </div>
+          <div>
+            <h3>Utopian Rewards Open Source Contributors!</h3>
+            <p>
+              <Link to={`/write`}>Create a <b>Contributor Report</b></Link> to share the latest contributions you made to an Open Source project.
+              The Utopian community will vote and get you rewarded $$. <Link to={`/help/#contributor-report`}>Learn more</Link>
+            </p>
+          </div>
+        </div>
+        <div className="VoteContributions">
+          <h3>Vote Contributor Reports:</h3>
+        </div>
+
         <Feed
           content={content}
           isFetching={isFetching}

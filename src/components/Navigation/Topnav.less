@@ -20,6 +20,28 @@
     &:active {
       text-decoration: none;
     }
+
+    span {
+      vertical-align: middle;
+      padding-left: 5px;
+      color: @black;
+      font-size: 22px;
+
+      @media screen and (max-width: 375px) {
+        display: none;
+      }
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+      vertical-align: middle;
+
+      @media screen and (max-width: 375px) {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 
   &__container {
@@ -105,9 +127,23 @@
     margin: 0 10px !important;
   }
 
+  &__newReport {
+    span {
+      background: @blue;
+      color: @white;
+      padding: 17px;
+
+      i {
+        vertical-align: middle;
+        font-size: 14px;
+      }
+    }
+  }
+
   &__link {
     i {
-      color: rgba(0, 0, 0, 0.65) !important;
+      color: rgba(0, 0, 0, 0.65);
+      vertical-align: middle;
     }
 
     &--light {

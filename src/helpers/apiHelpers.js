@@ -10,23 +10,47 @@ import { jsonParse } from '../helpers/formatter';
  * @param steemAPI - The same giving to Steem API
  * @returns {function}
  */
-export const getDiscussionsFromAPI = function getDiscussionsFromAPI(sortBy, query, steemAPI) {
+export const getDiscussionsFromAPI = function getDiscussionsFromAPI(sortBy, originalQuery, steemAPI) {
+
+  console.log("ORIGINAL", originalQuery)
+  // @UTOPIAN filtered query
+  const query = {
+    ...originalQuery,
+    ["select_tags"]: ["utopian-io"],
+  };
+  console.log("FILTERED", query)
+
   switch (sortBy) {
+    /*
     case 'feed':
+      console.log("BY FEED")
       return steemAPI.getDiscussionsByFeedAsync(query);
+      */
     case 'hot':
+      console.log("BY HOT")
+      query.tag = "utopian-io"; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByHotAsync(query);
     case 'created':
+      console.log("BY CREATED")
+      query.tag = "utopian-io"; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByCreatedAsync(query);
     case 'active':
+      console.log("BY ACTIVE")
+      query.tag = "utopian-io"; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByActiveAsync(query);
     case 'trending':
+      console.log("BY TRENDING")
+      query.tag = "utopian-io"; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByTrendingAsync(query);
     case 'blog':
+      console.log("BY BLOG")
       return steemAPI.getDiscussionsByBlogAsync(query);
-    case 'comments':
+    /*case 'comments':
       return steemAPI.getDiscussionsByCommentsAsync(query);
+      */
     case 'promoted':
+      console.log("BY PROMOTED")
+      query.tag = "utopian-io"; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByPromotedAsync(query);
     default:
       throw new Error('There is not API endpoint defined for this sorting');

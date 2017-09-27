@@ -50,12 +50,9 @@ export default class UserProfilePosts extends React.Component {
     const hasMore = getFeedHasMoreFromState('comments', username, feed);
     const loadMoreContentAction = () => this.props.getMoreUserComments(username, limit);
 
-    // @UTOPIAN forced category
-    const filteredContent = content.filter(post => post.category === "utopian-io");
-
     return (
       <Feed
-        content={filteredContent}
+        content={content}
         isFetching={isFetching}
         hasMore={hasMore}
         loadMoreContent={loadMoreContentAction}

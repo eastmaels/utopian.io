@@ -16,6 +16,21 @@
   font-weight: 500;
 }
 
+.SidebarBlock__desc {
+  font-size: 14px;
+  text-align: center;
+}
+
+.SidebarBlock__desc > a {
+  color: @white;
+  text-decoration: underline;
+}
+
+.SidebarBlock__helplink {
+  color: @white;
+  text-decoration: underline;
+}
+
 .SidebarBlock__button {
   .btn;
   .btn-default;
@@ -23,7 +38,8 @@
   
   width: 100% !important;
   height: 46px !important;
-  color: @white !important;
+  color: @blue !important;
+  background: @white;
   font-size: 16px !important;
 
   &:hover,
@@ -34,4 +50,10 @@
     background: @white !important;
     border: none !important;
   }
+}
+
+.SidebarBlock__text > img {
+  margin-right: 5px;
+  width: 14px;
+  vertical-align: middle;
 }

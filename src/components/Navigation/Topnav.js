@@ -29,9 +29,9 @@ const Topnav = ({
       <div className="Topnav__menu-container">
         <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
           <Menu.Item key="write">
-            <Tooltip placement="bottom" title={intl.formatMessage({ id: 'write_post', defaultMessage: 'Write post' })}>
-              <Link to="/write" className="Topnav__link">
-                <i className="iconfont icon-write" />
+            <Tooltip placement="bottom" title={intl.formatMessage({ id: 'write_contributor_report', defaultMessage: 'Write a new Contributor Report' })}>
+              <Link to="/write" className="Topnav__newReport">
+                <span><i className="iconfont icon-add" /> Contributor Report</span>
               </Link>
             </Tooltip>
           </Menu.Item>
@@ -130,7 +130,8 @@ const Topnav = ({
       <div className="topnav-layout container">
         <div className="left">
           <Link className="Topnav__brand" to="/">
-            Utopian
+            <img src="/img/utopian-logo-120x120.png" />
+            <span>Utopian</span>
           </Link>
         </div>
         <div className="center">

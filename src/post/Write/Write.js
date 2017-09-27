@@ -260,25 +260,6 @@ class Write extends React.Component {
             </div>
           </Affix>
           <div className="center">
-            <h3>READ BEFORE POSTING (OR YOU WILL BE DOWNVOTED):</h3>
-            <br />
-            This is not just a blog post that you are creating, it's a <b>Contribution Report</b>.
-            You have to specify here the most meaningful contributions you made to a specific Open Source project,
-             the reasons why are you contributing to it and the full story behind your contributions.
-            <br /><br />
-            Contribution Reports are not intended to be cold reports of your work. <b>They must tell a story.</b>
-            <br />
-            Contributions must be verifiable and trustworthy.
-            <br /><br />
-            <b>You are requested to add:</b>
-            <li>- Links to pull requests/branches/forks if you are contributing to the development.</li>
-            <li>- Proof of social engagement if you have contributed by sharing on social media.</li>
-            <li>- Any other verifiable proof of your contributions.</li>
-            <br />
-            The community will vote and reward you for your contributions.
-            <br />
-            Contributors are invited to share their Contribution Reports <b>no more than once a week</b> for a single project and <b>never post contributions already posted</b> in previous Contribution Reports.
-            <br /><br />
             <Editor
               ref={this.setForm}
               saving={saving}
