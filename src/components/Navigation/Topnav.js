@@ -22,7 +22,7 @@ const Topnav = ({
   const notificationsCount =
     notifications && notifications.filter(notification => !notification.read).length;
 
-  const next = window.location.pathname.length > 1 ? window.location.pathname : '';
+  const next = window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : '';
 
   if (username) {
     content = (

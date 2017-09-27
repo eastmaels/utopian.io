@@ -1,11 +1,7 @@
 import React from 'react';
 import steemconnect from 'sc2-sdk';
 
-import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
 import './Help.less';
-
-const next = window.location.pathname.length > 1 ? window.location.pathname : '';
 
 export default (props) =>
   (<div className="main-panel">
@@ -13,7 +9,7 @@ export default (props) =>
       {props.mustAuthenticate && <div
         className="MustLogin"
       >
-        You must login to access that page. <a href={steemconnect.getLoginURL(next)}>Log in</a> or <a target="_blank" rel="noopener noreferrer" href="https://steemit.com/pick_account">Sign up with Steemit</a>
+        You must login to access that page. <a href={steemconnect.getLoginURL(window.location.pathname.length > 1 ? window.location.pathname : '')}>Log in</a> or <a target="_blank" rel="noopener noreferrer" href="https://steemit.com/pick_account">Sign up with Steemit</a>
       </div>
       }
 
