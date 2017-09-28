@@ -77,6 +77,11 @@ class Story extends React.Component {
       onShareClick,
     } = this.props;
 
+    const metaData = JSON.parse(post.json_metadata);
+    const repository = metaData.repository;
+
+    if (!repository) return null; // @UTOPIAN @TODO find a better way to hide posts not written via Utopian
+
     let followText = '';
 
     if (postState.userFollowed && !pendingFollow) {
@@ -152,6 +157,9 @@ class Story extends React.Component {
           >
             <i className="iconfont icon-unfold Story__more" />
           </Popover>
+          <div className="Story__contribution">
+            <b>Contribution Report for</b>: <a href={metaData.repository} target="_blank">Visit Project</a>
+          </div>
           <div className="Story__header">
             <Link to={`/@${post.author}`}>
               <Avatar username={post.author} size={40} />

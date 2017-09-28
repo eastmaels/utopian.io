@@ -436,7 +436,7 @@ class Editor extends React.Component {
         <Form.Item
           label={
             <span className="Editor__label">
-              <FormattedMessage id="title" defaultMessage="Title" />
+              Title of Contributor Report
             </span>
           }
         >
@@ -524,6 +524,13 @@ class Editor extends React.Component {
           }
         >
           <EditorToolbar onSelect={this.insertCode} />
+
+          <div>
+            <b>Write the story of your contributions. Remember to provide proof of your contributions and
+              to never write about contributions you have already reported in previous Contributor Reports. <a href="http://utopian.io/help#contributor-report" target="_blank">Learn more</a>
+            </b>
+          </div>
+
           <div className="Editor__dropzone-base">
             <Dropzone
               disableClick
