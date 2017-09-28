@@ -69,6 +69,7 @@ class Write extends React.Component {
       initialBody: '',
       initialReward: '50',
       initialUpvote: true,
+      initialRepository: '',
       isUpdating: false,
     };
   }
@@ -78,6 +79,8 @@ class Write extends React.Component {
     const { draftPosts, location: { search } } = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
+
+    console.log("DRAFT", draftPost)
 
     if (draftPost) {
       const { jsonMetadata, isUpdating } = draftPost;
@@ -102,6 +105,7 @@ class Write extends React.Component {
         initialReward: draftPost.reward || '50',
         initialUpvote: draftPost.upvote,
         isUpdating: isUpdating || false,
+        initialRepository: jsonMetadata.repository,
       });
     }
   }
@@ -114,8 +118,7 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    // @UTOPIAN forcing category
-    data.jsonMetadata.tags = ["utopian-io"];
+    console.log("DATA", data)
 
     this.props.createPost(data);
   };
@@ -131,7 +134,7 @@ class Write extends React.Component {
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
 
-    const tags = form.topics || [];
+    const tags = ['utopian-io'];  // @UTOPIAN forcing category
     const users = [];
     const userRegex = /@([a-zA-Z.0-9-]+)/g;
     const links = [];
@@ -175,6 +178,7 @@ class Write extends React.Component {
       community: 'utopian',
       app: `utopian/${version}`,
       format: 'markdown',
+      repository: form.repository
     };
 
     if (tags.length) {
@@ -248,7 +252,7 @@ class Write extends React.Component {
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialBody, initialReward, initialUpvote } = this.state;
+    const { initialTitle, initialTopics, initialBody, initialReward, initialUpvote, initialRepository } = this.state;
     const { loading, saving } = this.props;
 
     return (
@@ -263,6 +267,7 @@ class Write extends React.Component {
             <Editor
               ref={this.setForm}
               saving={saving}
+              repository={initialRepository}
               title={initialTitle}
               topics={initialTopics}
               body={initialBody}

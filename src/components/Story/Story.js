@@ -180,9 +180,9 @@ class Story extends React.Component {
                 </span>
               </Tooltip>
             </div>
-            <div className="Story__topics">
+            {/*<div className="Story__topics">
               <Topic name={post.category} />
-            </div>
+            </div>*/}
           </div>
           <div className="Story__content">
             <Link to={post.url} className="Story__content__title">

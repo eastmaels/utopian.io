@@ -18,6 +18,7 @@ class Editor extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     form: PropTypes.shape().isRequired,
+    repository: PropTypes.string,
     title: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
@@ -34,6 +35,7 @@ class Editor extends React.Component {
 
   static defaultProps = {
     title: '',
+    repository: '',
     topics: [],
     body: '',
     reward: '50',
@@ -90,9 +92,10 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, topics, body, reward, upvote } = this.props;
+    const { title, repository, topics, body, reward, upvote } = this.props;
     if (
       title !== nextProps.title ||
+      repository !== nextProps.repository ||
       topics !== nextProps.topics ||
       body !== nextProps.body ||
       reward !== nextProps.reward ||
@@ -119,6 +122,7 @@ class Editor extends React.Component {
   setValues = (post) => {
     this.props.form.setFieldsValue({
       title: post.title,
+      repository: post.repository,
       topics: post.topics,
       reward: post.reward,
       upvote: post.upvote,
@@ -136,7 +140,7 @@ class Editor extends React.Component {
     // (array or just value for Select, proxy event for inputs and checkboxes)
 
     const values = {
-      ...this.props.form.getFieldsValue(['title', 'topics', 'reward', 'upvote']),
+      ...this.props.form.getFieldsValue(['title', 'repository', 'topics', 'reward', 'upvote']),
       body: this.input.value,
     };
 
@@ -397,6 +401,38 @@ class Editor extends React.Component {
 
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
+        <Form.Item
+          label={
+            <span className="Editor__label">
+              Project Repository URL
+            </span>
+          }
+        >
+          {getFieldDecorator('repository', {
+            rules: [
+              {
+                required: true,
+                message: intl.formatMessage({
+                  id: 'repository_error_empty',
+                  defaultMessage: 'Please enter the repository URL of this Open Source Project',
+                }),
+              },
+            ],
+          })(
+            <Input
+              ref={(repository) => {
+                this.repository = repository;
+              }}
+              onChange={this.onUpdate}
+              className="Editor__repository"
+              placeholder={intl.formatMessage({
+                id: 'repository_placeholder',
+                defaultMessage: 'Eg. https://github.com/WordPress/WordPress',
+              })}
+            />,
+          )}
+        </Form.Item>
+
         <Form.Item
           label={
             <span className="Editor__label">

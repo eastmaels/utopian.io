@@ -130,6 +130,8 @@ export const broadcastComment = (
     ]);
   }
 
+  console.log("OPERATIONS", operations)
+
   return SteemConnect.broadcast(operations);
 };
 
@@ -151,6 +153,7 @@ export function createPost(postData) {
       draftId,
       isUpdating,
     } = postData;
+
     const getPermLink = isUpdating
       ? Promise.resolve(postData.permlink)
       : createPermlink(title, author, parentAuthor, parentPermlink);

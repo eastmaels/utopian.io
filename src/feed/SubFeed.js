@@ -123,7 +123,7 @@ class SubFeed extends React.Component {
           </div>
         </div>
         <div className="VoteContributions">
-          <h3>Vote Contributor Reports:</h3>
+          <h3>Vote Contribution Reports:</h3>
         </div>
 
         <Feed
