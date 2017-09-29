@@ -158,7 +158,8 @@ class Story extends React.Component {
             <i className="iconfont icon-unfold Story__more" />
           </Popover>
           <div className="Story__contribution">
-            <b>Contribution Report for</b>: <a href={metaData.repository} target="_blank">Visit Project</a>
+            <b>
+              <Icon type='github' /> Contribution Report for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}`}>{repository.full_name}</Link>
           </div>
           <div className="Story__header">
             <Link to={`/@${post.author}`}>

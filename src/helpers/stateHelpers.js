@@ -1,5 +1,6 @@
 export const getFeedFromState = (sortBy, category = 'all', state) => {
   switch (sortBy) {
+    case 'project':
     case 'feed':
     case 'hot':
     case 'created':
@@ -28,6 +29,7 @@ export const getUserCommentsFromState = (username, feedState, commentsState) => 
 
 export const getFeedLoadingFromState = (sortBy, category = 'all', feedState) => {
   switch (sortBy) {
+    case 'project':
     case 'feed':
     case 'hot':
     case 'created':
@@ -46,6 +48,7 @@ export const getFeedLoadingFromState = (sortBy, category = 'all', feedState) => 
 
 export const getFeedHasMoreFromState = (sortBy, listName = 'all', feedState) => {
   switch (sortBy) {
+    case 'project':
     case 'feed':
     case 'hot':
     case 'cashout':

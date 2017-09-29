@@ -9,6 +9,7 @@ import ProfileSettings from './app/ProfileSettings';
 import Activity from './activity/Activity';
 
 import Page from './feed/Page';
+import Project from './feed/Project';
 import Replies from './replies/Replies';
 import User from './user/User';
 import Tags from './tags/Tags';
@@ -26,14 +27,14 @@ export default (
   <Wrapper>
     <Switch>
       <Route exact path="/" component={Page} />
-      <Route
+      {/*<Route
         path="/replies"
         render={() => (
           <RequireLogin>
             <Replies />
           </RequireLogin>
         )}
-      />
+      />*/}
       <Route path="/help" component={Help} />
       {/*
       <Route path="/about" component={About} />
@@ -91,6 +92,10 @@ export default (
       />
       <Route path="/@:name" component={User} />
       <Route path="/:category/@:author/:permlink" component={Post} />
+      <Route
+        path="/project/:author/:project/:platform/:projectId"
+        component={Project}
+      />
       <Route path="/" component={Page} />
     </Switch>
   </Wrapper>

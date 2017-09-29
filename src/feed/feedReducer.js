@@ -4,6 +4,7 @@ import * as repliesTypes from '../replies/repliesActions';
 import * as bookmarksActions from '../bookmarks/bookmarksActions';
 
 const initialState = {
+  project: {},
   feed: {},
   hot: {},
   cashout: {},

@@ -5,12 +5,9 @@ import { FormattedMessage } from 'react-intl';
 const EmptyFeed = () =>
   (<div className="text-center">
     <h3>
-      <FormattedMessage
-        id="@statics/empty_feed"
-        defaultMessage="Oops! This feed empty, here's a link to the"
-      />{' '}
-      <Link to="/">
-        <FormattedMessage id="@statics/homepage" defaultMessage="home page" />
+      No Contribution Reports for this project yet. <b>Be the first!</b>{' '}
+      <Link to="/write">
+        Write a Contributor Report
       </Link>
       .
     </h3>

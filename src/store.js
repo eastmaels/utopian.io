@@ -1,5 +1,6 @@
 import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
+import { API } from './middlewares';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import api from './steemAPI';
@@ -29,6 +30,7 @@ const middleware = [
       'ERROR',
     ],
   }),
+  API,
   thunk.withExtraArgument({
     steemAPI: api,
   }),

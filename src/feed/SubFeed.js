@@ -66,10 +66,20 @@ class SubFeed extends React.Component {
 
   componentDidMount() {
     const { authenticated, loaded, user, match } = this.props;
-    const sortBy = match.params.sortBy || 'trending';
-    const category = match.params.category;
+    let sortBy = 'trending';
+    let category;
 
-    if (!loaded && Cookie.get('access_token')) return;
+    console.log("PARAMS", match.params)
+
+    if (match.params.projectId) {
+      sortBy = 'project';
+      category = match.params.platform + '-' + match.params.projectId;
+    } else {
+      sortBy = match.params.sortBy || 'trending';
+      category = match.params.category;
+    }
+
+    //if (!loaded && Cookie.get('access_token')) return;
 
     this.props.getFeedContent(sortBy, category);
   }
@@ -87,9 +97,15 @@ class SubFeed extends React.Component {
 
     if (!isLoaded && Cookie.get('access_token')) return;
 
-    if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
-      this.props.getFeedContent(newSortBy || 'trending', match.params.category);
+    if (!match.params.projectId) {
+      if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
+        this.props.getFeedContent(newSortBy || 'trending', match.params.category);
+      }
+    } else {
+      console.log("WTF")
+      //this.props.getFeedContent('project', match.params.platform + '-' + match.params.projectId);
     }
+
   }
 
   render() {
@@ -99,18 +115,29 @@ class SubFeed extends React.Component {
     let isFetching = false;
     let hasMore = false;
     let loadMoreContent = () => {};
+    let sortBy = 'trending';
+    let category;
 
-    const sortBy = match.params.sortBy || 'trending';
-    content = getFeedContentFromState(sortBy, match.params.category, feed, posts);
-    isFetching = getFeedLoadingFromState(sortBy, match.params.category, feed);
-    hasMore = getFeedHasMoreFromState(sortBy, match.params.category, feed);
-    loadMoreContent = () => this.props.getMoreFeedContent(sortBy, match.params.category);
+    if (match.params.projectId) {
+      sortBy = 'project';
+      category = match.params.platform + '-' + match.params.projectId;
+    } else {
+      sortBy = match.params.sortBy || 'trending';
+      category = match.params.category;
+    }
+
+    content = getFeedContentFromState(sortBy, category, feed, posts);
+    isFetching = getFeedLoadingFromState(sortBy, category, feed);
+    hasMore = getFeedHasMoreFromState(sortBy, category, feed);
+    loadMoreContent = () => this.props.getMoreFeedContent(sortBy, category);
+
+    console.log("CONTENT", category)
 
     return (
       <div>
         <ScrollToTop />
 
-        <div className="AddContribution">
+        {sortBy !== 'project' && <div className="AddContribution">
           <div>
             <img src="/img/utopian-logo-120x120.png" />
           </div>
@@ -121,10 +148,7 @@ class SubFeed extends React.Component {
               The Utopian community will vote and get you rewarded $$. <Link to={`/help/#contributor-report`}>Learn more</Link>
             </p>
           </div>
-        </div>
-        <div className="VoteContributions">
-          <h3>Vote Contribution Reports:</h3>
-        </div>
+        </div>}
 
         <Feed
           content={content}

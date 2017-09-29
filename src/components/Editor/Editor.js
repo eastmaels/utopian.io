@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
@@ -11,14 +12,23 @@ import Dropzone from 'react-dropzone';
 import EditorToolbar from './EditorToolbar';
 import Action from '../Button/Action';
 import Body, { remarkable } from '../Story/Body';
+import Autocomplete from 'react-autocomplete';
 import './Editor.less';
 
+import { getProjects, setProjects } from '../../project/projectsActions';
+
+@connect(
+  state => ({
+    projects: state.projects,
+  }),
+  { getProjects, setProjects },
+)
 @injectIntl
 class Editor extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     form: PropTypes.shape().isRequired,
-    repository: PropTypes.string,
+    repository: PropTypes.object,
     title: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
@@ -35,7 +45,7 @@ class Editor extends React.Component {
 
   static defaultProps = {
     title: '',
-    repository: '',
+    repository: null,
     topics: [],
     body: '',
     reward: '50',
@@ -70,7 +80,21 @@ class Editor extends React.Component {
     noContent: false,
     imageUploading: false,
     dropzoneActive: false,
+    value: '',
+    loading: false,
+    loaded: false,
+    repository: null,
+    noRepository: false,
   };
+
+  constructor (props) {
+    super(props)
+    this.renderItems = this.renderItems.bind(this);
+  }
+
+  renderItems(items) {
+    return items;
+  }
 
   componentDidMount() {
     if (this.input) {
@@ -92,10 +116,17 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, repository, topics, body, reward, upvote } = this.props;
+    const { title, topics, body, reward, upvote } = this.props;
+
+    if (this.props.repository !== nextProps.repository) {
+      this.setState({
+        value: nextProps.repository.full_name,
+        repository: nextProps.repository,
+      });
+    }
+
     if (
       title !== nextProps.title ||
-      repository !== nextProps.repository ||
       topics !== nextProps.topics ||
       body !== nextProps.body ||
       reward !== nextProps.reward ||
@@ -122,7 +153,6 @@ class Editor extends React.Component {
   setValues = (post) => {
     this.props.form.setFieldsValue({
       title: post.title,
-      repository: post.repository,
       topics: post.topics,
       reward: post.reward,
       upvote: post.upvote,
@@ -140,7 +170,7 @@ class Editor extends React.Component {
     // (array or just value for Select, proxy event for inputs and checkboxes)
 
     const values = {
-      ...this.props.form.getFieldsValue(['title', 'repository', 'topics', 'reward', 'upvote']),
+      ...this.props.form.getFieldsValue(['title', 'topics', 'reward', 'upvote']),
       body: this.input.value,
     };
 
@@ -174,11 +204,16 @@ class Editor extends React.Component {
     // to control its selection what is needed for markdown formatting.
     // This code adds requirement for body input to not be empty.
     e.preventDefault();
-    this.setState({ noContent: false });
+    this.setState({ noContent: false, noRepository: false });
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err && this.input.value !== '') {
+      if (
+        !this.state.repository
+      ) {
+        this.setState({noRepository: true});
+      } else if (!err && this.input.value !== '') {
         this.props.onSubmit({
           ...values,
+          repository: this.state.repository,
           body: this.input.value,
         });
       } else if (this.input.value === '') {
@@ -397,40 +432,85 @@ class Editor extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { intl, loading, isUpdating, saving } = this.props;
+    const { intl, loading, isUpdating, saving, getProjects, projects, setProjects } = this.props;
 
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
         <Form.Item
+          validateStatus={this.state.noRepository ? 'error' : ''}
+          help={
+            this.state.noRepository &&
+            intl.formatMessage({
+              id: 'repository_error_empty',
+              defaultMessage: "Please enter an existing Github repository",
+            })
+          }
           label={
             <span className="Editor__label">
-              Project Repository URL
+              <Icon type='github' /> Github Repository
             </span>
           }
         >
-          {getFieldDecorator('repository', {
-            rules: [
-              {
-                required: true,
-                message: intl.formatMessage({
-                  id: 'repository_error_empty',
-                  defaultMessage: 'Please enter the repository URL of this Open Source Project',
-                }),
+          <Autocomplete
+            ref={ search => this.search = search }
+            value={ this.state.value }
+            inputProps={{
+              id: 'search-projects',
+              placeholder: 'Browse Github repositories',
+              className: 'ant-input ant-input-lg Editor__repository',
+              onKeyPress: (event) => {
+                const q = event.target.value;
+
+                if (event.key === 'Enter') {
+                  event.preventDefault();
+
+                  this.setState({loading: true, loaded: false});
+                  this.search.refs.input.click();
+
+                  getProjects(q).then(() => {
+                    this.setState({loaded: true, loading: false});
+                    this.search.refs.input.click();
+                  });
+                }
               },
-            ],
-          })(
-            <Input
-              ref={(repository) => {
-                this.repository = repository;
-              }}
-              onChange={this.onUpdate}
-              className="Editor__repository"
-              placeholder={intl.formatMessage({
-                id: 'repository_placeholder',
-                defaultMessage: 'Eg. https://github.com/WordPress/WordPress',
-              })}
-            />,
-          )}
+            }}
+            items={ projects }
+            getItemValue={project => project.full_name}
+            onSelect={(value, project) => {
+              this.setState({
+                value: project.full_name,
+                repository: project,
+              });
+            }}
+            onChange={(event, value) => {
+              this.setState({value});
+
+              if (value === '') {
+                setProjects([]);
+                this.setState({loaded: false, repository: null});
+              }
+
+            }}
+            renderItem={(project, isHighlighted) => (
+              <div
+                className='Topnav__search-item'
+                key={project.full_name}
+              >
+                <span><Icon type='github' /> <b>{project.full_name}</b></span>
+                <span>{project.html_url}</span>
+              </div>
+            )}
+            renderMenu={(items, value) => (
+              <div className="Topnav__search-menu">
+                <div>
+                  {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip">Press enter to search</div>}
+                  {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
+                  {this.state.loading && <div className="Topnav__search-tip">Loading...</div>}
+                  {items.length > 0 && this.renderItems(items)}
+                </div>
+              </div>
+            )}
+          />
         </Form.Item>
 
         <Form.Item
@@ -472,47 +552,6 @@ class Editor extends React.Component {
           )}
         </Form.Item>
 
-        {/*<Form.Item
-          label={
-            <span className="Editor__label">
-              <FormattedMessage id="topics" defaultMessage="Topics" />
-            </span>
-          }
-          extra={intl.formatMessage({
-            id: 'topics_extra',
-            defaultMessage:
-              'Separate topics with commas. Only lowercase letters, numbers and hyphen character is permitted.',
-          })}
-        >
-          {getFieldDecorator('topics', {
-            rules: [
-              {
-                required: true,
-                message: intl.formatMessage({
-                  id: 'topics_error_empty',
-                  defaultMessage: 'Please enter topics.',
-                }),
-                type: 'array',
-              },
-              { validator: this.checkTopics },
-            ],
-          })(
-            <Select
-              ref={(ref) => {
-                this.select = ref;
-              }}
-              onChange={this.onUpdate}
-              className="Editor__topics"
-              mode="tags"
-              placeholder={intl.formatMessage({
-                id: 'topics_placeholder',
-                defaultMessage: 'Add story topics here',
-              })}
-              dropdownStyle={{ display: 'none' }}
-              tokenSeparators={[' ', ',']}
-            />,
-          )}
-        </Form.Item>*/}
         <Form.Item
           validateStatus={this.state.noContent ? 'error' : ''}
           help={
@@ -566,18 +605,18 @@ class Editor extends React.Component {
             <input type="file" id="inputfile" onChange={this.handleImageChange} />
             <label htmlFor="inputfile">
               {this.state.imageUploading ? (
-                <Icon type="loading" />
-              ) : (
-                <i className="iconfont icon-picture" />
-              )}
+                  <Icon type="loading" />
+                ) : (
+                  <i className="iconfont icon-picture" />
+                )}
               {this.state.imageUploading ? (
-                <FormattedMessage id="image_uploading" defaultMessage="Uploading your image..." />
-              ) : (
-                <FormattedMessage
-                  id="select_or_past_image"
-                  defaultMessage="Select image or paste it from the clipboard."
-                />
-              )}
+                  <FormattedMessage id="image_uploading" defaultMessage="Uploading your image..." />
+                ) : (
+                  <FormattedMessage
+                    id="select_or_past_image"
+                    defaultMessage="Select image or paste it from the clipboard."
+                  />
+                )}
             </label>
           </p>
         </Form.Item>
@@ -622,13 +661,13 @@ class Editor extends React.Component {
           )}
         </Form.Item>
         <div className="Editor__bottom">
-          <span className="Editor__bottom__info">
+            <span className="Editor__bottom__info">
             <i className="iconfont icon-markdown" />{' '}
-            <FormattedMessage
-              id="markdown_supported"
-              defaultMessage="Styling with markdown supported"
-            />
-          </span>
+              <FormattedMessage
+                id="markdown_supported"
+                defaultMessage="Styling with markdown supported"
+              />
+            </span>
           <div className="Editor__bottom__right">
             {saving && (
               <span className="Editor__bottom__right__saving">
@@ -637,26 +676,26 @@ class Editor extends React.Component {
             )}
             <Form.Item className="Editor__bottom__submit">
               {isUpdating ? (
-                <Action
-                  primary
-                  loading={loading}
-                  disabled={loading}
-                  text={intl.formatMessage({
-                    id: loading ? 'post_send_progress' : 'post_update_send',
-                    defaultMessage: loading ? 'Submitting' : 'Update post',
-                  })}
-                />
-              ) : (
-                <Action
-                  primary
-                  loading={loading}
-                  disabled={loading}
-                  text={intl.formatMessage({
-                    id: loading ? 'post_send_progress' : 'post_send',
-                    defaultMessage: loading ? 'Submitting' : 'Post',
-                  })}
-                />
-              )}
+                  <Action
+                    primary
+                    loading={loading}
+                    disabled={loading}
+                    text={intl.formatMessage({
+                      id: loading ? 'post_send_progress' : 'post_update_send',
+                      defaultMessage: loading ? 'Submitting' : 'Update post',
+                    })}
+                  />
+                ) : (
+                  <Action
+                    primary
+                    loading={loading}
+                    disabled={loading}
+                    text={intl.formatMessage({
+                      id: loading ? 'post_send_progress' : 'post_send',
+                      defaultMessage: loading ? 'Submitting' : 'Post',
+                    })}
+                  />
+                )}
             </Form.Item>
           </div>
         </div>

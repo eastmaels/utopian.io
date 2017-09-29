@@ -11,14 +11,14 @@ import { jsonParse } from '../helpers/formatter';
  * @returns {function}
  */
 export const getDiscussionsFromAPI = function getDiscussionsFromAPI(sortBy, originalQuery, steemAPI) {
-
-  console.log("ORIGINAL", originalQuery)
+  // @TODO this is hacky to say the least. Requires full refactoring
   // @UTOPIAN filtered query
-  const query = {
+  let query;
+  query = {
     ...originalQuery,
     ["select_tags"]: ["utopian-io"],
   };
-  console.log("FILTERED", query)
+  console.log("SORT BY", sortBy);
 
   switch (sortBy) {
     /*
@@ -26,6 +26,14 @@ export const getDiscussionsFromAPI = function getDiscussionsFromAPI(sortBy, orig
       console.log("BY FEED")
       return steemAPI.getDiscussionsByFeedAsync(query);
       */
+    case 'project':
+      console.log("BY PROJECT");
+      query = {
+        tag: originalQuery.tag,
+        limit: 10,
+        ["select_tags"]: ["utopian-io"],
+      };
+      return steemAPI.getDiscussionsByTrendingAsync(query);
     case 'hot':
       console.log("BY HOT")
       query.tag = "utopian-io"; // @UTOPIAN filtered query

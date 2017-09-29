@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import { getIsAuthenticated } from '../reducers';
+import { getProject, setProject } from '../project/projectsActions';
 
+import { Icon } from 'antd';
 import SubFeed from './SubFeed';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import RightSidebar from '../app/Sidebar/RightSidebar';
@@ -14,12 +16,17 @@ import Affix from '../components/Utils/Affix';
 import ScrollToTop from '../components/Utils/ScrollToTop';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
 
+import * as R from 'ramda';
+
 @connect(
   state => ({
     authenticated: getIsAuthenticated(state),
+    projects: state.projects,
+    project: state.project,
   }),
+  { getProject, setProject }
 )
-class Page extends React.Component {
+class Project extends React.Component {
   static propTypes = {
     authenticated: PropTypes.bool.isRequired,
     history: PropTypes.shape().isRequired,
@@ -27,53 +34,40 @@ class Page extends React.Component {
     match: PropTypes.shape().isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentKey: 'trending',
-      categories: [],
-    };
-  }
+  componentWillMount () {
+    const { projects, project, match, getProject, setProject } = this.props;
+    const { projectId } = match.params;
+    const id = parseInt(projectId);
+    const projectInState = R.find(R.propEq('id', id))(projects);
 
-  componentWillReceiveProps(nextProps) {
-    const { pathname } = nextProps.location;
-    const sortBy = pathname.split('/')[1];
-    const category = pathname.split('/')[2];
-
-    if (sortBy) {
-      this.setState({
-        currentKey: sortBy,
-      });
+    if(!projectInState) {
+      console.log("PROJECT NOT IN STATE");
+      getProject(id);
+      return;
     }
 
-    this.setState({
-      categories: (category) ? [category] : [],
-    });
+    if (projectInState && (project && project.id !== id)) {
+      setProject(projectInState);
+    }
   }
 
-  handleSortChange = (key) => {
-    this.setState({
-      currentKey: key,
-    }, () => {
-      if (this.state.categories[0]) {
-        this.props.history.push(`/${key}/${this.state.categories[0]}`);
-      } else {
-        this.props.history.push(`/${key}`);
-      }
-    });
-  };
-
-  handleTopicClose = () => this.props.history.push(`${this.props.match.url}trending`);
+  constructor(props) {
+    super(props);
+  }
 
   render() {
-    const { authenticated, match, location } = this.props;
+    const { authenticated, match, location, project } = this.props;
+    const { platform, project: projectName, projectId } = match.params;
 
-    const shouldDisplaySelector = location.pathname !== '/' || !authenticated;
+    if (!project || (project && project.id !== parseInt(projectId))) {
+      // @TODO add loading
+      return null;
+    }
 
     return (
       <div>
         <Helmet>
-          <title>Utopian - Rewarding Open Source Contributors</title>
+          <title>Utopian - {projectName} Contribution Reports </title>
         </Helmet>
         <ScrollToTop />
         <ScrollToTopOnMount />
@@ -90,15 +84,14 @@ class Page extends React.Component {
               </div>
             </Affix>
             <div className="center">
-              {/*
-              {shouldDisplaySelector && <TopicSelector
-                isSingle={false}
-                sort={this.state.currentKey}
-                topics={this.state.categories}
-                onSortChange={this.handleSortChange}
-                onTopicClose={this.handleTopicClose}
-              />}*/}
-              <Route path={`${match.path}:sortBy?/:category?`} component={SubFeed} />
+              <div className="Project">
+                <h3>Contributions for { project.full_name }</h3>
+                <p>
+                  <Icon type='github' />
+                    <a href={ project.html_url } target="_blank"> { project.html_url } </a>
+                  </p>
+              </div>
+              <Route path={`/project/:author/:project?/:platform?/:projectId?`} component={SubFeed} />
             </div>
           </div>
         </div>
@@ -107,4 +100,4 @@ class Page extends React.Component {
   }
 }
 
-export default Page;
+export default Project;

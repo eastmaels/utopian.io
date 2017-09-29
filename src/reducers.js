@@ -17,6 +17,10 @@ import walletReducer, * as fromWallet from './wallet/walletReducer';
 import reblogReducers, * as fromReblog from './app/Reblog/reblogReducers';
 import { responsiveReducer } from './vendor/responsive';
 
+// @UTOPIAN
+import projectsReducer from './project/projectsReducer';
+import projectReducer from './project/projectReducer';
+
 const reducers = combineReducers({
   app: appReducer,
   auth: authReducer,
@@ -33,6 +37,8 @@ const reducers = combineReducers({
   reblog: reblogReducers,
   router: routerReducer,
   wallet: walletReducer,
+  projects: projectsReducer,
+  project: projectReducer,
 });
 
 export default reducers;

@@ -94,7 +94,7 @@ export default class Wrapper extends React.PureComponent {
       <IntlProvider key={locale} locale={locale} messages={translations}>
         <Layout>
           <Layout.Header style={{ position: 'fixed', width: '100%', zIndex: 5 }}>
-            <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} />
+            <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} history={this.props.history}/>
           </Layout.Header>
           <div className="content">
             {this.props.children}

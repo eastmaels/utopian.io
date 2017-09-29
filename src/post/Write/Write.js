@@ -69,7 +69,7 @@ class Write extends React.Component {
       initialBody: '',
       initialReward: '50',
       initialUpvote: true,
-      initialRepository: '',
+      initialRepository: null,
       isUpdating: false,
     };
   }
@@ -79,8 +79,6 @@ class Write extends React.Component {
     const { draftPosts, location: { search } } = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
-
-    console.log("DRAFT", draftPost)
 
     if (draftPost) {
       const { jsonMetadata, isUpdating } = draftPost;
@@ -118,7 +116,7 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    console.log("DATA", data)
+    console.log("DATA", data);
 
     this.props.createPost(data);
   };
@@ -134,7 +132,7 @@ class Write extends React.Component {
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
 
-    const tags = ['utopian-io'];  // @UTOPIAN forcing category
+    const tags = ['utopian-io', 'github-'+form.repository.id];  // @UTOPIAN forcing category
     const users = [];
     const userRegex = /@([a-zA-Z.0-9-]+)/g;
     const links = [];
@@ -178,7 +176,8 @@ class Write extends React.Component {
       community: 'utopian',
       app: `utopian/${version}`,
       format: 'markdown',
-      repository: form.repository
+      repository: form.repository,
+      platform: 'github',
     };
 
     if (tags.length) {
@@ -194,7 +193,7 @@ class Write extends React.Component {
       metaData.image = images;
     }
 
-    data.parentPermlink = tags.length ? tags[0] : 'general';
+    data.parentPermlink = tags.length ? tags[0] : 'utopian-io';
     data.jsonMetadata = metaData;
 
     if (this.originalBody) {
