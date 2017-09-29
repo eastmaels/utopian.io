@@ -92,9 +92,7 @@ export default (
       />
       <Route path="/@:name" component={User} />
       <Route path="/:category/@:author/:permlink" component={Post} />
-      <Route
-        path="/project/:author/:project/:platform/:projectId"
-        component={Project}
+      <Route path="/project/:author/:project/:platform/:projectId" component={Project}
       />
       <Route path="/" component={Page} />
     </Switch>

@@ -69,8 +69,6 @@ class SubFeed extends React.Component {
     let sortBy = 'trending';
     let category;
 
-    console.log("PARAMS", match.params)
-
     if (match.params.projectId) {
       sortBy = 'project';
       category = match.params.platform + '-' + match.params.projectId;
@@ -95,15 +93,17 @@ class SubFeed extends React.Component {
     const wasLoaded = this.props.loaded;
     const isLoaded = loaded;
 
-    if (!isLoaded && Cookie.get('access_token')) return;
+    //if (!isLoaded && Cookie.get('access_token')) return;
 
-    if (!match.params.projectId) {
+
+    if (!this.props.match.params.projectId) {
       if (oldSortBy !== newSortBy || oldCategory !== newCategory || (!wasLoaded && isLoaded)) {
         this.props.getFeedContent(newSortBy || 'trending', match.params.category);
       }
     } else {
-      console.log("WTF")
-      //this.props.getFeedContent('project', match.params.platform + '-' + match.params.projectId);
+      if (this.props.match.params.projectId !== nextProps.match.params.projectId) {
+        this.props.getFeedContent('project', match.params.platform + '-' + match.params.projectId);
+      }
     }
 
   }
@@ -130,8 +130,6 @@ class SubFeed extends React.Component {
     isFetching = getFeedLoadingFromState(sortBy, category, feed);
     hasMore = getFeedHasMoreFromState(sortBy, category, feed);
     loadMoreContent = () => this.props.getMoreFeedContent(sortBy, category);
-
-    console.log("CONTENT", category)
 
     return (
       <div>

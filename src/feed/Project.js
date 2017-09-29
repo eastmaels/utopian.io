@@ -41,7 +41,6 @@ class Project extends React.Component {
     const projectInState = R.find(R.propEq('id', id))(projects);
 
     if(!projectInState) {
-      console.log("PROJECT NOT IN STATE");
       getProject(id);
       return;
     }
@@ -58,11 +57,6 @@ class Project extends React.Component {
   render() {
     const { authenticated, match, location, project } = this.props;
     const { platform, project: projectName, projectId } = match.params;
-
-    if (!project || (project && project.id !== parseInt(projectId))) {
-      // @TODO add loading
-      return null;
-    }
 
     return (
       <div>
@@ -91,7 +85,7 @@ class Project extends React.Component {
                     <a href={ project.html_url } target="_blank"> { project.html_url } </a>
                   </p>
               </div>
-              <Route path={`/project/:author/:project?/:platform?/:projectId?`} component={SubFeed} />
+              <Route path={`/project/:author/:project/:platform/:projectId`} component={SubFeed} />
             </div>
           </div>
         </div>

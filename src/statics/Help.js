@@ -9,8 +9,8 @@ export default (props) =>
       {props.mustAuthenticate && <div
         className="MustLogin"
       >
-        You must login to access that page. <a
-        href={steemconnect.getLoginURL(window.location.pathname.length > 1 ? window.location.pathname : '')}>Log in</a>
+        You must login to access that page. <a href={steemconnect.getLoginURL(window.location.pathname.length > 1 ? window.location.pathname : '')}>Log in</a>
+        {' '}
         or <a target="_blank" rel="noopener noreferrer" href="https://steemit.com/pick_account">Sign up with Steemit</a>
       </div>
       }
@@ -39,14 +39,15 @@ export default (props) =>
       </p>
       <h2 id="contributor-report">What is a Contributor Report?</h2>
       <p>A Contributor Report or Contribution Report is exactly the same as a blog post where Open Source contributors
-        share their work <b>once a week</b> for a particular Open Source project.</p>
+        can share their work for a particular Open Source project they are contributing to.</p>
       <br />
       <p>When creating a Contributor Report you have to specify the most meaningful contributions you made to a specific
         Open Source project, the reasons why are you contributing to it and the full story behind your
         contributions.</p>
       <br />
-      <p>Contribution Reports are not intended to be cold reports of your work. They must tell a story.
-        Contributions must be verifiable and trustworthy.</p>
+      <p>Contributing is not only about coding, but it's also about graphic design, documentation, spreading the word and much more.</p>
+      <br />
+      <p>Contribution Reports are not intended to be cold reports of your work. They must tell a story, be personal and meaningful. Contributions must be verifiable and trustworthy.</p>
       <br />
       <p>
         <b>You are requested to add:</b>
@@ -59,12 +60,11 @@ export default (props) =>
         The Utopian community will vote and reward you for your contributions.
       </p>
       <p>
-        Contributors are invited to share their Contribution Reports no more than <b>once a week for a single
-        project</b> and <b>never post contributions already posted</b> in previous Contribution Reports.
+        Contributors are invited to <b>never post contributions already posted</b> in previous Contribution Reports.
       </p>
       <br />
       <p>
-        Read he very first Contribution Report of the Utopian platform: <a
+        Read the very first Contribution Report of the Utopian platform: <a
         href="http://utopian.io/utopian-io/@elear/utopian-my-contribution-to-the-open-source-world">Utopian: My
         Contribution to the Open Source World.</a>
       </p>
