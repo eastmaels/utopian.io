@@ -503,7 +503,7 @@ class Editor extends React.Component {
             renderMenu={(items, value) => (
               <div className="Topnav__search-menu">
                 <div>
-                  {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip">Press enter to search</div>}
+                  {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
                   {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
                   {this.state.loading && <div className="Topnav__search-tip">Loading...</div>}
                   {items.length > 0 && this.renderItems(items)}
@@ -562,13 +562,19 @@ class Editor extends React.Component {
             })
           }
         >
-          <EditorToolbar onSelect={this.insertCode} />
 
-          <div>
-            <b>Write the story of your contributions. Remember to provide proof of your contributions and
-              to never write about contributions you have already reported in previous Contributor Reports. <a href="http://utopian.io/help#contributor-report" target="_blank">Learn more</a>
-            </b>
+          <div className="WriteTips">
+            <h3>Contributor Story</h3>
+            <p>Write the story of the contributions you made so far for this Open Source project.</p>
+            <ul>
+              <li><Icon type="heart" /> Be personal and meaningful. People love to read.</li>
+              <li><Icon type="frown" /> Don't cheat. Never report contributions you have already shared. </li>
+              <li><Icon type="search" /> Contributions must be verifiable. Provide proof of your work.</li>
+              <li><Icon type="like" /> Contributions can be anything, code development, graphic design, social engagement and more.</li>
+            </ul>
           </div>
+
+          <EditorToolbar onSelect={this.insertCode} />
 
           <div className="Editor__dropzone-base">
             <Dropzone

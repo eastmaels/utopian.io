@@ -91,7 +91,7 @@
     border-right: solid 1px #e9e7e7;
 
 
-    @media screen and (max-width: 375px) {
+    @media screen and (max-width: 667px) {
       padding-top: 55px;
     }
 
@@ -103,6 +103,10 @@
       border: 0 !important;
       padding: 0 0 0 43px !important;
       outline: none;
+
+      @media screen and (max-width: 667px) {
+        padding-left: 15px !important;
+      }
 
       &:hover, &:focus {
         box-shadow: none !important;
@@ -117,6 +121,9 @@
       color: #c2ccd3;
       font-size: 20px;
       z-index: 1;
+      @media screen and (max-width: 667px) {
+        display: none;
+      }
     }
   }
 
