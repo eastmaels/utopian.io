@@ -50,13 +50,24 @@ class Project extends React.Component {
     }
   }
 
+  componentWillReceiveProps (nextProps) {
+    const { projects, project, match, setProject } = this.props;
+    const { projectId } = nextProps.match.params;
+    const id = parseInt(projectId);
+    const projectInState = R.find(R.propEq('id', id))(projects);
+
+    if (projectInState && (project && project.id !== id)) {
+      setProject(projectInState);
+    }
+  }
+
   constructor(props) {
     super(props);
   }
 
   render() {
     const { authenticated, match, location, project } = this.props;
-    const { platform, project: projectName, projectId } = match.params;
+    const { project: projectName } = match.params;
 
     return (
       <div>

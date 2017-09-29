@@ -154,7 +154,7 @@ class SubFeed extends React.Component {
           hasMore={hasMore}
           loadMoreContent={loadMoreContent}
         />
-        {!content.length && !isFetching && loaded && <EmptyFeed />}
+        {!content.length && !isFetching && <EmptyFeed />}
       </div>
     );
   }
