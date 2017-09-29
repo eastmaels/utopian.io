@@ -1,6 +1,6 @@
 {
-  "name": "utopian",
-  "version": "0.1",
+  "name": "utopian.io",
+  "version": "1.0.0",
   "engines": {
     "node": ">=7.10.1",
     "npm": "=5.3.0"
@@ -144,7 +144,6 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
     "jest-cli": "^21.0.1",
-    "pre-commit": "^1.2.2",
     "react-test-renderer": "^15.6.1",
     "webpack-dev-server": "~2.6.1",
     "webpack-hot-middleware": "^2.18.0"
