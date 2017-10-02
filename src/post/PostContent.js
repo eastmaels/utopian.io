@@ -143,7 +143,7 @@ class PostContent extends React.Component {
     } = this.props;
 
     const postMetaData = jsonParse(content.json_metadata);
-    const busyHost = global.postOrigin || 'http://utopian.io';
+    const busyHost = global.postOrigin || 'https://utopian.io';
     let canonicalHost = busyHost;
     if (postMetaData.app && postMetaData.app.indexOf('steemit') === 0) {
       canonicalHost = 'https://steemit.com';

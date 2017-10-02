@@ -74,7 +74,7 @@ export default class User extends React.Component {
     const username = this.props.match.params.name;
     const { user } = this.props;
     const { profile = {} } = user.json_metadata || {};
-    const busyHost = global.postOrigin || 'http://utopian.io';
+    const busyHost = global.postOrigin || 'https://utopian.io';
     const desc = profile.about || `Post by ${username}`;
     const image = `${process.env.STEEMCONNECT_IMG_HOST}/@${username}`;
     const canonicalUrl = `${busyHost}/@${username}`;

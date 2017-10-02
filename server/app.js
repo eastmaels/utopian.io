@@ -55,6 +55,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(rootDir, 'public'), { maxAge: OneWeek }));
+  app.use(function(req,res,next) {
+    if (!/https/.test(req.protocol)){
+      res.redirect("https://" + req.headers.host + req.url);
+    } else {
+      return next();
+    }
+  });
 } else {
   app.use(express.static(path.join(rootDir, 'assets')));
 }

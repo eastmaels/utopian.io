@@ -65,7 +65,7 @@ export default (props) =>
       <br />
       <p>
         Read the very first Contribution Report of the Utopian platform: <a
-        href="http://utopian.io/utopian-io/@elear/utopian-my-contribution-to-the-open-source-world">Utopian: My
+        href="https://utopian.io/utopian-io/@elear/utopian-my-contribution-to-the-open-source-world">Utopian: My
         Contribution to the Open Source World.</a>
       </p>
       <h2 id="steem-signup">Why do I have to signup with Steemit?</h2>

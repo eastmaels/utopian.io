@@ -5,6 +5,8 @@
 const config = require('config');
 const app = require('./app').app;
 const debug = require('debug')('busy:server');
+const https = require('https');
+const fs = require('fs');
 
 if (process.env.NODE_ENV === 'production') import('newrelic');
 
@@ -83,5 +85,15 @@ function onListening() {
 if (!module.parent) {
   server.listen(port);
 }
+
+if (process.env.NODE_ENV === 'production') {
+  const options = {
+    cert: fs.readFileSync('/etc/letsencrypt/live/utopian.io/fullchain.pem'),
+    key: fs.readFileSync('/etc/letsencrypt/live/utopian.io/privkey.pem')
+  };
+
+  https.createServer(options, app).listen(443);
+}
+
 server.on('error', onError);
 server.on('listening', onListening);
