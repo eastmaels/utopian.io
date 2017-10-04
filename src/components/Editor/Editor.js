@@ -136,10 +136,17 @@ class Editor extends React.Component {
     }
   }
 
-  onUpdate = (e) => {
-    // NOTE: antd doesn't update field value on Select before firing onChange
-    // so we have to get value from event.
-    this.props.onUpdate(this.getValues(e));
+  onUpdate = (e, isRepository = false) => {
+    const values = isRepository ? this.getValues() : this.getValues(e);
+
+    if (isRepository) {
+      this.props.onUpdate({
+        ...values,
+        repository: e
+      });
+    } else {
+      this.props.onUpdate(values);
+    }
   };
 
   setInput = (input) => {
@@ -481,6 +488,7 @@ class Editor extends React.Component {
                 value: project.full_name,
                 repository: project,
               });
+              this.onUpdate(project, true);
             }}
             onChange={(event, value) => {
               this.setState({value});

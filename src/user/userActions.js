@@ -31,8 +31,8 @@ export const getUserComments = ({ username, limit = 10 }) => (dispatch, getState
       promise: getDiscussionsByComments({
         start_author: username,
         limit,
-        ["select_tags"]: ["utopian-io"], // @UTOPIAN forcing category
-        tag: "utopian-io",
+        ["select_tags"]: [process.env.UTOPIAN_CATEGORY], // @UTOPIAN forcing category
+        tag: process.env.UTOPIAN_CATEGORY,
       }),
     },
     meta: { username, limit },
@@ -64,8 +64,8 @@ export const getMoreUserComments = (username, limit) => (dispatch, getState, { s
         start_author: startAuthor,
         start_permlink: startPermlink,
         limit,
-        ["select_tags"]: ["utopian-io"], // @UTOPIAN forcing category
-        tag: "utopian-io",
+        ["select_tags"]: [process.env.UTOPIAN_CATEGORY], // @UTOPIAN forcing category
+        tag: process.env.UTOPIAN_CATEGORY,
       }),
     },
     meta: { username, limit },

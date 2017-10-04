@@ -50,6 +50,7 @@ function makePlugins(options) {
         STEEMCONNECT_HOST: JSON.stringify(process.env.STEEMCONNECT_HOST || 'https://v2.steemconnect.com'),
         STEEMCONNECT_REDIRECT_URL: JSON.stringify(process.env.STEEMCONNECT_REDIRECT_URL || 'https://utopian.io/callback'),
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
+        UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
         IS_BROWSER: JSON.stringify(true),
         PUSHPAD_PROJECT_ID: process.env.PUSHPAD_PROJECT_ID,
         BUSYPUSH_ENDPOINT: process.env.BUSYPUSH_ENDPOINT,

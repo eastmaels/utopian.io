@@ -16,7 +16,7 @@ export const getDiscussionsFromAPI = function getDiscussionsFromAPI(sortBy, orig
   let query;
   query = {
     ...originalQuery,
-    ["select_tags"]: ["utopian-io"],
+    ["select_tags"]: [process.env.UTOPIAN_CATEGORY],
   };
   console.log("SORT BY", sortBy);
 
@@ -31,34 +31,34 @@ export const getDiscussionsFromAPI = function getDiscussionsFromAPI(sortBy, orig
       query = {
         tag: originalQuery.tag,
         limit: 10,
-        ["select_tags"]: ["utopian-io"],
+        ["select_tags"]: [process.env.UTOPIAN_CATEGORY],
       };
       return steemAPI.getDiscussionsByTrendingAsync(query);
     case 'hot':
       console.log("BY HOT")
-      query.tag = "utopian-io"; // @UTOPIAN filtered query
+      query.tag = process.env.UTOPIAN_CATEGORY; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByHotAsync(query);
     case 'created':
       console.log("BY CREATED")
-      query.tag = "utopian-io"; // @UTOPIAN filtered query
+      query.tag = process.env.UTOPIAN_CATEGORY; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByCreatedAsync(query);
     case 'active':
       console.log("BY ACTIVE")
-      query.tag = "utopian-io"; // @UTOPIAN filtered query
+      query.tag = process.env.UTOPIAN_CATEGORY; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByActiveAsync(query);
     case 'trending':
-      console.log("BY TRENDING")
-      query.tag = "utopian-io"; // @UTOPIAN filtered query
+      console.log("BY TRENDING", query)
+      query.tag = process.env.UTOPIAN_CATEGORY; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByTrendingAsync(query);
     case 'blog':
-      console.log("BY BLOG")
+      console.log("BY BLOG", query)
       return steemAPI.getDiscussionsByBlogAsync(query);
     /*case 'comments':
       return steemAPI.getDiscussionsByCommentsAsync(query);
       */
     case 'promoted':
       console.log("BY PROMOTED")
-      query.tag = "utopian-io"; // @UTOPIAN filtered query
+      query.tag = process.env.UTOPIAN_CATEGORY; // @UTOPIAN filtered query
       return steemAPI.getDiscussionsByPromotedAsync(query);
     default:
       throw new Error('There is not API endpoint defined for this sorting');

@@ -116,7 +116,7 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    console.log("DATA", data);
+    console.log("POST DATA", data);
 
     this.props.createPost(data);
   };
@@ -132,7 +132,17 @@ class Write extends React.Component {
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
 
-    const tags = ['utopian-io', 'github-'+form.repository.id];  // @UTOPIAN forcing category
+    // @UTOPIAN forcing category
+    let tags = [process.env.UTOPIAN_CATEGORY];
+    const repositoryId = form.repository ? form.repository.id : false;
+
+    if (repositoryId) {
+      tags = [
+        ...tags,
+        'github-' + form.repository.id
+      ]
+    }
+
     const users = [];
     const userRegex = /@([a-zA-Z.0-9-]+)/g;
     const links = [];
@@ -193,7 +203,7 @@ class Write extends React.Component {
       metaData.image = images;
     }
 
-    data.parentPermlink = tags.length ? tags[0] : 'utopian-io';
+    data.parentPermlink = tags.length ? tags[0] : process.env.UTOPIAN_CATEGORY;
     data.jsonMetadata = metaData;
 
     if (this.originalBody) {
