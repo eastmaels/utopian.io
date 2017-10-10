@@ -1,8 +1,8 @@
-import { get, post } from 'superagent';
+import { get, post, put } from 'superagent';
 import { merge, path } from 'ramda';
 
 export const CALL_API = 'CALL_API';
-const API_ROOT = "/api/v1/";
+const API_ROOT = process.env.UTOPIAN_API;
 
 const callApi = (endpoint, schema, method, payload, additionalParams, absolute?) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) && !absolute
@@ -16,6 +16,12 @@ const callApi = (endpoint, schema, method, payload, additionalParams, absolute?)
         });
     case 'POST':
       return post(fullUrl)
+        .send(payload)
+        .then(res => {
+          return res.body
+        });
+    case 'PUT':
+      return put(fullUrl)
         .send(payload)
         .then(res => {
           return res.body

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import * as Actions from '../actions/constants';
 import Cookie from 'js-cookie';
+import * as querystring from 'querystring';
 import {
   getFeedContent,
   getMoreFeedContent,
@@ -27,6 +29,9 @@ import Feed from './Feed';
 import EmptyFeed from '../statics/EmptyFeed';
 import ScrollToTop from '../components/Utils/ScrollToTop';
 
+// @UTOPIAN
+import { getContributions } from '../actions/contributions';
+
 @connect(
   state => ({
     authenticated: getIsAuthenticated(state),
@@ -34,14 +39,18 @@ import ScrollToTop from '../components/Utils/ScrollToTop';
     user: getAuthenticatedUser(state),
     feed: getFeed(state),
     posts: getPosts(state),
+    contributions: state.contributions,
+    loading: state.loading,
   }),
-  dispatch => ({
+  {
+    /*
     getFeedContent: (sortBy, category) => dispatch(getFeedContent({ sortBy, category, limit: 10 })),
     getMoreFeedContent: (sortBy, category) =>
       dispatch(getMoreFeedContent({ sortBy, category, limit: 10 })),
     getUserFeedContent: username => dispatch(getUserFeedContent({ username, limit: 10 })),
-    getMoreUserFeedContent: username => dispatch(getMoreUserFeedContent({ username, limit: 10 })),
-  }),
+    getMoreUserFeedContent: username => dispatch(getMoreUserFeedContent({ username, limit: 10 })),*/
+    getContributions,
+  },
 )
 class SubFeed extends React.Component {
   static propTypes = {
@@ -64,22 +73,64 @@ class SubFeed extends React.Component {
     getMoreUserFeedContent: () => {},
   };
 
-  componentDidMount() {
-    const { authenticated, loaded, user, match } = this.props;
-    let sortBy = 'trending';
-    let category;
+  state = {
+    total: 0,
+    skip: 0,
+    limit: 10,
+  };
+
+  constructor(props) {
+    super(props);
+    this.loadContributions = this.loadContributions.bind(this);
+  }
+
+
+  loadContributions () {
+    const { match, getContributions } = this.props;
 
     if (match.params.projectId) {
-      sortBy = 'project';
-      category = match.params.platform + '-' + match.params.projectId;
+      getContributions(this.state.limit, this.state.skip, querystring.encode({
+        sortBy: 'project',
+        platform: match.params.platform,
+        projectId: match.params.projectId,
+      })).then(res => {
+        this.setState({total: res.response.total, skip: this.state.skip + this.state.limit});
+      });
     } else {
-      sortBy = match.params.sortBy || 'trending';
-      category = match.params.category;
+      getContributions(this.state.limit, this.state.skip, querystring.encode({
+        sortBy: 'all',
+      })).then(res => {
+        this.setState({total: res.response.total, skip: this.state.skip + this.state.limit});
+      });
     }
+  }
+
+
+  componentDidMount() {
+    /*
+    const { authenticated, loaded, user, match, getContributions } = this.props;
+
+    if (match.params.projectId) {
+      getContributions(this.state.limit, this.state.skip, {
+        sortBy: 'project',
+        platform: match.params.platform,
+        projectId: match.params.projectId,
+      }).then(res => {
+        this.setState({total: res.response.total, skip: this.state.skip + this.state.limit});
+      });
+    } else {
+      getContributions(this.state.limit, this.state.skip, {
+        sortBy: 'all',
+      }).then(res => {
+          this.setState({total: res.response.total, skip: this.state.skip + this.state.limit});
+      });
+    }*/
+
+    this.loadContributions();
 
     //if (!loaded && Cookie.get('access_token')) return;
 
-    this.props.getFeedContent(sortBy, category);
+    //this.props.getFeedContent(sortBy, category);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -109,9 +160,19 @@ class SubFeed extends React.Component {
   }
 
   render() {
-    const { authenticated, loaded, user, feed, posts, match } = this.props;
+    const { authenticated, loaded, user, feed, posts, match, contributions, loading, getContributions } = this.props;
+    let isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
+    const hasMore = this.state.total > contributions.length;
+    const sortBy = 'home';
 
-    let content = [];
+    /*
+    const loadMoreContent = () => {
+      getContributions(this.state.limit, this.state.skip).then(() => {
+        this.setState({skip: this.state.skip + this.state.limit});
+      });
+    };*/
+
+    /*let content = [];
     let isFetching = false;
     let hasMore = false;
     let loadMoreContent = () => {};
@@ -131,6 +192,11 @@ class SubFeed extends React.Component {
     hasMore = getFeedHasMoreFromState(sortBy, category, feed);
     loadMoreContent = () => this.props.getMoreFeedContent(sortBy, category);
 
+    console.log("CONTENT", content)
+    */
+
+
+
     return (
       <div>
         <ScrollToTop />
@@ -149,12 +215,12 @@ class SubFeed extends React.Component {
         </div>}
 
         <Feed
-          content={content}
-          isFetching={isFetching}
-          hasMore={hasMore}
-          loadMoreContent={loadMoreContent}
+          content={ contributions }
+          isFetching={ isFetching }
+          hasMore={ hasMore }
+          loadMoreContent={ this.loadContributions }
         />
-        {!content.length && !isFetching && <EmptyFeed />}
+        {!contributions.length && !isFetching && <EmptyFeed />}
       </div>
     );
   }

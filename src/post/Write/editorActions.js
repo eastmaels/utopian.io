@@ -7,6 +7,9 @@ import { addDraftMetadata, deleteDraftMetadata } from '../../helpers/metadata';
 import { jsonParse } from '../../helpers/formatter';
 import { createPermlink, getBodyPatchIfSmaller } from '../../vendor/steemitHelpers';
 
+// @UTOPIAN
+import { createContribution, updateContribution } from '../../actions/contributions';
+
 export const CREATE_POST = '@editor/CREATE_POST';
 export const CREATE_POST_START = '@editor/CREATE_POST_START';
 export const CREATE_POST_SUCCESS = '@editor/CREATE_POST_SUCCESS';
@@ -154,6 +157,8 @@ export function createPost(postData) {
       isUpdating,
     } = postData;
 
+    console.log("POST DATA", postData);
+
     const getPermLink = isUpdating
       ? Promise.resolve(postData.permlink)
       : createPermlink(title, author, parentAuthor, parentPermlink);
@@ -175,15 +180,34 @@ export function createPost(postData) {
             !isUpdating && upvote,
             permlink,
           ).then((result) => {
+
             if (draftId) {
               dispatch(deleteDraft(draftId));
               dispatch(addEditedPost(permlink));
             }
-            dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
+
+            // @UTOPIAN
+            if (result) {
+              if (!isUpdating) {
+                const createOnAPI = contributionData => dispatch(createContribution(contributionData));
+                createOnAPI({ author, permlink })
+                  .then(res => {
+                    console.log("RES", res)
+                  });
+              } else {
+                const updateOnAPI = contributionData => dispatch(updateContribution(contributionData));
+                updateOnAPI({ author, permlink })
+                  .then(res => {
+                    console.log("RES UPDATE", res)
+                  });
+              }
+            }
 
             if (window.ga) {
               window.ga('send', 'event', 'post', 'submit', '', 10);
             }
+
+            dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
 
             return result;
           }),

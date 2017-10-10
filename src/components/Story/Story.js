@@ -77,7 +77,7 @@ class Story extends React.Component {
       onShareClick,
     } = this.props;
 
-    const metaData = JSON.parse(post.json_metadata);
+    const metaData = post.json_metadata;
     const repository = metaData.repository;
 
     if (!repository) return null; // @UTOPIAN @TODO find a better way to hide posts not written via Utopian
@@ -224,3 +224,5 @@ class Story extends React.Component {
 }
 
 export default Story;
+
+

@@ -18,8 +18,10 @@ import reblogReducers, * as fromReblog from './app/Reblog/reblogReducers';
 import { responsiveReducer } from './vendor/responsive';
 
 // @UTOPIAN
-import projectsReducer from './project/projectsReducer';
-import projectReducer from './project/projectReducer';
+import projectsReducer from './reducers/projects';
+import projectReducer from './reducers/project';
+import contributionsReducer from './reducers/contributions';
+import loadingReducer from './reducers/loading';
 
 const reducers = combineReducers({
   app: appReducer,
@@ -27,6 +29,10 @@ const reducers = combineReducers({
   comments: commentsReducer,
   editor: editorReducer,
   posts: postsReducer,
+  contributions: contributionsReducer, // @UTOPIAN
+  projects: projectsReducer, // @UTOPIAN
+  project: projectReducer, // @UTOPIAN
+  loading: loadingReducer, // @UTOPIAN
   feed: feedReducer,
   user: userReducer,
   users: usersReducer,
@@ -37,8 +43,6 @@ const reducers = combineReducers({
   reblog: reblogReducers,
   router: routerReducer,
   wallet: walletReducer,
-  projects: projectsReducer,
-  project: projectReducer,
 });
 
 export default reducers;

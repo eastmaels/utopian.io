@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Menu, Popover, Tooltip, Input, Badge } from 'antd';
 import steemconnect from 'sc2-sdk';
 
-import { getProjects, setProjects } from '../../project/projectsActions';
+import { getProjects, setProjects } from '../../actions/projects';
 
 import Icon from 'antd/lib/icon';
 import Autocomplete from 'react-autocomplete';

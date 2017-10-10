@@ -87,6 +87,7 @@
     "postcss-flexbugs-fixes": "^3.0.0",
     "postcss-loader": "^2.0.5",
     "prop-types": "^15.5.10",
+    "querystring": "^0.2.0",
     "ramda": "^0.24.1",
     "raven-js": "^3.8.0",
     "react": "^15.6.1",

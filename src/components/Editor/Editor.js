@@ -15,7 +15,7 @@ import Body, { remarkable } from '../Story/Body';
 import Autocomplete from 'react-autocomplete';
 import './Editor.less';
 
-import { getProjects, setProjects } from '../../project/projectsActions';
+import { getProjects, setProjects } from '../../actions/projects';
 
 @connect(
   state => ({

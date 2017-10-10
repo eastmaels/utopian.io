@@ -1,4 +1,4 @@
-import * as Actions from './projectsActions';
+import * as Actions from '../actions/constants';
 
 const projects = (state = [], action) => {
   switch (action.type) {
