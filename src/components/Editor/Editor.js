@@ -32,7 +32,6 @@ class Editor extends React.Component {
     title: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
-    reward: PropTypes.string,
     upvote: PropTypes.bool,
     loading: PropTypes.bool,
     isUpdating: PropTypes.bool,
@@ -48,7 +47,6 @@ class Editor extends React.Component {
     repository: null,
     topics: [],
     body: '',
-    reward: '50',
     upvote: true,
     recentTopics: [],
     popularTopics: [],
@@ -116,7 +114,7 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, topics, body, reward, upvote } = this.props;
+    const { title, topics, body, upvote } = this.props;
 
     if (this.props.repository !== nextProps.repository) {
       this.setState({
@@ -129,7 +127,6 @@ class Editor extends React.Component {
       title !== nextProps.title ||
       topics !== nextProps.topics ||
       body !== nextProps.body ||
-      reward !== nextProps.reward ||
       upvote !== nextProps.upvote
     ) {
       this.setValues(nextProps);
@@ -161,7 +158,6 @@ class Editor extends React.Component {
     this.props.form.setFieldsValue({
       title: post.title,
       topics: post.topics,
-      reward: post.reward,
       upvote: post.upvote,
     });
     if (this.input) {
@@ -177,7 +173,7 @@ class Editor extends React.Component {
     // (array or just value for Select, proxy event for inputs and checkboxes)
 
     const values = {
-      ...this.props.form.getFieldsValue(['title', 'topics', 'reward', 'upvote']),
+      ...this.props.form.getFieldsValue(['title', 'topics', 'upvote']),
       body: this.input.value,
     };
 
@@ -185,9 +181,7 @@ class Editor extends React.Component {
 
     if (isArray(e)) {
       values.topics = e;
-    } else if (typeof e === 'string') {
-      values.reward = e;
-    } else if (e.target.type === 'textarea') {
+    }else if (e.target.type === 'textarea') {
       values.body = e.target.value;
     } else if (e.target.type === 'text') {
       values.title = e.target.value;
@@ -676,7 +670,7 @@ class Editor extends React.Component {
             />,
           )}
         </Form.Item>
-        <Form.Item
+        {/*<Form.Item
           className={classNames({ Editor__hidden: isUpdating })}
           label={
             <span className="Editor__label">
@@ -697,7 +691,7 @@ class Editor extends React.Component {
               </Select.Option>
             </Select>,
           )}
-        </Form.Item>
+        </Form.Item>*/}
         <Form.Item className={classNames({ Editor__hidden: isUpdating })}>
           {getFieldDecorator('upvote', { valuePropName: 'checked', initialValue: true })(
             <Checkbox onChange={this.onUpdate} disabled={isUpdating}>

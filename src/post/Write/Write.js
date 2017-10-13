@@ -101,7 +101,6 @@ class Write extends React.Component {
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
         initialBody: draftPost.body || '',
-        initialReward: draftPost.reward || '50',
         initialUpvote: draftPost.upvote,
         isUpdating: isUpdating || false,
         initialRepository: jsonMetadata.repository,
@@ -126,13 +125,13 @@ class Write extends React.Component {
     const data = {
       body: form.body,
       title: form.title,
-      reward: form.reward,
       upvote: form.upvote,
 
     };
 
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
+    data.reward = '100'; // @UTOPIAN forcing 100% power up reward
 
     const tags = [process.env.UTOPIAN_CATEGORY, ...form.topics];
 
@@ -273,7 +272,6 @@ class Write extends React.Component {
               title={initialTitle}
               topics={initialTopics}
               body={initialBody}
-              reward={initialReward}
               upvote={initialUpvote}
               loading={loading}
               isUpdating={this.state.isUpdating}
