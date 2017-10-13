@@ -11,12 +11,19 @@ import RightSidebar from '../app/Sidebar/RightSidebar';
 import Affix from '../components/Utils/Affix';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
 
+import * as Actions from '../actions/constants';
+import { getContribution, setContribution } from '../actions/contribution';
+import * as R from 'ramda';
+
 @connect(
   (state, ownProps) => ({
     edited: getIsPostEdited(state, ownProps.match.params.permlink),
     content: getPostContent(state, ownProps.match.params.author, ownProps.match.params.permlink),
     fetching: getIsFetching(state),
-  }), { getContent })
+    contributions: state.contributions,
+    contribution: state.contribution,
+    loading: state.loading,
+  }), { getContent, getContribution, setContribution })
 export default class Post extends React.Component {
   static propTypes = {
     match: PropTypes.shape().isRequired,
@@ -38,11 +45,29 @@ export default class Post extends React.Component {
   };
 
   componentWillMount() {
+    /*
     if ((!this.props.content || this.props.edited) && !this.props.fetching) {
       this.props.getContent(this.props.match.params.author, this.props.match.params.permlink);
+    }*/
+    const { contribution, contributions, getContribution, setContribution } = this.props;
+    const paramAuthor = this.props.match.params.author;
+    const paramPermlink = this.props.match.params.permlink;
+    const stateContribution = R.find(R.propEq('author', paramAuthor) && R.propEq('permlink', paramPermlink))(contributions);
+
+    if (stateContribution) {
+      return setContribution(stateContribution);
+    }
+
+    if (
+      !Object.keys(contribution).length ||
+      (contribution && (contribution.author !== paramAuthor || contribution.permlink !== paramPermlink))
+    ) {
+      console.log("GETTING");
+      getContribution(paramAuthor, paramPermlink);
     }
   }
 
+  /*
   componentWillReceiveProps(nextProps) {
     const { author, permlink } = nextProps.match.params;
     if ((!nextProps.content || nextProps.edited)
@@ -51,7 +76,7 @@ export default class Post extends React.Component {
       this.setState({ commentsVisible: false }, () => this.props.getContent(author, permlink));
     }
   }
-
+*/
   componentWillUnmount() {
     if (process.env.IS_BROWSER) {
       global.document.title = 'Utopian';
@@ -67,8 +92,8 @@ export default class Post extends React.Component {
   };
 
   render() {
-    const { content, fetching, edited } = this.props;
-    const loading = !content || (fetching && edited);
+    const { contribution, loading, content, fetching, edited } = this.props;
+    const isLoading = !Object.keys(contribution).length || loading === Actions.GET_CONTRIBUTION_REQUEST;
 
     return (
       <div className="main-panel">
@@ -81,13 +106,13 @@ export default class Post extends React.Component {
               </div>
             </Affix>
             <div className="center" style={{ paddingBottom: '24px' }}>
-              {!loading
-                ? <PostContent content={content} /> : <Loading />}
-              {!loading
+              {!isLoading
+                ? <PostContent content={contribution} /> : <Loading />}
+              {!isLoading
                 && <VisibilitySensor onChange={this.handleCommentsVisibility} />}
               <div id="comments">
-                {!loading
-                  && <Comments show={this.state.commentsVisible} post={content} />}
+                {!isLoading
+                  && <Comments show={this.state.commentsVisible} post={contribution} />}
               </div>
             </div>
           </div>

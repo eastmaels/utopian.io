@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { take } from 'lodash';
-import { Icon, Tooltip, Modal } from 'antd';
+import { Icon, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { sortVotes } from '../../helpers/sortHelpers';
 import { getUpvotes, getDownvotes } from '../../helpers/voteHelpers';
@@ -112,7 +112,6 @@ class StoryFooter extends React.Component {
         { amount: upVotesDiff });
 
     const likeClass = classNames({ active: postState.isLiked, StoryFooter__link: true });
-    const rebloggedClass = classNames({ active: postState.isReblogged, StoryFooter__link: true });
 
     return (
       <div className="StoryFooter">
@@ -128,10 +127,6 @@ class StoryFooter extends React.Component {
               />
             </span>
           </Tooltip>
-          {post.percent_steem_dollars === 0 &&
-            <Tooltip title={intl.formatMessage({ id: 'reward_option_100', defaultMessage: '100% Steem Power' })}>
-              <i className="iconfont icon-flashlight" />
-            </Tooltip>}
         </span>
         <Tooltip title={intl.formatMessage({ id: 'like' })}>
           <a role="presentation" className={likeClass} onClick={() => onLikeClick()}>
@@ -173,28 +168,6 @@ class StoryFooter extends React.Component {
         <span className="StoryFooter__number">
           <FormattedNumber value={post.children} />
         </span>
-        {post.parent_author === '' && <Tooltip
-          title={intl.formatMessage({
-            id: postState.reblogged ? 'reblog_reblogged' : 'reblog',
-            defaultMessage: postState.reblogged ? 'You already reblogged this post' : 'Reblog',
-          })}
-        >
-          <a role="presentation" className={rebloggedClass} onClick={this.handleShareClick}>
-            <i className="iconfont icon-share1 StoryFooter__share" />
-          </a>
-        </Tooltip>}
-        {!postState.isReblogged &&
-          <Modal
-            title={intl.formatMessage({ id: 'reblog_modal_title', defaultMessage: 'Reblog this post?' })}
-            visible={this.state.shareModalVisible}
-            confirmLoading={this.state.shareModalLoading}
-            okText={intl.formatMessage({ id: 'reblog', defaultMessage: 'Reblog' })}
-            cancelText={intl.formatMessage({ id: 'cancel', defaultMessage: 'Cancel' })}
-            onOk={this.handleShareOk}
-            onCancel={this.handleShareCancel}
-          >
-            <FormattedMessage id="reblog_modal_content" defaultMessage="This post will appear on your personal feed. This action cannot be reversed." />
-          </Modal>}
         <ReactionsModal
           visible={this.state.reactionsModalVisible}
           upVotes={upVotes}

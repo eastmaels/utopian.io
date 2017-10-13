@@ -8,7 +8,7 @@ import { jsonParse } from '../../helpers/formatter';
 import { createPermlink, getBodyPatchIfSmaller } from '../../vendor/steemitHelpers';
 
 // @UTOPIAN
-import { createContribution, updateContribution } from '../../actions/contributions';
+import { createContribution, updateContribution } from '../../actions/contribution';
 
 export const CREATE_POST = '@editor/CREATE_POST';
 export const CREATE_POST_START = '@editor/CREATE_POST_START';
@@ -189,13 +189,13 @@ export function createPost(postData) {
             // @UTOPIAN
             if (result) {
               if (!isUpdating) {
-                const createOnAPI = contributionData => dispatch(createContribution(contributionData));
+                const createOnAPI = contributionData => dispatch(createContribution(contributionData.author, contributionData.permlink));
                 createOnAPI({ author, permlink })
                   .then(res => {
                     console.log("RES", res)
                   });
               } else {
-                const updateOnAPI = contributionData => dispatch(updateContribution(contributionData));
+                const updateOnAPI = contributionData => dispatch(updateContribution(contributionData.author, contributionData.permlink));
                 updateOnAPI({ author, permlink })
                   .then(res => {
                     console.log("RES UPDATE", res)

@@ -45,8 +45,6 @@ class SubFeed extends React.Component {
   loadContributions () {
     const { match, getContributions } = this.props;
 
-    console.log("MATCH", match)
-
     if (match.params.projectId) {
       getContributions({
         limit: this.state.limit,

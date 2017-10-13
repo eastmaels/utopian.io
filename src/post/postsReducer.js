@@ -3,6 +3,7 @@ import * as bookmarksActions from '../bookmarks/bookmarksActions';
 import * as postsActions from './postActions';
 import * as commentsActions from '../comments/commentsActions';
 import * as repliesTypes from '../replies/repliesActions';
+import * as Actions from '../actions/constants';
 
 const postItem = (state = {}, action) => {
   switch (action.type) {
@@ -53,7 +54,15 @@ const posts = (state = initialState, action) => {
         },
       };
     }
+    case Actions.UPDATE_CONTRIBUTION_SUCCESS:
     case postsActions.GET_CONTENT_SUCCESS:
+      if (action.type === Actions.UPDATE_CONTRIBUTION_SUCCESS) {
+        // @TODO @UTOPIAN temporary to match Busy.org setup. Full refactoring required for all the reducers
+        return {
+          ...state,
+          pendingLikes: state.pendingLikes.filter(post => post !== action.response.id)
+        }
+      }
       if (action.meta.afterLike) {
         return {
           ...state,

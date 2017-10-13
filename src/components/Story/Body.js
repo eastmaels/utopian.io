@@ -23,7 +23,7 @@ export const remarkable = new Remarkable({
 // Should return text(html) if returnType is text
 // Should return Object(React Compatible) if returnType is Object
 export function getHtml(body, jsonMetadata = {}, returnType = 'Object') {
-  const parsedJsonMetadata = jsonParse(jsonMetadata) || {};
+  const parsedJsonMetadata = jsonMetadata || {};
   parsedJsonMetadata.image = parsedJsonMetadata.image || [];
 
   let parsedBody = body.replace(/<!--([\s\S]+?)(-->|$)/g, '(html comment removed: $1)');
@@ -76,13 +76,13 @@ const Body = (props) => {
 
 Body.propTypes = {
   body: PropTypes.string,
-  jsonMetadata: PropTypes.string,
+  jsonMetadata: PropTypes.object,
   full: PropTypes.bool,
 };
 
 Body.defaultProps = {
   body: '',
-  jsonMetadata: '',
+  jsonMetadata: {},
   full: false,
 };
 

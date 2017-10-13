@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import { getIsAuthenticated } from '../reducers';
-import { getProject, setProject } from '../actions/projects';
+import { getProject, setProject } from '../actions/project';
 
 import { Icon } from 'antd';
 import SubFeed from './SubFeed';

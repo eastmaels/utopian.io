@@ -2,6 +2,7 @@ import { createAction } from 'redux-actions';
 import SteemConnect from 'sc2-sdk';
 import { createCommentPermlink, getBodyPatchIfSmaller } from '../vendor/steemitHelpers';
 import { notify } from '../app/Notification/notificationActions';
+import { updateContribution } from '../actions/contribution';
 
 const version = require('../../package.json').version;
 
@@ -50,9 +51,8 @@ const getCommentsChildrenLists = (apiRes) => {
  */
 export const getComments = (postId, reload = false, focusedComment = undefined) =>
   (dispatch, getState, { steemAPI }) => {
-    const { posts } = getState();
-
-    const content = posts.list[postId];
+    const { contribution } = getState();
+    const content = contribution;
 
     const { category, author, permlink } = content;
 
@@ -81,7 +81,7 @@ export const sendComment = (parentPost, body, isUpdating = false, originalCommen
       permlink: parentPermlink,
       author: parentAuthor,
     } = parentPost;
-    const { auth } = getState();
+    const { auth, contribution } = getState();
 
     if (!auth.isAuthenticated) {
       return dispatch(notify('You have to be logged in to comment', 'error'));
@@ -117,6 +117,7 @@ export const sendComment = (parentPost, body, isUpdating = false, originalCommen
               permlink: resp.result.operations[0][1].permlink,
             };
             dispatch(notify('Comment submitted successfully', 'success'));
+            dispatch(updateContribution(contribution.author, contribution.permlink));
             dispatch(getComments(rootComment, true, focusedComment));
 
             if (window.ga) {

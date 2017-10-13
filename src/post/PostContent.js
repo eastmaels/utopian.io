@@ -142,11 +142,11 @@ class PostContent extends React.Component {
       saving,
     } = this.props;
 
-    const postMetaData = jsonParse(content.json_metadata);
+    const postMetaData = content.json_metadata;
     const busyHost = global.postOrigin || 'https://utopian.io';
     let canonicalHost = busyHost;
     if (postMetaData.app && postMetaData.app.indexOf('steemit') === 0) {
-      canonicalHost = 'https://steemit.com';
+      canonicalHost = 'https://utopian.io';
     }
 
     const userVote = find(content.active_votes, { voter: user.name }) || {};

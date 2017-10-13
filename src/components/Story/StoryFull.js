@@ -117,9 +117,9 @@ class StoryFull extends React.Component {
     } = this.props;
 
     const { open, index } = this.state.lightbox;
-    const images = JSON.parse(post.json_metadata).image;
-    const tags = _.union(JSON.parse(post.json_metadata).tags, [post.category]);
-    const video = JSON.parse(post.json_metadata).video;
+    const images = post.json_metadata.image;
+    const tags = _.union(post.json_metadata.tags, [post.category]);
+    const video = post.json_metadata.video;
 
     let followText = '';
 

@@ -1,5 +1,7 @@
 import steemConnect from 'sc2-sdk';
 import Promise from 'bluebird';
+import { updateContribution } from '../actions/contribution';
+import * as R from 'ramda';
 
 export const GET_CONTENT = 'GET_CONTENT';
 export const GET_CONTENT_START = 'GET_CONTENT_START';
@@ -31,18 +33,19 @@ export const getContent = (postAuthor, postPermlink, afterLike) =>
   };
 
 export const votePost = (postId, author, permlink, weight = 10000) => (dispatch, getState) => {
-  const { auth, posts } = getState();
+  const { auth, contributions } = getState();
   if (!auth.isAuthenticated) {
     return null;
   }
 
   const voter = auth.user.name;
+  const contribution = R.find(R.propEq('id', postId))(contributions);
 
   return dispatch({
     type: LIKE_POST,
     payload: {
       promise: steemConnect
-        .vote(voter, posts.list[postId].author, posts.list[postId].permlink, weight)
+        .vote(voter, contribution.author, contribution.permlink, weight)
         .then((res) => {
           if (window.ga) {
             window.ga('send', 'event', 'vote', 'submit', '', 1);
@@ -52,11 +55,7 @@ export const votePost = (postId, author, permlink, weight = 10000) => (dispatch,
           setTimeout(
             () =>
               dispatch(
-                getContent(
-                  posts.list[postId].author,
-                  posts.list[postId].permlink,
-                  true,
-                ),
+                updateContribution(contribution.author, contribution.permlink)
               ),
             1000,
           );
