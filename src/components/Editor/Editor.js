@@ -245,13 +245,13 @@ class Editor extends React.Component {
 
   checkTopics = (rule, value, callback) => {
     if (!value || value.length < 1 || value.length > 4) {
-      callback('You have to add 1 to 4 topics');
+      callback('You have to add 1 to 4 tags');
     }
 
     value
       .map(topic => ({ topic, valid: /^[a-z0-9]+(-[a-z0-9]+)*$/.test(topic) }))
       .filter(topic => !topic.valid)
-      .map(topic => callback(`Topic ${topic.topic} is invalid`));
+      .map(topic => callback(`Tag ${topic.topic} is invalid`));
 
     callback();
   };
@@ -645,6 +645,37 @@ class Editor extends React.Component {
             <Body full body={this.state.contentHtml} />
           </Form.Item>
         )}
+        <Form.Item
+          label={
+            <span className="Editor__label">
+              Tags
+            </span>
+          }
+          extra='Separate tags with commas. Only lowercase letters, numbers and hyphen character is permitted.'
+        >
+          {getFieldDecorator('topics', {
+            rules: [
+              {
+                required: true,
+                message: 'Please enter some tags',
+                type: 'array',
+              },
+              { validator: this.checkTopics },
+            ],
+          })(
+            <Select
+              ref={(ref) => {
+                this.select = ref;
+              }}
+              onChange={this.onUpdate}
+              className="Editor__topics"
+              mode="tags"
+              placeholder='Add story topics here'
+              dropdownStyle={{ display: 'none' }}
+              tokenSeparators={[' ', ',']}
+            />,
+          )}
+        </Form.Item>
         <Form.Item
           className={classNames({ Editor__hidden: isUpdating })}
           label={

@@ -44,12 +44,11 @@ class Topic extends React.Component {
     const { name, favorite, closable } = this.props;
 
     return (
-      <Link
+      <span
         className={classNames('Topic', {
           'Topic--favorite': favorite,
           'Topic--closing': this.state.closing,
         })}
-        to={`/trending/${name}`}
       >
         {name}
         {closable &&
@@ -60,7 +59,7 @@ class Topic extends React.Component {
             onMouseOver={this.onCloseOver}
             onMouseOut={this.onCloseOut}
           />}
-      </Link>
+      </span>
     );
   }
 }

@@ -128,21 +128,13 @@ class Write extends React.Component {
       title: form.title,
       reward: form.reward,
       upvote: form.upvote,
+
     };
 
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
 
-    // @UTOPIAN forcing category
-    let tags = [process.env.UTOPIAN_CATEGORY];
-    const repositoryId = form.repository ? form.repository.id : false;
-
-    if (repositoryId) {
-      tags = [
-        ...tags,
-        'github-' + form.repository.id
-      ]
-    }
+    const tags = [process.env.UTOPIAN_CATEGORY, ...form.topics];
 
     const users = [];
     const userRegex = /@([a-zA-Z.0-9-]+)/g;
@@ -204,7 +196,7 @@ class Write extends React.Component {
       metaData.image = images;
     }
 
-    data.parentPermlink = tags.length ? tags[0] : process.env.UTOPIAN_CATEGORY;
+    data.parentPermlink = process.env.UTOPIAN_CATEGORY; // @UTOPIAN forcing category
     data.jsonMetadata = metaData;
 
     if (this.originalBody) {
