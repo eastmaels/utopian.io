@@ -14,3 +14,8 @@ export const getProjectsRequest = q => ({
 });
 
 export const getProjects = q => dispatch => dispatch(getProjectsRequest(q));
+
+export const setProjects = (projects) => ({
+  type: Actions.SET_PROJECTS,
+  payload: projects
+});

@@ -448,7 +448,7 @@ class Editor extends React.Component {
           }
           label={
             <span className="Editor__label">
-              <Icon type='github' /> Github Repository
+              <Icon type='github' /> Github Repository (eg. Wordpress/Wordpress)
             </span>
           }
         >
@@ -460,12 +460,30 @@ class Editor extends React.Component {
               placeholder: 'Browse Github repositories',
               className: 'ant-input ant-input-lg Editor__repository',
               onKeyPress: (event) => {
-                const q = event.target.value;
+                let q = event.target.value;
+                q = q.replace('https://', '');
+                q = q.replace('http://', '');
+                q = q.replace('github.com/', '');
 
                 if (event.key === 'Enter') {
                   event.preventDefault();
 
                   this.setState({loading: true, loaded: false});
+                  this.search.refs.input.click();
+
+                  getProjects(q).then(() => {
+                    this.setState({loaded: true, loading: false});
+                    this.search.refs.input.click();
+                  });
+                }
+              },
+              onPaste: event => {
+                const pasted = event.clipboardData.getData('Text');
+                if (pasted.indexOf('github') > -1) {
+                  let q = pasted.replace('https://', '');
+                  q = q.replace('http://', '');
+                  q = q.replace('github.com/', '');
+
                   this.search.refs.input.click();
 
                   getProjects(q).then(() => {
@@ -670,28 +688,6 @@ class Editor extends React.Component {
             />,
           )}
         </Form.Item>
-        {/*<Form.Item
-          className={classNames({ Editor__hidden: isUpdating })}
-          label={
-            <span className="Editor__label">
-              <FormattedMessage id="reward" defaultMessage="Reward" />
-            </span>
-          }
-        >
-          {getFieldDecorator('reward', { initialValue: '50' })(
-            <Select onChange={this.onUpdate} disabled={isUpdating}>
-              <Select.Option value="100">
-                <FormattedMessage id="reward_option_100" defaultMessage="100% Steem Power" />
-              </Select.Option>
-              <Select.Option value="50">
-                <FormattedMessage id="reward_option_50" defaultMessage="50% SBD and 50% SP" />
-              </Select.Option>
-              <Select.Option value="0">
-                <FormattedMessage id="reward_option_0" defaultMessage="Declined" />
-              </Select.Option>
-            </Select>,
-          )}
-        </Form.Item>*/}
         <Form.Item className={classNames({ Editor__hidden: isUpdating })}>
           {getFieldDecorator('upvote', { valuePropName: 'checked', initialValue: true })(
             <Checkbox onChange={this.onUpdate} disabled={isUpdating}>
