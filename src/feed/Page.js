@@ -98,7 +98,7 @@ class Page extends React.Component {
                 onSortChange={this.handleSortChange}
                 onTopicClose={this.handleTopicClose}
               />}*/}
-              <Route path={`${match.path}:sortBy?/:category?`} component={SubFeed} />
+              <Route path={`${match.path}`} component={ SubFeed } />
             </div>
           </div>
         </div>

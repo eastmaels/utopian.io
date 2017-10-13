@@ -4,10 +4,7 @@ const contributions = (state = [], action) => {
   switch (action.type) {
     case Actions.GET_CONTRIBUTIONS_SUCCESS: {
       const contributions = action.response.results;
-      return [
-        ...state,
-        ...contributions
-      ];
+      return contributions;
     }
     case Actions.SET_CONTRIBUTIONS: {
       const contributions = action.payload;
