@@ -189,19 +189,26 @@ export function createPost(postData) {
             // @UTOPIAN
             if (result) {
               if (!isUpdating) {
-                const createOnAPI = contributionData => dispatch(createContribution(contributionData.author, contributionData.permlink));
-                createOnAPI({ author, permlink });
+                const createOnAPI = contributionData => dispatch(
+                  createContribution(contributionData.author, contributionData.permlink)
+                );
+                createOnAPI({ author, permlink })
+                  .then(() => dispatch(
+                    push(`/${parentPermlink}/@${author}/${permlink}`)
+                  ));
               } else {
-                const updateOnAPI = contributionData => dispatch(updateContribution(contributionData.author, contributionData.permlink));
-                updateOnAPI({ author, permlink });
+                const updateOnAPI = contributionData => dispatch(
+                  updateContribution(contributionData.author, contributionData.permlink)
+                );
+                updateOnAPI({ author, permlink }).then(() => dispatch(
+                  push(`/${parentPermlink}/@${author}/${permlink}`)
+                ));
               }
             }
 
             if (window.ga) {
               window.ga('send', 'event', 'post', 'submit', '', 10);
             }
-
-            dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
 
             return result;
           }),

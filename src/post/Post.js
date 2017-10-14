@@ -51,12 +51,13 @@ export default class Post extends React.Component {
     const stateContribution = R.find(R.propEq('author', paramAuthor) && R.propEq('permlink', paramPermlink))(contributions);
 
     if (stateContribution) {
-      return setContribution(stateContribution);
+      setContribution(stateContribution);
+      return;
     }
 
     if (
       !Object.keys(contribution).length ||
-      (contribution && (contribution.author !== paramAuthor || contribution.permlink !== paramPermlink))
+      (contribution.author !== paramAuthor || contribution.permlink !== paramPermlink)
     ) {
       getContribution(paramAuthor, paramPermlink);
     }
@@ -64,20 +65,29 @@ export default class Post extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
-    const { author, permlink } = nextProps.match.params;
-    const { contribution, contributions, getContribution, setContribution } = this.props;
+    const { location } = this.props;
+    const nextLocation = nextProps.location;
 
-    if (!Object.keys(contribution).length) {
-      return getContribution(author, permlink);
-    }
-
-    if (contribution.author !== author || contribution.permlink !== permlink) {
+    if (location.pathname !== nextLocation.pathname) {
+      const { author, permlink } = nextProps.match.params;
+      const { contribution, contributions, getContribution, setContribution } = this.props;
       const stateContribution = R.find(R.propEq('author', author) && R.propEq('permlink', permlink))(contributions);
 
-      if (stateContribution) {
-        setContribution(stateContribution);
-      } else {
-        getContribution(author, permlink);
+      if (!Object.keys(contribution).length) {
+        if (stateContribution) {
+          setContribution(stateContribution);
+        } else {
+          getContribution(author, permlink);
+        }
+        return;
+      }
+
+      if (contribution.author !== author || contribution.permlink !== permlink) {
+        if (stateContribution) {
+          setContribution(stateContribution);
+        } else {
+          getContribution(author, permlink);
+        }
       }
     }
   }
