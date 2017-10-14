@@ -21,8 +21,9 @@ import { reblog } from '../app/Reblog/reblogActions';
 import { toggleBookmark } from '../bookmarks/bookmarksActions';
 import { followUser, unfollowUser } from '../user/userActions';
 import { getHtml } from '../components/Story/Body';
-import { jsonParse } from '../helpers/formatter';
 import StoryFull from '../components/Story/StoryFull';
+
+import { verifyContribution } from '../actions/contribution';
 
 @connect(
   state => ({
@@ -44,6 +45,7 @@ import StoryFull from '../components/Story/StoryFull';
     toggleBookmark,
     followUser,
     unfollowUser,
+    verifyContribution,
   },
 )
 class PostContent extends React.Component {
@@ -140,6 +142,7 @@ class PostContent extends React.Component {
       bookmarks,
       pendingBookmarks,
       saving,
+      verifyContribution,
     } = this.props;
 
     const postMetaData = content.json_metadata;
@@ -196,6 +199,8 @@ class PostContent extends React.Component {
           />
         </Helmet>
         <StoryFull
+          user={user}
+          verifyContribution={verifyContribution}
           post={content}
           postState={postState}
           commentCount={content.children}

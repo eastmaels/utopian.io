@@ -31,50 +31,82 @@ class SubFeed extends React.Component {
   };
 
   state = {
-    total: 0,
     skip: 0,
-    limit: 10,
   };
 
   constructor(props) {
     super(props);
     this.loadContributions = this.loadContributions.bind(this);
+    this.total = 0;
   }
 
-
-  loadContributions () {
-    const { match, getContributions } = this.props;
+  loadContributions (nextProps = false) {
+    const { match, getContributions } = nextProps || this.props;
+    const skip =  nextProps ? 0 : this.state.skip;
+    const limit = 20;
+    this.total = nextProps ? 0 : this.total;
 
     if (match.params.projectId) {
       getContributions({
-        limit: this.state.limit,
-        skip: this.state.skip,
-        filterBy: 'project',
+        limit,
+        skip,
+        type: 'project',
         sortBy: 'created',
         platform: match.params.platform,
         projectId: match.params.projectId,
       }).then(res => {
-        this.setState({total: res.response.total, skip: this.state.skip + this.state.limit});
+        this.total = res.response.total;
+        this.setState({skip: skip + limit});
       });
     } else if (match.path === '/@:name') {
       getContributions({
-        limit: this.state.limit,
-        skip: this.state.skip,
-        filterBy: 'author',
+        limit,
+        skip,
+        type: 'author',
         sortBy: 'created',
         author: match.params.name,
       }).then(res => {
-        this.setState({total: res.response.total, skip: this.state.skip + this.state.limit});
+        this.total = res.response.total;
+        this.setState({skip: skip + limit});
       });
     } else {
       getContributions({
-        limit: this.state.limit,
-        skip: this.state.skip,
-        filterBy: 'all',
+        limit,
+        skip,
+        type: 'all',
         sortBy: 'created',
+        filterBy: match.params.filterBy || 'any',
       }).then(res => {
-        this.setState({total: res.response.total, skip: this.state.skip + this.state.limit});
+        this.total = res.response.total;
+        this.setState({skip: skip + limit});
       });
+    }
+  }
+
+  renderContributions () {
+    const { contributions, match } = this.props;
+
+    const filteredContributions = contributions.filter(contribution => {
+      if (match.params.projectId) {
+        return contribution.json_metadata.repository.id === parseInt(match.params.projectId) && contribution.reviewed === true;
+      } else if (match.path === '/@:name') {
+        return contribution.author === match.params.name && contribution.reviewed === true;
+      } else if (match.params.filterBy && match.params.filterBy === 'review') {
+        return contribution.reviewed === false;
+      }
+      return contribution.reviewed === true;
+    });
+
+    return filteredContributions;
+  }
+
+
+  componentWillReceiveProps (nextProps) {
+    const { location } = this.props;
+
+    if (location.pathname !== nextProps.location.pathname) {
+      this.total = 0; // @TODO @UTOPIAN antipattern - requires better implementation
+      this.loadContributions(nextProps);
     }
   }
 
@@ -83,9 +115,10 @@ class SubFeed extends React.Component {
   }
 
   render() {
-    const { contributions, loading, user, authenticated } = this.props;
-    let isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
-    const hasMore = this.state.total > contributions.length;
+    const { loading } = this.props;
+    const contributions = this.renderContributions();
+    const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
+    const hasMore = this.total > contributions.length;
 
     return (
       <div>

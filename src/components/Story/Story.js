@@ -79,6 +79,7 @@ class Story extends React.Component {
 
     const metaData = post.json_metadata;
     const repository = metaData.repository;
+    const reviewed = post.reviewed || false;
 
     if (!repository) return null; // @UTOPIAN @TODO find a better way to hide posts not written via Utopian
 
@@ -209,13 +210,13 @@ class Story extends React.Component {
             </Link>
           </div>
           <div className="Story__footer">
-            <StoryFooter
+            {reviewed && <StoryFooter
               post={post}
               postState={postState}
               pendingLike={pendingLike}
               onLikeClick={onLikeClick}
               onShareClick={onShareClick}
-            />
+            />}
           </div>
         </div>
       </div>

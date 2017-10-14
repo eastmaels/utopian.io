@@ -190,16 +190,10 @@ export function createPost(postData) {
             if (result) {
               if (!isUpdating) {
                 const createOnAPI = contributionData => dispatch(createContribution(contributionData.author, contributionData.permlink));
-                createOnAPI({ author, permlink })
-                  .then(res => {
-                    console.log("RES", res)
-                  });
+                createOnAPI({ author, permlink });
               } else {
                 const updateOnAPI = contributionData => dispatch(updateContribution(contributionData.author, contributionData.permlink));
-                updateOnAPI({ author, permlink })
-                  .then(res => {
-                    console.log("RES UPDATE", res)
-                  });
+                updateOnAPI({ author, permlink });
               }
             }
 

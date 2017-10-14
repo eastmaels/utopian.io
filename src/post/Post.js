@@ -45,10 +45,6 @@ export default class Post extends React.Component {
   };
 
   componentWillMount() {
-    /*
-    if ((!this.props.content || this.props.edited) && !this.props.fetching) {
-      this.props.getContent(this.props.match.params.author, this.props.match.params.permlink);
-    }*/
     const { contribution, contributions, getContribution, setContribution } = this.props;
     const paramAuthor = this.props.match.params.author;
     const paramPermlink = this.props.match.params.permlink;
@@ -62,21 +58,30 @@ export default class Post extends React.Component {
       !Object.keys(contribution).length ||
       (contribution && (contribution.author !== paramAuthor || contribution.permlink !== paramPermlink))
     ) {
-      console.log("GETTING");
       getContribution(paramAuthor, paramPermlink);
     }
   }
 
-  /*
+
   componentWillReceiveProps(nextProps) {
     const { author, permlink } = nextProps.match.params;
-    if ((!nextProps.content || nextProps.edited)
-      && nextProps.match.params !== this.props.match.params
-      && !nextProps.fetching) {
-      this.setState({ commentsVisible: false }, () => this.props.getContent(author, permlink));
+    const { contribution, contributions, getContribution, setContribution } = this.props;
+
+    if (!Object.keys(contribution).length) {
+      return getContribution(author, permlink);
+    }
+
+    if (contribution.author !== author || contribution.permlink !== permlink) {
+      const stateContribution = R.find(R.propEq('author', author) && R.propEq('permlink', permlink))(contributions);
+
+      if (stateContribution) {
+        setContribution(stateContribution);
+      } else {
+        getContribution(author, permlink);
+      }
     }
   }
-*/
+
   componentWillUnmount() {
     if (process.env.IS_BROWSER) {
       global.document.title = 'Utopian';

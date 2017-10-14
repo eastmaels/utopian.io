@@ -11,6 +11,9 @@ import StoryFooter from './StoryFooter';
 import Avatar from '../Avatar';
 import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
+import Action from '../../components/Button/Action';
+import { Modal } from 'antd';
+
 import './StoryFull.less';
 
 @injectIntl
@@ -31,9 +34,13 @@ class StoryFull extends React.Component {
     onLikeClick: PropTypes.func,
     onShareClick: PropTypes.func,
     onEditClick: PropTypes.func,
+    user: PropTypes.object.isRequired,
+    verifyContribution: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
+    user: {},
+    verifyContribution: () => {},
     pendingLike: false,
     pendingFollow: false,
     pendingBookmark: false,
@@ -52,6 +59,7 @@ class StoryFull extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      verifyModal: false,
       lightbox: {
         open: false,
         index: 0,
@@ -104,6 +112,7 @@ class StoryFull extends React.Component {
   render() {
     const {
       intl,
+      user,
       post,
       postState,
       pendingLike,
@@ -114,12 +123,19 @@ class StoryFull extends React.Component {
       ownPost,
       onLikeClick,
       onShareClick,
+      verifyContribution,
     } = this.props;
 
     const { open, index } = this.state.lightbox;
     const images = post.json_metadata.image;
     const tags = _.union(post.json_metadata.tags, [post.category]);
     const video = post.json_metadata.video;
+    const isLogged = Object.keys(user).length;
+    const userReputation = isLogged && user.reputation ?
+      formatter.reputation(user.reputation) :
+      false;
+    const minReputation = 55;
+    const reviewed = post.reviewed || false;
 
     let followText = '';
 
@@ -186,10 +202,45 @@ class StoryFull extends React.Component {
       </PopoverMenuItem>,
     ];
 
-
     return (
       <div className="StoryFull">
+        <Modal
+          visible={this.state.verifyModal}
+          title='Does this contribution meet the Utopian Standards?'
+          okText='Yes, Verify'
+          cancelText='Not yet'
+          onCancel={() => this.setState({verifyModal: false})}
+          onOk={ () => {
+            verifyContribution(post.author, post.permlink);
+            this.setState({verifyModal: false})
+          }}
+        >
+          <p>Utopian relies on community members with high reputation like you to guarantee the quality of the contributions.</p>
+            <br />
+            <ul>
+              <li><Icon type="heart" /> This contribution is personal, meaningful and informative.</li>
+              <li><Icon type="smile" /> This is the first and only time this contribution has been shared with the community. </li>
+              <li><Icon type="search" /> This contribution is verifiable and provide proof of the work.</li>
+            </ul>
+            <br />
+            <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified.</p>
+            <p><b>Is this contribution ready to be verified?</b></p>
+        </Modal>
+
         {replyUI}
+        {!reviewed && <div className="StoryFull__review">
+          <h3><Icon type="safety" /> Under Review</h3>
+          <p>A member of the Utopian community with a reputation score equal or higher than {minReputation} will soon review this contribution and suggest changes if it does not meet the Utopian standards.</p>
+          {isLogged && user.name !== post.author && userReputation >= minReputation ? <div>
+              <Action
+                primary={ true }
+                text='Verify'
+                onClick={() => this.setState({verifyModal: true})}
+              />
+            </div> :
+            null
+          }
+        </div>}
         <h1 className="StoryFull__title">
           {post.title}
         </h1>
@@ -289,13 +340,13 @@ class StoryFull extends React.Component {
         <div className="StoryFull__topics">
           {tags && tags.map(tag => <Topic key={tag} name={tag} />)}
         </div>
-        <StoryFooter
+        {reviewed && <StoryFooter
           post={post}
           postState={postState}
           pendingLike={pendingLike}
           onLikeClick={onLikeClick}
           onShareClick={onShareClick}
-        />
+        />}
       </div>
     );
   }

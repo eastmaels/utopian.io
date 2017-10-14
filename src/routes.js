@@ -94,7 +94,7 @@ export default (
       <Route path="/:category/@:author/:permlink" component={Post} />
       <Route path="/project/:author/:project/:platform/:projectId" component={Project}
       />
-      <Route path="/" component={Page} />
+      <Route path="/:filterBy?" component={Page} />
     </Switch>
   </Wrapper>
 );

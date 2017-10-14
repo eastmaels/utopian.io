@@ -6,14 +6,16 @@ const contribution = (state = {}, action) => {
       const contribution = action.response;
       return contribution;
     }
+    case Actions.VERIFY_CONTRIBUTION_SUCCESS:
     case Actions.UPDATE_CONTRIBUTION_SUCCESS: {
       const contribution = action.response;
       const stateContribution = state;
 
       if (Object.keys(stateContribution).length && stateContribution.id === contribution.id) {
+        console.log("CONT RES", contribution)
         return contribution;
       }
-      return stateContribution;
+      return {};
     }
     case Actions.CREATE_CONTRIBUTION_SUCCESS: {
       const contribution = action.response;
