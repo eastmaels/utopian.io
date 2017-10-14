@@ -202,8 +202,28 @@ class StoryFull extends React.Component {
       </PopoverMenuItem>,
     ];
 
+    const metaData = post.json_metadata;
+    const repository = metaData.repository;
+    const postType = post.json_metadata.type;
+    const icon = postType => {
+      switch (postType) {
+        case 'ideas':
+          return 'bulb';
+        case 'code':
+          return 'code';
+        case 'graphics':
+          return 'layout';
+        case 'social':
+          return 'share-alt';
+      }
+    };
+
     return (
       <div className="StoryFull">
+        <div className={`StoryFull__contribution ${postType}`}>
+          <b><Icon type={icon(postType)} /> Contribution for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}/all`}><Icon type='github' /> {repository.full_name}</Link>
+        </div>
+
         <Modal
           visible={this.state.verifyModal}
           title='Does this contribution meet the Utopian Standards?'

@@ -173,7 +173,7 @@ class Story extends React.Component {
               <i className="iconfont icon-unfold Story__more" />
             </Popover>
             <div className={`Story__contribution ${postType}`}>
-              <b><Icon type={icon(postType)} /> contribution for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}/all`}><Icon type='github' /> {repository.full_name}</Link>
+              <b><Icon type={icon(postType)} /> Contribution for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}/all`}><Icon type='github' /> {repository.full_name}</Link>
             </div>
             <div className="Story__header">
               <Link to={`/@${post.author}`}>
