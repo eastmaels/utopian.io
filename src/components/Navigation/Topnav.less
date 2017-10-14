@@ -2,11 +2,42 @@
 
 @base-spacing: 0;
 
+.Searchmobile {
+  display: none;
+}
+
+@media screen and (max-width: 736px) {
+  .Searchmobile {
+    display: block;
+    > div {
+      position: relative;
+      border-bottom: 1px solid #CCC;
+      >i {
+        display: none;
+      }
+      >div {
+        width: 100%;
+        background: @white;
+        >input {
+          width: 100%;
+          padding-left: 15px;
+        }
+      }
+    }
+  }
+}
+
 .Topnav {
   background-color: @white;
   border-bottom: 1px solid #e9e7e7;
   height: 56px;
   line-height: 56px;
+
+  @media screen and (max-width: 736px) {
+    .topnav-layout .center {
+      display: none;
+    }
+  }
 
   &__brand {
     font-size: 28px;
@@ -91,12 +122,12 @@
     border-right: solid 1px #e9e7e7;
 
 
-    @media screen and (max-width: 667px) {
+    @media screen and (max-width: 736px) {
       padding-top: 55px;
     }
 
-    & > div { width: 100%;}
-    & > div > input {
+    & > .Search > div { width: 100%;}
+    & > .Search input {
       width: 100%;
       height: 54px !important;
       border-radius: 0 !important;
@@ -104,7 +135,7 @@
       padding: 0 0 0 43px !important;
       outline: none;
 
-      @media screen and (max-width: 667px) {
+      @media screen and (max-width: 736px) {
         padding-left: 15px !important;
       }
 
@@ -114,14 +145,14 @@
       }
     }
 
-    & > i {
+    & > .Search i {
       top: 18px;
       left: 16px;
       position: absolute;
       color: #c2ccd3;
       font-size: 20px;
       z-index: 1;
-      @media screen and (max-width: 667px) {
+      @media screen and (max-width: 736px) {
         display: none;
       }
     }
@@ -190,6 +221,12 @@
         font-size: 14px;
       }
     }
+    @media screen and (max-width: 736px) {
+      &_text {
+        display: none;
+      }
+    }
+
   }
 
   &__link {

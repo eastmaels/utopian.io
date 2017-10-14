@@ -38,6 +38,68 @@ class Topnav extends React.Component {
     return items;
   }
 
+  renderSearch () {
+    const { projects, getProjects, setProjects, history } = this.props;
+
+    return (
+      <div className="Search">
+        <Icon type="github" className="iconfont icon-search" />
+        <Autocomplete
+          ref={ search => this.search = search }
+          value={ this.state.value }
+          inputProps={{
+            id: 'search-projects',
+            placeholder: 'Browse contributions by Github repositories',
+            onKeyPress: (event) => {
+              const q = event.target.value;
+
+              if (event.key === 'Enter') {
+                this.setState({loading: true, loaded: false});
+                this.search.refs.input.click();
+
+                getProjects(q).then(() => {
+                  this.setState({loaded: true, loading: false});
+                  this.search.refs.input.click();
+                });
+              }
+            },
+          }}
+          items={ projects }
+          getItemValue={project => project.full_name}
+          onSelect={(value, project) => {
+            this.setState({value: ''});
+            history.push(`/project/${project.full_name}/github/${project.id}`);
+          }}
+          onChange={(event, value) => {
+            this.setState({value});
+            if (value === '') {
+              setProjects([]);
+              this.setState({loaded: false});
+            }
+          }}
+          renderItem={(project, isHighlighted) => (
+            <div
+              className='Topnav__search-item'
+              key={project.full_name}
+            >
+              <span><Icon type='github' /> <b>{project.full_name}</b></span>
+              <span>{project.html_url}</span>
+            </div>
+          )}
+          renderMenu={(items, value) => (
+            <div className="Topnav__search-menu">
+              <div>
+                {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
+                {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
+                {this.state.loading && <div className="Topnav__search-tip">Loading...</div>}
+                {items.length > 0 && this.renderItems(items)}
+              </div>
+            </div>
+          )}
+        />
+      </div>
+    )}
+
   render() {
     const {
       intl,
@@ -64,12 +126,9 @@ class Topnav extends React.Component {
         <div className="Topnav__menu-container">
           <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
             <Menu.Item key="write">
-              <Tooltip placement="bottom" title={intl.formatMessage({
-                id: 'write_contributor_report',
-                defaultMessage: 'Write a new Contributor Report'
-              })}>
+              <Tooltip placement="bottom" title='Write a new Contributor Report'>
                 <Link to="/write" className="Topnav__newReport">
-                  <span><i className="iconfont icon-add"/> Contributor Report</span>
+                  <span><i className="iconfont icon-add"/> <span className="Topnav__newReport_text">Contribution</span></span>
                 </Link>
               </Tooltip>
             </Menu.Item>
@@ -162,75 +221,26 @@ class Topnav extends React.Component {
     }
 
     return (
-      <div className="Topnav">
-        <div className="topnav-layout container">
-          <div className="left">
-            <Link className="Topnav__brand" to="/">
-              <img src="/img/utopian-logo-120x120.png"/>
-              <span>Utopian</span>
-            </Link>
-          </div>
-          <div className="center">
-            <div className="Topnav__input-container">
-              <Icon type="github" className="iconfont icon-search" />
-              <Autocomplete
-                ref={ search => this.search = search }
-                value={ this.state.value }
-                inputProps={{
-                  id: 'search-projects',
-                  placeholder: 'Browse contributions by Github repositories',
-                  onKeyPress: (event) => {
-                    const q = event.target.value;
-
-                    if (event.key === 'Enter') {
-                      this.setState({loading: true, loaded: false});
-                      this.search.refs.input.click();
-
-                      getProjects(q).then(() => {
-                        this.setState({loaded: true, loading: false});
-                        this.search.refs.input.click();
-                      });
-                    }
-                  },
-                }}
-                items={ projects }
-                getItemValue={project => project.full_name}
-                onSelect={(value, project) => {
-                  this.setState({value: ''});
-                  history.push(`/project/${project.full_name}/github/${project.id}`);
-                }}
-                onChange={(event, value) => {
-                  this.setState({value});
-                  if (value === '') {
-                    setProjects([]);
-                    this.setState({loaded: false});
-                  }
-                }}
-                renderItem={(project, isHighlighted) => (
-                  <div
-                    className='Topnav__search-item'
-                    key={project.full_name}
-                  >
-                    <span><Icon type='github' /> <b>{project.full_name}</b></span>
-                    <span>{project.html_url}</span>
-                  </div>
-                )}
-                renderMenu={(items, value) => (
-                  <div className="Topnav__search-menu">
-                    <div>
-                      {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
-                      {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
-                      {this.state.loading && <div className="Topnav__search-tip">Loading...</div>}
-                      {items.length > 0 && this.renderItems(items)}
-                    </div>
-                  </div>
-                )}
-              />
+      <div>
+        <div className="Topnav">
+          <div className="topnav-layout container">
+            <div className="left">
+              <Link className="Topnav__brand" to="/">
+                <img src="/img/utopian-logo-120x120.png"/>
+              </Link>
+            </div>
+            <div className="center">
+              <div className="Topnav__input-container">
+                { window.outerWidth > 736 && this.renderSearch() }
+              </div>
+            </div>
+            <div className="right">
+              {content}
             </div>
           </div>
-          <div className="right">
-            {content}
-          </div>
+        </div>
+        <div className="Searchmobile">
+          { window.outerWidth <= 736 && this.renderSearch() }
         </div>
       </div>
     );
