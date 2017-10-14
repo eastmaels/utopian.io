@@ -219,6 +219,7 @@ class StoryFull extends React.Component {
             <br />
             <ul>
               <li><Icon type="heart" /> This contribution is personal, meaningful and informative.</li>
+              <li><Icon type="bulb" /> If it's an idea it is very well detailed and realistic.</li>
               <li><Icon type="smile" /> This is the first and only time this contribution has been shared with the community. </li>
               <li><Icon type="search" /> This contribution is verifiable and provide proof of the work.</li>
             </ul>

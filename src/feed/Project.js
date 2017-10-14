@@ -35,10 +35,18 @@ class Project extends React.Component {
   };
 
   componentWillMount () {
-    const { projects, project, match, getProject, setProject } = this.props;
+    const { projects, project, match, getProject, setProject, history, location } = this.props;
     const { projectId } = match.params;
     const id = parseInt(projectId);
     const projectInState = R.find(R.propEq('id', id))(projects);
+
+    // @UTOPIAN supporting old version where type was not mandatory
+    if (!match.params.type) {
+      // removing last slash if present to avoid double slashes
+      const locationPath = location.pathname.replace(/\/$/, '')
+      history.push(`${locationPath}/all`);
+      return;
+    }
 
     if(!projectInState) {
       getProject(id);
@@ -96,7 +104,7 @@ class Project extends React.Component {
                     <a href={ project.html_url } target="_blank"> { project.html_url } </a>
                   </p>
               </div>
-              <Route path={`/project/:author/:project/:platform/:projectId`} component={SubFeed} />
+              <Route path={`/project/:author/:project/:platform/:projectId/:type?`} component={SubFeed} />
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { HotKeys } from 'react-hotkeys';
 import { throttle } from 'lodash';
 import isArray from 'lodash/isArray';
-import { Icon, Checkbox, Form, Input, Select } from 'antd';
+import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd';
 import Dropzone from 'react-dropzone';
 import EditorToolbar from './EditorToolbar';
 import Action from '../Button/Action';
@@ -16,6 +16,7 @@ import Autocomplete from 'react-autocomplete';
 import './Editor.less';
 
 import { getProjects, setProjects } from '../../actions/projects';
+const RadioGroup = Radio.Group;
 
 @connect(
   state => ({
@@ -33,6 +34,7 @@ class Editor extends React.Component {
     topics: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
     upvote: PropTypes.bool,
+    type: PropTypes.string,
     loading: PropTypes.bool,
     isUpdating: PropTypes.bool,
     saving: PropTypes.bool,
@@ -46,6 +48,7 @@ class Editor extends React.Component {
     title: '',
     repository: null,
     topics: [],
+    type: '',
     body: '',
     upvote: true,
     recentTopics: [],
@@ -114,7 +117,7 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, topics, body, upvote } = this.props;
+    const { title, topics, body, upvote, type } = this.props;
 
     if (this.props.repository !== nextProps.repository) {
       this.setState({
@@ -127,7 +130,8 @@ class Editor extends React.Component {
       title !== nextProps.title ||
       topics !== nextProps.topics ||
       body !== nextProps.body ||
-      upvote !== nextProps.upvote
+      upvote !== nextProps.upvote ||
+      type !== nextProps.type
     ) {
       this.setValues(nextProps);
     }
@@ -159,6 +163,7 @@ class Editor extends React.Component {
       title: post.title,
       topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
       upvote: post.upvote,
+      type: post.type || 'ideas',
     });
     if (this.input) {
       this.input.value = post.body;
@@ -173,7 +178,7 @@ class Editor extends React.Component {
     // (array or just value for Select, proxy event for inputs and checkboxes)
 
     const values = {
-      ...this.props.form.getFieldsValue(['title', 'topics', 'upvote']),
+      ...this.props.form.getFieldsValue(['title', 'type', 'topics', 'upvote']),
       body: this.input.value,
     };
 
@@ -187,6 +192,8 @@ class Editor extends React.Component {
       values.title = e.target.value;
     } else if (e.target.type === 'checkbox') {
       values.upvote = e.target.checked;
+    } else if (e.target.type === 'radio') {
+      values.type = e.target.value;
     }
 
     return values;
@@ -439,16 +446,10 @@ class Editor extends React.Component {
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
         <Form.Item
           validateStatus={this.state.noRepository ? 'error' : ''}
-          help={
-            this.state.noRepository &&
-            intl.formatMessage({
-              id: 'repository_error_empty',
-              defaultMessage: "Please enter an existing Github repository",
-            })
-          }
+          help={this.state.noRepository && "Please enter an existing Github repository"}
           label={
             <span className="Editor__label">
-              <Icon type='github' /> Github Repository (eg. Wordpress/Wordpress)
+              <Icon type='github' /> Github project (eg. Wordpress/Wordpress)
             </span>
           }
         >
@@ -532,11 +533,48 @@ class Editor extends React.Component {
             )}
           />
         </Form.Item>
-
         <Form.Item
           label={
             <span className="Editor__label">
-              Title of Contributor Report
+              What is this contribution about?
+            </span>
+          }
+        >
+          <div className="Editor__category">
+            {getFieldDecorator('type')(
+              <RadioGroup onChange={this.onUpdate}>
+                <label>
+                  <Radio value="ideas" name="type" />
+                  <div className="ideas box">
+                    <span>Idea/Feature</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="code" name="type" />
+                  <div className="code box">
+                    <span>Code</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="graphics" name="type" />
+                  <div className="graphics box">
+                    <span>Graphics</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="social" name="type" />
+                  <div className="social box">
+                    <span>Social</span>
+                  </div>
+                </label>
+              </RadioGroup>
+            )}
+          </div>
+        </Form.Item>
+        <Form.Item
+          label={
+            <span className="Editor__label">
+              Contribution title
             </span>
           }
         >
@@ -544,17 +582,11 @@ class Editor extends React.Component {
             rules: [
               {
                 required: true,
-                message: intl.formatMessage({
-                  id: 'title_error_empty',
-                  defaultMessage: 'title_error_empty',
-                }),
+                message: 'Title cannot be empty',
               },
               {
                 max: 255,
-                message: intl.formatMessage({
-                  id: 'title_error_too_long',
-                  defaultMessage: "Title can't be longer than 255 characters.",
-                }),
+                message: "Title can't be longer than 255 characters.",
               },
             ],
           })(
@@ -564,33 +596,25 @@ class Editor extends React.Component {
               }}
               onChange={this.onUpdate}
               className="Editor__title"
-              placeholder={intl.formatMessage({
-                id: 'title_placeholder',
-                defaultMessage: 'Add title',
-              })}
+              placeholder='Add title'
             />,
           )}
         </Form.Item>
 
         <Form.Item
           validateStatus={this.state.noContent ? 'error' : ''}
-          help={
-            this.state.noContent &&
-            intl.formatMessage({
-              id: 'story_error_empty',
-              defaultMessage: "Story content can't be empty.",
-            })
-          }
+          help={this.state.noContent && "Story content can't be empty."}
         >
 
           <div className="WriteTips">
-            <h3>Contributor Story</h3>
+            <h3>Contribution details</h3>
             <p>Write the story of the contributions you made so far for this Open Source project.</p>
             <ul>
               <li><Icon type="heart" /> Be personal and meaningful. People love to read.</li>
+              <li><Icon type="bulb" /> Writing about an idea? Make sure to provide as much details as possible.</li>
               <li><Icon type="frown" /> Don't cheat. Never report contributions you have already shared. </li>
               <li><Icon type="search" /> Contributions must be verifiable. Provide proof of your work.</li>
-              <li><Icon type="like" /> Contributions can be anything, code development, graphic design, social engagement and more.</li>
+              <li><Icon type="like" /> Contributions can be ideas, code development, graphics or spreading the word via social networks.</li>
             </ul>
           </div>
 
@@ -696,17 +720,17 @@ class Editor extends React.Component {
           )}
         </Form.Item>
         <div className="Editor__bottom">
-            <span className="Editor__bottom__info">
-            <i className="iconfont icon-markdown" />{' '}
-              <FormattedMessage
-                id="markdown_supported"
-                defaultMessage="Styling with markdown supported"
-              />
-            </span>
+              <span className="Editor__bottom__info">
+              <i className="iconfont icon-markdown" />{' '}
+                <FormattedMessage
+                  id="markdown_supported"
+                  defaultMessage="Styling with markdown supported"
+                />
+              </span>
           <div className="Editor__bottom__right">
             {saving && (
               <span className="Editor__bottom__right__saving">
-                <FormattedMessage id="saving" defaultMessage="Saving..." />
+                Saving...
               </span>
             )}
             <Form.Item className="Editor__bottom__submit">

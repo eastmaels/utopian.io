@@ -11,6 +11,8 @@ import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
 
 // @UTOPIAN
 import { getContributions } from '../actions/contributions';
+import { Tabs, Icon } from 'antd';
+const TabPane = Tabs.TabPane;
 
 @connect(
   state => ({
@@ -50,10 +52,11 @@ class SubFeed extends React.Component {
       getContributions({
         limit,
         skip,
-        type: 'project',
+        section: 'project',
         sortBy: 'created',
         platform: match.params.platform,
         projectId: match.params.projectId,
+        type: match.params.type || 'all'
       }).then(res => {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
@@ -62,7 +65,7 @@ class SubFeed extends React.Component {
       getContributions({
         limit,
         skip,
-        type: 'author',
+        section: 'author',
         sortBy: 'created',
         author: match.params.name,
       }).then(res => {
@@ -73,9 +76,10 @@ class SubFeed extends React.Component {
       getContributions({
         limit,
         skip,
-        type: 'all',
+        section: 'all',
         sortBy: 'created',
         filterBy: match.params.filterBy || 'any',
+        type: match.params.type || 'all'
       }).then(res => {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
@@ -88,11 +92,19 @@ class SubFeed extends React.Component {
 
     const filteredContributions = contributions.filter(contribution => {
       if (match.params.projectId) {
-        return contribution.json_metadata.repository.id === parseInt(match.params.projectId) && contribution.reviewed === true;
+        if (match.params.type === 'all') {
+          return contribution.json_metadata.repository.id === parseInt(match.params.projectId) && contribution.reviewed === true;
+        } else {
+          return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
+            contribution.reviewed === true &&
+            contribution.json_metadata.type === match.params.type;
+        }
       } else if (match.path === '/@:name') {
         return contribution.author === match.params.name && contribution.reviewed === true;
       } else if (match.params.filterBy && match.params.filterBy === 'review') {
         return contribution.reviewed === false;
+      } else if (match.params.type && match.params.type !== 'all') {
+        return contribution.json_metadata.type === match.params.type && contribution.reviewed === true;
       }
       return contribution.reviewed === true;
     });
@@ -115,7 +127,7 @@ class SubFeed extends React.Component {
   }
 
   render() {
-    const { loading } = this.props;
+    const { loading, history, match, location } = this.props;
     const contributions = this.renderContributions();
     const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
     const hasMore = this.total > contributions.length;
@@ -124,18 +136,14 @@ class SubFeed extends React.Component {
       <div>
         <ScrollToTop />
 
-        <div className="AddContribution">
-          <div>
-            <img src="/img/utopian-logo-120x120.png" />
-          </div>
-          <div>
-            <h3>Utopian Rewards Open Source Contributors!</h3>
-            <p>
-              <Link to={`/write`}>Create a <b>Contributor Report</b></Link> to share the latest contributions you made to an Open Source project.
-              The Utopian community will vote and get you rewarded $$. <Link to={`/help/#contributor-report`}>Learn more</Link>
-            </p>
-          </div>
-        </div>
+        {match.path !== "/@:name" && match.params.filterBy !== "review" &&
+        <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => history.push(`${type}`)}>
+          <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
+          <TabPane tab={<span><Icon type="bulb" />Ideas</span>} key="ideas" />
+          <TabPane tab={<span><Icon type="code" />Code</span>} key="code" />
+          <TabPane tab={<span><Icon type="layout" />Graphics</span>} key="graphics" />
+          <TabPane tab={<span><Icon type="share-alt" />Social</span>} key="social" />
+        </Tabs>}
 
         <Feed
           content={ contributions }

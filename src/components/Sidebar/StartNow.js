@@ -6,11 +6,11 @@ import './SidebarBlock.less';
 const StartNow = () =>
   (<div className="SidebarBlock">
     <h3 className="SidebarBlock__title">
-      <FormattedMessage id="never_written_post" defaultMessage="Never written a post?" />
+      Never written a post?
     </h3>
     <Link to="/write">
       <button className="SidebarBlock__button">
-        <FormattedMessage id="start_now" defaultMessage="Start now" />
+        Start now
       </button>
     </Link>
   </div>);

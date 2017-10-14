@@ -137,7 +137,7 @@ export default class User extends React.Component {
               </div>
             </Affix>
             <div className="center">
-              <Route exact path={match.path} component={UserProfile} />
+              <Route exact path={`${match.path}`} component={UserProfile} />
               {/*<Route path={`${match.path}/comments`} component={UserComments} />*/}
               <Route path={`${match.path}/followers`} component={UserFollowers} />
               <Route path={`${match.path}/followed`} component={UserFollowing} />

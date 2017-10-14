@@ -16,7 +16,7 @@ import {
   getIsEditorSaving,
 } from '../../reducers';
 
-
+import * as Actions from '../../actions/constants';
 import { createPost, saveDraft, newPost } from './editorActions';
 import { notify } from '../../app/Notification/notificationActions';
 import Editor from '../../components/Editor/Editor';
@@ -32,6 +32,7 @@ const version = require('../../../package.json').version;
     draftPosts: getDraftPosts(state),
     loading: getIsEditorLoading(state),
     saving: getIsEditorSaving(state),
+    submitting: state.loading,
   }),
   {
     createPost,
@@ -67,8 +68,9 @@ class Write extends React.Component {
     this.state = {
       initialTitle: '',
       initialTopics: [],
+      initialType: '',
       initialBody: '',
-      initialReward: '50',
+      initialReward: '100',
       initialUpvote: true,
       initialRepository: null,
       isUpdating: false,
@@ -100,6 +102,7 @@ class Write extends React.Component {
       this.setState({
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
+        initialType: jsonMetadata.type || 'ideas',
         initialBody: draftPost.body || '',
         initialUpvote: draftPost.upvote,
         isUpdating: isUpdating || false,
@@ -126,7 +129,6 @@ class Write extends React.Component {
       body: form.body,
       title: form.title,
       upvote: form.upvote,
-
     };
 
     data.parentAuthor = '';
@@ -179,7 +181,8 @@ class Write extends React.Component {
       app: `utopian/${version}`,
       format: 'markdown',
       repository: form.repository,
-      platform: 'github',
+      platform: 'github', // @TODO @UTOPIAN hardcoded
+      type: form.type,
     };
 
     if (tags.length) {
@@ -253,8 +256,9 @@ class Write extends React.Component {
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialBody, initialReward, initialUpvote, initialRepository } = this.state;
-    const { loading, saving } = this.props;
+    const { initialTitle, initialTopics, initialType, initialBody, initialReward, initialUpvote, initialRepository } = this.state;
+    const { loading, saving, submitting } = this.props;
+    const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
     return (
       <div className="shifted">
@@ -271,9 +275,10 @@ class Write extends React.Component {
               repository={initialRepository}
               title={initialTitle}
               topics={initialTopics}
+              type={initialType}
               body={initialBody}
               upvote={initialUpvote}
-              loading={loading}
+              loading={isSubmitting}
               isUpdating={this.state.isUpdating}
               onUpdate={this.saveDraft}
               onSubmit={this.onSubmit}

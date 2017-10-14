@@ -9,7 +9,7 @@ const EmptyFeed = () =>
     <h3>
       No contributions found. {' '}
       <Link to="/write">
-        Write a Contributor Report
+        Add Contribution
       </Link>
       .
     </h3>

@@ -23,7 +23,7 @@ const Sidenav = ({ username }) =>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/review" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/review', match, location)}>
+          <NavLink to="/all/review" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/all/review', match, location)}>
             <i className="iconfont icon-warning" />
             Review
           </NavLink>

@@ -143,87 +143,97 @@ class Story extends React.Component {
       </div>);
     }
 
-    return (
-      <div className="Story">
-        {rebloggedUI}
-        <div className="Story__content">
-          <Popover
-            placement="bottomRight"
-            trigger="click"
-            content={
-              <PopoverMenu onSelect={this.handleClick} bold={false}>
-                {popoverMenu}
-              </PopoverMenu>
-            }
-          >
-            <i className="iconfont icon-unfold Story__more" />
-          </Popover>
-          <div className="Story__contribution">
-            <b>
-              <Icon type='github' /> Contribution Report for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}`}>{repository.full_name}</Link>
-          </div>
-          <div className="Story__header">
-            <Link to={`/@${post.author}`}>
-              <Avatar username={post.author} size={40} />
-            </Link>
-            <div className="Story__header__text">
+    const postType = post.json_metadata.type;
+    const icon = postType => {
+      switch (postType) {
+        case 'ideas':
+          return 'bulb';
+        case 'code':
+          return 'code';
+        case 'graphics':
+          return 'layout';
+        case 'social':
+          return 'share-alt';
+      }
+    };
+
+      return (
+        <div className="Story">
+          {rebloggedUI}
+          <div className="Story__content">
+            <Popover
+              placement="bottomRight"
+              trigger="click"
+              content={
+                <PopoverMenu onSelect={this.handleClick} bold={false}>
+                  {popoverMenu}
+                </PopoverMenu>
+              }
+            >
+              <i className="iconfont icon-unfold Story__more" />
+            </Popover>
+            <div className={`Story__contribution ${postType}`}>
+              <b><Icon type={icon(postType)} /> contribution for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}/all`}><Icon type='github' /> {repository.full_name}</Link>
+            </div>
+            <div className="Story__header">
               <Link to={`/@${post.author}`}>
-                <h4>
-                  {post.author}
-                  <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
-                    <Tag>
-                      {formatter.reputation(post.author_reputation)}
-                    </Tag>
-                  </Tooltip>
-                </h4>
+                <Avatar username={post.author} size={40} />
               </Link>
-              <Tooltip
-                title={
-                  <span>
+              <div className="Story__header__text">
+                <Link to={`/@${post.author}`}>
+                  <h4>
+                    {post.author}
+                    <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
+                      <Tag>
+                        {formatter.reputation(post.author_reputation)}
+                      </Tag>
+                    </Tooltip>
+                  </h4>
+                </Link>
+                <Tooltip
+                  title={
+                    <span>
                     <FormattedDate value={`${post.created}Z`} />{' '}
-                    <FormattedTime value={`${post.created}Z`} />
+                      <FormattedTime value={`${post.created}Z`} />
                   </span>
-                }
-              >
+                  }
+                >
                 <span className="Story__date">
                   <FormattedRelative value={`${post.created}Z`} />
                 </span>
-              </Tooltip>
+                </Tooltip>
+              </div>
             </div>
-            {/*<div className="Story__topics">
-              <Topic name={post.category} />
-            </div>*/}
-          </div>
-          <div className="Story__content">
-            <Link to={post.url} className="Story__content__title">
-              <h2>
-                {post.title ||
+            <div className="Story__content">
+              <Link to={post.url} className="Story__content__title">
+                <h2>
+                  {post.title ||
                   <span>
                     <Tag color="#4f545c">RE</Tag>
                     {post.root_title}
                   </span>
-                }
-              </h2>
-            </Link>
-            <Link to={post.url} className="Story__content__preview">
-              <StoryPreview post={post} />
-            </Link>
-          </div>
-          <div className="Story__footer">
-            {reviewed && <StoryFooter
-              post={post}
-              postState={postState}
-              pendingLike={pendingLike}
-              onLikeClick={onLikeClick}
-              onShareClick={onShareClick}
-            />}
+                  }
+                </h2>
+              </Link>
+              <Link to={post.url} className="Story__content__preview">
+                <StoryPreview post={post} />
+              </Link>
+            </div>
+            <div className="Story__footer">
+              {reviewed && <StoryFooter
+                post={post}
+                postState={postState}
+                pendingLike={pendingLike}
+                onLikeClick={onLikeClick}
+                onShareClick={onShareClick}
+              />}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
-}
 
-export default Story;
+  export default Story;
 
 

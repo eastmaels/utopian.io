@@ -3,6 +3,117 @@
 .Editor {
   padding-bottom: 24px;
 
+  .ant-form-item-label {
+    margin-bottom: 15px;
+  }
+
+  &__category {
+    .ant-radio-group {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    @media screen and (max-width: 736px) {
+      .ant-radio-group {
+        justify-content: space-around;
+      }
+    }
+
+    input[type="radio"],
+    .ant-radio-wrapper{
+      display: none;
+    }
+    .ant-radio-wrapper-checked{
+      + .box.ideas{
+        background-color: @green;
+      }
+      + .box.code{
+        background-color: @black;
+      }
+      + .box.graphics{
+        background-color: @orange;
+      }
+      + .box.social{
+        background-color: @blue-4;
+      }
+      + .box {
+        span {
+          color: @white;
+          transform: translateY(50px);
+          &:before {
+            color: @white;
+            transform: translateY(0px);
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .box {
+      width: 150px;
+      height: 150px;
+      background-color: @white;
+      transition: all 250ms ease;
+      will-change: transition;
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      font-weight: 900;
+      &:active{
+        transform: translateY(10px);
+      }
+      span {
+        position: absolute;
+        transform: translate(0, 60px);
+        left: 0;
+        right: 0;
+        transition: all 300ms ease;
+        font-size: 1.2em;
+        user-select: none;
+        color: #CCC;
+        &:before {
+          font-size: 1.5em;
+          font-family: 'anticon';
+          display: block;
+          transform: translateY(-10px);
+          opacity: 10;
+          transition: all 300ms ease-in-out;
+          font-weight: normal;
+          color: #CCC;
+        }
+      }
+    }
+    .ideas {
+      span {
+        &:before {
+          content: '\e649';
+        }
+      }
+    }
+    .code {
+      span {
+        &:before {
+          content: '\e636';
+        }
+      }
+    }
+    .graphics {
+      span {
+        &:before {
+          content: '\e656';
+        }
+      }
+    }
+    .social {
+      span {
+        &:before {
+          content: '\e671';
+        }
+      }
+    }
+  }
+
   .ant-form-item-control > div { width: 100%; }
   .ant-row { margin-top: 15px; }
 
