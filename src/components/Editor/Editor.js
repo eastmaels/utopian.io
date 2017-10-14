@@ -157,7 +157,7 @@ class Editor extends React.Component {
   setValues = (post) => {
     this.props.form.setFieldsValue({
       title: post.title,
-      topics: post.topics,
+      topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
       upvote: post.upvote,
     });
     if (this.input) {
