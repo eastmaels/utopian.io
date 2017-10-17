@@ -50,7 +50,7 @@ function makePlugins(options) {
         STEEMCONNECT_HOST: JSON.stringify(process.env.STEEMCONNECT_HOST || 'https://v2.steemconnect.com'),
         STEEMCONNECT_REDIRECT_URL: JSON.stringify(process.env.STEEMCONNECT_REDIRECT_URL || 'https://utopian.io/callback'),
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
-        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'https://steemd-int.steemit.com'),
+        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'wss://steemd.privex.io'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'https://api.utopian.io/api/'),
