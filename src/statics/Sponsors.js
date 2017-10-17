@@ -77,7 +77,8 @@ class Sponsors extends React.PureComponent {
                   return;
                 }
 
-                if (!sp || sp < 10) {
+                // 0 is allowed to undelegate
+                if (sp === '' || (sp > 0 && sp < 10)) {
                   alert("Please enter the amount of Steem Power you wish to delegate. Minimum is 10 SP.");
                   return;
                 }
