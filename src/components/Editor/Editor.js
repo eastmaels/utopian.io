@@ -33,7 +33,6 @@ class Editor extends React.Component {
     title: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
-    upvote: PropTypes.bool,
     type: PropTypes.string,
     loading: PropTypes.bool,
     isUpdating: PropTypes.bool,
@@ -50,7 +49,6 @@ class Editor extends React.Component {
     topics: [],
     type: '',
     body: '',
-    upvote: true,
     recentTopics: [],
     popularTopics: [],
     loading: false,
@@ -117,7 +115,7 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, topics, body, upvote, type } = this.props;
+    const { title, topics, body, type } = this.props;
 
     if (this.props.repository !== nextProps.repository) {
       this.setState({
@@ -130,7 +128,6 @@ class Editor extends React.Component {
       title !== nextProps.title ||
       topics !== nextProps.topics ||
       body !== nextProps.body ||
-      upvote !== nextProps.upvote ||
       type !== nextProps.type
     ) {
       this.setValues(nextProps);
@@ -161,8 +158,8 @@ class Editor extends React.Component {
   setValues = (post) => {
     this.props.form.setFieldsValue({
       title: post.title,
+      // @UTOPIAN filtering out utopian-io since it's always added/re-added when posting
       topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
-      upvote: post.upvote,
       type: post.type || 'ideas',
     });
     if (this.input) {
@@ -178,7 +175,7 @@ class Editor extends React.Component {
     // (array or just value for Select, proxy event for inputs and checkboxes)
 
     const values = {
-      ...this.props.form.getFieldsValue(['title', 'type', 'topics', 'upvote']),
+      ...this.props.form.getFieldsValue(['title', 'type', 'topics']),
       body: this.input.value,
     };
 
@@ -190,8 +187,6 @@ class Editor extends React.Component {
       values.body = e.target.value;
     } else if (e.target.type === 'text') {
       values.title = e.target.value;
-    } else if (e.target.type === 'checkbox') {
-      values.upvote = e.target.checked;
     } else if (e.target.type === 'radio') {
       values.type = e.target.value;
     }
@@ -440,7 +435,7 @@ class Editor extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { intl, loading, isUpdating, saving, getProjects, projects, setProjects } = this.props;
+    const { intl, loading, isUpdating, type, saving, getProjects, projects, setProjects } = this.props;
 
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
@@ -457,9 +452,10 @@ class Editor extends React.Component {
             ref={ search => this.search = search }
             value={ this.state.value }
             inputProps={{
+              disabled: isUpdating,
               id: 'search-projects',
               placeholder: 'Browse Github repositories',
-              className: 'ant-input ant-input-lg Editor__repository',
+              className: `ant-input ant-input-lg Editor__repository ${isUpdating ? 'disabled' : ''}`,
               onKeyPress: (event) => {
                 let q = event.target.value;
                 q = q.replace('https://', '');
@@ -544,26 +540,26 @@ class Editor extends React.Component {
             {getFieldDecorator('type')(
               <RadioGroup onChange={this.onUpdate}>
                 <label>
-                  <Radio value="ideas" name="type" />
-                  <div className="ideas box">
+                  <Radio value="ideas" name="type" disabled={ isUpdating } />
+                  <div className={`ideas box ${isUpdating && type !== 'ideas' ? 'disabled' : ''}`}>
                     <span>Idea/Feature</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="code" name="type" />
-                  <div className="code box">
+                  <Radio value="code" name="type" disabled={ isUpdating } />
+                  <div className={`code box ${isUpdating && type !== 'code' ? 'disabled' : ''}`}>
                     <span>Code</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="graphics" name="type" />
-                  <div className="graphics box">
+                  <Radio value="graphics" name="type" disabled={ isUpdating } />
+                  <div className={`graphics box ${isUpdating && type !== 'graphics' ? 'disabled' : ''}`}>
                     <span>Graphics</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="social" name="type" />
-                  <div className="social box">
+                  <Radio value="social" name="type" disabled={ isUpdating } />
+                  <div className={`social box ${isUpdating && type !== 'social' ? 'disabled' : ''}`}>
                     <span>Social</span>
                   </div>
                 </label>
@@ -710,13 +706,6 @@ class Editor extends React.Component {
               dropdownStyle={{ display: 'none' }}
               tokenSeparators={[' ', ',']}
             />,
-          )}
-        </Form.Item>
-        <Form.Item className={classNames({ Editor__hidden: isUpdating })}>
-          {getFieldDecorator('upvote', { valuePropName: 'checked', initialValue: true })(
-            <Checkbox onChange={this.onUpdate} disabled={isUpdating}>
-              <FormattedMessage id="like_post" defaultMessage="Like this post" />
-            </Checkbox>,
           )}
         </Form.Item>
         <div className="Editor__bottom">

@@ -82,9 +82,8 @@ export const broadcastComment = (
   title,
   body,
   jsonMetadata,
-  reward,
-  upvote,
   permlink,
+  extensions,
 ) => {
   const operations = [];
 
@@ -107,8 +106,21 @@ export const broadcastComment = (
     permlink,
     allow_votes: true,
     allow_curation_rewards: true,
+    extensions,
   };
 
+  // @UTOPIAN here beneficiaries are stored when creating the post
+  if (extensions) {
+    commentOptionsConfig.extensions = extensions;
+  }
+
+  // @UTOPIAN always 100% powered up
+  commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
+  commentOptionsConfig.percent_steem_dollars = 0;
+
+  operations.push(['comment_options', commentOptionsConfig]);
+
+  /*
   if (reward === '0') {
     commentOptionsConfig.max_accepted_payout = '0.000 SBD';
     commentOptionsConfig.percent_steem_dollars = 10000;
@@ -131,7 +143,7 @@ export const broadcastComment = (
         weight: 10000,
       },
     ]);
-  }
+  }*/
 
   console.log("OPERATIONS", operations)
 
@@ -151,10 +163,9 @@ export function createPost(postData) {
       title,
       body,
       jsonMetadata,
-      reward,
-      upvote,
       draftId,
       isUpdating,
+      extensions,
     } = postData;
 
     console.log("POST DATA", postData);
@@ -176,9 +187,8 @@ export function createPost(postData) {
             title,
             newBody,
             jsonMetadata,
-            !isUpdating && reward,
-            !isUpdating && upvote,
             permlink,
+            !isUpdating && extensions,
           ).then((result) => {
 
             if (draftId) {

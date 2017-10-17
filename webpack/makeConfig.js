@@ -52,6 +52,7 @@ function makePlugins(options) {
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
         STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'https://steemd-int.steemit.com'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
+        UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'https://api.utopian.io/api/'),
         IS_BROWSER: JSON.stringify(true),
         PUSHPAD_PROJECT_ID: process.env.PUSHPAD_PROJECT_ID,

@@ -70,8 +70,6 @@ class Write extends React.Component {
       initialTopics: [],
       initialType: '',
       initialBody: '',
-      initialReward: '100',
-      initialUpvote: true,
       initialRepository: null,
       isUpdating: false,
     };
@@ -104,7 +102,6 @@ class Write extends React.Component {
         initialTopics: tags || [],
         initialType: jsonMetadata.type || 'ideas',
         initialBody: draftPost.body || '',
-        initialUpvote: draftPost.upvote,
         isUpdating: isUpdating || false,
         initialRepository: jsonMetadata.repository,
       });
@@ -128,12 +125,16 @@ class Write extends React.Component {
     const data = {
       body: form.body,
       title: form.title,
-      upvote: form.upvote,
     };
 
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
-    data.reward = '100'; // @UTOPIAN forcing 100% power up reward
+
+    data.extensions = [[0, {
+      beneficiaries: [
+        { account: process.env.UTOPIAN_STEEM_ACCOUNT, weight: 1000 }
+      ]
+    }]];
 
     const tags = [process.env.UTOPIAN_CATEGORY, ...form.topics];
 
@@ -256,7 +257,7 @@ class Write extends React.Component {
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialType, initialBody, initialReward, initialUpvote, initialRepository } = this.state;
+    const { initialTitle, initialTopics, initialType, initialBody, initialRepository } = this.state;
     const { loading, saving, submitting } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
@@ -277,7 +278,6 @@ class Write extends React.Component {
               topics={initialTopics}
               type={initialType}
               body={initialBody}
-              upvote={initialUpvote}
               loading={isSubmitting}
               isUpdating={this.state.isUpdating}
               onUpdate={this.saveDraft}

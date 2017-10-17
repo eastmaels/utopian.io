@@ -37,7 +37,9 @@ if (process.env.STEEMCONNECT_HOST) {
   steemconnect.init({
     app: 'utopian.app',
     callbackURL: process.env.STEEMCONNECT_REDIRECT_URL,
+    scope: [],
   });
+
   const accessToken = Cookie.get('access_token');
   steemconnect.setBaseURL(process.env.STEEMCONNECT_HOST);
   if (accessToken) {
@@ -49,6 +51,12 @@ steem.api.setOptions({ transport: 'http' });
 if (process.env.STEEMJS_URL) {
   steem.api.setOptions({ url: process.env.STEEMJS_URL });
 }
+
+/*
+steem.api.lookupAccounts('elear', 100, function(err, result) {
+  console.log(err, result);
+});
+*/
 
 message.config({
   top: 62,
