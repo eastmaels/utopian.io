@@ -11,6 +11,10 @@ const loading = (state = false, action) => {
     case Actions.GET_CONTRIBUTION_REQUEST: {
       return Actions.GET_CONTRIBUTION_REQUEST;
     }
+    case Actions.GET_SPONSORS_REQUEST: {
+      return Actions.GET_SPONSORS_REQUEST;
+    }
+    case Actions.CREATE_SPONSOR_SUCCESS:
     case Actions.CREATE_CONTRIBUTION_SUCCESS:
     case Actions.GET_CONTRIBUTION_SUCCESS:
     case Actions.GET_CONTRIBUTIONS_SUCCESS: {

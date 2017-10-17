@@ -18,6 +18,7 @@ import Post from './post/Post';
 import Bookmarks from './bookmarks/Bookmarks';
 import About from './statics/About';
 import Help from './statics/Help';
+import Sponsors from './statics/Sponsors';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
 import Drafts from './post/Write/Drafts';
@@ -42,6 +43,7 @@ export default (
       <Route path="/tags" component={Tags} />
       <Route path="/donors" component={Donors} />
       */}
+      <Route path="/sponsors" component={Sponsors} />
       <Route
         path="/bookmarks"
         render={() => (
