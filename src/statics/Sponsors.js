@@ -109,6 +109,7 @@ class Sponsors extends React.PureComponent {
                 <label htmlFor="sp">Steem Power to delegate, minimum is ten (10.000)</label>
                 <input id="sp" type="number" min="10" placeholder="e.g. 1000.000" ref={input => this.sp = input}/>
               </form>
+              <p style={{'font-size': '12px'}}>You can un-delegate anytime. Enter 0 in the field above.</p>
             </Modal>
           </div>
         </div>
