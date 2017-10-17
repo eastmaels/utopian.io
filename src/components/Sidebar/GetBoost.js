@@ -14,9 +14,9 @@ const GetBoost = () =>
     </p>
     <p>
       <Link className="SidebarBlock__helplink" to={`/help/#contributor-report`}>
-      <button className="SidebarBlock__button">
-        <span className="SidebarBlock__text">LEARN HOW</span>
-      </button>
+        <button className="SidebarBlock__button">
+          <span className="SidebarBlock__text">LEARN HOW</span>
+        </button>
       </Link>
     </p>
   </div>);
