@@ -440,6 +440,68 @@ class Editor extends React.Component {
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
         <Form.Item
+          label={
+            <span className="Editor__label">
+              What is this contribution about?
+            </span>
+          }
+        >
+          <div className="Editor__category">
+            {getFieldDecorator('type')(
+              <RadioGroup onChange={this.onUpdate}>
+                <label>
+                  <Radio value="ideas" name="type" disabled={ isUpdating } />
+                  <div className={`ideas box ${isUpdating && type !== 'ideas' ? 'disabled' : ''}`}>
+                    <span>Idea/Feature</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="development" name="type" disabled={ isUpdating } />
+                  <div className={`development box ${isUpdating && type !== 'development' ? 'disabled' : ''}`}>
+                    <span>Development</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="bug-hunting" name="type" disabled={ isUpdating } />
+                  <div className={`bug-hunting box ${isUpdating && type !== 'bug-hunting' ? 'disabled' : ''}`}>
+                    <span>Bug Hunting</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="translations" name="type" disabled={ isUpdating } />
+                  <div className={`translations box ${isUpdating && type !== 'translations' ? 'disabled' : ''}`}>
+                    <span>Translation</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="graphics" name="type" disabled={ isUpdating } />
+                  <div className={`graphics box ${isUpdating && type !== 'graphics' ? 'disabled' : ''}`}>
+                    <span>Graphics</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="documentation" name="type" disabled={ isUpdating } />
+                  <div className={`documentation box ${isUpdating && type !== 'documentation' ? 'disabled' : ''}`}>
+                    <span>Documentation</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="analysis" name="type" disabled={ isUpdating } />
+                  <div className={`analysis box ${isUpdating && type !== 'analysis' ? 'disabled' : ''}`}>
+                    <span>Analysis</span>
+                  </div>
+                </label>
+                <label>
+                  <Radio value="social" name="type" disabled={ isUpdating } />
+                  <div className={`social box ${isUpdating && type !== 'social' ? 'disabled' : ''}`}>
+                    <span>Visibility</span>
+                  </div>
+                </label>
+              </RadioGroup>
+            )}
+          </div>
+        </Form.Item>
+        <Form.Item
           validateStatus={this.state.noRepository ? 'error' : ''}
           help={this.state.noRepository && "Please enter an existing Github repository"}
           label={
@@ -528,44 +590,6 @@ class Editor extends React.Component {
               </div>
             )}
           />
-        </Form.Item>
-        <Form.Item
-          label={
-            <span className="Editor__label">
-              What is this contribution about?
-            </span>
-          }
-        >
-          <div className="Editor__category">
-            {getFieldDecorator('type')(
-              <RadioGroup onChange={this.onUpdate}>
-                <label>
-                  <Radio value="ideas" name="type" disabled={ isUpdating } />
-                  <div className={`ideas box ${isUpdating && type !== 'ideas' ? 'disabled' : ''}`}>
-                    <span>Idea/Feature</span>
-                  </div>
-                </label>
-                <label>
-                  <Radio value="code" name="type" disabled={ isUpdating } />
-                  <div className={`code box ${isUpdating && type !== 'code' ? 'disabled' : ''}`}>
-                    <span>Code</span>
-                  </div>
-                </label>
-                <label>
-                  <Radio value="graphics" name="type" disabled={ isUpdating } />
-                  <div className={`graphics box ${isUpdating && type !== 'graphics' ? 'disabled' : ''}`}>
-                    <span>Graphics</span>
-                  </div>
-                </label>
-                <label>
-                  <Radio value="social" name="type" disabled={ isUpdating } />
-                  <div className={`social box ${isUpdating && type !== 'social' ? 'disabled' : ''}`}>
-                    <span>Social</span>
-                  </div>
-                </label>
-              </RadioGroup>
-            )}
-          </div>
         </Form.Item>
         <Form.Item
           label={

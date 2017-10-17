@@ -1,0 +1,52 @@
+@import (reference) "../../styles/modules/variables.less";
+@import (reference) "../../styles/custom.less";
+@import (reference) "../../styles/fonts.less";
+
+.Contribution {
+  margin-bottom: 15px;
+  padding: 10px;
+  color: @white;
+  background: @blue;
+
+  a {
+    color: @white;
+    &:hover {
+      color: @white;
+      text-decoration: underline;
+    }
+  }
+
+  &.ideas {
+    background: @bg-ideas;
+  }
+  &.development {
+    background: @bg-development;
+  }
+  &.bug-hunting {
+    background: @bg-bug-hunting;
+  }
+  &.translations {
+    background: @bg-translations;
+  }
+  &.documentation {
+    color: @black;
+    background: @bg-documentation;
+    border: 1px solid #999;
+    a {
+      color: @black;
+      &:hover {
+        color: @black;
+        text-decoration: underline;
+      }
+    }
+  }
+  &.analysis {
+    background: @bg-analysis;
+  }
+  &.graphics {
+    background: @bg-graphics;
+  }
+  &.social {
+    background: @bg-social;
+  }
+}

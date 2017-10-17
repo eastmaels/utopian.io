@@ -13,6 +13,7 @@ import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 import Action from '../../components/Button/Action';
 import { Modal } from 'antd';
+import Contribution from './Contribution';
 
 import './StoryFull.less';
 
@@ -205,24 +206,16 @@ class StoryFull extends React.Component {
     const metaData = post.json_metadata;
     const repository = metaData.repository;
     const postType = post.json_metadata.type;
-    const icon = postType => {
-      switch (postType) {
-        case 'ideas':
-          return 'bulb';
-        case 'code':
-          return 'code';
-        case 'graphics':
-          return 'layout';
-        case 'social':
-          return 'share-alt';
-      }
-    };
 
     return (
       <div className="StoryFull">
-        <div className={`StoryFull__contribution ${postType}`}>
-          <b><Icon type={icon(postType)} /> Contribution for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}/all`}><Icon type='github' /> {repository.full_name}</Link>
-        </div>
+
+        <Contribution
+          type={ postType }
+          full_name={ repository.full_name }
+          platform={ metaData.platform }
+          id={ repository.id }
+        />
 
         <Modal
           visible={this.state.verifyModal}
@@ -236,16 +229,16 @@ class StoryFull extends React.Component {
           }}
         >
           <p>Utopian relies on community members with high reputation like you to guarantee the quality of the contributions.</p>
-            <br />
-            <ul>
-              <li><Icon type="heart" /> This contribution is personal, meaningful and informative.</li>
-              <li><Icon type="bulb" /> If it's an idea it is very well detailed and realistic.</li>
-              <li><Icon type="smile" /> This is the first and only time this contribution has been shared with the community. </li>
-              <li><Icon type="search" /> This contribution is verifiable and provide proof of the work.</li>
-            </ul>
-            <br />
-            <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified.</p>
-            <p><b>Is this contribution ready to be verified?</b></p>
+          <br />
+          <ul>
+            <li><Icon type="heart" /> This contribution is personal, meaningful and informative.</li>
+            <li><Icon type="bulb" /> If it's an idea it is very well detailed and realistic.</li>
+            <li><Icon type="smile" /> This is the first and only time this contribution has been shared with the community. </li>
+            <li><Icon type="search" /> This contribution is verifiable and provide proof of the work.</li>
+          </ul>
+          <br />
+          <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified.</p>
+          <p><b>Is this contribution ready to be verified?</b></p>
         </Modal>
 
         {replyUI}
@@ -320,44 +313,44 @@ class StoryFull extends React.Component {
           onClick={this.handleContentClick}
         >
           {_.has(video, 'content.videohash') && _.has(video, 'info.snaphash') &&
-            <video
-              controls
-              src={`https://ipfs.io/ipfs/${video.content.videohash}`}
-              poster={`https://ipfs.io/ipfs/${video.info.snaphash}`}
-            >
-              <track kind="captions" />
-            </video>
+          <video
+            controls
+            src={`https://ipfs.io/ipfs/${video.content.videohash}`}
+            poster={`https://ipfs.io/ipfs/${video.info.snaphash}`}
+          >
+            <track kind="captions" />
+          </video>
           }
           <Body full body={post.body} json_metadata={post.json_metadata} />
         </div>
         {open &&
-          <Lightbox
-            mainSrc={images[index]}
-            nextSrc={images[(index + 1) % images.length]}
-            prevSrc={images[(index + (images.length - 1)) % images.length]}
-            onCloseRequest={() => {
-              this.setState({
-                lightbox: {
-                  ...this.state.lightbox,
-                  open: false,
-                },
-              });
-            }}
-            onMovePrevRequest={() =>
-              this.setState({
-                lightbox: {
-                  ...this.state.lightbox,
-                  index: (index + (images.length - 1)) % images.length,
-                },
-              })}
-            onMoveNextRequest={() =>
-              this.setState({
-                lightbox: {
-                  ...this.state.lightbox,
-                  index: (index + (images.length + 1)) % images.length,
-                },
-              })}
-          />}
+        <Lightbox
+          mainSrc={images[index]}
+          nextSrc={images[(index + 1) % images.length]}
+          prevSrc={images[(index + (images.length - 1)) % images.length]}
+          onCloseRequest={() => {
+            this.setState({
+              lightbox: {
+                ...this.state.lightbox,
+                open: false,
+              },
+            });
+          }}
+          onMovePrevRequest={() =>
+            this.setState({
+              lightbox: {
+                ...this.state.lightbox,
+                index: (index + (images.length - 1)) % images.length,
+              },
+            })}
+          onMoveNextRequest={() =>
+            this.setState({
+              lightbox: {
+                ...this.state.lightbox,
+                index: (index + (images.length + 1)) % images.length,
+              },
+            })}
+        />}
         <div className="StoryFull__topics">
           {tags && tags.map(tag => <Topic key={tag} name={tag} />)}
         </div>

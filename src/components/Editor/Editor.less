@@ -26,16 +26,35 @@
     }
     .ant-radio-wrapper-checked{
       + .box.ideas{
-        background-color: @green;
+        background-color: @bg-ideas;
       }
-      + .box.code{
-        background-color: @black;
+      + .box.development{
+        background-color: @bg-development;
+      }
+      + .box.bug-hunting{
+        background-color: @bg-bug-hunting;
+      }
+      + .box.translations{
+        background-color: @bg-translations;
       }
       + .box.graphics{
-        background-color: @orange;
+        background-color: @bg-graphics;
+      }
+      + .box.documentation{
+        span {
+          color: @black;
+          &:before {
+            color: @black;
+          }
+        }
+        border: 1px solid #999;
+        background-color: @bg-documentation;
+      }
+      + .box.analysis{
+        background-color: @bg-analysis;
       }
       + .box.social{
-        background-color: @blue-4;
+        background-color: @bg-social;
       }
       + .box {
         span {
@@ -91,28 +110,56 @@
     .ideas {
       span {
         &:before {
-          content: '\e649';
+          content: @icon-ideas;
         }
       }
     }
-    .code {
+    .development {
       span {
         &:before {
-          content: '\e636';
+          content: @icon-development;
+        }
+      }
+    }
+    .bug-hunting {
+      span {
+        &:before {
+          content: @icon-bug-hunting;
+        }
+      }
+    }
+    .translations {
+      span {
+        &:before {
+          content: @icon-translations;
         }
       }
     }
     .graphics {
       span {
         &:before {
-          content: '\e656';
+          content: @icon-graphics;
+        }
+      }
+    }
+    .documentation {
+      span {
+        &:before {
+          content: @icon-documentation;
+        }
+      }
+    }
+    .analysis {
+      span {
+        &:before {
+          content: @icon-analysis;
         }
       }
     }
     .social {
       span {
         &:before {
-          content: '\e671';
+          content: @icon-social;
         }
       }
     }

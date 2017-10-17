@@ -9,6 +9,8 @@ import StoryFooter from './StoryFooter';
 import Avatar from '../Avatar';
 import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
+
+import Contribution from './Contribution';
 import './Story.less';
 
 @injectIntl
@@ -144,18 +146,6 @@ class Story extends React.Component {
     }
 
     const postType = post.json_metadata.type;
-    const icon = postType => {
-      switch (postType) {
-        case 'ideas':
-          return 'bulb';
-        case 'code':
-          return 'code';
-        case 'graphics':
-          return 'layout';
-        case 'social':
-          return 'share-alt';
-      }
-    };
 
       return (
         <div className="Story">
@@ -172,9 +162,14 @@ class Story extends React.Component {
             >
               <i className="iconfont icon-unfold Story__more" />
             </Popover>
-            <div className={`Story__contribution ${postType}`}>
-              <b><Icon type={icon(postType)} /> Contribution for</b>: <Link to={`/project/${repository.full_name}/${metaData.platform}/${repository.id}/all`}><Icon type='github' /> {repository.full_name}</Link>
-            </div>
+
+            <Contribution
+              type={ postType }
+              full_name={ repository.full_name }
+              platform={ metaData.platform }
+              id={ repository.id }
+            />
+
             <div className="Story__header">
               <Link to={`/@${post.author}`}>
                 <Avatar username={post.author} size={40} />

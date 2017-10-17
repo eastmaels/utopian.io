@@ -140,9 +140,13 @@ class SubFeed extends React.Component {
         <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => history.push(`${type}`)}>
           <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
           <TabPane tab={<span><Icon type="bulb" />Ideas</span>} key="ideas" />
-          <TabPane tab={<span><Icon type="code" />Code</span>} key="code" />
+          <TabPane tab={<span><Icon type="code" />Development</span>} key="development" />
+          <TabPane tab={<span><Icon type="eye-o" />Bug Hunting</span>} key="bug-hunting" />
+          <TabPane tab={<span><Icon type="flag" />Translations</span>} key="translations" />
           <TabPane tab={<span><Icon type="layout" />Graphics</span>} key="graphics" />
-          <TabPane tab={<span><Icon type="share-alt" />Social</span>} key="social" />
+          <TabPane tab={<span><Icon type="book" />Documentation</span>} key="documentation" />
+          <TabPane tab={<span><Icon type="dot-chart" />Analysis</span>} key="analysis" />
+          <TabPane tab={<span><Icon type="share-alt" />Visibility</span>} key="social" />
         </Tabs>}
 
         <Feed
