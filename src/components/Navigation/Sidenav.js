@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
+import { Icon } from 'antd';
 import './Sidenav.less';
 
 const isActive = (item, match, location) => location.pathname === item;
@@ -33,6 +34,12 @@ const Sidenav = ({ username }) =>
             <i className="iconfont icon-wallet" />
             Wallet
           </a>
+        </li>
+        <li>
+          <NavLink to="/sponsors" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/sponsors', match, location)}>
+            <Icon type="heart" style={{'vertical-align': 'middle', 'font-size': '22px', 'margin-right': '10px'}}/>
+            Sponsors
+          </NavLink>
         </li>
       </ul>}
   </div>);

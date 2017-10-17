@@ -1,0 +1,78 @@
+.Sponsors {
+  padding: 15px;
+
+  &__intro {
+    text-align: center;
+
+    &-delegate {
+      width: auto;
+      display: inline-block;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      background: #0275d8;
+      color: #FFF;
+      padding: 17px;
+
+      i {
+        vertical-align: middle;
+        font-size: 14px;
+      }
+    }
+  }
+
+  &__heroes {
+    display: flex;
+    background: #FFF;
+    border-radius: 4px;
+    border: 1px solid #EEE;
+    margin-top: 15px;
+    padding: 15px;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    > h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    &-hero {
+      width: auto;
+      padding: 15px;
+      border: 1px solid #EEE;
+      margin-bottom: 2px;
+
+      .picture {
+        vertical-align: middle;
+        display: inline-block;
+        border: 1px solid #CCC;
+        border-radius: 100%;
+      }
+
+      .account {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 22px;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  &__form {
+    input {
+      width: 100%;
+      height: 45px;
+      border-radius: 4px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+    label{
+      display: block;
+      width: 100%;
+      font-weight: bold;
+      margin-bottom: 7.5px;
+    }
+  }
+}

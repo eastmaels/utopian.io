@@ -21,6 +21,7 @@ import { responsiveReducer } from './vendor/responsive';
 import projectsReducer from './reducers/projects';
 import projectReducer from './reducers/project';
 import contributionsReducer from './reducers/contributions';
+import sponsorsReducer from './reducers/sponsors';
 import contributionReducer from './reducers/contribution';
 import loadingReducer from './reducers/loading';
 
@@ -35,6 +36,7 @@ const reducers = combineReducers({
   projects: projectsReducer, // @UTOPIAN
   project: projectReducer, // @UTOPIAN
   loading: loadingReducer, // @UTOPIAN
+  sponsors: sponsorsReducer, // @UTOPIAN
   feed: feedReducer,
   user: userReducer,
   users: usersReducer,

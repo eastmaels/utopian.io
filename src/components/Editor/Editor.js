@@ -634,7 +634,6 @@ class Editor extends React.Component {
               <li><Icon type="bulb" /> Writing about an idea? Make sure to provide as much details as possible.</li>
               <li><Icon type="frown" /> Don't cheat. Never report contributions you have already shared. </li>
               <li><Icon type="search" /> Contributions must be verifiable. Provide proof of your work.</li>
-              <li><Icon type="like" /> Contributions can be ideas, code development, graphics or spreading the word via social networks.</li>
             </ul>
           </div>
 
