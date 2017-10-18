@@ -24,6 +24,9 @@ import Affix from '../../components/Utils/Affix';
 
 const version = require('../../../package.json').version;
 
+// @UTOPIAN
+import { getSponsors } from '../../actions/sponsors';
+
 @injectIntl
 @withRouter
 @connect(
@@ -39,6 +42,7 @@ const version = require('../../../package.json').version;
     saveDraft,
     newPost,
     notify,
+    getSponsors,
   },
 )
 class Write extends React.Component {
@@ -109,6 +113,7 @@ class Write extends React.Component {
   }
 
   onSubmit = (form) => {
+    const { getSponsors } = this.props;
     const data = this.getNewPostData(form);
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
@@ -116,9 +121,45 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    console.log("POST DATA", data);
+    getSponsors().then(res => {
+      if (res.response && res.response.results) {
+        const sponsors = res.response.results;
+        let total_vesting_shares = 0;
 
-    this.props.createPost(data);
+        sponsors.forEach(sponsor => {
+          total_vesting_shares = total_vesting_shares + sponsor.vesting_shares;
+        });
+
+        const beneficiaries = [
+          ...sponsors.map(sponsor => {
+            const sponsorSharesPercent = (sponsor.vesting_shares / total_vesting_shares) * 100;
+            const sponsorsDedicatedWeight = 2000; // 20% of all the rewards
+            const sponsorWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
+
+            return {
+              account: sponsor.account,
+              weight: sponsorWeight
+            }
+          })
+        ];
+
+        const extensions = [[0, {
+          beneficiaries
+        }]];
+
+        const contributionData = {
+          ...data,
+          extensions
+        };
+
+        console.log("CONTRIBUTION DATA", contributionData);
+
+        //this.props.createPost(contributionData);
+      } else {
+        alert("Something went wrong. Please try again!")
+      }
+
+    });
   };
 
   getNewPostData = (form) => {
@@ -129,12 +170,6 @@ class Write extends React.Component {
 
     data.parentAuthor = '';
     data.author = this.props.user.name || '';
-
-    data.extensions = [[0, {
-      beneficiaries: [
-        { account: process.env.UTOPIAN_STEEM_ACCOUNT, weight: 1000 }
-      ]
-    }]];
 
     const tags = [process.env.UTOPIAN_CATEGORY, ...form.topics];
 

@@ -37,7 +37,7 @@ const Sidenav = ({ username }) =>
         </li>
         <li>
           <NavLink to="/sponsors" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/sponsors', match, location)}>
-            <Icon type="heart" style={{'vertical-align': 'middle', 'font-size': '22px', 'margin-right': '10px'}}/>
+            <Icon type="heart" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
             Sponsors
           </NavLink>
         </li>
