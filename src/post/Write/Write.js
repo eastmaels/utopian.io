@@ -154,7 +154,7 @@ class Write extends React.Component {
 
         console.log("CONTRIBUTION DATA", contributionData);
 
-        //this.props.createPost(contributionData);
+        this.props.createPost(contributionData);
       } else {
         alert("Something went wrong. Please try again!")
       }
