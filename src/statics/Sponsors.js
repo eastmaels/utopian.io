@@ -79,7 +79,7 @@ class Sponsors extends React.PureComponent {
                 }
 
                 // 0 is allowed to undelegate
-                if (sp === '' || (sp > 0 && sp < 100)) {
+                if (sp === 'undefined' || sp === '' || (sp > 0 && sp < 100)) {
                   alert("Please enter the amount of Steem Power you wish to delegate. Minimum is 100 SP.");
                   return;
                 }
@@ -113,7 +113,7 @@ class Sponsors extends React.PureComponent {
               <form className="Sponsors__form">
                 <label htmlFor="account">Your Steem account</label>
                 <input id="account" type="text" name="account" placeholder="e.g. @youraccount" ref={input => this.account = input} />
-                <label htmlFor="sp">Steem Power to delegate, minimum is ten (10.000)</label>
+                <label htmlFor="sp">Steem Power to delegate, minimum is 100 (100.000)</label>
                 <input id="sp" type="number" min="100" placeholder="e.g. 1000.000" ref={input => this.sp = input}/>
               </form>
               <p style={{'fontSize': '12px'}}>You can un-delegate anytime. Enter 0 in the field above.</p>
