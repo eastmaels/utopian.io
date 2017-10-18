@@ -126,12 +126,14 @@ class Write extends React.Component {
         const sponsors = res.response.results;
         let total_vesting_shares = 0;
 
-        sponsors.forEach(sponsor => {
+        const maxSponsors = sponsors.filter((sponsor, index) => index < 8);
+
+        maxSponsors.forEach(sponsor => {
           total_vesting_shares = total_vesting_shares + sponsor.vesting_shares;
         });
 
         const beneficiaries = [
-          ...sponsors.map(sponsor => {
+          ...maxSponsors.map(sponsor => {
             const sponsorSharesPercent = (sponsor.vesting_shares / total_vesting_shares) * 100;
             const sponsorsDedicatedWeight = 2000; // 20% of all the rewards
             const sponsorWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
