@@ -57,15 +57,15 @@ class Sponsors extends React.PureComponent {
               </div>
               <div className="Sponsors__stats-box">
                 <h3>${Math.round(stats.total_paid_authors)}</h3>
-                <p><b>Contributors Rewards</b></p>
+                <p><b>Released Contributors Rewards</b></p>
               </div>
               <div className="Sponsors__stats-box">
                 <h3>${Math.round(stats.total_paid_curators)}</h3>
-                <p><b>Curators Rewards</b></p>
+                <p><b>Released Curators Rewards</b></p>
               </div>
               <div className="Sponsors__stats-box">
                 <h3>${Math.round(stats.total_paid_rewards) + Math.round(stats.total_pending_rewards)}</h3>
-                <p><b>Total Generating</b></p>
+                <p><b>Total Generated</b></p>
               </div>
             </div>
             <div><h2>HEROES</h2></div>
@@ -94,6 +94,7 @@ class Sponsors extends React.PureComponent {
                     <div className="statsTab">
                       <h4>${(Math.round((sponsor.should_receive_rewards || 0) * 10) / 10).toFixed(2)}</h4>
                       <p><b>Will Receive</b></p>
+                      <p style={{fontSize: '12px'}}><em>(Not including pending rewards. Will accumulate pending rewards once released)</em></p>
                     </div>
                     <div className="statsTab">
                       <h4>${(Math.round((sponsor.total_paid_rewards || 0) * 10) / 10).toFixed(2)}</h4>
