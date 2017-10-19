@@ -25,7 +25,7 @@ import Affix from '../../components/Utils/Affix';
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
-import { getSponsors } from '../../actions/sponsors';
+import { getSponsorsBeneficiaries } from '../../actions/sponsors';
 
 @injectIntl
 @withRouter
@@ -42,7 +42,7 @@ import { getSponsors } from '../../actions/sponsors';
     saveDraft,
     newPost,
     notify,
-    getSponsors,
+    getSponsorsBeneficiaries,
   },
 )
 class Write extends React.Component {
@@ -113,7 +113,7 @@ class Write extends React.Component {
   }
 
   onSubmit = (form) => {
-    const { getSponsors } = this.props;
+    const { getSponsorsBeneficiaries } = this.props;
     const data = this.getNewPostData(form);
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
@@ -121,26 +121,18 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    getSponsors().then(res => {
+    getSponsorsBeneficiaries().then(res => {
       if (res.response && res.response.results) {
         const sponsors = res.response.results;
-        let total_vesting_shares = 0;
-
-        const maxSponsors = sponsors.filter((sponsor, index) => index < 8);
-
-        maxSponsors.forEach(sponsor => {
-          total_vesting_shares = total_vesting_shares + sponsor.vesting_shares;
-        });
-
         const beneficiaries = [
-          ...maxSponsors.map(sponsor => {
-            const sponsorSharesPercent = (sponsor.vesting_shares / total_vesting_shares) * 100;
+          ...sponsors.map(sponsor => {
+            const sponsorSharesPercent = sponsor.percentage_total_vesting_shares;
             const sponsorsDedicatedWeight = 2000; // 20% of all the rewards
             const sponsorWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
 
             return {
               account: sponsor.account,
-              weight: sponsorWeight
+              weight: sponsorWeight || 1
             }
           })
         ];
