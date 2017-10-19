@@ -42,7 +42,7 @@ class Sponsors extends React.PureComponent {
             <div className="Sponsors__intro">
               <h1>The Utopian Sponsors <Icon type="heart" /> The Open Source World!</h1>
               <p>Utopian uses the delegated Steem Power to reward the best Open Source contributions.</p>
-              <p><b>20% of the total rewards generated goes to the Sponsors based on the delegated amount.</b></p>
+              <p><b>20% of the total contributor rewards generated goes to the Sponsors based on their delegated amount.</b></p>
               <div
                 className="Sponsors__intro-delegate"
                 onClick={() => this.setState({sponsorModal: true})}>
