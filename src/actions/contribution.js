@@ -49,7 +49,7 @@ export const getContributionRequest = (author, permlink) => ({
 
 export const getContribution = (author, permlink) => dispatch => dispatch(getContributionRequest(author, permlink));
 
-export const verifyContributionRequest = (author, permlink) => ({
+export const verifyContributionRequest = (author, permlink, moderator) => ({
   [CALL_API]: {
     types: [ Actions.VERIFY_CONTRIBUTION_REQUEST, Actions.VERIFY_CONTRIBUTION_SUCCESS, Actions.VERIFY_CONTRIBUTION_FAILURE ],
     endpoint: `posts/${author}/${permlink}`,
@@ -58,6 +58,7 @@ export const verifyContributionRequest = (author, permlink) => ({
     payload: {
       author,
       permlink,
+      moderator,
       reviewed: true,
     },
     additionalParams: {},
@@ -65,7 +66,7 @@ export const verifyContributionRequest = (author, permlink) => ({
   }
 });
 
-export const verifyContribution = (author, permlink) => dispatch => dispatch(verifyContributionRequest(author, permlink));
+export const verifyContribution = (author, permlink, moderator) => dispatch => dispatch(verifyContributionRequest(author, permlink, moderator));
 
 export const setContribution = (contribution) => ({
   type: Actions.SET_CONTRIBUTION,

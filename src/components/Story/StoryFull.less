@@ -10,7 +10,7 @@
   }
 
   &__review {
-    background: @blue;
+    background: @red;
     color: @white;
     padding: 7.5px;
     overflow: hidden;
@@ -19,6 +19,16 @@
     button {
       float: right;
       width: auto;
+      background: @green !important;
+      border: 1px solid @white !important;
+    }
+    a {
+      color: @white;
+      font-weight: bold;
+      text-decoration: underline;
+      &:hover {
+        color: @white;
+      }
     }
   }
 

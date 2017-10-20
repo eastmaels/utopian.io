@@ -33,7 +33,6 @@ class Sponsors extends React.PureComponent {
   render () {
     const { createSponsor, loading, sponsors, stats } = this.props;
     const isLoading = loading === Actions.CREATE_SPONSOR_SUCCESS;
-    const minimumSp = 500;
 
     return (
       <div className="main-panel help-section">
@@ -88,16 +87,16 @@ class Sponsors extends React.PureComponent {
                       <p><b>Delegated</b></p>
                     </div>
                     <div className="statsTab">
-                      <h4>{(Math.round((sponsor.percentage_total_vesting_shares || 0) * 10) / 10).toFixed(2)}%</h4>
+                      <h4>{Math.ceil((sponsor.percentage_total_vesting_shares || 0) * 100) / 100}%</h4>
                       <p><b>Utopian Shares</b></p>
                     </div>
                     <div className="statsTab">
-                      <h4>${(Math.round((sponsor.should_receive_rewards || 0) * 10) / 10).toFixed(2)}</h4>
+                      <h4>${Math.ceil((sponsor.should_receive_rewards || 0) * 100) / 100}</h4>
                       <p><b>Will Receive</b></p>
                       <p style={{fontSize: '12px'}}><em>(Not including pending rewards. Will accumulate pending rewards once released)</em></p>
                     </div>
                     <div className="statsTab">
-                      <h4>${(Math.round((sponsor.total_paid_rewards || 0) * 10) / 10).toFixed(2)}</h4>
+                      <h4>${Math.ceil((sponsor.total_paid_rewards || 0) * 100) / 100}</h4>
                       <p><b>Rewards Received</b></p>
                     </div>
                   </div>
@@ -121,8 +120,8 @@ class Sponsors extends React.PureComponent {
                 }
 
                 // 0 is allowed to undelegate
-                if (sp === 'undefined' || sp === '' || (sp > 0 && sp < minimumSp)) {
-                  alert(`Please enter the amount of Steem Power you wish to delegate. Minimum is ${minimumSp} SP.`);
+                if (sp === 'undefined' || sp === '') {
+                  alert(`Please enter the amount of Steem Power you wish to delegate.`);
                   return;
                 }
 
@@ -152,8 +151,8 @@ class Sponsors extends React.PureComponent {
               <form className="Sponsors__form">
                 <label htmlFor="account">Your Steem account</label>
                 <input id="account" type="text" name="account" placeholder="e.g. @youraccount" ref={input => this.account = input} />
-                <label htmlFor="sp">Steem Power to delegate, minimum is {minimumSp} ({minimumSp}.000)</label>
-                <input id="sp" type="number" min="100" placeholder="e.g. 1000.000" ref={input => this.sp = input}/>
+                <label htmlFor="sp">Steem Power to delegate, recommended is 1000 (1000.000)</label>
+                <input id="sp" type="number" placeholder="e.g. 1000.000" ref={input => this.sp = input}/>
               </form>
               <p style={{'fontSize': '13px'}}>You can un-delegate anytime. Enter 0 in the field above. By un-delegating you stop receiving shares immediately.</p>
             </Modal>

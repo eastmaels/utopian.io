@@ -25,7 +25,7 @@ import Affix from '../../components/Utils/Affix';
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
-import { getSponsorsBeneficiaries } from '../../actions/sponsors';
+import { getBeneficiaries } from '../../actions/beneficiaries';
 
 @injectIntl
 @withRouter
@@ -42,7 +42,7 @@ import { getSponsorsBeneficiaries } from '../../actions/sponsors';
     saveDraft,
     newPost,
     notify,
-    getSponsorsBeneficiaries,
+    getBeneficiaries,
   },
 )
 class Write extends React.Component {
@@ -113,7 +113,7 @@ class Write extends React.Component {
   }
 
   onSubmit = (form) => {
-    const { getSponsorsBeneficiaries } = this.props;
+    const { getBeneficiaries } = this.props;
     const data = this.getNewPostData(form);
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
@@ -121,18 +121,29 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    getSponsorsBeneficiaries().then(res => {
+    getBeneficiaries().then(res => {
       if (res.response && res.response.results) {
-        const sponsors = res.response.results;
+        const allBeneficiaries = res.response.results;
         const beneficiaries = [
-          ...sponsors.map(sponsor => {
-            const sponsorSharesPercent = sponsor.percentage_total_vesting_shares;
-            const sponsorsDedicatedWeight = 2000; // 20% of all the rewards
-            const sponsorWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
+          ...allBeneficiaries.map(beneficiary => {
+            let assignedWeight = 0;
+            if (beneficiary.vesting_shares) { // this is a sponsor
+              const sponsorSharesPercent = beneficiary.percentage_total_vesting_shares;
+              // 20% of all the rewards dedicated to sponsors
+              const sponsorsDedicatedWeight = 2000;
+              assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
+            } else {
+              // this is a moderator
+              const moderatorSharesPercent = beneficiary.percentage_total_rewards_moderators;
+              // 5% all the rewards dedicated to moderators
+              // This does not sum up. The total ever taken from an author is 20%
+              const moderatorsDedicatedWeight = 500;
+              assignedWeight = Math.round((moderatorsDedicatedWeight * moderatorSharesPercent ) / 100);
+            }
 
             return {
-              account: sponsor.account,
-              weight: sponsorWeight || 1
+              account: beneficiary.account,
+              weight: assignedWeight || 1
             }
           })
         ];

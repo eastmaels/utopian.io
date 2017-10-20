@@ -72,6 +72,18 @@ class SubFeed extends React.Component {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
       });
+    } else if (match.params.filterBy === 'review') {
+      getContributions({
+        limit,
+        skip,
+        section: 'all',
+        sortBy: 'created',
+        filterBy: 'review',
+        type: match.params.type || 'all',
+      }).then(res => {
+        this.total = res.response.total;
+        this.setState({skip: skip + limit});
+      });
     } else {
       getContributions({
         limit,

@@ -38,6 +38,7 @@ class Topics extends React.Component {
 
     return (
       <div className="Topics">
+        <br />
         <b>Do you often contribute to Open Source projects?</b>
         Utopian.io rewards contributors like you for the hard work!
       </div>

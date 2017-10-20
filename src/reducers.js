@@ -22,6 +22,7 @@ import projectsReducer from './reducers/projects';
 import projectReducer from './reducers/project';
 import contributionsReducer from './reducers/contributions';
 import sponsorsReducer from './reducers/sponsors';
+import moderatorsReducer from './reducers/moderators';
 import statsReducer from './reducers/stats';
 import contributionReducer from './reducers/contribution';
 import loadingReducer from './reducers/loading';
@@ -38,6 +39,7 @@ const reducers = combineReducers({
   project: projectReducer, // @UTOPIAN
   loading: loadingReducer, // @UTOPIAN
   sponsors: sponsorsReducer, // @UTOPIAN
+  moderators: moderatorsReducer, // @UTOPIAN
   stats: statsReducer, // @UTOPIAN
   feed: feedReducer,
   user: userReducer,

@@ -18,7 +18,9 @@ import Post from './post/Post';
 import Bookmarks from './bookmarks/Bookmarks';
 import About from './statics/About';
 import Help from './statics/Help';
+import Rules from './statics/Rules';
 import Sponsors from './statics/Sponsors';
+import Moderators from './statics/Moderators';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
 import Drafts from './post/Write/Drafts';
@@ -36,14 +38,16 @@ export default (
           </RequireLogin>
         )}
       />*/}
-      <Route path="/help" component={Help} />
+      <Route path="/help" exact component={Help} />
+      <Route path="/rules" exact component={Rules} />
       {/*
       <Route path="/about" component={About} />
       <Route path="/team" component={Team} />
       <Route path="/tags" component={Tags} />
       <Route path="/donors" component={Donors} />
       */}
-      <Route path="/sponsors" component={Sponsors} />
+      <Route path="/sponsors" exact component={Sponsors} />
+      <Route path="/moderators" exact component={Moderators} />
       <Route
         path="/bookmarks"
         render={() => (
@@ -53,6 +57,7 @@ export default (
         )}
       />
       <Route
+        exact
         path="/write"
         render={() => (
           <RequireLogin>
@@ -61,6 +66,7 @@ export default (
         )}
       />
       <Route
+        exact
         path="/drafts"
         render={() => (
           <RequireLogin>
@@ -69,6 +75,7 @@ export default (
         )}
       />
       <Route
+        exact
         path="/activity"
         render={() => (
           <RequireLogin>
@@ -77,6 +84,7 @@ export default (
         )}
       />
       <Route
+        exact
         path="/settings"
         render={() => (
           <RequireLogin>
@@ -85,6 +93,7 @@ export default (
         )}
       />
       <Route
+        exact
         path="/edit-profile"
         render={() => (
           <RequireLogin>

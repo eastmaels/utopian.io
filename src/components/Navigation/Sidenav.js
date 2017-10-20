@@ -41,6 +41,12 @@ const Sidenav = ({ username }) =>
             Sponsors
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/moderators" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/moderators', match, location)}>
+            <Icon type="safety" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+            Moderators
+          </NavLink>
+        </li>
       </ul>}
   </div>);
 
