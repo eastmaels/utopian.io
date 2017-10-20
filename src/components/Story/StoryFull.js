@@ -217,7 +217,7 @@ class StoryFull extends React.Component {
             A moderator will soon review this contribution and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
               {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
               <br /><br />
-              <b>To be a moderator you must have a reputation score equal or higher than {minReputation}.</b>
+              <b>To become an Utopian Moderator you must have a reputation score equal or higher than {minReputation}. Moderators can only review contributions made by others but not their own.</b>
           </p> : null}
           {isModerator ? <p>
             Since you have a reputation equal to {userReputation} you can review this contribution and allow it in the Utopian feed. Please make sure it follows the Utopian Standards and suggest any change in the comments before marking it as verified. Moderators automatically earn 5% of all the contribution rewards generated based on how many contributions they review.

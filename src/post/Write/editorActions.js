@@ -177,7 +177,7 @@ export function createPost(postData) {
       ? Promise.resolve(postData.permlink)
       : createPermlink(title, author, parentAuthor, parentPermlink);
 
-    const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + '<br /><hr/><em>Open Source Contribution posted via https://utopian.io</em></hr>';
+    const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + '<br /><hr/><em>Open Source Contribution posted via https://utopian.io</em><hr/>';
 
     dispatch({
       type: CREATE_POST,

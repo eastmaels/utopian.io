@@ -450,50 +450,50 @@ class Editor extends React.Component {
             {getFieldDecorator('type')(
               <RadioGroup onChange={this.onUpdate}>
                 <label>
-                  <Radio value="ideas" name="type" disabled={ isUpdating } />
-                  <div className={`ideas box ${isUpdating && type !== 'ideas' ? 'disabled' : ''}`}>
+                  <Radio value="ideas" name="type" />
+                  <div className={`ideas box`}>
                     <span>Idea/Feature</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="development" name="type" disabled={ isUpdating } />
-                  <div className={`development box ${isUpdating && type !== 'development' ? 'disabled' : ''}`}>
+                  <Radio value="development" name="type" />
+                  <div className={`development box`}>
                     <span>Development</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="bug-hunting" name="type" disabled={ isUpdating } />
-                  <div className={`bug-hunting box ${isUpdating && type !== 'bug-hunting' ? 'disabled' : ''}`}>
+                  <Radio value="bug-hunting" name="type" />
+                  <div className={`bug-hunting box`}>
                     <span>Bug Hunting</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="translations" name="type" disabled={ isUpdating } />
-                  <div className={`translations box ${isUpdating && type !== 'translations' ? 'disabled' : ''}`}>
+                  <Radio value="translations" name="type" />
+                  <div className={`translations box`}>
                     <span>Translation</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="graphics" name="type" disabled={ isUpdating } />
-                  <div className={`graphics box ${isUpdating && type !== 'graphics' ? 'disabled' : ''}`}>
+                  <Radio value="graphics" name="type" />
+                  <div className={`graphics box`}>
                     <span>Graphics</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="documentation" name="type" disabled={ isUpdating } />
-                  <div className={`documentation box ${isUpdating && type !== 'documentation' ? 'disabled' : ''}`}>
+                  <Radio value="documentation" name="type"/>
+                  <div className={`documentation box`}>
                     <span>Documentation</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="analysis" name="type" disabled={ isUpdating } />
-                  <div className={`analysis box ${isUpdating && type !== 'analysis' ? 'disabled' : ''}`}>
+                  <Radio value="analysis" name="type"/>
+                  <div className={`analysis box`}>
                     <span>Analysis</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="social" name="type" disabled={ isUpdating } />
-                  <div className={`social box ${isUpdating && type !== 'social' ? 'disabled' : ''}`}>
+                  <Radio value="social" name="type"/>
+                  <div className={`social box`}>
                     <span>Visibility</span>
                   </div>
                 </label>
@@ -514,10 +514,9 @@ class Editor extends React.Component {
             ref={ search => this.search = search }
             value={ this.state.value }
             inputProps={{
-              disabled: isUpdating,
               id: 'search-projects',
               placeholder: 'Browse Github repositories',
-              className: `ant-input ant-input-lg Editor__repository ${isUpdating ? 'disabled' : ''}`,
+              className: `ant-input ant-input-lg Editor__repository`,
               onKeyPress: (event) => {
                 let q = event.target.value;
                 q = q.replace('https://', '');

@@ -9,7 +9,7 @@ export default (props) =>
         Check the Github Repository
       </h2>
       <p>
-        The linked Github repository must be the correct one and must actually contain code. If this rule is not met, the contribution won't be accepted. A moderator can request for a change. The repository can be updated by editing the contribution.
+        The linked Github repository <b>must be the correct one</b> and must actually contain code on Github. If this rule is not met, the contribution won't be accepted. A moderator can request for a change. The repository can be updated by editing the contribution.
       </p>
       <br />
       <h2>
