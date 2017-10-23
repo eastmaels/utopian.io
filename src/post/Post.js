@@ -107,7 +107,7 @@ export default class Post extends React.Component {
   };
 
   render() {
-    const { contribution, loading, content, fetching, edited } = this.props;
+    const { contribution, loading, content, fetching, edited, history } = this.props;
     const isLoading = !Object.keys(contribution).length || loading === Actions.GET_CONTRIBUTION_REQUEST;
 
     return (
@@ -122,7 +122,7 @@ export default class Post extends React.Component {
             </Affix>
             <div className="center" style={{ paddingBottom: '24px' }}>
               {!isLoading
-                ? <PostContent content={contribution} /> : <Loading />}
+                ? <PostContent history={history} content={contribution} /> : <Loading />}
               {!isLoading
                 && <VisibilitySensor onChange={this.handleCommentsVisibility} />}
               <div id="comments">
