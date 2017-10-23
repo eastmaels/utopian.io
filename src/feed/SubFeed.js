@@ -209,10 +209,9 @@ class SubFeed extends React.Component {
     return (
       <div>
         <ScrollToTop />
-
         {match.path !== "/@:name" ?
           <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
-            {this.isModerator() && <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" />}
+            {this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
             <TabPane tab={<span><Icon type="bulb" />Ideas</span>} key="ideas" />
             <TabPane tab={<span><Icon type="code" />Development</span>} key="development" />
