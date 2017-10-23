@@ -1,4 +1,5 @@
 @import (reference) "../../styles/custom.less";
+@import "../../styles/modules/variables.less";
 
 .Editor {
   padding-bottom: 24px;
@@ -57,6 +58,7 @@
         background-color: @bg-social;
       }
       + .box {
+        position: relative;
         span {
           color: @white;
           transform: translateY(50px);
@@ -79,6 +81,7 @@
       cursor: pointer;
       position: relative;
       font-weight: 900;
+
       &:active{
         transform: translateY(10px);
       }
@@ -165,12 +168,32 @@
     }
   }
 
+  &__rules {
+    background: @white;
+    padding: 15px;
+
+    ul {
+      padding-left: 30px;
+      padding-bottom: 15px;
+      list-style: disc;
+      li {
+        margin-top: 15px;
+      }
+    }
+    button {
+      margin-top: 15px;
+    }
+  }
+  .rulesAccepted {
+    display: block;
+  }
+
+  .rulesNotAccepted {
+    display: none;
+  }
+
   .ant-form-item-control > div { width: 100%; }
   .ant-row { margin-top: 15px; }
-
-  .WriteTips {
-    margin-bottom: 15px;
-  }
 
   &__hidden {
     display: none !important;

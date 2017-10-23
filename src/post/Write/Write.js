@@ -25,7 +25,10 @@ import Affix from '../../components/Utils/Affix';
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
+import { Modal, Icon } from 'antd';
 import { getBeneficiaries } from '../../actions/beneficiaries';
+import { getStats } from '../../actions/stats';
+
 
 @injectIntl
 @withRouter
@@ -43,6 +46,7 @@ import { getBeneficiaries } from '../../actions/beneficiaries';
     newPost,
     notify,
     getBeneficiaries,
+    getStats,
   },
 )
 class Write extends React.Component {
@@ -76,6 +80,8 @@ class Write extends React.Component {
       initialBody: '',
       initialRepository: null,
       isUpdating: false,
+      warningModal: false,
+      parsedPostData: null,
     };
   }
 
@@ -112,14 +118,16 @@ class Write extends React.Component {
     }
   }
 
-  onSubmit = (form) => {
+  proceedSubmit = () => {
     const { getBeneficiaries } = this.props;
-    const data = this.getNewPostData(form);
+    const data = this.state.parsedPostData;
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
     if (id) {
       data.draftId = id;
     };
+
+    this.setState({warningModal : false});
 
     getBeneficiaries().then(res => {
       if (res.response && res.response.results) {
@@ -160,11 +168,39 @@ class Write extends React.Component {
         console.log("CONTRIBUTION DATA", contributionData);
 
         this.props.createPost(contributionData);
+
       } else {
         alert("Something went wrong. Please try again!")
       }
-
     });
+  };
+
+  onSubmit = (form) => {
+    const { getStats } = this.props;
+    const data = this.getNewPostData(form);
+    const { location: { search } } = this.props;
+    const id = new URLSearchParams(search).get('draft');
+    if (id) {
+      data.draftId = id;
+    };
+
+    this.setState({parsedPostData: data})
+
+    getStats()
+      .then(res => {
+        const { stats } = res.response;
+        const jsonData = data.jsonMetadata;
+        const categoryStats = stats.categories[jsonData.type];
+        const average_posts_length = categoryStats.average_posts_length;
+        const bodyLength = data.body.length;
+
+        if (bodyLength < average_posts_length) {
+          this.setState({warningModal : true});
+        } else {
+          this.proceedSubmit();
+        }
+      })
+      .catch((e) => alert("Something went wrong. Please try again." + e))
   };
 
   getNewPostData = (form) => {
@@ -324,6 +360,32 @@ class Write extends React.Component {
               onSubmit={this.onSubmit}
               onImageInserted={this.handleImageInserted}
             />
+            <Modal
+              visible={this.state.warningModal}
+              title='Hey. Your Contribution may be better!'
+              okText={'Proceed anyways'}
+              cancelText='Keep editing'
+              onCancel={() => this.setState({warningModal: false})}
+              onOk={ () => {
+                  this.proceedSubmit();
+              }}
+            >
+              <p>
+                <Icon type="safety" style={{
+                  fontSize: '100px',
+                  color: 'red',
+                  display: 'block',
+                  clear: 'both',
+                  textAlign: 'center',
+                }}/>
+                <br />
+                Looking at the contribution you just wrote, seems like there are some things that should be adjusted.
+                <br /><br />
+                Please make sure you are adding <b>enough information</b> and that your contribution is <b>narrative and brings value</b>.
+                <br /><br />
+                Submitting the contribution as it is now, will either result in the <b>contribution being refused</b> by the Utopian Moderators or <b>lower votes</b>.
+              </p>
+            </Modal>
           </div>
         </div>
       </div>
