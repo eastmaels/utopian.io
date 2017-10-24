@@ -25,12 +25,33 @@ const icon = type => {
   }
 };
 
-const Contribution = ({type, full_name, platform, id }) => (
+const categorySlug = type => {
+  switch (type) {
+    case 'ideas':
+      return 'Idea for';
+    case 'development':
+      return 'Development of';
+    case 'bug-hunting':
+      return 'Bug in';
+    case 'documentation':
+      return 'Documentation for';
+    case 'translations':
+      return 'Translation for';
+    case 'analysis':
+      return 'Analysis for';
+    case 'graphics':
+      return 'Design for';
+    case 'social':
+      return 'Visibility for';
+  }
+};
+
+const Contribution = ({type, repository, platform, id }) => (
   <div className={`Contribution ${type}`}>
     <b>
-      <Icon type={icon(type)} /> Contribution for</b>:
-    <Link to={`/project/${full_name}/${platform}/${id}/all`}>
-      {' '} <Icon type='github' /> {full_name}
+      <Icon type={icon(type)} /> {categorySlug(type)} </b>:
+    <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
+      {' '} <Icon type='github' /> {repository.name}
     </Link>
   </div>
 );

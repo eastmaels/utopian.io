@@ -165,14 +165,14 @@ class Story extends React.Component {
 
             <Contribution
               type={ postType }
-              full_name={ repository.full_name }
+              repository={ repository }
               platform={ metaData.platform }
               id={ repository.id }
             />
 
             <div className="Story__header">
               <Link to={`/@${post.author}`}>
-                <Avatar username={post.author} size={40} />
+                <Avatar username={post.author} size={30} />
               </Link>
               <div className="Story__header__text">
                 <Link to={`/@${post.author}`}>

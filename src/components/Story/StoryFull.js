@@ -257,7 +257,7 @@ class StoryFull extends React.Component {
 
         <Contribution
           type={ postType }
-          full_name={ repository.full_name }
+          repository={ repository }
           platform={ metaData.platform }
           id={ repository.id }
         />

@@ -5,7 +5,7 @@ import './Avatar.less';
 const Avatar = ({ username, size }) =>
   (<img
     className="Avatar"
-    style={{ minWidth: `${size}px`, width: `${size}px`, height: `${size}px` }}
+    style={{ minWidth: `${size}px`, width: `${size}px`, height: `${size}px`, borderRadius: `100%` }}
     alt={username}
     src={`${process.env.STEEMCONNECT_IMG_HOST}/@${username || 'steemconnect'}?s=${size}`}
   />);

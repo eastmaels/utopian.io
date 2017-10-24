@@ -56,7 +56,7 @@ const StoryPreview = ({ post }) => {
   const htmlBody = getHtml(post.body, {}, 'text');
   const tagPositions = getPositions(htmlBody);
   const bodyData = [];
-
+/*
   if (hasVideo) {
     bodyData.push(preview.embed());
     bodyData.push(preview.text());
@@ -75,6 +75,8 @@ const StoryPreview = ({ post }) => {
   } else {
     bodyData.push(preview.text());
   }
+*/
+  bodyData.push(preview.text());
 
   return (
     <div>
