@@ -24,10 +24,9 @@ export default (props) =>
         The contribution must contain as much details as possible and have some graphical contents into it (videos, images, etc.). The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be submitted in Utopian. A moderator can request for changes before the contribution will be accepted.
       </p>
       <br />
-      <h2>Contributions can be in any language</h2>
+      <h2>Contributions should be in English</h2>
       <p>
-        Contributions can be in any language. Moderators will have to translate the contribution before accepting it into the Utopian feed in order to check the quality of the contribution. <b>English language is always preferred.</b>
-      </p>
+        Contributions should be in plain english and fully understandable. The only accepted exceptions are: 1. The effort to document an Open Source project in a specific language. 2. Contributions under the Translations category. 3. Open Source projects that are meant to be only for specific languages. Contributors can translate their contributions in their local language at the bottom of the post, but english should always come first in the body and it is always required in the title.</p>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
