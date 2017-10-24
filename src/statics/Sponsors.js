@@ -6,6 +6,7 @@ import { getStats } from '../actions/stats';
 import * as Actions from '../actions/constants';
 import { Link } from 'react-router-dom';
 
+import steem from 'steem';
 import { Modal, Icon } from 'antd';
 import './Sponsors.less';
 
@@ -20,14 +21,26 @@ class Sponsors extends React.PureComponent {
     super(props);
 
     this.state = {
-      sponsorModal: false
+      sponsorModal: false,
+      total_vesting_shares: 0,
+      total_vesting_fund_steem: 0,
     };
   }
 
   componentWillMount () {
     const { getSponsors, getStats } = this.props;
+    const _self = this;
     getStats();
     getSponsors();
+    steem.api.getDynamicGlobalProperties(function(err, result) {
+      console.log("RES", result);
+      if (!err) {
+        _self.setState({
+          total_vesting_shares: result.total_vesting_shares,
+          total_vesting_fund_steem: result.total_vesting_fund_steem,
+        });
+      }
+    })
   }
 
   render () {
@@ -72,6 +85,7 @@ class Sponsors extends React.PureComponent {
             <div className="Sponsors__heroes">
               {sponsors.map(sponsor => {
                 const VS = sponsor.vesting_shares;
+                const delegatedSP = steem.formatter.vestToSteem(VS, this.state.total_vesting_shares, this.state.total_vesting_fund_steem);
                 const picture = `https://img.busy.org/@${sponsor.account}?s=72`;
                 const username = sponsor.account;
                 return (
@@ -83,7 +97,7 @@ class Sponsors extends React.PureComponent {
                       </Link>
                     </div>
                     <div className="statsTab">
-                      <h4>{Math.round(VS / 2057)} SP</h4>
+                      <h4>{Math.round(delegatedSP)} SP</h4>
                       <p><b>Delegated</b></p>
                     </div>
                     <div className="statsTab">

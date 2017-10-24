@@ -104,7 +104,7 @@ class SubFeed extends React.Component {
         sortBy: 'created',
         filterBy: 'review',
         status: this.isModerator() && match.params.status === 'pending' ? 'pending' : 'any',
-        moderator: this.isModerator() && match.params.status === 'pending' ? user.name : 'any',
+        moderator: user.name || 'any',
         type: match.params.type || 'all',
       }).then(res => {
         this.total = res.response.total;
@@ -157,7 +157,7 @@ class SubFeed extends React.Component {
             contribution.json_metadata.type === match.params.type;
         }
         return contribution.reviewed === false &&
-          ((user.name && contribution.moderator !== user.name) || !contribution.moderator || contribution.moderator === '') && // contributions pending review of logged moderator already in pending review section
+          (contribution.moderator !== user.name) && // contributions pending review of logged moderator already in pending review section
           !contribution.flagged;
       } else if (match.params.type && match.params.type !== 'all') {
         return contribution.json_metadata.type === match.params.type &&

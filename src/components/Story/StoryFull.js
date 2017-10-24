@@ -209,51 +209,64 @@ class StoryFull extends React.Component {
     const metaData = post.json_metadata;
     const repository = metaData.repository;
     const postType = post.json_metadata.type;
+    const alreadyChecked = isModerator && (post.reviewed || post.pending || post.flagged);
 
     return (
       <div className="StoryFull">
-        {!reviewed && <div className="StoryFull__review">
-          <h3>
-            <Icon type="safety" /> {!isModerator ? 'Under Review' : 'Review Contribution'}
-            {isModerator && post.pending ? <div>{' '}<b>Pending Review:</b> @{post.moderator}</div> : null}
-            </h3>
-          {!isModerator ? <p>
-            A moderator will soon review this contribution and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
-              {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
-          </p> : null}
-          {isModerator ? <p>
-              Hello Moderator. How are you today? <br />
-              Please make sure this contribution meets the{' '}<Link to="/rules">Utopian Quality Standards</Link>.<br/>
-              If not please help the user using the comments. <br />
-              If the contribution is spam or makes no sense, please flag it to hide it <b>forever</b>.
-          </p> : null}
-          {isModerator ? <div>
-              <Action
-                primary={ true }
-                text='Hide forever'
-                onClick={() => {
-                  var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user is not responding for over 48 hours to your requests.')
-                  if (confirm) {
-                    moderatorAction(post.author, post.permlink, user.name, 'flagged').then(() => history.push('/all/review'));
-                  }
-                }}
-              />
-              {!post.pending && <Action
-                primary={ true }
-                text='Pending Review'
-                onClick={() => {
-                  moderatorAction(post.author, post.permlink, user.name, 'pending').then(() => history.push('/all/review'));
-                }}
-              />}
-              <Action
-                primary={ true }
-                text='Verified'
-                onClick={() => this.setState({verifyModal: true})}
-              />
-            </div> :
-            null
-          }
-        </div>}
+        {!reviewed || alreadyChecked ? <div className="StoryFull__review">
+
+            {!alreadyChecked ? <h3>
+              <Icon type="safety" /> {!isModerator ? 'Under Review' : 'Review Contribution'}
+            </h3>: null}
+
+            {!isModerator ? <p>
+                A moderator will soon review this contribution and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
+                {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
+              </p> : null}
+
+            {isModerator && !alreadyChecked ? <p>
+                Hello Moderator. How are you today? <br />
+                Please make sure this contribution meets the{' '}<Link to="/rules">Utopian Quality Standards</Link>.<br/>
+              </p> : null}
+
+            {isModerator && alreadyChecked ? <div>
+                <h3><Icon type="safety" /> Moderation Status</h3>
+                {post.reviewed && <p><b>ACCEPTED BY:</b> @{post.moderator}</p>}
+                {post.flagged && <p><b>FLAGGED BY:</b> @{post.moderator}</p>}
+                {post.pending && <p><b>PENDING REVIEW:</b> @{post.moderator}</p>}
+              </div> : null}
+
+            {isModerator ? <div>
+                {!post.flagged && <Action
+                  id="hide"
+                  primary={ true }
+                  text='Hide forever'
+                  onClick={() => {
+                    var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user is not responding for over 48 hours to your requests.')
+                    if (confirm) {
+                      moderatorAction(post.author, post.permlink, user.name, 'flagged').then(() => history.push('/all/review'));
+                    }
+                  }}
+                />}
+                {!post.pending && <Action
+                  id="pending"
+                  primary={ true }
+                  text='Pending Review'
+                  onClick={() => {
+                    moderatorAction(post.author, post.permlink, user.name, 'pending').then(() => history.push('/all/review'));
+                  }}
+                />}
+
+                {!post.reviewed && <Action
+                  id="verified"
+                  primary={ true }
+                  text='Verified'
+                  onClick={() => this.setState({verifyModal: true})}
+                />}
+              </div> : null
+            }
+
+          </div> : null}
 
         <Contribution
           type={ postType }
