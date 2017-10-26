@@ -52,7 +52,7 @@ class Topnav extends React.Component {
     this.renderItems = this.renderItems.bind(this);
     this.searchSelected = this.searchSelected.bind(this);
     this.state = {
-      searchSection: this.searchSelected(props.location),
+      searchSection: this.searchSelected(props.location) || 'projects',
     };
   }
 
