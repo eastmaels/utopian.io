@@ -5,7 +5,13 @@ const contributions = (state = [], action) => {
   switch (action.type) {
     case Actions.GET_CONTRIBUTIONS_SUCCESS: {
       const contributions = state;
+      const reset = action.additionalParams.reset;
       const newContributions = action.response.results;
+
+      if (reset) {
+        return newContributions;
+      }
+
       return [
         ...contributions,
         ...newContributions.filter(contribution => !R.find(R.propEq('id', contribution.id))(contributions)),

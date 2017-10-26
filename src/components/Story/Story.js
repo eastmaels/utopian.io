@@ -211,7 +211,7 @@ class Story extends React.Component {
                 </h2>
               </Link>
               <Link to={post.url} className="Story__content__preview">
-                <StoryPreview post={post} />
+                <StoryPreview post={post.body} />
               </Link>
             </div>
             <div className="Story__footer">

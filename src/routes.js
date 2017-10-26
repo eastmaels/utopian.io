@@ -101,11 +101,12 @@ export default (
           </RequireLogin>
         )}
       />
-      <Route path="/@:name" component={User} />
+      <Route path="/@:name" exact component={User} />
       <Route path="/:category/@:author/:permlink" component={Post} />
-      <Route path="/project/:author/:project/:platform/:projectId/:type?" component={Project}
-      />
+      <Route path="/search/:searchSection?/:query?/" exact component={Page} />
+      <Route path="/project/:author/:project/:platform/:projectId/:type?" exact component={Project}/>
       <Route path="/:type?/:filterBy?/:status?" component={Page} />
+
     </Switch>
   </Wrapper>
 );

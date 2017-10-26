@@ -85,7 +85,7 @@ export default class Wrapper extends React.PureComponent {
   };
 
   render() {
-    const { locale: appLocale, user } = this.props;
+    const { locale: appLocale, user, location } = this.props;
 
     const locale = getAvailableLocale(appLocale);
     const translations = getTranslations(appLocale);
@@ -94,7 +94,7 @@ export default class Wrapper extends React.PureComponent {
       <IntlProvider key={locale} locale={locale} messages={translations}>
         <Layout>
           <Layout.Header style={{ position: 'fixed', width: '100%', zIndex: 5 }}>
-            <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} history={this.props.history}/>
+            <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} history={this.props.history} location={location} />
           </Layout.Header>
           <div className="content">
             {this.props.children}

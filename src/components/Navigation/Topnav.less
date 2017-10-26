@@ -2,6 +2,13 @@
 
 @base-spacing: 0;
 
+.ant-select-dropdown-menu-item {
+  .anticon-github {
+    font-size: 16px;
+    color: #444;
+  }
+}
+
 .Searchmobile {
   display: none;
 }
@@ -9,20 +16,60 @@
 @media screen and (max-width: 736px) {
   .Searchmobile {
     display: block;
-    > div {
-      position: relative;
-      border-bottom: 1px solid #CCC;
-      >i {
-        display: none;
+  }
+}
+
+.Search,
+.Searchmobile {
+  border-bottom: 1px solid #e9e7e7 !important;
+
+  > span {
+    display: flex !important;
+    justify-content: flex-start !important;
+
+    .ant-select {
+      outline: 0;
+      min-width: 25%;
+      border-radius: 0;
+      height: 100%;
+      border: 0;
+      border-right: 1px solid #e9e7e7 !important;
+
+      @media screen and (max-width: 736px) {
+        min-width: 30%;
       }
-      >div {
-        width: 100%;
-        background: @white;
-        >input {
-          width: 100%;
-          padding-left: 15px;
+
+      .ant-select-selection {
+        height: 100%;
+        border: 0;
+        border-radius: 0 !important;
+
+        .anticon-github {
+          font-size: 16px;
+          color: #444;
+          margin-right: 5px;
+        }
+        .ant-select-selection__rendered {
+          line-height: 54px;
         }
       }
+    }
+  }
+
+  input {
+    height: 54px !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+    padding: 0 0 0 15px !important;
+    outline: none;
+
+    @media screen and (max-width: 736px) {
+      padding-left: 15px !important;
+    }
+
+    &:hover, &:focus {
+      box-shadow: none !important;
+      border-color: #e9e7e7 !important;
     }
   }
 }
@@ -121,43 +168,11 @@
     border-left: solid 1px #e9e7e7;
     border-right: solid 1px #e9e7e7;
 
-
     @media screen and (max-width: 736px) {
       padding-top: 55px;
     }
 
-    & > .Search > div { width: 100%;}
-    & > .Search input {
-      width: 100%;
-      height: 54px !important;
-      border-radius: 0 !important;
-      border: 0 !important;
-      padding: 0 0 0 43px !important;
-      outline: none;
-
-      @media screen and (max-width: 736px) {
-        padding-left: 15px !important;
-      }
-
-      &:hover, &:focus {
-        box-shadow: none !important;
-        border-color: #e9e7e7 !important;
-      }
-    }
-
-    & > .Search i {
-      top: 18px;
-      left: 16px;
-      position: absolute;
-      color: #c2ccd3;
-      font-size: 20px;
-      z-index: 1;
-      @media screen and (max-width: 736px) {
-        display: none;
-      }
-    }
   }
-
 
 
   &__menu-container {

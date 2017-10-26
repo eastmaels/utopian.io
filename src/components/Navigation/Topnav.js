@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Menu, Popover, Tooltip, Input, Badge } from 'antd';
+import { Menu, Popover, Tooltip, Input, Badge, Select } from 'antd';
 import steemconnect from 'sc2-sdk';
 
 import { getProjects, setProjects } from '../../actions/projects';
@@ -13,7 +13,12 @@ import Autocomplete from 'react-autocomplete';
 import Avatar from '../Avatar';
 import Notifications from './Notifications/Notifications';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
+
+import CategoryIcon from '../CategoriesIcons';
 import './Topnav.less';
+
+const InputGroup = Input.Group;
+const Option = Select.Option;
 
 @connect(
   state => ({
@@ -29,9 +34,26 @@ class Topnav extends React.Component {
     loaded: false,
   };
 
+  searchSelected(location) {
+    if (location.pathname.indexOf('search/projects') > -1) return 'projects';
+    if (location.pathname.indexOf('search/ideas') > -1) return 'ideas';
+    if (location.pathname.indexOf('search/development') > -1) return 'development';
+    if (location.pathname.indexOf('search/bug-hunting') > -1) return 'bug-hunting';
+    if (location.pathname.indexOf('search/translations') > -1) return 'translations';
+    if (location.pathname.indexOf('search/graphics') > -1) return 'graphics';
+    if (location.pathname.indexOf('search/documentation') > -1) return 'documentation';
+    if (location.pathname.indexOf('search/analysis') > -1) return 'analysis';
+    if (location.pathname.indexOf('search/social') > -1) return 'social';
+    return false;
+  };
+
   constructor (props) {
     super(props)
     this.renderItems = this.renderItems.bind(this);
+    this.searchSelected = this.searchSelected.bind(this);
+    this.state = {
+      searchSection: this.searchSelected(props.location),
+    };
   }
 
   renderItems(items) {
@@ -39,64 +61,37 @@ class Topnav extends React.Component {
   }
 
   renderSearch () {
-    const { projects, getProjects, setProjects, history } = this.props;
+    const { history, location } = this.props;
 
     return (
       <div className="Search">
-        <Icon type="github" className="iconfont icon-search" />
-        <Autocomplete
-          ref={ search => this.search = search }
-          value={ this.state.value }
-          inputProps={{
-            id: 'search-projects',
-            placeholder: 'Browse contributions by Github repositories',
-            onKeyPress: (event) => {
+
+        <InputGroup compact>
+          <Select defaultValue={this.searchSelected(location) || 'projects'} onChange={(section) => this.setState({searchSection: section})}>
+            <Option value="projects"><Icon type="github" className="iconfont icon-search" /> Projects</Option>
+            <Option value="ideas"><CategoryIcon type="ideas"/> Ideas</Option>
+            <Option value="development"><CategoryIcon type="development"/> Code</Option>
+            <Option value="bug-hunting"><CategoryIcon type="bug-hunting"/> Bugs</Option>
+            <Option value="translations"><CategoryIcon type="translations"/> Translations</Option>
+            <Option value="graphics"><CategoryIcon type="graphics"/> Graphics</Option>
+            <Option value="documentation"><CategoryIcon type="documentation"/> Docs</Option>
+            <Option value="analysis"><CategoryIcon type="analysis"/> Analysis</Option>
+            <Option value="social"><CategoryIcon type="social"/> Visibility</Option>
+          </Select>
+          <Input
+            ref={input => this.searchInput = input}
+            placeholder="Search.."
+            onKeyPress={(event) => {
               const q = event.target.value;
+              const searchSection = this.state.searchSection;
 
               if (event.key === 'Enter') {
-                this.setState({loading: true, loaded: false});
-                this.search.refs.input.click();
-
-                getProjects(q).then(() => {
-                  this.setState({loaded: true, loading: false});
-                  this.search.refs.input.click();
-                });
+                history.push(`/search/${searchSection}/${q}`);
               }
-            },
-          }}
-          items={ projects }
-          getItemValue={project => project.full_name}
-          onSelect={(value, project) => {
-            this.setState({value: ''});
-            history.push(`/project/${project.full_name}/github/${project.id}`);
-          }}
-          onChange={(event, value) => {
-            this.setState({value});
-            if (value === '') {
-              setProjects([]);
-              this.setState({loaded: false});
-            }
-          }}
-          renderItem={(project, isHighlighted) => (
-            <div
-              className='Topnav__search-item'
-              key={project.full_name}
-            >
-              <span><Icon type='github' /> <b>{project.full_name}</b></span>
-              <span>{project.html_url}</span>
-            </div>
-          )}
-          renderMenu={(items, value) => (
-            <div className="Topnav__search-menu">
-              <div>
-                {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
-                {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
-                {this.state.loading && <div className="Topnav__search-tip">Loading...</div>}
-                {items.length > 0 && this.renderItems(items)}
-              </div>
-            </div>
-          )}
-        />
+            }}
+          />
+        </InputGroup>
+
       </div>
     )}
 
@@ -135,37 +130,37 @@ class Topnav extends React.Component {
             <Menu.Item key="user" className="Topnav__item-user">
               <Link className="Topnav__user" to={`/@${username}`}>
                 <Avatar username={username} size={36}/>
-                <span className="Topnav__user__username">
-                {username}
-              </span>
+                {/*<span className="Topnav__user__username">
+                 {username}
+                 </span>*/}
               </Link>
             </Menu.Item>
-            <Menu.Item
-              key="notifications"
-              className="Topnav__item--badge"
-            >
-              <Tooltip placement="bottom"
-                       title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}>
-                <Popover
-                  placement="bottomRight"
-                  trigger="click"
-                  content={
-                    <Notifications
-                      notifications={notifications}
-                      onClick={onNotificationClick}
-                      onSeeAllClick={onSeeAllClick}
-                    />
-                  }
-                  title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}
-                >
-                  <a className="Topnav__link Topnav__link--light">
-                    <Badge count={notificationsCount}>
-                      <i className="iconfont icon-remind"/>
-                    </Badge>
-                  </a>
-                </Popover>
-              </Tooltip>
-            </Menu.Item>
+            {/*<Menu.Item
+             key="notifications"
+             className="Topnav__item--badge"
+             >
+             <Tooltip placement="bottom"
+             title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}>
+             <Popover
+             placement="bottomRight"
+             trigger="click"
+             content={
+             <Notifications
+             notifications={notifications}
+             onClick={onNotificationClick}
+             onSeeAllClick={onSeeAllClick}
+             />
+             }
+             title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}
+             >
+             <a className="Topnav__link Topnav__link--light">
+             <Badge count={notificationsCount}>
+             <i className="iconfont icon-remind"/>
+             </Badge>
+             </a>
+             </Popover>
+             </Tooltip>
+             </Menu.Item>*/}
             <Menu.Item key="more">
               <Popover
                 placement="bottom"
