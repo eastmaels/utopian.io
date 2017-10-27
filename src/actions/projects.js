@@ -21,3 +21,19 @@ export const setProjects = (projects) => ({
   type: Actions.SET_PROJECTS,
   payload: projects
 });
+
+export const getGithubProjectsRequest = (account, loggedUser) => ({
+  [CALL_API]: {
+    types: [ Actions.GET_GITHUB_PROJECTS_REQUEST, Actions.GET_GITHUB_PROJECTS_SUCCESS, Actions.GET_GITHUB_PROJECTS_FAILURE ],
+    endpoint: `users/${account}/projects`,
+    schema: null,
+    method: 'GET',
+    payload: {},
+    additionalParams: {
+      loggedUser,
+    },
+    absolute: false
+  }
+});
+
+export const getGithubProjects = (account, loggedUser = false) => dispatch => dispatch(getGithubProjectsRequest(account, loggedUser));

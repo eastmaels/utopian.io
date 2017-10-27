@@ -14,13 +14,23 @@ import InterestingPeople from '../../components/Sidebar/InterestingPeople';
 import StartNow from '../../components/Sidebar/StartNow';
 import SignUp from '../../components/Sidebar/SignUp';
 
+import { Icon } from 'antd';
+import GithubRepos from '../../components/Sidebar/GithubRepos';
+
+
+import { getGithubProjects } from '../../actions/projects';
+
+
 @connect(
   state => ({
     authenticated: getIsAuthenticated(state),
+    user: getAuthenticatedUser(state),
     authenticatedUser: getAuthenticatedUser(state),
     followingList: getFollowingList(state),
   }),
-)
+  {
+    getGithubProjects,
+  })
 export default class RightSidebar extends React.Component {
   static propTypes = {
     authenticated: PropTypes.bool.isRequired,
@@ -32,8 +42,22 @@ export default class RightSidebar extends React.Component {
     super(props);
     this.state = {
       randomPeople: this.getRandomPeople(),
+      loadedProjects: false,
     };
   }
+
+  componentDidUpdate () {
+    const { user, getGithubProjects } = this.props;
+
+    if (user && user.name && !this.state.loadedProjects) {
+
+      this.setState({
+        loadedProjects: true,
+      });
+
+      getGithubProjects(user.name, true);
+    }
+  };
 
   getRandomPeople = () => people
     .reduce((res, item) => {
@@ -49,6 +73,8 @@ export default class RightSidebar extends React.Component {
   });
 
   render() {
+    const { user } = this.props;
+
     const InterestingPeopleWithData = () => (
       <InterestingPeople
         users={this.state.randomPeople}
@@ -56,22 +82,14 @@ export default class RightSidebar extends React.Component {
       />
     );
 
+    if (!this.props.authenticated) {
+      return (
+        <SignUp />
+      )
+    }
+
     return (
-      (this.props.authenticated
-        ? <Switch>
-          <Route path="/@:name" component={InterestingPeopleWithData} />
-          <Route
-            path="/"
-            render={() =>
-              (<div>
-                {this.props.authenticatedUser.last_root_post === '1970-01-01T00:00:00' &&
-                <StartNow />
-                }
-                <InterestingPeopleWithData />
-              </div>)}
-          />
-        </Switch>
-        : <SignUp />)
+      <GithubRepos repos={user.projects || []} />
     );
   }
 }

@@ -7,6 +7,13 @@
   padding: 10px;
   color: @white;
   background: @blue;
+  position: relative;
+
+  i.announcement {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+  }
 
   a {
     color: @white;
@@ -16,18 +23,23 @@
     }
   }
 
+  &.announcement-ideas,
   &.ideas {
     background: @bg-ideas;
   }
+  &.announcement-development,
   &.development {
     background: @bg-development;
   }
+  &.announcement-bug-hunting,
   &.bug-hunting {
     background: @bg-bug-hunting;
   }
+  &.announcement-translations,
   &.translations {
     background: @bg-translations;
   }
+  &.announcement-documentation,
   &.documentation {
     color: @black;
     background: @bg-documentation;
@@ -40,12 +52,15 @@
       }
     }
   }
+  &.announcement-analysis,
   &.analysis {
     background: @bg-analysis;
   }
+  &.announcement-graphics,
   &.graphics {
     background: @bg-graphics;
   }
+  &.announcement-social,
   &.social {
     background: @bg-social;
   }

@@ -41,7 +41,12 @@ export const saveDraft = (post, redirect) => dispatch =>
       promise: addDraftMetadata(post)
         .then((resp) => {
           if (redirect) {
-            dispatch(push(`/write?draft=${post.id}`));
+            if (post.projectId && post.type === 'announcement') {
+              dispatch(push(`/write-announcement/${post.projectId}/?draft=${post.id}`));
+            } else {
+              dispatch(push(`/write?draft=${post.id}`));
+            }
+
           }
           return resp;
         }),

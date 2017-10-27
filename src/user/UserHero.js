@@ -26,7 +26,7 @@ class UserMenuWrapper extends React.Component {
     const { match, location, history, ...otherProps } = this.props;
     const current = this.props.location.pathname.split('/')[2];
     const currentKey = current || 'discussions';
-    return <UserMenu defaultKey={currentKey} onChange={this.onChange} {...otherProps} />;
+    return <UserMenu match={match} defaultKey={currentKey} onChange={this.onChange} {...otherProps} />;
   }
 }
 

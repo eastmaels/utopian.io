@@ -1,21 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import * as Actions from '../actions/constants';
-import { Link } from 'react-router-dom';
-import Feed from './Feed';
-import EmptyFeed from '../statics/EmptyFeed';
-import ScrollToTop from '../components/Utils/ScrollToTop';
-
-import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
-
+import React from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import * as Actions from "../actions/constants";
+import Feed from "./Feed";
+import EmptyFeed from "../statics/EmptyFeed";
+import ScrollToTop from "../components/Utils/ScrollToTop";
+import {getIsAuthenticated, getAuthenticatedUser} from "../reducers";
 // @UTOPIAN
-import { getContributions } from '../actions/contributions';
-import { getModerators } from '../actions/moderators';
-import { Tabs, Icon } from 'antd';
+import {getContributions} from "../actions/contributions";
+import {getModerators} from "../actions/moderators";
+import {Tabs, Icon} from "antd";
+import * as R from "ramda";
 const TabPane = Tabs.TabPane;
-
-import * as R from 'ramda';
 
 @connect(
   state => ({
@@ -132,8 +128,11 @@ class SubFeed extends React.Component {
       if (match.params.projectId) {
         if (match.params.type === 'all') {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
-            contribution.reviewed === true &&
-            !contribution.flagged;
+            contribution.reviewed === true && !contribution.flagged;
+        }else if (match.params.type === 'announcements') {
+          return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
+            contribution.reviewed === true && !contribution.flagged &&
+            contribution.json_metadata.type.indexOf('announcement') > -1;
         } else {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
             contribution.reviewed === true &&
@@ -213,6 +212,7 @@ class SubFeed extends React.Component {
           <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
+            {match.params.projectId && <TabPane tab={<span><Icon type="notification" />Announcements</span>} key="announcements" />}
             <TabPane tab={<span><Icon type="bulb" />Ideas</span>} key="ideas" />
             <TabPane tab={<span><Icon type="code" />Development</span>} key="development" />
             <TabPane tab={<span><Icon type="eye-o" />Bug Hunting</span>} key="bug-hunting" />
@@ -229,7 +229,7 @@ class SubFeed extends React.Component {
           hasMore={ hasMore }
           loadMoreContent={ this.loadContributions }
         />
-        {!contributions.length && !isFetching && <EmptyFeed />}
+        {!contributions.length && !isFetching && <EmptyFeed text={match.params.type === 'announcements' ? 'No announcements yet' : null}/>}
       </div>
     );
   }

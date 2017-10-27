@@ -1,4 +1,5 @@
 import * as types from './authActions';
+import * as Actions from '../actions/constants';
 
 const initialState = {
   isAuthenticated: false,
@@ -10,6 +11,21 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case Actions.GET_GITHUB_PROJECTS_SUCCESS: {
+      const repos = action.response;
+      const { loggedUser } = action.additionalParams;
+
+      if (loggedUser) {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            projects: repos,
+          }
+        };
+      }
+      return state;
+    }
     case types.LOGIN_START:
       return {
         ...state,
