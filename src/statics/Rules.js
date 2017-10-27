@@ -82,5 +82,17 @@ export default (props) =>
       <p>
         These contributions serve as a way to bring more visibility to an Open Source project. They must include links to social network posts, adv and similar, plus the results of the visibility effort.
       </p>
+
+      <br/>
+
+      <hr />
+
+      <h2>Announcements</h2>
+      <p>
+        Announcements are meant to be tasks requests made by the project owner when looking for contributions.
+        A task must be explained in great details and provide all the necessary details for the task to be actually completed. In one announcement there should not be more than one task and if more they must be related to the category where the announcement is being submitted.
+        Generic announcements, like "We are looking for contributors" won't be accepted.
+        Moderators may request to change an announcement if it does not meet the rules.
+      </p>
     </div>
   </div>);
