@@ -73,7 +73,13 @@ export const editPost = post => (dispatch) => {
     isUpdating: true,
   };
   dispatch(saveDraft({ postData: draft, id: post.id }))
-    .then(() => dispatch(push(`/write?draft=${post.id}`)));
+    .then(() => {
+      if (jsonMetadata.type.indexOf('announcement') > -1) {
+        dispatch(push(`/write-announcement/${jsonMetadata.repository.id}?draft=${post.id}`));
+      } else {
+        dispatch(push(`/write?draft=${post.id}`));
+      }
+    });
 };
 
 const requiredFields = 'parentAuthor,parentPermlink,author,permlink,title,body,jsonMetadata'.split(
