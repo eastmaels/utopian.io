@@ -16,75 +16,17 @@ import {
 import { getHtml } from './Body';
 import { getProxyImageURL } from '../../helpers/image';
 
-const StoryPreview = ({ post }) => {
-  const jsonMetadata = jsonParse(post.json_metadata);
-  let imagePath = '';
-
-  if (jsonMetadata.image && jsonMetadata.image[0]) {
-    imagePath = getProxyImageURL(jsonMetadata.image[0], 'preview');
-  } else {
-    const bodyImg = post.body.match(image());
-    if (bodyImg && bodyImg.length) {
-      imagePath = getProxyImageURL(bodyImg[0], 'preview');
-    }
-  }
-
-  const embeds = embedjs.getAll(post.body);
-  const video = jsonMetadata.video;
-  let hasVideo = false;
-  if (_.has(video, 'content.videohash') && _.has(video, 'info.snaphash')) {
-    hasVideo = true;
-    embeds[0] = {
-      type: 'video',
-      provider_name: 'DTube',
-      embed: `<video controls="true" autoplay="true" src="https://ipfs.io/ipfs/${video.content.videohash}" poster="https://ipfs.io/ipfs/${video.info.snaphash}"><track kind="captions" /></video>`,
-      thumbnail: getProxyImageURL(`https://ipfs.io/ipfs/${video.info.snaphash}`, 'preview'),
-    };
-  }
-
-  const preview = {
-    text: () => <BodyShort key="text" className="Story__content__body" body={post.body} />,
-
-    embed: () => embeds && embeds[0] && <PostFeedEmbed key="embed" embed={embeds[0]} />,
-
-    image: () =>
-      (<div key={imagePath} className="Story__content__img-container">
-        <img alt="post" src={imagePath} />
-      </div>),
-  };
-
-  const htmlBody = getHtml(post.body, {}, 'text');
-  const tagPositions = getPositions(htmlBody);
-  const bodyData = [];
-
-  if (hasVideo) {
-    bodyData.push(preview.embed());
-    bodyData.push(preview.text());
-  } else if (isPostStartsWithAPicture(tagPositions)) {
-    bodyData.push(preview.image());
-    bodyData.push(preview.text());
-  } else if (isPostStartsWithAnEmbed(tagPositions)) {
-    bodyData.push(preview.embed());
-    bodyData.push(preview.text());
-  } else if (isPostWithPictureBeforeFirstHalf(tagPositions)) {
-    bodyData.push(preview.text());
-    bodyData.push(preview.image());
-  } else if (isPostWithEmbedBeforeFirstHalf(tagPositions)) {
-    bodyData.push(preview.text());
-    bodyData.push(preview.embed());
-  } else {
-    bodyData.push(preview.text());
-  }
+const StoryPreview = ({ text }) => {
 
   return (
     <div>
-      {bodyData}
+      <BodyShort key="text" className="Story__content__body" body={text} />
     </div>
   );
 };
 
 StoryPreview.propTypes = {
-  post: PropTypes.shape().isRequired,
+  text: PropTypes.string,
 };
 
 export default StoryPreview;

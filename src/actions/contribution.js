@@ -49,9 +49,9 @@ export const getContributionRequest = (author, permlink) => ({
 
 export const getContribution = (author, permlink) => dispatch => dispatch(getContributionRequest(author, permlink));
 
-export const verifyContributionRequest = (author, permlink, moderator) => ({
+export const moderatorActionRequest = (author, permlink, moderator, status) => ({
   [CALL_API]: {
-    types: [ Actions.VERIFY_CONTRIBUTION_REQUEST, Actions.VERIFY_CONTRIBUTION_SUCCESS, Actions.VERIFY_CONTRIBUTION_FAILURE ],
+    types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
     endpoint: `posts/${author}/${permlink}`,
     schema: null,
     method: 'PUT',
@@ -59,14 +59,16 @@ export const verifyContributionRequest = (author, permlink, moderator) => ({
       author,
       permlink,
       moderator,
-      reviewed: true,
+      reviewed: status === 'reviewed',
+      flagged: status === 'flagged',
+      pending: status === 'pending',
     },
     additionalParams: {},
     absolute: false
   }
 });
 
-export const verifyContribution = (author, permlink, moderator) => dispatch => dispatch(verifyContributionRequest(author, permlink, moderator));
+export const moderatorAction = (author, permlink, moderator, status) => dispatch => dispatch(moderatorActionRequest(author, permlink, moderator, status));
 
 export const setContribution = (contribution) => ({
   type: Actions.SET_CONTRIBUTION,

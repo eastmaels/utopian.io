@@ -7,6 +7,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+require('dotenv').config();
+
 
 const DEFAULTS = {
   isDevelopment: process.env.NODE_ENV !== 'production',
@@ -54,6 +56,8 @@ function makePlugins(options) {
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'https://api.utopian.io/api/'),
+        UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '06b0ef5509fc7de00493'),
+        UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(process.env.UTOPIAN_GITHUB_REDIRECT_URL || 'https://utopian.io/github/callback'),
         IS_BROWSER: JSON.stringify(true),
         PUSHPAD_PROJECT_ID: process.env.PUSHPAD_PROJECT_ID,
         BUSYPUSH_ENDPOINT: process.env.BUSYPUSH_ENDPOINT,

@@ -26,7 +26,7 @@ const RadioGroup = Radio.Group;
   { getProjects, setProjects },
 )
 @injectIntl
-class Editor extends React.Component {
+class EditorAnnouncement extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     form: PropTypes.shape().isRequired,
@@ -48,7 +48,7 @@ class Editor extends React.Component {
     title: '',
     repository: null,
     topics: [],
-    type: 'ideas',
+    type: 'announcement-ideas',
     body: '',
     recentTopics: [],
     popularTopics: [],
@@ -99,6 +99,10 @@ class Editor extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      repository: this.props.repository
+    });
+
     if (this.input) {
       this.input.addEventListener('input', throttle(e => this.renderMarkdown(e.target.value), 500));
       this.input.addEventListener('paste', this.handlePastedImage);
@@ -163,7 +167,7 @@ class Editor extends React.Component {
       title: post.title,
       // @UTOPIAN filtering out utopian-io since it's always added/re-added when posting
       topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
-      type: post.type || 'ideas',
+      type: post.type || 'announcement-ideas',
     });
     if (this.input) {
       this.input.value = post.body;
@@ -441,9 +445,9 @@ class Editor extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { intl, loading, isUpdating, type, saving, getProjects, projects, setProjects } = this.props;
+    const { intl, loading, isUpdating, type, saving, repository } = this.props;
 
-    const chosenType = this.state.currentType || type || 'ideas';
+    const chosenType = this.state.currentType || type || 'announcement-ideas';
 
     const AcceptRules = () => (
       <Action
@@ -459,123 +463,115 @@ class Editor extends React.Component {
 
     const Rules = () => {
       switch(chosenType) {
-        case 'ideas':
+        case 'announcement-ideas':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="ideas"/> Idea/Feature Rules</h2>
+              <h2><CategoryIcon type="ideas"/> Conceptors/Thinkers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>Ideas are features that you would like to have in an Open Source project.</li>
-                <li>Ideas must provide great details for the features to be actually built.</li>
-                <li>Images, screenshots, links and examples are always necessary in this category.</li>
-                <li>Never write about ideas you have already shared before or ideas already shared by someone else.</li>
+                <li>By submitting an announcement in this category you are requesting contributors to provide concepts and ideas.</li>
+                <li>You must provide great details about what you are looking for and the problems you want to solve with a concept.</li>
+                <li>Images, screenshots, links and examples are always welcome in this category.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'development':
+        case 'announcement-development':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="development"/> Development Rules</h2>
+              <h2><CategoryIcon type="development"/> Developers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>In this category you can only write if you have developed or contributed to the development.</li>
-                <li>You must provide the links to the branches/forks/gists/pull requests.</li>
-                <li>Images, screenshots, links and examples are not necessary but preferred.</li>
-                <li>Never write about code contributions you have already shared before.</li>
+                <li>In this category you can only write if you are looking for developers joining your crew.</li>
+                <li>You must provide all the details for the developers to contribute to your project.</li>
+                <li>Documentation, Repositories, Communities (e.g. Slack, Discord) and specific details are necessary.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'bug-hunting':
+        case 'announcement-bug-hunting':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="bug-hunting"/> Bug Hunting Rules</h2>
+              <h2><CategoryIcon type="bug-hunting"/> Bug Hunters</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>In this category you can only report bugs you have found in an Open Source project.</li>
-                <li>You must provide every possible detail to reproduce the bug.</li>
-                <li>You must include for example browsers used, devices, operating systems and similar.</li>
-                <li>Never write about bugs you have already shared before or someone else have already reported before.</li>
+                <li>In this category you can only post if you are looking to spot bugs in your system/software/website and similar.</li>
+                <li>You must provide every possible detail for the bug hunters to be able to start the hunting.</li>
+                <li>You must include for example browsers, devices, operating systems and similar info where you want bugs to be spotted.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'translations':
+        case 'announcement-translations':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="translations"/> Translations Rules</h2>
+              <h2><CategoryIcon type="translations"/> Translators</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>You must provide your translated text directly on this post or include public links.</li>
-                <li>This category is meant only for translations you have updated or created for an Open Source project.</li>
-                <li>You must include every possible detail to check the translations and the tools you have used to translate.</li>
-                <li>Never write about translations you have already shared before or someone else have already shared before.</li>
+                <li>You can only post in this category if you are looking for translators to translate your project.</li>
+                <li>You must provide any necessary information for the translators to start their work.</li>
+                <li>Location of the files to be translated, tools to use, languages you are looking for and similar info are necessary.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'graphics':
+        case 'announcement-graphics':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="graphics"/> Graphics Rules</h2>
+              <h2><CategoryIcon type="graphics"/> Designers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>You must provide samples of your creations directly on this post and include public links to the full design.</li>
-                <li>This category is meant only for graphics you have designed for an Open Source project.</li>
-                <li>You must include every possible detail to check the creations and the tools you have used to create them.</li>
-                <li>Never write about graphics you have already shared before or someone else have already shared before.</li>
+                <li>You can only post in this category if you are looking for designers to join your Open Source project.</li>
+                <li>You must provide exactly what you are looking and how would you like it to be in great details.</li>
+                <li>Whether you are looking for a logo, layout, banner or similar, your request has to be very specific.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower votes or your announcemnt won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'documentation':
+        case 'announcement-documentation':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="documentation"/> Documentation Rules</h2>
+              <h2><CategoryIcon type="documentation"/> Tech Writers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>This category is meant only for providing documentation about an Open Source project.</li>
-                <li>Documentation can be in any language. You must be the author of the documentation.</li>
-                <li>If you are not pasting the entire documentation here you must provide public links to it.</li>
-                <li>Never write about documentations you have already shared before or someone else have already shared before.</li>
+                <li>This category is meant only for requiring help in updating/creating the documentation of your Open Source project.</li>
+                <li>You must be very specific about which part of the documentation you wish to update/create.</li>
+                <li>It is important to provide the tools you wish to use and necessary info for the documentation to be actually written.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'analysis':
+        case 'announcement-analysis':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="analysis"/> Analysis Rules</h2>
+              <h2><CategoryIcon type="analysis"/> Data Analysts</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>This category is meant only for providing analysis you have generated for an Open Source project.</li>
-                <li>You must include the results of your analyses and the reasons why you have generated them.</li>
-                <li>If you are not pasting the entire analysis here you must provide public links to it.</li>
-                <li>Never write about analyses you have already shared before or someone else have already shared before.</li>
+                <li>This category is meant only for requesting data analyses for your Open Source project.</li>
+                <li>Your request must be very specific about the numbers you wish to extract.</li>
+                <li>You must provide the tools and all the information necessary for the analyses to be actually completed.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'social':
+        case 'announcement-social':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="analysis"/> Visibility Rules</h2>
+              <h2><CategoryIcon type="analysis"/> Influencers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>This category is meant only for providing results of social engagement, adv and similar for an Open Source project.</li>
-                <li>You must include links and proofs of the visibility effort you made and write down the results.</li>
-                <li>If your effort brought few or 0 new users/contributors to the Open Source project you are invited to not write about it.</li>
-                <li>Never write about visibility efforts you have already shared before or someone else have already shared before.</li>
+                <li>This category is meant only for requesting help of social influencers in spreading the word about your project.</li>
+                <li>You must provide any possible detail for the influencers to effectively share your Open Source project.</li>
+                <li>You must also provide any graphic, video and similar digital goods the influencers are supposed to share.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
@@ -587,7 +583,7 @@ class Editor extends React.Component {
         <Form.Item
           label={
             <span className="Editor__label">
-              What is this contribution about?
+              What are you looking for?
             </span>
           }
         >
@@ -595,51 +591,51 @@ class Editor extends React.Component {
             {getFieldDecorator('type')(
               <RadioGroup onChange={this.onUpdate}>
                 <label>
-                  <Radio value="ideas" name="type" />
+                  <Radio value="announcement-ideas" name="type" />
                   <div className={`ideas box`}>
-                    <span>Idea/Feature</span>
+                    <span>Thinkers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="development" name="type" />
+                  <Radio value="announcement-development" name="type" />
                   <div className={`development box`}>
-                    <span>Development</span>
+                    <span>Developers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="bug-hunting" name="type" />
+                  <Radio value="announcement-bug-hunting" name="type" />
                   <div className={`bug-hunting box`}>
-                    <span>Bug Hunting</span>
+                    <span>Bug Hunters</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="translations" name="type" />
+                  <Radio value="announcement-translations" name="type" />
                   <div className={`translations box`}>
-                    <span>Translation</span>
+                    <span>Translators</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="graphics" name="type" />
+                  <Radio value="announcement-graphics" name="type" />
                   <div className={`graphics box`}>
-                    <span>Graphics</span>
+                    <span>Designers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="documentation" name="type"/>
+                  <Radio value="announcement-documentation" name="type"/>
                   <div className={`documentation box`}>
-                    <span>Documentation</span>
+                    <span>Tech Writers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="analysis" name="type"/>
+                  <Radio value="announcement-analysis" name="type"/>
                   <div className={`analysis box`}>
-                    <span>Analysis</span>
+                    <span>Data Analysts</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="social" name="type"/>
+                  <Radio value="announcement-social" name="type"/>
                   <div className={`social box`}>
-                    <span>Visibility</span>
+                    <span>Influencers</span>
                   </div>
                 </label>
               </RadioGroup>
@@ -655,93 +651,11 @@ class Editor extends React.Component {
             help={this.state.noRepository && "Please enter an existing Github repository"}
             label={
               <span className="Editor__label">
-              <Icon type='github' /> Github project (eg. Wordpress/Wordpress)
+              <Icon type='github' /> Github project
             </span>
             }
           >
-            <Autocomplete
-              ref={ search => this.search = search }
-              value={ this.state.value }
-              inputProps={{
-                id: 'search-projects',
-                placeholder: 'Browse Github repositories',
-                className: `ant-input ant-input-lg Editor__repository`,
-                onKeyPress: (event) => {
-                  let q = event.target.value;
-                  q = q.replace('https://', '');
-                  q = q.replace('http://', '');
-                  q = q.replace('github.com/', '');
-
-                  if (event.key === 'Enter') {
-                    event.preventDefault();
-
-                    this.setState({loading: true, loaded: false});
-                    this.search.refs.input.click();
-
-                    getProjects({
-                      q,
-                      sort: 'stars',
-                      order: 'desc',
-                    }).then(() => {
-                      this.setState({loaded: true, loading: false});
-                      this.search.refs.input.click();
-                    });
-                  }
-                },
-                onPaste: event => {
-                  const pasted = event.clipboardData.getData('Text');
-                  if (pasted.indexOf('github') > -1) {
-                    let q = pasted.replace('https://', '');
-                    q = q.replace('http://', '');
-                    q = q.replace('github.com/', '');
-
-                    this.search.refs.input.click();
-
-                    getProjects(q).then(() => {
-                      this.setState({loaded: true, loading: false});
-                      this.search.refs.input.click();
-                    });
-                  }
-                },
-              }}
-              items={ projects }
-              getItemValue={project => project.full_name}
-              onSelect={(value, project) => {
-                this.setState({
-                  value: project.full_name,
-                  repository: project,
-                });
-                this.onUpdate(project, true);
-              }}
-              onChange={(event, value) => {
-                this.setState({value});
-
-                if (value === '') {
-                  setProjects([]);
-                  this.setState({loaded: false, repository: null});
-                }
-
-              }}
-              renderItem={(project, isHighlighted) => (
-                <div
-                  className='Topnav__search-item'
-                  key={project.full_name}
-                >
-                  <span><Icon type='github' /> <b>{project.full_name}</b></span>
-                  <span>{project.html_url}</span>
-                </div>
-              )}
-              renderMenu={(items, value) => (
-                <div className="Topnav__search-menu">
-                  <div>
-                    {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
-                    {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
-                    {this.state.loading && <div className="Topnav__search-tip">Loading...</div>}
-                    {items.length > 0 && this.renderItems(items)}
-                  </div>
-                </div>
-              )}
-            />
+            <input className="ant-input ant-input-lg Editor__repository disabled" disabled="true" defaultValue={repository.full_name} />
           </Form.Item>
           <Form.Item
             label={
@@ -796,7 +710,7 @@ class Editor extends React.Component {
                     </div>
                   </div>
                 )}
-                <HotKeys keyMap={Editor.hotkeys} handlers={this.handlers}>
+                <HotKeys keyMap={EditorAnnouncement.hotkeys} handlers={this.handlers}>
                   <Input
                     autosize={{ minRows: 6, maxRows: 12 }}
                     onChange={this.onUpdate}
@@ -916,4 +830,4 @@ class Editor extends React.Component {
   }
 }
 
-export default Form.create()(Editor);
+export default Form.create()(EditorAnnouncement);

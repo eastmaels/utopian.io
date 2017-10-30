@@ -9,7 +9,9 @@ export const getContributionsRequest = query => ({
         schema: null,
         method: 'GET',
         payload: {},
-        additionalParams: {},
+        additionalParams: {
+          reset: query.reset || false
+        },
         absolute: false
     }
 });

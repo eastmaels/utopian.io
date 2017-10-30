@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { getIsAuthenticated } from '../reducers';
 
 import SubFeed from './SubFeed';
+import SearchFeed from './SearchFeed';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import RightSidebar from '../app/Sidebar/RightSidebar';
 import TopicSelector from '../components/TopicSelector';
@@ -67,7 +68,6 @@ class Page extends React.Component {
 
   render() {
     const { authenticated, match, location } = this.props;
-
     const shouldDisplaySelector = location.pathname !== '/' || !authenticated;
 
     return (
@@ -98,7 +98,8 @@ class Page extends React.Component {
                 onSortChange={this.handleSortChange}
                 onTopicClose={this.handleTopicClose}
               />}*/}
-              <Route path={`${match.path}`} component={ SubFeed } />
+              {match.params.searchSection && <Route path={`${match.path}`} component={ SearchFeed } />}
+              {!match.params.searchSection && <Route path={`${match.path}`} component={ SubFeed } />}
             </div>
           </div>
         </div>

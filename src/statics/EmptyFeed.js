@@ -4,8 +4,17 @@ import { FormattedMessage } from 'react-intl';
 
 import './EmptyFeed.less';
 
-const EmptyFeed = () =>
-  (<div className="EmptyFeed">
+
+const Text = ({text}) => {
+  if (text) return (
+    <div className="EmptyFeed">
+      <h3>
+        {text}
+      </h3>
+    </div>
+  );
+
+  return (<div className="EmptyFeed">
     <h3>
       No contributions found. {' '}
       <Link to="/write">
@@ -13,6 +22,10 @@ const EmptyFeed = () =>
       </Link>
       .
     </h3>
-  </div>);
+  </div>)
+}
+
+const EmptyFeed = ({ text }) =>
+  (<Text text={text} />);
 
 export default EmptyFeed;

@@ -30,9 +30,12 @@ class DraftRow extends React.Component {
     let draftTitle = title.length ? title : body;
     draftTitle = draftTitle.trim();
 
+    const type = data.jsonMetadata.type || '';
+    const repository = data.jsonMetadata.repository || {};
+
     return (
       <div>
-        <Link to={{ pathname: '/write', search: `?draft=${id}` }}>
+        <Link to={{ pathname: type.indexOf('announcement') > -1 ? `/write-announcement/${repository.id}` : '/write', search: `?draft=${id}` }}>
           <h3>
             {draftTitle.length === 0 ? <FormattedMessage id="draft_untitled" defaultMessage="Untitled draft" /> : draftTitle}
           </h3>

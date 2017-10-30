@@ -21,13 +21,12 @@ export default (props) =>
       <br />
       <h2>Contributions MUST BE Informative and Narrative</h2>
       <p>
-        The contribution must contain as much details as possible and have some graphical contents into it (videos, images, etc.). The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be submitted in Utopian. A moderator can request for changes before the contribution will be accepted.
+        The contribution must contain as much details as possible and have some graphical contents into it (videos, images, etc.) where applicable. The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be submitted in Utopian. A moderator can request for changes before the contribution will be accepted.
       </p>
       <br />
-      <h2>Contributions can be in any language</h2>
+      <h2>Contributions should be in English</h2>
       <p>
-        Contributions can be in any language. Moderators will have to translate the contribution before accepting it into the Utopian feed in order to check the quality of the contribution. <b>English language is always preferred.</b>
-      </p>
+        Contributions should be in plain english and fully understandable. The only accepted exceptions are: 1. The effort to document an Open Source project in a specific language. 2. Contributions under the Translations category. 3. Open Source projects that are meant to be only for specific languages. If they wish to do so contributors can translate their contributions in their local language at the bottom of the post.</p>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
@@ -37,6 +36,11 @@ export default (props) =>
       <h2>Provides Proof Of Work</h2>
       <p>
         The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc. if a code contribution. Read all the rules for the specific Utopian categories below.
+      </p>
+      <br />
+      <h2>Contributions Must Not Contain Spam</h2>
+      <p>
+        The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will require to edit the contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. Moderators will flag and hide forever spam posts that bring no real value.
       </p>
       <br />
       <h2>Ideas/Feature requests Category</h2>
@@ -77,6 +81,18 @@ export default (props) =>
       <h2>Visibility Category</h2>
       <p>
         These contributions serve as a way to bring more visibility to an Open Source project. They must include links to social network posts, adv and similar, plus the results of the visibility effort.
+      </p>
+
+      <br/>
+
+      <hr />
+
+      <h2>Announcements</h2>
+      <p>
+        Announcements are meant to be tasks requests made by the project owner when looking for contributions.
+        A task must be explained in great details and provide all the necessary details for the task to be actually completed. In one announcement there should not be more than one task and if more they must be related to the category where the announcement is being submitted.
+        Generic announcements, like "We are looking for contributors" won't be accepted.
+        Moderators may request to change an announcement if it does not meet the rules.
       </p>
     </div>
   </div>);

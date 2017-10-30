@@ -5,6 +5,8 @@ const postcssFlexbugs = require('postcss-flexbugs-fixes');
 
 const baseDir = path.resolve(__dirname, '..');
 
+require('dotenv').config();
+
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: path.resolve(baseDir, './src/index.js'),
@@ -25,6 +27,8 @@ module.exports = {
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'test-category'),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'http://localhost:4040/api/'),
+        UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '1ed58da028b638550c03'),
+        UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(process.env.UTOPIAN_GITHUB_REDIRECT_URL || 'http://localhost:3000/github/callback'),
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
         IS_BROWSER: JSON.stringify(true),
         PUSHPAD_PROJECT_ID: process.env.PUSHPAD_PROJECT_ID,

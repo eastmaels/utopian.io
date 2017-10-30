@@ -41,7 +41,12 @@ export const saveDraft = (post, redirect) => dispatch =>
       promise: addDraftMetadata(post)
         .then((resp) => {
           if (redirect) {
-            dispatch(push(`/write?draft=${post.id}`));
+            if (post.projectId && post.type === 'announcement') {
+              dispatch(push(`/write-announcement/${post.projectId}/?draft=${post.id}`));
+            } else {
+              dispatch(push(`/write?draft=${post.id}`));
+            }
+
           }
           return resp;
         }),
@@ -68,7 +73,13 @@ export const editPost = post => (dispatch) => {
     isUpdating: true,
   };
   dispatch(saveDraft({ postData: draft, id: post.id }))
-    .then(() => dispatch(push(`/write?draft=${post.id}`)));
+    .then(() => {
+      if (jsonMetadata.type.indexOf('announcement') > -1) {
+        dispatch(push(`/write-announcement/${jsonMetadata.repository.id}?draft=${post.id}`));
+      } else {
+        dispatch(push(`/write?draft=${post.id}`));
+      }
+    });
 };
 
 const requiredFields = 'parentAuthor,parentPermlink,author,permlink,title,body,jsonMetadata'.split(

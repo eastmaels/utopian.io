@@ -15,6 +15,7 @@ import Action from '../../components/Button/Action';
 import { Modal } from 'antd';
 import Contribution from './Contribution';
 
+import * as R from 'ramda';
 import './StoryFull.less';
 
 @injectIntl
@@ -36,12 +37,14 @@ class StoryFull extends React.Component {
     onShareClick: PropTypes.func,
     onEditClick: PropTypes.func,
     user: PropTypes.object.isRequired,
-    verifyContribution: PropTypes.func.isRequired,
+    moderatorAction: PropTypes.func.isRequired,
+    moderators: PropTypes.array,
   };
 
   static defaultProps = {
     user: {},
-    verifyContribution: () => {},
+    moderatorAction: () => {},
+    moderators: [],
     pendingLike: false,
     pendingFollow: false,
     pendingBookmark: false,
@@ -124,7 +127,9 @@ class StoryFull extends React.Component {
       ownPost,
       onLikeClick,
       onShareClick,
-      verifyContribution,
+      moderatorAction,
+      moderators,
+      history,
     } = this.props;
 
     const { open, index } = this.state.lightbox;
@@ -132,12 +137,8 @@ class StoryFull extends React.Component {
     const tags = _.union(post.json_metadata.tags, [post.category]);
     const video = post.json_metadata.video;
     const isLogged = Object.keys(user).length;
-    const userReputation = isLogged && user.reputation ?
-      formatter.reputation(user.reputation) :
-      false;
-    const minReputation = 50;
     const isAuthor = isLogged && user.name === post.author;
-    const isModerator = isLogged && (userReputation >= minReputation && !isAuthor) || user.name === 'elear' || user.name === 'utopian.-io'; // @UTOPIAN sorry this is for convenience
+    const isModerator = isLogged && R.find(R.propEq('account', user.name))(moderators) && !isAuthor;
     const reviewed = post.reviewed || false;
 
     let followText = '';
@@ -208,35 +209,68 @@ class StoryFull extends React.Component {
     const metaData = post.json_metadata;
     const repository = metaData.repository;
     const postType = post.json_metadata.type;
+    const alreadyChecked = isModerator && (post.reviewed || post.pending || post.flagged);
 
     return (
       <div className="StoryFull">
-        {!reviewed && <div className="StoryFull__review">
-          <h3><Icon type="safety" /> {!isModerator ? 'Under Review' : 'Review Contribution'}</h3>
-          {!isModerator ? <p>
-            A moderator will soon review this contribution and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
-              {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
-              <br /><br />
-              <b>To become an Utopian Moderator you must have a reputation score equal or higher than {minReputation}. Moderators can only review contributions made by others but not their own.</b>
-          </p> : null}
-          {isModerator ? <p>
-            Since you have a reputation equal to {userReputation} you can review this contribution and allow it in the Utopian feed. Please make sure it follows the Utopian Standards and suggest any change in the comments before marking it as verified. Moderators automatically earn 5% of all the contribution rewards generated based on how many contributions they review.
-            {' '}<Link to="/rules">Read the rules</Link>
-          </p> : null}
-          {isModerator ? <div>
-              <Action
-                primary={ true }
-                text='Verify'
-                onClick={() => this.setState({verifyModal: true})}
-              />
-            </div> :
-            null
-          }
-        </div>}
+        {!reviewed || alreadyChecked ? <div className="StoryFull__review">
+
+            {!alreadyChecked ? <h3>
+              <Icon type="safety" /> {!isModerator ? 'Under Review' : 'Review Contribution'}
+            </h3>: null}
+
+            {!isModerator ? <p>
+                A moderator will soon review this contribution and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
+                {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
+              </p> : null}
+
+            {isModerator && !alreadyChecked ? <p>
+                Hello Moderator. How are you today? <br />
+                Please make sure this contribution meets the{' '}<Link to="/rules">Utopian Quality Standards</Link>.<br/>
+              </p> : null}
+
+            {isModerator && alreadyChecked ? <div>
+                <h3><Icon type="safety" /> Moderation Status</h3>
+                {post.reviewed && <p><b>ACCEPTED BY:</b> @{post.moderator}</p>}
+                {post.flagged && <p><b>FLAGGED BY:</b> @{post.moderator}</p>}
+                {post.pending && <p><b>PENDING REVIEW:</b> @{post.moderator}</p>}
+              </div> : null}
+
+            {isModerator ? <div>
+                {!post.flagged && <Action
+                  id="hide"
+                  primary={ true }
+                  text='Hide forever'
+                  onClick={() => {
+                    var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user is not responding for over 48 hours to your requests.')
+                    if (confirm) {
+                      moderatorAction(post.author, post.permlink, user.name, 'flagged').then(() => history.push('/all/review'));
+                    }
+                  }}
+                />}
+                {!post.pending && <Action
+                  id="pending"
+                  primary={ true }
+                  text='Pending Review'
+                  onClick={() => {
+                    moderatorAction(post.author, post.permlink, user.name, 'pending').then(() => history.push('/all/review'));
+                  }}
+                />}
+
+                {!post.reviewed && <Action
+                  id="verified"
+                  primary={ true }
+                  text='Verified'
+                  onClick={() => this.setState({verifyModal: true})}
+                />}
+              </div> : null
+            }
+
+          </div> : null}
 
         <Contribution
           type={ postType }
-          full_name={ repository.full_name }
+          repository={ repository }
           platform={ metaData.platform }
           id={ repository.id }
         />
@@ -246,14 +280,15 @@ class StoryFull extends React.Component {
           title='Does this contribution meet the Utopian Standards?'
           okText='Yes, Verify'
           cancelText='Not yet'
-          onCancel={() => this.setState({verifyModal: false})}
+          onCancel={() => {
+            moderatorAction(post.author, post.permlink, user.name, 'pending');
+            this.setState({verifyModal: false})
+          }}
           onOk={ () => {
-            verifyContribution(post.author, post.permlink, user.name);
+            moderatorAction(post.author, post.permlink, user.name, 'reviewed');
             this.setState({verifyModal: false})
           }}
         >
-          <p>Utopian relies on community members with high reputation like you to guarantee the quality of the contributions.</p>
-          <br />
           <p>By moderating contributions on Utopian <b>you will earn 5% of the total author rewards generated on the platform</b> based on the amount of contributions reviewed.</p>
           <br />
           <ul>

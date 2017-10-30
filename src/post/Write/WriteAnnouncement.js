@@ -19,8 +19,11 @@ import {
 import * as Actions from '../../actions/constants';
 import { createPost, saveDraft, newPost } from './editorActions';
 import { notify } from '../../app/Notification/notificationActions';
-import Editor from '../../components/Editor/Editor';
+import EditorAnnouncement from '../../components/Editor/EditorAnnouncement';
 import Affix from '../../components/Utils/Affix';
+
+
+import { getProject } from '../../actions/project';
 
 const version = require('../../../package.json').version;
 
@@ -39,6 +42,7 @@ import { getStats } from '../../actions/stats';
     loading: getIsEditorLoading(state),
     saving: getIsEditorSaving(state),
     submitting: state.loading,
+    project: state.project,
   }),
   {
     createPost,
@@ -47,6 +51,7 @@ import { getStats } from '../../actions/stats';
     notify,
     getBeneficiaries,
     getStats,
+    getProject,
   },
 )
 class Write extends React.Component {
@@ -85,6 +90,14 @@ class Write extends React.Component {
     };
   }
 
+  componentWillMount () {
+    const { match, getProject } = this.props;
+    const { projectId } = match.params;
+
+    getProject(projectId);
+
+  }
+
   componentDidMount() {
     this.props.newPost();
     const { draftPosts, location: { search } } = this.props;
@@ -118,9 +131,8 @@ class Write extends React.Component {
     }
   }
 
-  proceedSubmit = () => {
+  proceedSubmit = (data) => {
     const { getBeneficiaries } = this.props;
-    const data = this.state.parsedPostData;
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
     if (id) {
@@ -165,12 +177,12 @@ class Write extends React.Component {
           extensions
         };
 
-        console.log("CONTRIBUTION DATA", contributionData);
+        console.log("ANNOUNCEMENT DATA", contributionData);
 
         this.props.createPost(contributionData);
 
       } else {
-        alert("Something went wrong. Please try again!")
+        alert("Something went wrong. Please try again!");
       }
     });
   };
@@ -184,23 +196,7 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    this.setState({parsedPostData: data})
-
-    getStats()
-      .then(res => {
-        const { stats } = res.response;
-        const jsonData = data.jsonMetadata;
-        const categoryStats = stats.categories[jsonData.type];
-        const average_posts_length = categoryStats.average_posts_length;
-        const bodyLength = data.body.length;
-
-        if (bodyLength < average_posts_length) {
-          this.setState({warningModal : true});
-        } else {
-          this.proceedSubmit();
-        }
-      })
-      .catch((e) => alert("Something went wrong. Please try again." + e))
+    this.proceedSubmit(data);
   };
 
   getNewPostData = (form) => {
@@ -312,6 +308,7 @@ class Write extends React.Component {
   };
 
   saveDraft = debounce((form) => {
+    const projectId = this.props.match.params.projectId;
     const data = this.getNewPostData(form);
     const postBody = data.body;
     const { location: { search } } = this.props;
@@ -329,13 +326,19 @@ class Write extends React.Component {
       redirect = true;
     }
 
-    this.props.saveDraft({ postData: data, id }, redirect);
+    data.jsonMetadata.repository = this.props.project;
+
+    this.props.saveDraft({ postData: data, id, projectId, type: 'announcement'}, redirect);
   }, 400);
 
   render() {
     const { initialTitle, initialTopics, initialType, initialBody, initialRepository } = this.state;
-    const { loading, saving, submitting } = this.props;
+    const { loading, saving, submitting, project, match } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
+
+    if (!Object.keys(project).length || (project && project.id !== parseInt(match.params.projectId))) {
+      return null;
+    }
 
     return (
       <div className="shifted">
@@ -346,10 +349,10 @@ class Write extends React.Component {
             </div>
           </Affix>
           <div className="center">
-            <Editor
+            <EditorAnnouncement
               ref={this.setForm}
               saving={saving}
-              repository={initialRepository}
+              repository={initialRepository || project}
               title={initialTitle}
               topics={initialTopics}
               type={initialType}

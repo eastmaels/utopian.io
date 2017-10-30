@@ -27,6 +27,14 @@ class UserMenu extends React.Component {
     };
   }
 
+  componentDidUpdate (prevProps) {
+    if (prevProps.match.params.name !== this.props.match.params.name) {
+      this.setState({
+        current: 'discussions',
+      })
+    }
+  }
+
   getItemClasses = key => classNames('UserMenu__item', { 'UserMenu__item--active': this.state.current === key });
 
   handleClick = (e) => {
@@ -47,6 +55,9 @@ class UserMenu extends React.Component {
               {/*<li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
                 <FormattedMessage id="comments" defaultMessage="Comments" />
               </li>*/}
+              <li className={this.getItemClasses('projects')} onClick={this.handleClick} role="presentation" data-key="projects">
+                Projects
+              </li>
               <li className={this.getItemClasses('followers')} onClick={this.handleClick} role="presentation" data-key="followers">
                 <FormattedMessage id="followers" defaultMessage="Followers" />
                 <span className="UserMenu__badge">

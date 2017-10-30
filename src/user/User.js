@@ -22,20 +22,30 @@ import UserProfile from './UserProfile';
 import UserComments from './UserComments';
 import UserFollowers from './UserFollowers';
 import UserFollowing from './UserFollowing';
+import ProjectsFeed from '../feed/ProjectsFeed';
 import UserReblogs from './UserReblogs';
 import UserFeed from './UserFeed';
 import SubFeed from '../feed/SubFeed';
 
+import GithubConnect from './GithubConnect';
+
 export const needs = [getAccountWithFollowingCount];
+
+import EmptyFeed from '../statics/EmptyFeed';
+
+import { getGithubProjects } from '../actions/projects';
+import * as Actions from '../actions/constants';
 
 @connect(
   (state, ownProps) => ({
     authenticated: getIsAuthenticated(state),
     authenticatedUser: getAuthenticatedUser(state),
     user: getUser(state, ownProps.match.params.name),
+    loading: state.loading,
   }), {
     getAccountWithFollowingCount,
     openTransfer,
+    getGithubProjects,
   })
 export default class User extends React.Component {
   static propTypes = {
@@ -54,15 +64,46 @@ export default class User extends React.Component {
 
   static needs = needs;
 
-  componentWillMount() {
-    if (!this.props.user.name) {
-      this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
-    }
+  constructor (props) {
+    super (props);
+
+    this.state = {
+      githubProjects: []
+    };
   }
 
+  componentWillMount() {
+    const {getGithubProjects, match} = this.props;
+    if (!this.props.user.name) {
+      this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
+      return;
+    }
+
+    getGithubProjects(match.params.name).then(res => {
+      this.setState({
+        githubProjects: res.response || []
+      })
+    });
+  }
+
+
   componentDidUpdate(prevProps) {
+    const {getGithubProjects, match, authenticatedUser, user} = this.props;
+
     if (prevProps.match.params.name !== this.props.match.params.name) {
       this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
+    }
+
+    if (prevProps.user !== user) {
+      const isOnwer = authenticatedUser && authenticatedUser.name === match.params.name;
+      console.log("IS WO", isOnwer);
+      console.log(authenticatedUser)
+
+      getGithubProjects(match.params.name, isOnwer).then(res => {
+        this.setState({
+          githubProjects: res.response || []
+        })
+      });
     }
   }
 
@@ -71,7 +112,7 @@ export default class User extends React.Component {
   };
 
   render() {
-    const { authenticated, authenticatedUser, match } = this.props;
+    const { authenticated, authenticatedUser, match, loading, getGithubProjects } = this.props;
     const username = this.props.match.params.name;
     const { user } = this.props;
     const { profile = {} } = user.json_metadata || {};
@@ -113,15 +154,15 @@ export default class User extends React.Component {
         </Helmet>
         <ScrollToTopOnMount />
         {user &&
-          <UserHero
-            authenticated={authenticated}
-            user={user}
-            username={displayedUsername}
-            isSameUser={isSameUser}
-            hasCover={hasCover}
-            onFollowClick={this.handleFollowClick}
-            onSelect={this.handleUserMenuSelect}
-          />}
+        <UserHero
+          authenticated={authenticated}
+          user={user}
+          username={displayedUsername}
+          isSameUser={isSameUser}
+          hasCover={hasCover}
+          onFollowClick={this.handleFollowClick}
+          onSelect={this.handleUserMenuSelect}
+        />}
         <div className="shifted">
           <div className="feed-layout container">
             <Affix className="leftContainer" stickPosition={72}>
@@ -132,13 +173,30 @@ export default class User extends React.Component {
             <Affix className="rightContainer" stickPosition={72}>
               <div className="right">
                 {user && user.name &&
-                  <RightSidebar key={user.name} />
+                <RightSidebar key={user.name} />
                 }
               </div>
             </Affix>
             <div className="center">
               <Route exact path={`${match.path}`} component={UserProfile} />
-              {/*<Route path={`${match.path}/comments`} component={UserComments} />*/}
+              <Route path={`${match.path}/projects`} component={() => {
+
+                if(this.state.githubProjects.length) {
+                  return (
+                    <ProjectsFeed
+                      content={ this.state.githubProjects }
+                      isFetching={ loading === Actions.GET_GITHUB_PROJECTS_REQUEST }
+                      hasMore={ false }
+                      loadMoreContent={() => null}
+                    />
+                  )
+                }
+
+                if(!this.state.githubProjects.length && loading !== Actions.GET_GITHUB_PROJECTS_REQUEST) {
+                  return <EmptyFeed text={'No projects found'} />
+                }
+              }}
+              />
               <Route path={`${match.path}/followers`} component={UserFollowers} />
               <Route path={`${match.path}/followed`} component={UserFollowing} />
               {/*<Route path={`${match.path}/reblogs`} component={UserReblogs} />*/}

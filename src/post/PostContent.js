@@ -23,7 +23,8 @@ import { followUser, unfollowUser } from '../user/userActions';
 import { getHtml } from '../components/Story/Body';
 import StoryFull from '../components/Story/StoryFull';
 
-import { verifyContribution } from '../actions/contribution';
+import { getModerators } from '../actions/moderators';
+import { moderatorAction } from '../actions/contribution';
 
 @connect(
   state => ({
@@ -36,6 +37,7 @@ import { verifyContribution } from '../actions/contribution';
     followingList: getFollowingList(state),
     pendingFollows: getPendingFollows(state),
     saving: getIsEditorSaving(state),
+    moderators: state.moderators,
     state,
   }),
   {
@@ -45,7 +47,8 @@ import { verifyContribution } from '../actions/contribution';
     toggleBookmark,
     followUser,
     unfollowUser,
-    verifyContribution,
+    moderatorAction,
+    getModerators,
   },
 )
 class PostContent extends React.Component {
@@ -82,6 +85,11 @@ class PostContent extends React.Component {
     followUser: () => {},
     unfollowUser: () => {},
   };
+
+  componentWillMount () {
+    const { getModerators } = this.props;
+    getModerators();
+  }
 
   componentDidMount() {
     const { hash } = window.location;
@@ -142,7 +150,9 @@ class PostContent extends React.Component {
       bookmarks,
       pendingBookmarks,
       saving,
-      verifyContribution,
+      moderatorAction,
+      moderators,
+      history,
     } = this.props;
 
     const postMetaData = content.json_metadata;
@@ -199,8 +209,10 @@ class PostContent extends React.Component {
           />
         </Helmet>
         <StoryFull
+          history={history}
           user={user}
-          verifyContribution={verifyContribution}
+          moderators={moderators}
+          moderatorAction={moderatorAction}
           post={content}
           postState={postState}
           commentCount={content.children}
