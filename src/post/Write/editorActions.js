@@ -132,29 +132,29 @@ export const broadcastComment = (
   operations.push(['comment_options', commentOptionsConfig]);
 
   /*
-  if (reward === '0') {
-    commentOptionsConfig.max_accepted_payout = '0.000 SBD';
-    commentOptionsConfig.percent_steem_dollars = 10000;
-  } else if (reward === '100') {
-    commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
-    commentOptionsConfig.percent_steem_dollars = 0;
-  }
+   if (reward === '0') {
+   commentOptionsConfig.max_accepted_payout = '0.000 SBD';
+   commentOptionsConfig.percent_steem_dollars = 10000;
+   } else if (reward === '100') {
+   commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
+   commentOptionsConfig.percent_steem_dollars = 0;
+   }
 
-  if (reward === '0' || reward === '100') {
-    operations.push(['comment_options', commentOptionsConfig]);
-  }
+   if (reward === '0' || reward === '100') {
+   operations.push(['comment_options', commentOptionsConfig]);
+   }
 
-  if (upvote) {
-    operations.push([
-      'vote',
-      {
-        voter: author,
-        author,
-        permlink,
-        weight: 10000,
-      },
-    ]);
-  }*/
+   if (upvote) {
+   operations.push([
+   'vote',
+   {
+   voter: author,
+   author,
+   permlink,
+   weight: 10000,
+   },
+   ]);
+   }*/
 
   console.log("OPERATIONS", operations)
 
@@ -188,54 +188,55 @@ export function createPost(postData) {
       ? Promise.resolve(postData.permlink)
       : createPermlink(title, author, parentAuthor, parentPermlink);
 
-    const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + '<br /><hr/><em>Open Source Contribution posted via https://utopian.io</em><hr/>';
-
     dispatch({
       type: CREATE_POST,
       payload: {
-        promise: getPermLink.then(permlink =>
-          broadcastComment(
-            parentAuthor,
-            parentPermlink,
-            author,
-            title,
-            newBody,
-            jsonMetadata,
-            permlink,
-            !isUpdating && extensions,
-          ).then((result) => {
+        promise: getPermLink.then(permlink => {
+          const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + `<br /><hr/><em>Open Source Contribution posted via <a href="https://utopian.io/${process.env.UTOPIAN_CATEGORY}/@${author}/${permlink}">Utopian.io</a></em><hr/>`;
 
-            if (draftId) {
-              dispatch(deleteDraft(draftId));
-              dispatch(addEditedPost(permlink));
-            }
+          return broadcastComment(
+              parentAuthor,
+              parentPermlink,
+              author,
+              title,
+              newBody,
+              jsonMetadata,
+              permlink,
+              !isUpdating && extensions,
+            ).then((result) => {
 
-            // @UTOPIAN
-            if (result) {
-              if (!isUpdating) {
-                const createOnAPI = contributionData => dispatch(
-                  createContribution(contributionData.author, contributionData.permlink)
-                );
-                createOnAPI({ author, permlink })
-                  .then(() => dispatch(
+              if (draftId) {
+                dispatch(deleteDraft(draftId));
+                dispatch(addEditedPost(permlink));
+              }
+
+              // @UTOPIAN
+              if (result) {
+                if (!isUpdating) {
+                  const createOnAPI = contributionData => dispatch(
+                    createContribution(contributionData.author, contributionData.permlink)
+                  );
+                  createOnAPI({ author, permlink })
+                    .then(() => dispatch(
+                      push(`/${parentPermlink}/@${author}/${permlink}`)
+                    ));
+                } else {
+                  const updateOnAPI = contributionData => dispatch(
+                    updateContribution(contributionData.author, contributionData.permlink)
+                  );
+                  updateOnAPI({ author, permlink }).then(() => dispatch(
                     push(`/${parentPermlink}/@${author}/${permlink}`)
                   ));
-              } else {
-                const updateOnAPI = contributionData => dispatch(
-                  updateContribution(contributionData.author, contributionData.permlink)
-                );
-                updateOnAPI({ author, permlink }).then(() => dispatch(
-                  push(`/${parentPermlink}/@${author}/${permlink}`)
-                ));
+                }
               }
-            }
 
-            if (window.ga) {
-              window.ga('send', 'event', 'post', 'submit', '', 10);
-            }
+              if (window.ga) {
+                window.ga('send', 'event', 'post', 'submit', '', 10);
+              }
 
-            return result;
-          }),
+              return result;
+            })
+          }
         ),
       },
     });

@@ -7,7 +7,6 @@ import debounce from 'lodash/debounce';
 import isArray from 'lodash/isArray';
 import 'url-search-params-polyfill';
 import { injectIntl } from 'react-intl';
-import GetBoost from '../../components/Sidebar/GetBoost';
 
 import {
   getAuthenticatedUser,
@@ -28,6 +27,9 @@ const version = require('../../../package.json').version;
 import { Modal, Icon } from 'antd';
 import { getBeneficiaries } from '../../actions/beneficiaries';
 import { getStats } from '../../actions/stats';
+import { getUser } from '../../actions/user';
+import { getGithubProjects } from '../../actions/projects';
+import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 
 @injectIntl
@@ -47,6 +49,8 @@ import { getStats } from '../../actions/stats';
     notify,
     getBeneficiaries,
     getStats,
+    getUser,
+    getGithubProjects,
   },
 )
 class Write extends React.Component {
@@ -79,6 +83,7 @@ class Write extends React.Component {
       initialType: '',
       initialBody: '',
       initialRepository: null,
+      initialPullRequests: [],
       isUpdating: false,
       warningModal: false,
       parsedPostData: null,
@@ -87,9 +92,15 @@ class Write extends React.Component {
 
   componentDidMount() {
     this.props.newPost();
-    const { draftPosts, location: { search } } = this.props;
+    const { draftPosts, location: { search }, getUser, user, getGithubProjects } = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
+
+    getUser(user.name).then((res) => {
+      if (res.response && res.response.github) {
+        getGithubProjects(user.name, true);
+      }
+    }); // @UTOPIAN INTERNAL DATA
 
     if (draftPost) {
       const { jsonMetadata, isUpdating } = draftPost;
@@ -112,8 +123,10 @@ class Write extends React.Component {
         initialTopics: tags || [],
         initialType: jsonMetadata.type || 'ideas',
         initialBody: draftPost.body || '',
+        isReviewed: draftPost.reviewed || false,
         isUpdating: isUpdating || false,
         initialRepository: jsonMetadata.repository,
+        initialPullRequests: jsonMetadata.pullRequests || [],
       });
     }
   }
@@ -194,7 +207,7 @@ class Write extends React.Component {
         const average_posts_length = categoryStats.average_posts_length;
         const bodyLength = data.body.length;
 
-        if (bodyLength < average_posts_length) {
+        if (bodyLength + 2000 < average_posts_length) {
           this.setState({warningModal : true});
         } else {
           this.proceedSubmit();
@@ -258,6 +271,7 @@ class Write extends React.Component {
       app: `utopian/${version}`,
       format: 'markdown',
       repository: form.repository,
+      pullRequests: form.pullRequests || [],
       platform: 'github', // @TODO @UTOPIAN hardcoded
       type: form.type,
     };
@@ -333,8 +347,8 @@ class Write extends React.Component {
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialType, initialBody, initialRepository } = this.state;
-    const { loading, saving, submitting } = this.props;
+    const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialPullRequests } = this.state;
+    const { loading, saving, submitting, user } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
     return (
@@ -342,7 +356,7 @@ class Write extends React.Component {
         <div className="post-layout container">
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
-              <GetBoost />
+              <GithubConnection user={user}/>
             </div>
           </Affix>
           <div className="center">
@@ -350,15 +364,18 @@ class Write extends React.Component {
               ref={this.setForm}
               saving={saving}
               repository={initialRepository}
+              pullRequests={initialPullRequests}
               title={initialTitle}
               topics={initialTopics}
               type={initialType}
               body={initialBody}
               loading={isSubmitting}
               isUpdating={this.state.isUpdating}
+              isReviewed={this.state.isReviewed}
               onUpdate={this.saveDraft}
               onSubmit={this.onSubmit}
               onImageInserted={this.handleImageInserted}
+              user={user}
             />
             <Modal
               visible={this.state.warningModal}
@@ -379,11 +396,11 @@ class Write extends React.Component {
                   textAlign: 'center',
                 }}/>
                 <br />
-                Looking at the contribution you just wrote, seems like there are some things that should be adjusted.
+                Looking at the contribution you just wrote, seems like it less informative than others in this category.
                 <br /><br />
                 Please make sure you are adding <b>enough information</b> and that your contribution is <b>narrative and brings value</b>.
                 <br /><br />
-                Submitting the contribution as it is now, will either result in the <b>contribution being refused</b> by the Utopian Moderators or <b>lower votes</b>.
+                Submitting the contribution as it is now, will either result in the <b>contribution being refused</b> by the Utopian Moderators or <b>lower votes/exposure</b>.
               </p>
             </Modal>
           </div>
