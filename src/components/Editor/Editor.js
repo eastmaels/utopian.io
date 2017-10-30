@@ -134,7 +134,7 @@ class Editor extends React.Component {
     const getPulls = () => {
       getPullRequests(nextProps.repository.full_name).then(res => {
         if (res.response && res.response.length > 0) {
-          const prs = res.response.filter(pr => pr.user.login === 'mktcode');
+          const prs = res.response.filter(pr => pr.user.login === user.github.account);
           this.setState({
             availablePullRequests: prs
           });
@@ -763,7 +763,7 @@ class Editor extends React.Component {
                   getPullRequests(project.full_name).then(res => {
                     if (res.response && res.response.length > 0) {
                       console.log(user.github.account)
-                      const prs = res.response.filter(pr => pr.user.login === 'mktcode');
+                      const prs = res.response.filter(pr => pr.user.login === user.github.account);
                       this.setState({
                         availablePullRequests: prs
                       });
