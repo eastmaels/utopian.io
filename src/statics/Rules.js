@@ -26,7 +26,7 @@ export default (props) =>
       <br />
       <h2>Contributions should be in English</h2>
       <p>
-        Contributions should be in plain english and fully understandable. The only accepted exceptions are: 1. The effort to document an Open Source project in a specific language. 2. Contributions under the Translations category. 3. Open Source projects that are meant to be only for specific languages. If they wish to do so contributors can translate their contributions in their local language at the bottom of the post.</p>
+        Contributions should be in plain english and fully understandable. The only accepted exceptions are: 1. The effort to document an Open Source project in a specific language. 2. Contributions under the Translations category. 3. Open Source projects that are meant to be only for specific languages.</p>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
@@ -41,6 +41,17 @@ export default (props) =>
       <h2>Contributions Must Not Contain Spam</h2>
       <p>
         The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will require to edit the contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. Moderators will flag and hide forever spam posts that bring no real value.
+      </p>
+      <br />
+      <h2>Contributions Must Not Contain Defamation</h2>
+      <p>
+        Contributions must not use namecalling directed at other users of steem blockchain. Contributions also may not contain false information about another user that may be perceived as defamotory.
+      </p>
+      <br />
+      <br />
+      <h2>Contributions Cannot Refer To Steem</h2>
+      <p>
+        Contributions cannot have any direct reference to Steem, Steemit, Steemians and similar. This is because contributions get posted in the Github feed where project maintainers have no interest in your Steemit activities. "Follow", "Upvote", "Resteem" and similar sentences are not allowed.
       </p>
       <br />
       <h2>Ideas/Feature requests Category</h2>

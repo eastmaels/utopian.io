@@ -248,7 +248,7 @@ class StoryFull extends React.Component {
                     }
                   }}
                 />}
-                {!post.pending && <Action
+                {!post.pending && !post.reviewed && <Action
                   id="pending"
                   primary={ true }
                   text='Pending Review'
