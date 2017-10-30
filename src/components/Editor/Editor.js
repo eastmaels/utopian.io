@@ -18,12 +18,20 @@ import './Editor.less';
 import CategoryIcon from '../CategoriesIcons';
 import { getProjects, setProjects } from '../../actions/projects';
 const RadioGroup = Radio.Group;
+const Option = Select.Option;
+
+// @UTOPIAN
+import { getPullRequests } from '../../actions/pullRequests';
+
 
 @connect(
   state => ({
     projects: state.projects,
   }),
-  { getProjects, setProjects },
+  { getProjects,
+    setProjects,
+    getPullRequests,
+  },
 )
 @injectIntl
 class Editor extends React.Component {
@@ -85,6 +93,8 @@ class Editor extends React.Component {
     loading: false,
     loaded: false,
     repository: null,
+    pullRequests: [],
+    availablePullRequests: [],
     noRepository: false,
     currentType: null,
   };
@@ -118,12 +128,36 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, topics, body, type } = this.props;
+    const { title, topics, body, type, user, getPullRequests, repository } = this.props;
+    const chosenType = this.state.currentType || type || 'ideas';
+
+    const getPulls = () => {
+      getPullRequests(nextProps.repository.full_name).then(res => {
+        if (res.response && res.response.length > 0) {
+          const prs = res.response.filter(pr => pr.user.login === user.github.account);
+          this.setState({
+            availablePullRequests: prs
+          });
+        }
+      });
+    }
 
     if (this.props.repository !== nextProps.repository) {
       this.setState({
         value: nextProps.repository.full_name,
         repository: nextProps.repository,
+      });
+    }
+
+    if (nextProps.repository !== nextProps.repository && user && user.github ||
+      nextProps.user !== user && nextProps.user.github !== user.github &&
+      (chosenType === 'development' || chosenType === 'documentation')) {
+      getPulls();
+    }
+
+    if (this.props.pullRequests !== nextProps.pullRequests) {
+      this.setState({
+        pullRequests: nextProps.pullRequests,
       });
     }
 
@@ -137,13 +171,19 @@ class Editor extends React.Component {
     }
   }
 
-  onUpdate = (e, isRepository = false) => {
-    const values = isRepository ? this.getValues() : this.getValues(e);
+  onUpdate = (e, type = null) => {
+    const values = type === 'repository' || type === 'pullRequests' ? this.getValues() : this.getValues(e);
 
-    if (isRepository) {
+    if (type === 'repository') {
       this.props.onUpdate({
         ...values,
         repository: e
+      });
+    }else if (type === 'pullRequests') {
+      console.log(e)
+      this.props.onUpdate({
+        ...values,
+        pullRequests: e
       });
     } else {
       this.props.onUpdate(values);
@@ -181,6 +221,7 @@ class Editor extends React.Component {
       ...this.props.form.getFieldsValue(['title', 'type', 'topics']),
       body: this.input.value,
     };
+
 
     if (!e) return values;
 
@@ -223,6 +264,7 @@ class Editor extends React.Component {
         this.props.onSubmit({
           ...values,
           repository: this.state.repository,
+          pullRequests: this.state.pullRequests,
           body: this.input.value,
         });
       } else if (this.input.value === '') {
@@ -441,7 +483,7 @@ class Editor extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { intl, loading, isUpdating, type, saving, getProjects, projects, setProjects } = this.props;
+    const { intl, loading, isUpdating, isReviewed, type, saving, getProjects, projects, setProjects, user, getPullRequests, pullRequests } = this.props;
 
     const chosenType = this.state.currentType || type || 'ideas';
 
@@ -595,49 +637,49 @@ class Editor extends React.Component {
             {getFieldDecorator('type')(
               <RadioGroup onChange={this.onUpdate}>
                 <label>
-                  <Radio value="ideas" name="type" />
+                  <Radio value="ideas" name="type" disabled={isReviewed}/>
                   <div className={`ideas box`}>
                     <span>Idea/Feature</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="development" name="type" />
+                  <Radio value="development" name="type" disabled={isReviewed}/>
                   <div className={`development box`}>
                     <span>Development</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="bug-hunting" name="type" />
+                  <Radio value="bug-hunting" name="type" disabled={isReviewed}/>
                   <div className={`bug-hunting box`}>
                     <span>Bug Hunting</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="translations" name="type" />
+                  <Radio value="translations" name="type" disabled={isReviewed}/>
                   <div className={`translations box`}>
                     <span>Translation</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="graphics" name="type" />
+                  <Radio value="graphics" name="type" disabled={isReviewed}/>
                   <div className={`graphics box`}>
                     <span>Graphics</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="documentation" name="type"/>
+                  <Radio value="documentation" name="type" disabled={isReviewed}/>
                   <div className={`documentation box`}>
                     <span>Documentation</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="analysis" name="type"/>
+                  <Radio value="analysis" name="type" disabled={isReviewed}/>
                   <div className={`analysis box`}>
                     <span>Analysis</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="social" name="type"/>
+                  <Radio value="social" name="type" disabled={isReviewed}/>
                   <div className={`social box`}>
                     <span>Visibility</span>
                   </div>
@@ -650,6 +692,7 @@ class Editor extends React.Component {
         {!this.state.rulesAccepted && !isUpdating  ? <Rules /> : null}
 
         <div className={this.state.rulesAccepted || isUpdating ? 'rulesAccepted' : 'rulesNotAccepted'}>
+
           <Form.Item
             validateStatus={this.state.noRepository ? 'error' : ''}
             help={this.state.noRepository && "Please enter an existing Github repository"}
@@ -663,9 +706,10 @@ class Editor extends React.Component {
               ref={ search => this.search = search }
               value={ this.state.value }
               inputProps={{
+                disabled: isReviewed,
                 id: 'search-projects',
                 placeholder: 'Browse Github repositories',
-                className: `ant-input ant-input-lg Editor__repository`,
+                className: `ant-input ant-input-lg Editor__repository ${isReviewed ? 'disabled' : ''}`,
                 onKeyPress: (event) => {
                   let q = event.target.value;
                   q = q.replace('https://', '');
@@ -707,11 +751,27 @@ class Editor extends React.Component {
               items={ projects }
               getItemValue={project => project.full_name}
               onSelect={(value, project) => {
-                this.setState({
-                  value: project.full_name,
-                  repository: project,
-                });
-                this.onUpdate(project, true);
+                const update = () => {
+                  this.setState({
+                    value: project.full_name,
+                    repository: project,
+                  });
+                  this.onUpdate(project, 'repository');
+                };
+
+                if (user.github && !isReviewed && (chosenType === 'development' || chosenType === 'documentation')) {
+                  getPullRequests(project.full_name).then(res => {
+                    if (res.response && res.response.length > 0) {
+                      const prs = res.response.filter(pr => pr.user.login === user.github.account);
+                      this.setState({
+                        availablePullRequests: prs
+                      });
+                      update();
+                    }
+                  });
+                } else {
+                  update();
+                }
               }}
               onChange={(event, value) => {
                 this.setState({value});
@@ -743,6 +803,35 @@ class Editor extends React.Component {
               )}
             />
           </Form.Item>
+
+
+          {(chosenType === 'development' || chosenType === 'documentation') &&
+          user.github &&
+          (this.state.availablePullRequests.length > 0 || pullRequests.length > 0) ?
+            <Form.Item
+              label={
+                <span className="Editor__label">
+              Pull Requests
+            </span>
+              }
+            >
+              <Select
+                disabled={isReviewed}
+                mode="multiple"
+                placeholder="Choose Pull Requests"
+                defaultValue={pullRequests.map(pr => pr.id.toString())}
+                onChange={ (prs) => {
+                  this.setState({
+                    pullRequests: this.state.availablePullRequests.filter(avPr => prs.indexOf(avPr.id.toString()) > -1),
+                  });
+                  this.onUpdate(prs, 'pullRequests');
+                }}
+              >
+                {this.state.availablePullRequests.map(pr => <Option value={pr.id.toString()} key={pr.id}>{pr.id} - {pr.title}</Option>)}
+              </Select>
+
+            </Form.Item> : null}
+
           <Form.Item
             label={
               <span className="Editor__label">

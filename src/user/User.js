@@ -96,8 +96,6 @@ export default class User extends React.Component {
 
     if (prevProps.user !== user) {
       const isOnwer = authenticatedUser && authenticatedUser.name === match.params.name;
-      console.log("IS WO", isOnwer);
-      console.log(authenticatedUser)
 
       getGithubProjects(match.params.name, isOnwer).then(res => {
         this.setState({

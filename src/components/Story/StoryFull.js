@@ -216,8 +216,8 @@ class StoryFull extends React.Component {
         {!reviewed || alreadyChecked ? <div className="StoryFull__review">
 
             {!alreadyChecked ? <h3>
-              <Icon type="safety" /> {!isModerator ? 'Under Review' : 'Review Contribution'}
-            </h3>: null}
+                <Icon type="safety" /> {!isModerator ? 'Under Review' : 'Review Contribution'}
+              </h3>: null}
 
             {!isModerator ? <p>
                 A moderator will soon review this contribution and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
@@ -248,7 +248,7 @@ class StoryFull extends React.Component {
                     }
                   }}
                 />}
-                {!post.pending && <Action
+                {!post.pending && !post.reviewed && <Action
                   id="pending"
                   primary={ true }
                   text='Pending Review'
@@ -404,6 +404,17 @@ class StoryFull extends React.Component {
         <div className="StoryFull__topics">
           {tags && tags.map(tag => <Topic key={tag} name={tag} />)}
         </div>
+        {metaData.pullRequests && metaData.pullRequests.length > 0 ?
+          <div>
+            <h3><Icon type="github"/> Linked Pull Requests</h3>
+            <ul>
+              {metaData.pullRequests.map(pr => (
+                <li key={pr.id}>
+                  <a target="_blank" href={pr.html_url}>{pr.title}</a>
+                </li>
+              ))}
+            </ul>
+          </div> : null}
         {reviewed && <StoryFooter
           post={post}
           postState={postState}

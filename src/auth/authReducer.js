@@ -11,6 +11,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    // @UTOPIAN
     case Actions.GET_GITHUB_PROJECTS_SUCCESS: {
       const repos = action.response;
       const { loggedUser } = action.additionalParams;
@@ -25,6 +26,18 @@ export default (state = initialState, action) => {
         };
       }
       return state;
+    }
+    // @UTOPIAN
+    case Actions.GET_USER_SUCCESS: {
+      const userData = action.response;
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...userData,
+        }
+      };
     }
     case types.LOGIN_START:
       return {

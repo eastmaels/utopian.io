@@ -15,9 +15,9 @@ import StartNow from '../../components/Sidebar/StartNow';
 import SignUp from '../../components/Sidebar/SignUp';
 
 import { Icon } from 'antd';
-import GithubRepos from '../../components/Sidebar/GithubRepos';
+import GithubConnection from '../../components/Sidebar/GithubConnection';
 
-
+import { getUser } from '../../actions/user';
 import { getGithubProjects } from '../../actions/projects';
 
 
@@ -30,6 +30,7 @@ import { getGithubProjects } from '../../actions/projects';
   }),
   {
     getGithubProjects,
+    getUser,
   })
 export default class RightSidebar extends React.Component {
   static propTypes = {
@@ -47,7 +48,7 @@ export default class RightSidebar extends React.Component {
   }
 
   componentDidUpdate () {
-    const { user, getGithubProjects } = this.props;
+    const { user, getGithubProjects, getUser } = this.props;
 
     if (user && user.name && !this.state.loadedProjects) {
 
@@ -55,7 +56,11 @@ export default class RightSidebar extends React.Component {
         loadedProjects: true,
       });
 
-      getGithubProjects(user.name, true);
+      getUser(user.name).then(res => {
+        if (res.response && res.response.github) {
+          getGithubProjects(user.name, true);
+        }
+      })
     }
   };
 
@@ -89,7 +94,7 @@ export default class RightSidebar extends React.Component {
     }
 
     return (
-      <GithubRepos repos={user.projects || []} />
+      <GithubConnection user={user} />
     );
   }
 }
