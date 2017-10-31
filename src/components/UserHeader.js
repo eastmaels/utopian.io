@@ -46,7 +46,7 @@ const UserHeader = ({
                 : <FollowButton username={handle} />)
             }
           </div>
-          <Popover
+          {!isSameUser && <Popover
             placement="bottom"
             trigger="click"
             content={
@@ -61,7 +61,7 @@ const UserHeader = ({
             }
           >
             <i className="iconfont icon-more UserHeader__more" />
-          </Popover>
+          </Popover>}
         </div>
         <div className="UserHeader__row UserHeader__handle">
           @{handle}
