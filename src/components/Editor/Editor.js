@@ -766,12 +766,10 @@ class Editor extends React.Component {
                       this.setState({
                         availablePullRequests: prs
                       });
-                      update();
                     }
                   });
-                } else {
-                  update();
                 }
+                update();
               }}
               onChange={(event, value) => {
                 this.setState({value});
