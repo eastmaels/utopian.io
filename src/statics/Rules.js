@@ -66,7 +66,7 @@ export default (props) =>
       <br />
       <h2>Bug Hunting Category</h2>
       <p>
-        Contributions under this category must include all the possible information for reproducing the bug. Devices, Internet connection speed, Browser version and similar info are necessary to reproduce the submitted bugs.
+        Contributions under this category must include all the possible information for reproducing the bug. Devices, Internet connection speed, Browser version and similar info are necessary to reproduce the submitted bugs. Contributors should look if the bug has been reported on the project's GitHub repository.
       </p>
       <br />
       <h2>Translation Category</h2>
