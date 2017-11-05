@@ -30,7 +30,7 @@ export default (props) =>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
-        Contributions must be unique. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
+        Contributions must be unique. Users must look first if the same or very similar contribution has been submitted. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
       </p>
       <br />
       <h2>Provides Proof Of Work</h2>
