@@ -35,7 +35,7 @@ export default (props) =>
       <br />
       <h2>Provides Proof Of Work</h2>
       <p>
-        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc. if a code contribution. Read all the rules for the specific Utopian categories below.
+        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc. if a code contribution. Contributors must give their usernames on the third party site so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
       </p>
       <br />
       <h2>Contributions Must Not Contain Spam</h2>
