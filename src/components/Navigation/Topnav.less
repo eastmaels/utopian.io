@@ -225,23 +225,27 @@
     margin: 0 10px !important;
   }
 
-  &__newReport {
-    span {
-      background: @blue;
-      color: @white;
-      padding: 17px;
+  &__item-write {
+    &:hover {
+      border: none !important;
+    }
+    &__newReport {
+      span {
+        background: @blue;
+        color: @white;
+        padding: 17px;
 
-      i {
-        vertical-align: middle;
-        font-size: 14px;
+        i {
+          vertical-align: middle;
+          font-size: 14px;
+        }
+      }
+      @media screen and (max-width: 736px) {
+        &_text {
+          display: none;
+        }
       }
     }
-    @media screen and (max-width: 736px) {
-      &_text {
-        display: none;
-      }
-    }
-
   }
 
   &__link {

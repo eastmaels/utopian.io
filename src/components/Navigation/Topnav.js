@@ -120,7 +120,7 @@ class Topnav extends React.Component {
       content = (
         <div className="Topnav__menu-container">
           <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
-            <Menu.Item key="write">
+            <Menu.Item key="write" className="Topnav__item-write">
               <Tooltip placement="bottom" title='Write a new Contributor Report'>
                 <Link to="/write" className="Topnav__newReport">
                   <span><i className="iconfont icon-add"/> <span className="Topnav__newReport_text">Contribution</span></span>
