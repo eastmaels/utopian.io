@@ -191,7 +191,6 @@
         padding: 0 4px !important;
 
         & > a {
-          color: @purple !important;
           font-weight: 600 !important;
         }
       }
@@ -226,24 +225,26 @@
   }
 
   &__item-write {
+    background-color: @blue;
     &:hover {
+      background-color: @blue-7 !important;
       border: none !important;
     }
-    &__newReport {
-      span {
-        background: @blue;
-        color: @white;
-        padding: 17px;
+  }
+  &__newReport {
+    color: @white !important;
 
-        i {
-          vertical-align: middle;
-          font-size: 14px;
-        }
+    span {
+      padding: 15px;
+
+      i {
+        vertical-align: middle;
+        font-size: 14px;
       }
-      @media screen and (max-width: 736px) {
-        &_text {
-          display: none;
-        }
+    }
+    @media screen and (max-width: 736px) {
+      &_text {
+        display: none;
       }
     }
   }
