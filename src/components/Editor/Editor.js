@@ -151,7 +151,9 @@ class Editor extends React.Component {
 
     if (nextProps.repository !== nextProps.repository && user && user.github ||
       nextProps.user !== user && nextProps.user.github !== user.github &&
-      (chosenType === 'development' || chosenType === 'documentation')) {
+      (chosenType === 'development' || chosenType === 'documentation') &&
+      (nextProps.repository && nextProps.repository.full_name))
+    {
       getPulls();
     }
 
