@@ -731,8 +731,6 @@ class Editor extends React.Component {
 
                     getProjects({
                       q,
-                      sort: 'stars',
-                      order: 'desc',
                     }).then(() => {
                       this.setState({loaded: true, loading: false});
                       this.search.refs.input.click();
