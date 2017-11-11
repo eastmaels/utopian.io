@@ -722,6 +722,7 @@ class Editor extends React.Component {
                   q = q.replace('https://', '');
                   q = q.replace('http://', '');
                   q = q.replace('github.com/', '');
+                  q = '"' + q + '"'; 
 
                   if (event.key === 'Enter') {
                     event.preventDefault();
@@ -743,6 +744,7 @@ class Editor extends React.Component {
                     let q = pasted.replace('https://', '');
                     q = q.replace('http://', '');
                     q = q.replace('github.com/', '');
+                    q = '"' + q + '"'; 
 
                     this.search.refs.input.click();
 
