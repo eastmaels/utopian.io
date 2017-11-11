@@ -192,7 +192,7 @@ export function createPost(postData) {
       type: CREATE_POST,
       payload: {
         promise: getPermLink.then(permlink => {
-          const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + `<br /><hr/><em>Open Source Contribution posted via <a href="https://utopian.io/${process.env.UTOPIAN_CATEGORY}/@${author}/${permlink}">Utopian.io</a></em><hr/>`;
+          const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + `\n\n<br /><hr/><em>Open Source Contribution posted via <a href="https://utopian.io/${process.env.UTOPIAN_CATEGORY}/@${author}/${permlink}">Utopian.io</a></em><hr/>`;
 
           return broadcastComment(
               parentAuthor,

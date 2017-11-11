@@ -151,7 +151,9 @@ class Editor extends React.Component {
 
     if (nextProps.repository !== nextProps.repository && user && user.github ||
       nextProps.user !== user && nextProps.user.github !== user.github &&
-      (chosenType === 'development' || chosenType === 'documentation')) {
+      (chosenType === 'development' || chosenType === 'documentation') &&
+      (nextProps.repository && nextProps.repository.full_name))
+    {
       getPulls();
     }
 
@@ -239,6 +241,12 @@ class Editor extends React.Component {
 
     return values;
   };
+
+  setInputCursorPosition = (pos) => {
+    if (this.input && this.input.setSelectionRange) {
+      this.input.setSelectionRange(pos, pos);
+    }
+  }
 
   resizeTextarea = () => {
     if (this.originalInput) this.originalInput.resizeTextarea();
@@ -401,13 +409,14 @@ class Editor extends React.Component {
 
     const startPos = this.input.selectionStart;
     const endPos = this.input.selectionEnd;
+    const imageText = `![${imageName}](${image})\n`;
     this.input.value = `${this.input.value.substring(
       0,
       startPos,
-    )}![${imageName}](${image})${this.input.value.substring(endPos, this.input.value.length)}\n`;
-
+    )}${imageText}${this.input.value.substring(endPos, this.input.value.length)}`;
     this.resizeTextarea();
     this.renderMarkdown(this.input.value);
+    this.setInputCursorPosition(startPos + imageText.length);
     this.onUpdate();
   };
 
@@ -724,8 +733,6 @@ class Editor extends React.Component {
 
                     getProjects({
                       q,
-                      sort: 'stars',
-                      order: 'desc',
                     }).then(() => {
                       this.setState({loaded: true, loading: false});
                       this.search.refs.input.click();
@@ -766,12 +773,10 @@ class Editor extends React.Component {
                       this.setState({
                         availablePullRequests: prs
                       });
-                      update();
                     }
                   });
-                } else {
-                  update();
                 }
+                update();
               }}
               onChange={(event, value) => {
                 this.setState({value});

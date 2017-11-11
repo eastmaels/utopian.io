@@ -30,17 +30,17 @@ export default (props) =>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
-        Contributions must be unique. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
+        Contributions must be unique. Users must look first if the same or very similar contribution has been submitted. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
       </p>
       <br />
       <h2>Provides Proof Of Work</h2>
       <p>
-        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc. if a code contribution. Read all the rules for the specific Utopian categories below.
+        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc. if a code contribution. Contributors must give their usernames on the third party site so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
       </p>
       <br />
       <h2>Contributions Must Not Contain Spam</h2>
       <p>
-        The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will require to edit the contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. Moderators will flag and hide forever spam posts that bring no real value.
+        The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will require to edit the contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. <b>Contributors must not submit work of someone else. Plagiarism is also forbidden.</b> Moderators will flag and hide forever spam posts that bring no real value.
       </p>
       <br />
       <h2>Contributions Must Not Contain Defamation</h2>
@@ -66,7 +66,7 @@ export default (props) =>
       <br />
       <h2>Bug Hunting Category</h2>
       <p>
-        Contributions under this category must include all the possible information for reproducing the bug. Devices, Internet connection speed, Browser version and similar info are necessary to reproduce the submitted bugs.
+        Contributions under this category must include all the possible information for reproducing the bug. Devices, Internet connection speed, Browser version and similar info are necessary to reproduce the submitted bugs. Contributors should look if the bug has been reported on the project's GitHub repository.
       </p>
       <br />
       <h2>Translation Category</h2>

@@ -57,7 +57,7 @@
   }
 
   input {
-    height: 54px !important;
+    height: 55px !important;
     border-radius: 0 !important;
     border: 0 !important;
     padding: 0 0 0 15px !important;
@@ -191,7 +191,6 @@
         padding: 0 4px !important;
 
         & > a {
-          color: @purple !important;
           font-weight: 600 !important;
         }
       }
@@ -225,11 +224,18 @@
     margin: 0 10px !important;
   }
 
+  &__item-write {
+    background-color: @blue;
+    &:hover {
+      background-color: @blue-7 !important;
+      border: none !important;
+    }
+  }
   &__newReport {
+    color: @white !important;
+
     span {
-      background: @blue;
-      color: @white;
-      padding: 17px;
+      padding: 15px;
 
       i {
         vertical-align: middle;
@@ -241,7 +247,6 @@
         display: none;
       }
     }
-
   }
 
   &__link {
