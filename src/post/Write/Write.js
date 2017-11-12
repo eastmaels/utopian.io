@@ -80,6 +80,7 @@ class Write extends React.Component {
     this.state = {
       initialTitle: '',
       initialTopics: [],
+      initialReward: '50',
       initialType: '',
       initialBody: '',
       initialRepository: null,
@@ -121,6 +122,7 @@ class Write extends React.Component {
       this.setState({
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
+        initialReward: draftPost.reward || '50',
         initialType: jsonMetadata.type || 'ideas',
         initialBody: draftPost.body || '',
         isReviewed: draftPost.reviewed || false,
@@ -220,6 +222,7 @@ class Write extends React.Component {
     const data = {
       body: form.body,
       title: form.title,
+      reward: form.reward,
     };
 
     data.parentAuthor = '';
@@ -347,7 +350,7 @@ class Write extends React.Component {
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialPullRequests } = this.state;
+    const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialPullRequests, initialReward } = this.state;
     const { loading, saving, submitting, user } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
@@ -367,6 +370,7 @@ class Write extends React.Component {
               pullRequests={initialPullRequests}
               title={initialTitle}
               topics={initialTopics}
+              reward={initialReward}
               type={initialType}
               body={initialBody}
               loading={isSubmitting}

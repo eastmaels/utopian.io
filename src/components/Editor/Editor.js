@@ -41,6 +41,7 @@ class Editor extends React.Component {
     repository: PropTypes.object,
     title: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.string),
+    reward: PropTypes.string,
     body: PropTypes.string,
     type: PropTypes.string,
     loading: PropTypes.bool,
@@ -56,6 +57,7 @@ class Editor extends React.Component {
     title: '',
     repository: null,
     topics: [],
+    reward: '50',
     type: 'ideas',
     body: '',
     recentTopics: [],
@@ -128,7 +130,7 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, topics, body, type, user, getPullRequests, repository } = this.props;
+    const { title, topics, body, type, user, getPullRequests, repository, reward } = this.props;
     const chosenType = this.state.currentType || type || 'ideas';
 
     const getPulls = () => {
@@ -166,6 +168,7 @@ class Editor extends React.Component {
     if (
       title !== nextProps.title ||
       topics !== nextProps.topics ||
+      reward !== nextProps.reward ||
       body !== nextProps.body ||
       type !== nextProps.type
     ) {
@@ -205,6 +208,7 @@ class Editor extends React.Component {
       title: post.title,
       // @UTOPIAN filtering out utopian-io since it's always added/re-added when posting
       topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
+      reward: post.reward,
       type: post.type || 'ideas',
     });
     if (this.input) {
@@ -220,7 +224,7 @@ class Editor extends React.Component {
     // (array or just value for Select, proxy event for inputs and checkboxes)
 
     const values = {
-      ...this.props.form.getFieldsValue(['title', 'type', 'topics']),
+      ...this.props.form.getFieldsValue(['title', 'type', 'topics', 'reward']),
       body: this.input.value,
     };
 
@@ -229,6 +233,8 @@ class Editor extends React.Component {
 
     if (isArray(e)) {
       values.topics = e;
+    } else if (typeof e === 'string') {
+      values.reward = e;
     }else if (e.target.type === 'textarea') {
       values.body = e.target.value;
     } else if (e.target.type === 'text') {
@@ -856,6 +862,25 @@ class Editor extends React.Component {
                 dropdownStyle={{ display: 'none' }}
                 tokenSeparators={[' ', ',']}
               />,
+            )}
+          </Form.Item>
+          <Form.Item
+            className={classNames({ Editor__hidden: isUpdating })}
+            label={
+              <span className="Editor__label">
+              Reward
+            </span>
+            }
+          >
+            {getFieldDecorator('reward', { initialValue: '50' })(
+              <Select onChange={this.onUpdate} disabled={isUpdating}>
+                <Select.Option value="100">
+                  100% Steem Power
+                </Select.Option>
+                <Select.Option value="50">
+                  50% SBD and 50% SP
+                </Select.Option>
+              </Select>,
             )}
           </Form.Item>
           <div className="Editor__bottom">
