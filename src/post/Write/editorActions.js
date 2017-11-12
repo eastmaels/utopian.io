@@ -3,7 +3,7 @@ import assert from 'assert';
 import SteemConnect from 'sc2-sdk';
 import { push } from 'react-router-redux';
 import { createAction } from 'redux-actions';
-import { addDraftMetadata, deleteDraftMetadata } from '../../helpers/metadata';
+import { addDraftLocaleStorage, deleteDraftLocaleStorage } from '../../helpers/localStorageHelpers';
 import { jsonParse } from '../../helpers/formatter';
 import { createPermlink, getBodyPatchIfSmaller } from '../../vendor/steemitHelpers';
 
@@ -38,7 +38,7 @@ export const saveDraft = (post, redirect) => dispatch =>
   dispatch({
     type: SAVE_DRAFT,
     payload: {
-      promise: addDraftMetadata(post)
+      promise: addDraftLocaleStorage(post)
         .then((resp) => {
           if (redirect) {
             if (post.projectId && post.type === 'announcement') {
@@ -58,7 +58,7 @@ export const deleteDraft = draftId => (dispatch) => {
   dispatch({
     type: DELETE_DRAFT,
     payload: {
-      promise: deleteDraftMetadata(draftId),
+      promise: deleteDraftLocaleStorage(draftId),
     },
     meta: { id: draftId },
   });

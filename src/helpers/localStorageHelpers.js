@@ -1,6 +1,22 @@
 import store from 'store';
 import _ from 'lodash';
 
+export const getDrafts = () => store.get('drafts') || {};
+
+export const addDraftLocaleStorage = (draft) => new Promise(function(resolve, reject) {
+  const drafts = store.get('drafts') || {};
+  drafts[draft.id] = draft.postData;
+  store.set('drafts', drafts);
+  resolve(drafts[draft.id]);
+});
+
+export const deleteDraftLocaleStorage = (draftId) => new Promise(function(resolve, reject) {
+  const drafts = store.get('drafts') || {};
+  delete drafts[draftId];
+  store.set('drafts', drafts);
+  resolve(drafts);
+});
+
 export const getFavoriteUsers = () => store.get('users') || {};
 
 export const addFavoriteUser = (username) => {

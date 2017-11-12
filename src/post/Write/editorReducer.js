@@ -36,7 +36,7 @@ const editor = (state = defaultState, action) => {
     case authActions.LOGIN_SUCCESS:
       return {
         ...state,
-        draftPosts: action.payload.user_metadata.drafts || defaultState.draftPosts,
+        draftPosts: action.payload.drafts || defaultState.draftPosts,
       };
     case editorActions.NEW_POST:
       return {
