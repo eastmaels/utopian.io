@@ -109,8 +109,8 @@ class Project extends React.Component {
                   </p>
                   <hr />
                   {isOwner && <div>
-                    <Link to={`/write-announcement/${project.id}`}>
-                      <Icon type="notification"/> Add announcement
+                    <Link to={`/write-task/${project.id}`}>
+                      <Icon type="notification"/> Add task request
                     </Link>
                   </div>}
                 </div>

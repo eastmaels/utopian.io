@@ -41,8 +41,8 @@ export const saveDraft = (post, redirect) => dispatch =>
       promise: addDraftLocaleStorage(post)
         .then((resp) => {
           if (redirect) {
-            if (post.projectId && post.type === 'announcement') {
-              dispatch(push(`/write-announcement/${post.projectId}/?draft=${post.id}`));
+            if (post.projectId && post.type === 'task') {
+              dispatch(push(`/write-task/${post.projectId}/?draft=${post.id}`));
             } else {
               dispatch(push(`/write?draft=${post.id}`));
             }
@@ -74,8 +74,8 @@ export const editPost = post => (dispatch) => {
   };
   dispatch(saveDraft({ postData: draft, id: post.id }))
     .then(() => {
-      if (jsonMetadata.type.indexOf('announcement') > -1) {
-        dispatch(push(`/write-announcement/${jsonMetadata.repository.id}?draft=${post.id}`));
+      if (jsonMetadata.type.indexOf('task') > -1) {
+        dispatch(push(`/write-task/${jsonMetadata.repository.id}?draft=${post.id}`));
       } else {
         dispatch(push(`/write?draft=${post.id}`));
       }

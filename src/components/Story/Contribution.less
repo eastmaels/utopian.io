@@ -9,7 +9,7 @@
   background: @blue;
   position: relative;
 
-  i.announcement {
+  i.task {
     position: absolute;
     right: 12px;
     top: 12px;
@@ -23,23 +23,38 @@
     }
   }
 
-  &.announcement-ideas,
+  &.task-ideas,
   &.ideas {
     background: @bg-ideas;
   }
-  &.announcement-development,
+  &.sub-projects {
+    background: @bg-sub-projects;
+  }
+  &.task-development,
   &.development {
     background: @bg-development;
   }
-  &.announcement-bug-hunting,
+  &.task-bug-hunting,
   &.bug-hunting {
     background: @bg-bug-hunting;
   }
-  &.announcement-translations,
+  &.task-translations,
   &.translations {
     background: @bg-translations;
   }
-  &.announcement-documentation,
+  &.task-analysis,
+  &.analysis {
+    background: @bg-analysis;
+  }
+  &.task-graphics,
+  &.graphics {
+    background: @bg-graphics;
+  }
+  &.task-social,
+  &.social {
+    background: @bg-social;
+  }
+  &.task-documentation,
   &.documentation {
     color: @black;
     background: @bg-documentation;
@@ -52,16 +67,13 @@
       }
     }
   }
-  &.announcement-analysis,
-  &.analysis {
-    background: @bg-analysis;
+  &.tutorials {
+    background: @bg-tutorials;
   }
-  &.announcement-graphics,
-  &.graphics {
-    background: @bg-graphics;
+  &.video-tutorials {
+    background: @bg-video-tutorials;
   }
-  &.announcement-social,
-  &.social {
-    background: @bg-social;
+  &.copywriting {
+    background: @bg-copywriting;
   }
 }

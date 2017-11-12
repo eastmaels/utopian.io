@@ -70,7 +70,7 @@ export default (
       />
       <Route
         exact
-        path="/write-announcement/:projectId"
+        path="/write-task/:projectId"
         render={(props) => (
           <RequireLogin>
             <WriteAnnouncement {...props} />

@@ -69,14 +69,18 @@ class Topnav extends React.Component {
         <InputGroup compact>
           <Select defaultValue={this.searchSelected(location) || 'projects'} onChange={(section) => this.setState({searchSection: section})}>
             <Option value="projects"><Icon type="github" className="iconfont icon-search" /> Projects</Option>
-            <Option value="ideas"><CategoryIcon type="ideas"/> Ideas</Option>
+            <Option value="ideas"><CategoryIcon type="ideas"/> Suggestions</Option>
+            <Option value="sub-projects"><CategoryIcon type="sub-projects"/> Sub-Projects</Option>
             <Option value="development"><CategoryIcon type="development"/> Code</Option>
             <Option value="bug-hunting"><CategoryIcon type="bug-hunting"/> Bugs</Option>
             <Option value="translations"><CategoryIcon type="translations"/> Translations</Option>
             <Option value="graphics"><CategoryIcon type="graphics"/> Graphics</Option>
-            <Option value="documentation"><CategoryIcon type="documentation"/> Docs</Option>
             <Option value="analysis"><CategoryIcon type="analysis"/> Analysis</Option>
             <Option value="social"><CategoryIcon type="social"/> Visibility</Option>
+            <Option value="documentation"><CategoryIcon type="documentation"/> Docs</Option>
+            <Option value="tutorials"><CategoryIcon type="tutorials"/> Tuts</Option>
+            <Option value="video-tutorials"><CategoryIcon type="video-tutorials"/> Video Tuts</Option>
+            <Option value="copywriting"><CategoryIcon type="copywriting"/> Copy</Option>
           </Select>
           <Input
             ref={input => this.searchInput = input}

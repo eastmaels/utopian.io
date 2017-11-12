@@ -204,7 +204,7 @@ class Write extends React.Component {
         const { stats } = res.response;
         const jsonData = data.jsonMetadata;
         const categoryStats = stats.categories[jsonData.type];
-        const average_posts_length = categoryStats.average_posts_length;
+        const average_posts_length = categoryStats ? categoryStats.average_posts_length : 0;
         const bodyLength = data.body.length;
 
         if (bodyLength + 2000 < average_posts_length) {

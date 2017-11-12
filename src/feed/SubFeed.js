@@ -9,6 +9,8 @@ import {getIsAuthenticated, getAuthenticatedUser} from "../reducers";
 // @UTOPIAN
 import {getContributions} from "../actions/contributions";
 import {getModerators} from "../actions/moderators";
+import CategoryIcon from '../components/CategoriesIcons';
+
 import {Tabs, Icon} from "antd";
 import * as R from "ramda";
 const TabPane = Tabs.TabPane;
@@ -129,10 +131,10 @@ class SubFeed extends React.Component {
         if (match.params.type === 'all') {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
             contribution.reviewed === true && !contribution.flagged;
-        }else if (match.params.type === 'announcements') {
+        }else if (match.params.type === 'tasks') {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
             contribution.reviewed === true && !contribution.flagged &&
-            contribution.json_metadata.type.indexOf('announcement') > -1;
+            contribution.json_metadata.type.indexOf('task') > -1;
         } else {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
             contribution.reviewed === true &&
@@ -212,15 +214,20 @@ class SubFeed extends React.Component {
           <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
-            {match.params.projectId && <TabPane tab={<span><Icon type="notification" />Announcements</span>} key="announcements" />}
-            <TabPane tab={<span><Icon type="bulb" />Ideas</span>} key="ideas" />
-            <TabPane tab={<span><Icon type="code" />Development</span>} key="development" />
-            <TabPane tab={<span><Icon type="eye-o" />Bug Hunting</span>} key="bug-hunting" />
-            <TabPane tab={<span><Icon type="flag" />Translations</span>} key="translations" />
-            <TabPane tab={<span><Icon type="layout" />Graphics</span>} key="graphics" />
-            <TabPane tab={<span><Icon type="book" />Documentation</span>} key="documentation" />
-            <TabPane tab={<span><Icon type="dot-chart" />Analysis</span>} key="analysis" />
-            <TabPane tab={<span><Icon type="share-alt" />Visibility</span>} key="social" />
+            {match.params.projectId && <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />}
+            <TabPane tab={<span><CategoryIcon type="ideas" />Suggestions</span>} key="ideas" />
+            <TabPane tab={<span><CategoryIcon type="sub-projects" />Sub-Projects</span>} key="sub-projects" />
+            <TabPane tab={<span><CategoryIcon type="development" />Development</span>} key="development" />
+            <TabPane tab={<span><CategoryIcon type="bug-hunting" />Bug Hunting</span>} key="bug-hunting" />
+            <TabPane tab={<span><CategoryIcon type="translations" />Translations</span>} key="translations" />
+            <TabPane tab={<span><CategoryIcon type="graphics" />Graphics</span>} key="graphics" />
+            <TabPane tab={<span><CategoryIcon type="analysis" />Analysis</span>} key="analysis" />
+            <TabPane tab={<span><CategoryIcon type="social" />Visibility</span>} key="social" />
+            <TabPane tab={<span><CategoryIcon type="documentation" />Documentation</span>} key="documentation" />
+            <TabPane tab={<span><CategoryIcon type="tutorials" />Tutorials</span>} key="tutorials" />
+            <TabPane tab={<span><CategoryIcon type="video-tutorials" />Video Tutorials</span>} key="video-tutorials" />
+            <TabPane tab={<span><CategoryIcon type="copywriting" />Copywriting</span>} key="copywriting" />
+
           </Tabs> : null}
 
         <Feed
@@ -229,7 +236,7 @@ class SubFeed extends React.Component {
           hasMore={ hasMore }
           loadMoreContent={ this.loadContributions }
         />
-        {!contributions.length && !isFetching && <EmptyFeed text={match.params.type === 'announcements' ? 'No announcements yet' : null}/>}
+        {!contributions.length && !isFetching && <EmptyFeed text={match.params.type === 'tasks' ? 'No tasks requests yet' : null}/>}
       </div>
     );
   }

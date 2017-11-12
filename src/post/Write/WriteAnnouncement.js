@@ -328,7 +328,7 @@ class Write extends React.Component {
 
     data.jsonMetadata.repository = this.props.project;
 
-    this.props.saveDraft({ postData: data, id, projectId, type: 'announcement'}, redirect);
+    this.props.saveDraft({ postData: data, id, projectId, type: 'task'}, redirect);
   }, 400);
 
   render() {
