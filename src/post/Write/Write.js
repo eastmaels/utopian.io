@@ -144,7 +144,7 @@ class Write extends React.Component {
 
     this.setState({warningModal : false});
 
-    getBeneficiaries().then(res => {
+    getBeneficiaries(data.author).then(res => {
       if (res.response && res.response.results) {
         const allBeneficiaries = res.response.results;
         const beneficiaries = [
