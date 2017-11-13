@@ -45,6 +45,7 @@ const categorySlug = type => {
       return 'Data Analyst for';
     case 'task-graphics':
       return 'Designer';
+    case 'task-social':
     case 'social':
       return 'Influencers for';
   }
