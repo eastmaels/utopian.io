@@ -35,7 +35,7 @@ class DraftRow extends React.Component {
 
     return (
       <div>
-        <Link to={{ pathname: type.indexOf('announcement') > -1 ? `/write-announcement/${repository.id}` : '/write', search: `?draft=${id}` }}>
+        <Link to={{ pathname: type.indexOf('task') > -1 ? `/write-task/${repository.id}` : '/write', search: `?draft=${id}` }}>
           <h3>
             {draftTitle.length === 0 ? <FormattedMessage id="draft_untitled" defaultMessage="Untitled draft" /> : draftTitle}
           </h3>

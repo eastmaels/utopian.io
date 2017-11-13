@@ -48,7 +48,7 @@ class EditorAnnouncement extends React.Component {
     title: '',
     repository: null,
     topics: [],
-    type: 'announcement-ideas',
+    type: 'task-ideas',
     body: '',
     recentTopics: [],
     popularTopics: [],
@@ -167,7 +167,7 @@ class EditorAnnouncement extends React.Component {
       title: post.title,
       // @UTOPIAN filtering out utopian-io since it's always added/re-added when posting
       topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
-      type: post.type || 'announcement-ideas',
+      type: post.type || 'task-ideas',
     });
     if (this.input) {
       this.input.value = post.body;
@@ -447,7 +447,7 @@ class EditorAnnouncement extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { intl, loading, isUpdating, type, saving, repository } = this.props;
 
-    const chosenType = this.state.currentType || type || 'announcement-ideas';
+    const chosenType = this.state.currentType || type || 'task-ideas';
 
     const AcceptRules = () => (
       <Action
@@ -463,21 +463,21 @@ class EditorAnnouncement extends React.Component {
 
     const Rules = () => {
       switch(chosenType) {
-        case 'announcement-ideas':
+        case 'task-ideas':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="ideas"/> Conceptors/Thinkers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>By submitting an announcement in this category you are requesting contributors to provide concepts and ideas.</li>
+                <li>By submitting a task request in this category you are requesting contributors to provide concepts and ideas.</li>
                 <li>You must provide great details about what you are looking for and the problems you want to solve with a concept.</li>
                 <li>Images, screenshots, links and examples are always welcome in this category.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'announcement-development':
+        case 'task-development':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="development"/> Developers</h2>
@@ -487,11 +487,11 @@ class EditorAnnouncement extends React.Component {
                 <li>You must provide all the details for the developers to contribute to your project.</li>
                 <li>Documentation, Repositories, Communities (e.g. Slack, Discord) and specific details are necessary.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'announcement-bug-hunting':
+        case 'task-bug-hunting':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="bug-hunting"/> Bug Hunters</h2>
@@ -501,11 +501,11 @@ class EditorAnnouncement extends React.Component {
                 <li>You must provide every possible detail for the bug hunters to be able to start the hunting.</li>
                 <li>You must include for example browsers, devices, operating systems and similar info where you want bugs to be spotted.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'announcement-translations':
+        case 'task-translations':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="translations"/> Translators</h2>
@@ -515,11 +515,11 @@ class EditorAnnouncement extends React.Component {
                 <li>You must provide any necessary information for the translators to start their work.</li>
                 <li>Location of the files to be translated, tools to use, languages you are looking for and similar info are necessary.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'announcement-graphics':
+        case 'task-graphics':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="graphics"/> Designers</h2>
@@ -533,7 +533,7 @@ class EditorAnnouncement extends React.Component {
               <AcceptRules />
             </div>
           )
-        case 'announcement-documentation':
+        case 'task-documentation':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="documentation"/> Tech Writers</h2>
@@ -543,11 +543,11 @@ class EditorAnnouncement extends React.Component {
                 <li>You must be very specific about which part of the documentation you wish to update/create.</li>
                 <li>It is important to provide the tools you wish to use and necessary info for the documentation to be actually written.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'announcement-analysis':
+        case 'task-analysis':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="analysis"/> Data Analysts</h2>
@@ -557,11 +557,11 @@ class EditorAnnouncement extends React.Component {
                 <li>Your request must be very specific about the numbers you wish to extract.</li>
                 <li>You must provide the tools and all the information necessary for the analyses to be actually completed.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
               <AcceptRules />
             </div>
           )
-        case 'announcement-social':
+        case 'task-social':
           return (
             <div className="Editor__rules">
               <h2><CategoryIcon type="analysis"/> Influencers</h2>
@@ -571,7 +571,7 @@ class EditorAnnouncement extends React.Component {
                 <li>You must provide any possible detail for the influencers to effectively share your Open Source project.</li>
                 <li>You must also provide any graphic, video and similar digital goods the influencers are supposed to share.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower exposure or your announcement won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
               <AcceptRules />
             </div>
           )
@@ -591,49 +591,49 @@ class EditorAnnouncement extends React.Component {
             {getFieldDecorator('type')(
               <RadioGroup onChange={this.onUpdate}>
                 <label>
-                  <Radio value="announcement-ideas" name="type" />
+                  <Radio value="task-ideas" name="type" />
                   <div className={`ideas box`}>
                     <span>Thinkers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="announcement-development" name="type" />
+                  <Radio value="task-development" name="type" />
                   <div className={`development box`}>
                     <span>Developers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="announcement-bug-hunting" name="type" />
+                  <Radio value="task-bug-hunting" name="type" />
                   <div className={`bug-hunting box`}>
                     <span>Bug Hunters</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="announcement-translations" name="type" />
+                  <Radio value="task-translations" name="type" />
                   <div className={`translations box`}>
                     <span>Translators</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="announcement-graphics" name="type" />
+                  <Radio value="task-graphics" name="type" />
                   <div className={`graphics box`}>
                     <span>Designers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="announcement-documentation" name="type"/>
+                  <Radio value="task-documentation" name="type"/>
                   <div className={`documentation box`}>
                     <span>Tech Writers</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="announcement-analysis" name="type"/>
+                  <Radio value="task-analysis" name="type"/>
                   <div className={`analysis box`}>
                     <span>Data Analysts</span>
                   </div>
                 </label>
                 <label>
-                  <Radio value="announcement-social" name="type"/>
+                  <Radio value="task-social" name="type"/>
                   <div className={`social box`}>
                     <span>Influencers</span>
                   </div>

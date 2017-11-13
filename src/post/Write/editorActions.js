@@ -3,7 +3,7 @@ import assert from 'assert';
 import SteemConnect from 'sc2-sdk';
 import { push } from 'react-router-redux';
 import { createAction } from 'redux-actions';
-import { addDraftMetadata, deleteDraftMetadata } from '../../helpers/metadata';
+import { addDraftLocaleStorage, deleteDraftLocaleStorage } from '../../helpers/localStorageHelpers';
 import { jsonParse } from '../../helpers/formatter';
 import { createPermlink, getBodyPatchIfSmaller } from '../../vendor/steemitHelpers';
 
@@ -38,11 +38,11 @@ export const saveDraft = (post, redirect) => dispatch =>
   dispatch({
     type: SAVE_DRAFT,
     payload: {
-      promise: addDraftMetadata(post)
+      promise: addDraftLocaleStorage(post)
         .then((resp) => {
           if (redirect) {
-            if (post.projectId && post.type === 'announcement') {
-              dispatch(push(`/write-announcement/${post.projectId}/?draft=${post.id}`));
+            if (post.projectId && post.type === 'task') {
+              dispatch(push(`/write-task/${post.projectId}/?draft=${post.id}`));
             } else {
               dispatch(push(`/write?draft=${post.id}`));
             }
@@ -58,7 +58,7 @@ export const deleteDraft = draftId => (dispatch) => {
   dispatch({
     type: DELETE_DRAFT,
     payload: {
-      promise: deleteDraftMetadata(draftId),
+      promise: deleteDraftLocaleStorage(draftId),
     },
     meta: { id: draftId },
   });
@@ -74,8 +74,8 @@ export const editPost = post => (dispatch) => {
   };
   dispatch(saveDraft({ postData: draft, id: post.id }))
     .then(() => {
-      if (jsonMetadata.type.indexOf('announcement') > -1) {
-        dispatch(push(`/write-announcement/${jsonMetadata.repository.id}?draft=${post.id}`));
+      if (jsonMetadata.type.indexOf('task') > -1) {
+        dispatch(push(`/write-task/${jsonMetadata.repository.id}?draft=${post.id}`));
       } else {
         dispatch(push(`/write?draft=${post.id}`));
       }
@@ -94,6 +94,7 @@ export const broadcastComment = (
   body,
   jsonMetadata,
   permlink,
+  reward,
   extensions,
 ) => {
   const operations = [];
@@ -125,36 +126,15 @@ export const broadcastComment = (
     commentOptionsConfig.extensions = extensions;
   }
 
-  // @UTOPIAN always 100% powered up
+  if (reward === '100') {
+    commentOptionsConfig.percent_steem_dollars = 0;
+  } else {
+    commentOptionsConfig.percent_steem_dollars = 50;
+  }
+
   commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
-  commentOptionsConfig.percent_steem_dollars = 0;
 
   operations.push(['comment_options', commentOptionsConfig]);
-
-  /*
-   if (reward === '0') {
-   commentOptionsConfig.max_accepted_payout = '0.000 SBD';
-   commentOptionsConfig.percent_steem_dollars = 10000;
-   } else if (reward === '100') {
-   commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
-   commentOptionsConfig.percent_steem_dollars = 0;
-   }
-
-   if (reward === '0' || reward === '100') {
-   operations.push(['comment_options', commentOptionsConfig]);
-   }
-
-   if (upvote) {
-   operations.push([
-   'vote',
-   {
-   voter: author,
-   author,
-   permlink,
-   weight: 10000,
-   },
-   ]);
-   }*/
 
   console.log("OPERATIONS", operations)
 
@@ -177,6 +157,7 @@ export function createPost(postData) {
       title,
       body,
       jsonMetadata,
+      reward,
       draftId,
       isUpdating,
       extensions,
@@ -192,9 +173,9 @@ export function createPost(postData) {
       type: CREATE_POST,
       payload: {
         promise: getPermLink.then(permlink => {
-          const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + `\n\n<br /><hr/><em>Open Source Contribution posted via <a href="https://utopian.io/${process.env.UTOPIAN_CATEGORY}/@${author}/${permlink}">Utopian.io</a></em><hr/>`;
+            const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + `\n\n<br /><hr/><em>Open Source Contribution posted via <a href="https://utopian.io/${process.env.UTOPIAN_CATEGORY}/@${author}/${permlink}">Utopian.io</a></em><hr/>`;
 
-          return broadcastComment(
+            return broadcastComment(
               parentAuthor,
               parentPermlink,
               author,
@@ -202,6 +183,7 @@ export function createPost(postData) {
               newBody,
               jsonMetadata,
               permlink,
+              !isUpdating && reward,
               !isUpdating && extensions,
             ).then((result) => {
 
@@ -211,23 +193,21 @@ export function createPost(postData) {
               }
 
               // @UTOPIAN
-              if (result) {
-                if (!isUpdating) {
-                  const createOnAPI = contributionData => dispatch(
-                    createContribution(contributionData.author, contributionData.permlink)
-                  );
-                  createOnAPI({ author, permlink })
-                    .then(() => dispatch(
-                      push(`/${parentPermlink}/@${author}/${permlink}`)
-                    ));
-                } else {
-                  const updateOnAPI = contributionData => dispatch(
-                    updateContribution(contributionData.author, contributionData.permlink)
-                  );
-                  updateOnAPI({ author, permlink }).then(() => dispatch(
+              if (!isUpdating) {
+                const createOnAPI = contributionData => dispatch(
+                  createContribution(contributionData.author, contributionData.permlink)
+                );
+                createOnAPI({ author, permlink })
+                  .then(() => dispatch(
                     push(`/${parentPermlink}/@${author}/${permlink}`)
                   ));
-                }
+              } else {
+                const updateOnAPI = contributionData => dispatch(
+                  updateContribution(contributionData.author, contributionData.permlink)
+                );
+                updateOnAPI({ author, permlink }).then(() => dispatch(
+                  push(`/${parentPermlink}/@${author}/${permlink}`)
+                ));
               }
 
               if (window.ga) {

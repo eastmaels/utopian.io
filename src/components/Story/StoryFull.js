@@ -220,7 +220,7 @@ class StoryFull extends React.Component {
               </h3>: null}
 
             {!isModerator ? <p>
-                A moderator will soon review this contribution and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
+                A moderator will review this contribution within 24-48 hours and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
                 {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
               </p> : null}
 

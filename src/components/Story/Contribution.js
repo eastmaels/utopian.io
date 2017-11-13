@@ -1,48 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
+import CategoryIcon from '../CategoriesIcons';
 
 import './Contribution.less';
-
-const icon = type => {
-  switch (type) {
-    case 'announcement-ideas':
-    case 'ideas':
-      return 'bulb';
-    case 'announcement-development':
-    case 'development':
-      return 'code';
-    case 'announcement-bug-hunting':
-    case 'bug-hunting':
-      return 'eye-o';
-    case 'announcement-documentation':
-    case 'documentation':
-      return 'book';
-    case 'announcement-translations':
-    case 'translations':
-      return 'flag';
-    case 'announcement-analysis':
-    case 'analysis':
-      return 'dot-chart';
-    case 'announcement-graphics':
-    case 'graphics':
-      return 'layout';
-    case 'announcement-social':
-    case 'social':
-      return 'share-alt';
-  }
-};
 
 const categorySlug = type => {
   switch (type) {
     case 'ideas':
-      return 'Idea for';
+      return 'Suggestion for';
+    case 'sub-projects':
+      return 'Project for';
     case 'development':
       return 'Development of';
     case 'bug-hunting':
       return 'Bug in';
-    case 'documentation':
-      return 'Documentation for';
     case 'translations':
       return 'Translation for';
     case 'analysis':
@@ -51,19 +23,27 @@ const categorySlug = type => {
       return 'Design for';
     case 'social':
       return 'Visibility for';
-    case 'announcement-ideas':
+    case 'documentation':
+      return 'Documentation for';
+    case 'tutorials':
+      return 'Tutorial for';
+    case 'video-tutorials':
+      return 'Video Tutorial for';
+    case 'copywriting':
+      return 'Copywriting for';
+    case 'task-ideas':
       return 'Thinkers for';
-    case 'announcement-development':
+    case 'task-development':
       return 'Developers for';
-    case 'announcement-bug-hunting':
+    case 'task-bug-hunting':
       return 'Bug Hunters for';
-    case 'announcement-documentation':
+    case 'task-documentation':
       return 'Tech Writers for';
-    case 'announcement-translations':
+    case 'task-translations':
       return 'Translators for';
-    case 'announcement-analysis':
+    case 'task-analysis':
       return 'Data Analyst for';
-    case 'announcement-graphics':
+    case 'task-graphics':
       return 'Designer';
     case 'social':
       return 'Influencers for';
@@ -73,11 +53,11 @@ const categorySlug = type => {
 const Contribution = ({type, repository, platform, id }) => (
   <div className={`Contribution ${type}`}>
     <b>
-      <Icon type={icon(type)} /> {categorySlug(type)} </b>:
+      <CategoryIcon type={type} /> {categorySlug(type)} </b>:
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
       {' '} <Icon type='github' /> {repository.name}
     </Link>
-    {type.indexOf('announcement') > -1 && <Icon type="notification" className="announcement"/> }
+    {type.indexOf('task') > -1 && <Icon type="notification" className="task"/> }
   </div>
 );
 

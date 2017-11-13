@@ -27,10 +27,10 @@ const GithubRepos = ({ user }) => {
                   <Link to={`/project/${project.full_name}/github/${project.id}/all`}>
                     <Icon type="github"/> {project.full_name}
                   </Link>
-                  <p className="announcement">
+                  <p className="task">
                     <small>
-                      <Link to={`/write-announcement/${project.id}`}>
-                        <Icon type="notification"/> Add announcement
+                      <Link to={`/write-task/${project.id}`}>
+                        <Icon type="notification"/> Add task request
                       </Link>
                     </small>
                   </p>

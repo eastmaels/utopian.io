@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Rules } from '../components/Rules';
 import './Rules.less';
 
 export default (props) =>
@@ -54,56 +54,43 @@ export default (props) =>
         Contributions cannot have any direct reference to Steem, Steemit, Steemians and similar. This is because contributions get posted in the Github feed where project maintainers have no interest in your Steemit activities. "Follow", "Upvote", "Resteem" and similar sentences are not allowed.
       </p>
       <br />
-      <h2>Ideas/Feature requests Category</h2>
-      <p>
-        Contributions submitted under this category are the most important ones, therefore they must provide as much details as possible. Ideas and feature requests must be well explained and in great details. They must include images or videos and include any necessary information for the idea/feature to be created.
-      </p>
+      <h2>Categories Specific Rules</h2>
       <br />
-      <h2>Code Development Category</h2>
-      <p>
-        Contributions under this category must include links to pull requests, branches, forks etc. where the code has been submitted.
-      </p>
+      <Rules inEditor={false} type="ideas" />
       <br />
-      <h2>Bug Hunting Category</h2>
-      <p>
-        Contributions under this category must include all the possible information for reproducing the bug. Devices, Internet connection speed, Browser version and similar info are necessary to reproduce the submitted bugs. Contributors should look if the bug has been reported on the project's GitHub repository.
-      </p>
+      <Rules inEditor={false} type="sub-projects" />
       <br />
-      <h2>Translation Category</h2>
-      <p>
-        Translations can be either submitted directly on the Utopian post or there must be a link to the translated files, in order to verify the work done.
-      </p>
+      <Rules inEditor={false} type="development" />
       <br />
-      <h2>Graphics Category</h2>
-      <p>
-        Graphics can be either submitted directly on the Utopian post or there must be a link to the layouts, logos and creativity in general, in order to verify the work done.
-      </p>
+      <Rules inEditor={false} type="bug-hunting" />
       <br />
-      <h2>Documentation Category</h2>
-      <p>
-        Documentation can be either submitted directly on the Utopian post or there must be a link to the newly created or updated documentation, in order to verify the work done.
-      </p>
+      <Rules inEditor={false} type="translations" />
       <br />
-      <h2>Analysis Category</h2>
-      <p>
-        Analyses realised for an Open Source project have to written directly on the Utopian post or there must be links, charts, etc. to very what has been done. The contribution must also explain in great details why the analyses have been conducted and how.
-      </p>
+      <Rules inEditor={false} type="graphics" />
       <br />
-      <h2>Visibility Category</h2>
-      <p>
-        These contributions serve as a way to bring more visibility to an Open Source project. They must include links to social network posts, adv and similar, plus the results of the visibility effort.
-      </p>
-
-      <br/>
+      <Rules inEditor={false} type="analysis" />
+      <br />
+      <Rules inEditor={false} type="social" />
+      <br />
+      <Rules inEditor={false} type="documentation" />
+      <br />
+      <Rules inEditor={false} type="tutorials" />
+      <br />
+      <Rules inEditor={false} type="video-tutorials" />
+      <br />
+      <Rules inEditor={false} type="copywriting" />
+      <br />
 
       <hr />
 
-      <h2>Announcements</h2>
+      <br />
+
+      <h2>Task Requests</h2>
       <p>
-        Announcements are meant to be tasks requests made by the project owner when looking for contributions.
-        A task must be explained in great details and provide all the necessary details for the task to be actually completed. In one announcement there should not be more than one task and if more they must be related to the category where the announcement is being submitted.
-        Generic announcements, like "We are looking for contributors" won't be accepted.
-        Moderators may request to change an announcement if it does not meet the rules.
+        Task requests are meant to be made by the project owner when looking for contributions.
+        A task must be explained in great details and provide all the necessary details to actually be completed. In one task request there should not be more than one task and if more they must be related to the category where the task request is being submitted.
+        Generic task requests, like "We are looking for contributors" won't be accepted.
+        Moderators may request to change a task request if it does not meet the rules.
       </p>
     </div>
   </div>);
