@@ -43,6 +43,8 @@ export const saveDraft = (post, redirect) => dispatch =>
           if (redirect) {
             if (post.projectId && post.type === 'task') {
               dispatch(push(`/write-task/${post.projectId}/?draft=${post.id}`));
+            } else if (post.type === 'blog') {
+              dispatch(push(`/write-blog?draft=${post.id}`));
             } else {
               dispatch(push(`/write?draft=${post.id}`));
             }
@@ -76,6 +78,8 @@ export const editPost = post => (dispatch) => {
     .then(() => {
       if (jsonMetadata.type.indexOf('task') > -1) {
         dispatch(push(`/write-task/${jsonMetadata.repository.id}?draft=${post.id}`));
+      } else if (jsonMetadata.type === 'blog') {
+        dispatch(push(`/write-blog?draft=${post.id}`));
       } else {
         dispatch(push(`/write?draft=${post.id}`));
       }
@@ -173,7 +177,7 @@ export function createPost(postData) {
       type: CREATE_POST,
       payload: {
         promise: getPermLink.then(permlink => {
-            const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + `\n\n<br /><hr/><em>Open Source Contribution posted via <a href="https://utopian.io/${process.env.UTOPIAN_CATEGORY}/@${author}/${permlink}">Utopian.io</a></em><hr/>`;
+            const newBody = isUpdating ? getBodyPatchIfSmaller(postData.originalBody, body) : body + `\n\n<br /><hr/><em>Posted on <a href="https://utopian.io/${process.env.UTOPIAN_CATEGORY}/@${author}/${permlink}">Utopian.io -  Rewarding Open Source Contributors</a></em><hr/>`;
 
             return broadcastComment(
               parentAuthor,

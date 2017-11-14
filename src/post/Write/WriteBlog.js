@@ -7,7 +7,6 @@ import debounce from 'lodash/debounce';
 import isArray from 'lodash/isArray';
 import 'url-search-params-polyfill';
 import { injectIntl } from 'react-intl';
-import GetBoost from '../../components/Sidebar/GetBoost';
 
 import {
   getAuthenticatedUser,
@@ -26,7 +25,7 @@ const version = require('../../../package.json').version;
 
 // @UTOPIAN
 import { getBeneficiaries } from '../../actions/beneficiaries';
-
+import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
 @withRouter
@@ -45,7 +44,6 @@ import { getBeneficiaries } from '../../actions/beneficiaries';
     newPost,
     notify,
     getBeneficiaries,
-    getProject,
   },
 )
 class WriteBlog extends React.Component {
@@ -109,7 +107,7 @@ class WriteBlog extends React.Component {
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
         initialReward: draftPost.reward || '50',
-        initialType: jsonMetadata.type || 'ideas',
+        initialType: 'blog',
         initialBody: draftPost.body || '',
         isUpdating: isUpdating || false,
       });
@@ -237,7 +235,7 @@ class WriteBlog extends React.Component {
       community: 'utopian',
       app: `utopian/${version}`,
       format: 'markdown',
-      type: form.type,
+      type: 'blog',
     };
 
     if (tags.length) {
@@ -308,24 +306,20 @@ class WriteBlog extends React.Component {
       redirect = true;
     }
 
-    this.props.saveDraft({ postData: data, id, projectId, type: 'task'}, redirect);
+    this.props.saveDraft({ postData: data, id, projectId, type: 'blog'}, redirect);
   }, 400);
 
   render() {
     const { initialTitle, initialTopics, initialType, initialBody, initialReward } = this.state;
-    const { loading, saving, submitting, project, match } = this.props;
+    const { user, loading, saving, submitting } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
-
-    if (!Object.keys(project).length || (project && project.id !== parseInt(match.params.projectId))) {
-      return null;
-    }
 
     return (
       <div className="shifted">
         <div className="post-layout container">
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
-              <GetBoost />
+              <GithubConnection user={user} />
             </div>
           </Affix>
           <div className="center">

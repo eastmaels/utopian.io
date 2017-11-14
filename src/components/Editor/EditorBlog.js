@@ -196,15 +196,9 @@ class EditorBlog extends React.Component {
     e.preventDefault();
     this.setState({ noContent: false });
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if (
-        !this.state.repository
-      ) {
-        this.setState({noRepository: true});
-      } else if (!err && this.input.value !== '') {
-
+      if (!err && this.input.value !== '') {
         this.props.onSubmit({
           ...values,
-          repository: this.state.repository,
           body: this.input.value,
         });
       } else if (this.input.value === '') {
@@ -430,7 +424,7 @@ class EditorBlog extends React.Component {
         <Form.Item
           label={
             <span className="Editor__label">
-              Contribution title
+              Blog Post title
             </span>
           }
         >
@@ -480,7 +474,7 @@ class EditorBlog extends React.Component {
                   </div>
                 </div>
               )}
-              <HotKeys keyMap={EditorAnnouncement.hotkeys} handlers={this.handlers}>
+              <HotKeys keyMap={EditorBlog.hotkeys} handlers={this.handlers}>
                 <Input
                   autosize={{ minRows: 6, maxRows: 12 }}
                   onChange={this.onUpdate}

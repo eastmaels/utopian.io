@@ -29,7 +29,7 @@ const version = require('../../../package.json').version;
 
 // @UTOPIAN
 import { getBeneficiaries } from '../../actions/beneficiaries';
-
+import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
 @withRouter
@@ -329,7 +329,7 @@ class Write extends React.Component {
 
   render() {
     const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialReward } = this.state;
-    const { loading, saving, submitting, project, match } = this.props;
+    const { user, loading, saving, submitting, project, match } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
     if (!Object.keys(project).length || (project && project.id !== parseInt(match.params.projectId))) {
@@ -341,7 +341,7 @@ class Write extends React.Component {
         <div className="post-layout container">
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
-              <GetBoost />
+              <GithubConnection user={user} />
             </div>
           </Affix>
           <div className="center">
