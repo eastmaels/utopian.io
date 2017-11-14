@@ -359,7 +359,7 @@ class Write extends React.Component {
         <div className="post-layout container">
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
-              <GithubConnection user={user}/>
+              <GithubConnection user={user} />
             </div>
           </Affix>
           <div className="center">

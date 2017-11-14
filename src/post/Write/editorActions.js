@@ -124,17 +124,17 @@ export const broadcastComment = (
   // @UTOPIAN here beneficiaries are stored when creating the post
   if (extensions) {
     commentOptionsConfig.extensions = extensions;
+
+    if (reward === '100') {
+      commentOptionsConfig.percent_steem_dollars = 0;
+    } else {
+      commentOptionsConfig.percent_steem_dollars = 50;
+    }
+
+    commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
+
+    operations.push(['comment_options', commentOptionsConfig]);
   }
-
-  if (reward === '100') {
-    commentOptionsConfig.percent_steem_dollars = 0;
-  } else {
-    commentOptionsConfig.percent_steem_dollars = 50;
-  }
-
-  commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
-
-  operations.push(['comment_options', commentOptionsConfig]);
 
   console.log("OPERATIONS", operations)
 
