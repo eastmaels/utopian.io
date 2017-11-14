@@ -19,11 +19,8 @@ import {
 import * as Actions from '../../actions/constants';
 import { createPost, saveDraft, newPost } from './editorActions';
 import { notify } from '../../app/Notification/notificationActions';
-import EditorAnnouncement from '../../components/Editor/EditorAnnouncement';
+import EditorBlog from '../../components/Editor/EditorBlog';
 import Affix from '../../components/Utils/Affix';
-
-
-import { getProject } from '../../actions/project';
 
 const version = require('../../../package.json').version;
 
@@ -51,7 +48,7 @@ import { getBeneficiaries } from '../../actions/beneficiaries';
     getProject,
   },
 )
-class Write extends React.Component {
+class WriteBlog extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     user: PropTypes.shape().isRequired,
@@ -81,18 +78,9 @@ class Write extends React.Component {
       initialReward: '50',
       initialType: '',
       initialBody: '',
-      initialRepository: null,
       isUpdating: false,
       parsedPostData: null,
     };
-  }
-
-  componentWillMount () {
-    const { match, getProject } = this.props;
-    const { projectId } = match.params;
-
-    getProject(projectId);
-
   }
 
   componentDidMount() {
@@ -124,7 +112,6 @@ class Write extends React.Component {
         initialType: jsonMetadata.type || 'ideas',
         initialBody: draftPost.body || '',
         isUpdating: isUpdating || false,
-        initialRepository: jsonMetadata.repository,
       });
     }
   }
@@ -199,6 +186,7 @@ class Write extends React.Component {
     const data = {
       body: form.body,
       title: form.title,
+      reward: form.reward,
     };
 
     data.parentAuthor = '';
@@ -249,8 +237,6 @@ class Write extends React.Component {
       community: 'utopian',
       app: `utopian/${version}`,
       format: 'markdown',
-      repository: form.repository,
-      platform: 'github', // @TODO @UTOPIAN hardcoded
       type: form.type,
     };
 
@@ -322,13 +308,11 @@ class Write extends React.Component {
       redirect = true;
     }
 
-    data.jsonMetadata.repository = this.props.project;
-
     this.props.saveDraft({ postData: data, id, projectId, type: 'task'}, redirect);
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialReward } = this.state;
+    const { initialTitle, initialTopics, initialType, initialBody, initialReward } = this.state;
     const { loading, saving, submitting, project, match } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
@@ -345,10 +329,9 @@ class Write extends React.Component {
             </div>
           </Affix>
           <div className="center">
-            <EditorAnnouncement
+            <EditorBlog
               ref={this.setForm}
               saving={saving}
-              repository={initialRepository || project}
               title={initialTitle}
               topics={initialTopics}
               reward={initialReward}
@@ -367,4 +350,4 @@ class Write extends React.Component {
   }
 }
 
-export default Write;
+export default WriteBlog;
