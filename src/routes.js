@@ -24,9 +24,11 @@ import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
+import WriteSC2 from './post/Write/WriteSC2';
 import WriteAnnouncement from './post/Write/WriteAnnouncement';
 
 import Drafts from './post/Write/Drafts';
+import DraftsSC2 from './post/Write/DraftsSC2';
 import RequireLogin from './auth/RequireLogin';
 
 export default (
@@ -70,6 +72,15 @@ export default (
       />
       <Route
         exact
+        path="/write-sc2"
+        render={() => (
+          <RequireLogin>
+            <WriteSC2 />
+          </RequireLogin>
+        )}
+      />
+      <Route
+        exact
         path="/write-task/:projectId"
         render={(props) => (
           <RequireLogin>
@@ -83,6 +94,15 @@ export default (
         render={() => (
           <RequireLogin>
             <Drafts />
+          </RequireLogin>
+        )}
+      />
+      <Route
+        exact
+        path="/drafts-sc2"
+        render={() => (
+          <RequireLogin>
+            <DraftsSC2 />
           </RequireLogin>
         )}
       />

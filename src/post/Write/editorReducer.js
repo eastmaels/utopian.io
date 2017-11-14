@@ -10,6 +10,8 @@ const defaultState = {
   saving: false,
   draftPosts: {},
   pendingDrafts: [],
+  draftPostsSC2: {},
+  pendingDraftsSC2: [],
   editedPosts: [],
 };
 
@@ -37,6 +39,7 @@ const editor = (state = defaultState, action) => {
       return {
         ...state,
         draftPosts: action.payload.drafts || defaultState.draftPosts,
+        draftPostsSC2: action.payload.user_metadata.drafts || defaultState.draftPostsSC2,
       };
     case editorActions.NEW_POST:
       return {
@@ -90,18 +93,24 @@ const editor = (state = defaultState, action) => {
           ...state.pendingDrafts,
           action.meta.id,
         ],
+        pendingDraftsSC2: [
+          ...state.pendingDraftsSC2,
+          action.meta.id,
+        ],
       };
     case editorActions.DELETE_DRAFT_SUCCESS: {
       return {
         ...state,
         draftPosts: action.payload,
         pendingDrafts: state.pendingDrafts.filter(id => id !== action.meta.id),
+        pendingDraftsSC2: state.pendingDraftsSC2.filter(id => id !== action.meta.id),
       };
     }
     case editorActions.DELETE_DRAFT_ERROR:
       return {
         ...state,
         pendingDrafts: state.pendingDrafts.filter(id => id !== action.meta.id),
+        pendingDraftsSC2: state.pendingDraftsSC2.filter(id => id !== action.meta.id),
       };
     case userActions.UPLOAD_FILE_START:
       return { ...state, loadingImg: true };
@@ -121,3 +130,7 @@ export const getIsEditorLoading = state => state.loading;
 export const getIsEditorSaving = state => state.saving;
 export const getPendingDrafts = state => state.pendingDrafts;
 export const getIsPostEdited = (state, permlink) => state.editedPosts.includes(permlink);
+
+export const getDraftPostsSC2 = state => state.draftPostsSC2;
+export const getPendingDraftsSC2 = state => state.pendingDraftsSC2;
+

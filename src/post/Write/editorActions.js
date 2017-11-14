@@ -4,6 +4,7 @@ import SteemConnect from 'sc2-sdk';
 import { push } from 'react-router-redux';
 import { createAction } from 'redux-actions';
 import { addDraftLocaleStorage, deleteDraftLocaleStorage } from '../../helpers/localStorageHelpers';
+import { addDraftMetadata, deleteDraftMetadata } from '../../helpers/metadata';
 import { jsonParse } from '../../helpers/formatter';
 import { createPermlink, getBodyPatchIfSmaller } from '../../vendor/steemitHelpers';
 
@@ -54,6 +55,26 @@ export const saveDraft = (post, redirect) => dispatch =>
     meta: { postId: post.id },
   });
 
+export const saveDraftSC2 = (post, redirect) => dispatch =>
+  dispatch({
+    type: SAVE_DRAFT,
+    payload: {
+      promise: addDraftMetadata(post)
+        .then((resp) => {
+          if (redirect) {
+            if (post.projectId && post.type === 'task') {
+              dispatch(push(`/write-task-sc2/${post.projectId}/?draft=${post.id}`));
+            } else {
+              dispatch(push(`/write-sc2?draft=${post.id}`));
+            }
+          }
+          return resp;
+        }),
+    },
+    meta: { postId: post.id },
+  });
+
+
 export const deleteDraft = draftId => (dispatch) => {
   dispatch({
     type: DELETE_DRAFT,
@@ -63,6 +84,17 @@ export const deleteDraft = draftId => (dispatch) => {
     meta: { id: draftId },
   });
 };
+
+export const deleteDraftSC2 = draftId => (dispatch) => {
+  dispatch({
+    type: DELETE_DRAFT,
+    payload: {
+      promise: deleteDraftMetadata(draftId),
+    },
+    meta: { id: draftId },
+  });
+};
+
 
 export const editPost = post => (dispatch) => {
   const jsonMetadata = jsonParse(post.json_metadata);

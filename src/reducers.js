@@ -68,9 +68,11 @@ export const getPostContent = (state, author, permlink) =>
 export const getPendingLikes = state => fromPosts.getPendingLikes(state.posts);
 
 export const getDraftPosts = state => fromEditor.getDraftPosts(state.editor);
+export const getDraftPostsSC2 = state => fromEditor.getDraftPostsSC2(state.editor);
 export const getIsEditorLoading = state => fromEditor.getIsEditorLoading(state.editor);
 export const getIsEditorSaving = state => fromEditor.getIsEditorSaving(state.editor);
 export const getPendingDrafts = state => fromEditor.getPendingDrafts(state.editor);
+export const getPendingDraftsSC2 = state => fromEditor.getPendingDraftsSC2(state.editor);
 export const getIsPostEdited = (state, permlink) =>
   fromEditor.getIsPostEdited(state.editor, permlink);
 

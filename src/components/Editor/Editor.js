@@ -51,6 +51,7 @@ class Editor extends React.Component {
     onSubmit: PropTypes.func,
     onError: PropTypes.func,
     onImageInserted: PropTypes.func,
+    displayUpdateBtn: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -70,6 +71,7 @@ class Editor extends React.Component {
     onSubmit: () => {},
     onError: () => {},
     onImageInserted: () => {},
+    displayUpdateBtn: true,
   };
 
   static hotkeys = {
@@ -498,8 +500,8 @@ class Editor extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { intl, loading, isUpdating, isReviewed, type, saving, getProjects, projects, setProjects, user, getPullRequests, pullRequests } = this.props;
-
+    const { intl, loading, isUpdating, isReviewed, type, saving, getProjects, projects, setProjects, user, getPullRequests, pullRequests, displayUpdateBtn } = this.props;
+	
     const chosenType = this.state.currentType || type || 'ideas';
 
     return (
@@ -891,6 +893,7 @@ class Editor extends React.Component {
                   defaultMessage="Styling with markdown supported"
                 />
               </span>
+            {displayUpdateBtn && (
             <div className="Editor__bottom__right">
               {saving && (
                 <span className="Editor__bottom__right__saving">
@@ -921,6 +924,7 @@ class Editor extends React.Component {
                   )}
               </Form.Item>
             </div>
+            )}
           </div>
         </div>
       </Form>
