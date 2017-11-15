@@ -232,7 +232,7 @@ class StoryFull extends React.Component {
             {isModerator && alreadyChecked ? <div>
                 <h3><Icon type="safety" /> Moderation Status</h3>
                 {post.reviewed && <p><b>ACCEPTED BY:</b> @{post.moderator}</p>}
-                {post.flagged && <p><b>FLAGGED BY:</b> @{post.moderator}</p>}
+                {post.flagged && <p><b>HIDDEN BY:</b> @{post.moderator}</p>}
                 {post.pending && <p><b>PENDING REVIEW:</b> @{post.moderator}</p>}
               </div> : null}
 
