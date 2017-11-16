@@ -20,6 +20,8 @@ const UserHeader = ({
   isSameUser,
   hasCover,
   onSelect,
+  isPopoverVisible,
+  handleVisibleChange,
 }) =>
   (<div
     className={classNames('UserHeader', { 'UserHeader--cover': hasCover })}
@@ -46,22 +48,26 @@ const UserHeader = ({
                 : <FollowButton username={handle} />)
             }
           </div>
-          {!isSameUser && <Popover
-            placement="bottom"
-            trigger="click"
-            content={
-              <PopoverMenu onSelect={onSelect}>
-                <PopoverMenuItem key="transfer">
-                  <FormattedMessage id="support" defaultMessage="Support" />
-                </PopoverMenuItem>
-                <PopoverMenuItem key="mute">
-                  <FormattedMessage id="block_user" defaultMessage="Block this user" />
-                </PopoverMenuItem>
-              </PopoverMenu>
-            }
-          >
-            <i className="iconfont icon-more UserHeader__more" />
-          </Popover>}
+          {!isSameUser && (
+            <Popover
+              placement="bottom"
+              trigger="click"
+              visible={isPopoverVisible}
+              onVisibleChange={handleVisibleChange}
+              content={
+                <PopoverMenu onSelect={onSelect}>
+                  <PopoverMenuItem key="transfer">
+                    <FormattedMessage id="support" defaultMessage="Support" />
+                  </PopoverMenuItem>
+                  <PopoverMenuItem key="mute">
+                    <FormattedMessage id="block_user" defaultMessage="Block this user" />
+                  </PopoverMenuItem>
+                </PopoverMenu>
+              }
+            >
+              <i className="iconfont icon-more UserHeader__more" />
+            </Popover>
+          )}
         </div>
         <div className="UserHeader__row UserHeader__handle">
           @{handle}
@@ -86,6 +92,8 @@ UserHeader.propTypes = {
   isSameUser: PropTypes.bool,
   hasCover: PropTypes.bool,
   onSelect: PropTypes.func,
+  isPopoverVisible: PropTypes.bool,
+  handleVisibleChange: PropTypes.func,
 };
 
 UserHeader.defaultProps = {
@@ -96,6 +104,8 @@ UserHeader.defaultProps = {
   isSameUser: false,
   hasCover: false,
   onSelect: () => {},
+  isPopoverVisible: false,
+  handleVisibleChange: () => {},
 };
 
 export default injectIntl(UserHeader);
