@@ -30,7 +30,7 @@ import { getStats } from '../../actions/stats';
 import { getUser } from '../../actions/user';
 import { getGithubProjects } from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
-import SimilarPosts from '../../components/Sidebar/SimilarPosts';
+import SimilarPosts from '../../components/Editor/SimilarPosts';
 
 @injectIntl
 @withRouter
@@ -375,7 +375,6 @@ class Write extends React.Component {
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
               <GithubConnection user={user} />
-              <SimilarPosts data={parsedPostData} />
             </div>
           </Affix>
           <div className="center">
@@ -397,6 +396,7 @@ class Write extends React.Component {
               onImageInserted={this.handleImageInserted}
               user={user}
             />
+            <SimilarPosts data={parsedPostData} />
             <Modal
               visible={this.state.warningModal}
               title='Hey. Your Contribution may be better!'

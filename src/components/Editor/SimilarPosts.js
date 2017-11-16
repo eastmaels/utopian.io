@@ -49,6 +49,7 @@ class SimilarPosts extends React.Component {
   }, 1000);
 
   render() {
+    if (!this.state.contributions.length) return null;
     return (
       <div className="SimilarPosts">
         <div className="SimilarPosts__container">
