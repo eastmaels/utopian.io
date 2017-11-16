@@ -37,13 +37,15 @@ const UserHero = ({
   isSameUser,
   hasCover,
   onSelect,
-}) =>
-  (<div>
+  isPopoverVisible,
+  handleVisibleChange,
+}) => (
+  <div>
     <Switch>
       <Route
         path="/@:name"
-        render={() =>
-          (<div>
+        render={() => (
+          <div>
             {
               (user.isFetching) ? <UserHeaderLoading />
                 : <UserHeader
@@ -55,13 +57,16 @@ const UserHero = ({
                   isSameUser={isSameUser}
                   hasCover={hasCover}
                   onSelect={onSelect}
+                  isPopoverVisible={isPopoverVisible}
+                  handleVisibleChange={handleVisibleChange}
                 />
             }
             <UserMenuWrapper
               followers={user.follower_count}
               following={user.following_count}
             />
-          </div>)}
+          </div>
+        )}
       />
       <Route render={() => (authenticated ? <Hero /> : <div />)} />
     </Switch>
@@ -74,12 +79,16 @@ UserHero.propTypes = {
   isSameUser: PropTypes.bool,
   hasCover: PropTypes.bool,
   onSelect: PropTypes.func,
+  isPopoverVisible: PropTypes.bool,
+  handleVisibleChange: PropTypes.func,
 };
 
 UserHero.defaultProps = {
   isSameUser: false,
   hasCover: false,
   onSelect: () => {},
+  isPopoverVisible: false,
+  handleVisibleChange: () => {},
 };
 
 export default UserHero;

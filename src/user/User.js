@@ -68,7 +68,8 @@ export default class User extends React.Component {
     super (props);
 
     this.state = {
-      githubProjects: []
+      githubProjects: [],
+      popoverVisible: false,
     };
   }
 
@@ -106,8 +107,17 @@ export default class User extends React.Component {
   }
 
   handleUserMenuSelect = (key) => {
-    if (key === 'transfer') this.props.openTransfer(this.props.match.params.name);
+    if (key === 'transfer') {
+      this.props.openTransfer(this.props.match.params.name);
+      this.setState({
+        popoverVisible: false,
+      });
+    }
   };
+
+  handleVisibleChange = (visible) => {
+    this.setState({ popoverVisible: visible });
+  }
 
   render() {
     const { authenticated, authenticatedUser, match, loading, getGithubProjects } = this.props;
@@ -151,16 +161,19 @@ export default class User extends React.Component {
           />
         </Helmet>
         <ScrollToTopOnMount />
-        {user &&
-        <UserHero
-          authenticated={authenticated}
-          user={user}
-          username={displayedUsername}
-          isSameUser={isSameUser}
-          hasCover={hasCover}
-          onFollowClick={this.handleFollowClick}
-          onSelect={this.handleUserMenuSelect}
-        />}
+        {user && (
+          <UserHero
+            authenticated={authenticated}
+            user={user}
+            username={displayedUsername}
+            isSameUser={isSameUser}
+            hasCover={hasCover}
+            onFollowClick={this.handleFollowClick}
+            onSelect={this.handleUserMenuSelect}
+            isPopoverVisible={this.state.popoverVisible}
+            handleVisibleChange={this.handleVisibleChange}
+          />
+        )}
         <div className="shifted">
           <div className="feed-layout container">
             <Affix className="leftContainer" stickPosition={72}>
