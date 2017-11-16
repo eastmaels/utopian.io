@@ -171,20 +171,26 @@ class Topnav extends React.Component {
                 trigger="click"
                 content={
                   <PopoverMenu onSelect={onMenuItemClick}>
+                    <PopoverMenuItem key="new-contribution">
+                      New Contribution
+                    </PopoverMenuItem>
+                    <PopoverMenuItem key="new-blog-post">
+                      New Blog Post
+                    </PopoverMenuItem>
                     <PopoverMenuItem key="activity">
-                      <FormattedMessage id="activity" defaultMessage="Activity"/>
+                      Activity
                     </PopoverMenuItem>
                     <PopoverMenuItem key="bookmarks">
-                      <FormattedMessage id="bookmarks" defaultMessage="Bookmarks"/>
+                      Bookmarks
                     </PopoverMenuItem>
                     <PopoverMenuItem key="drafts">
-                      <FormattedMessage id="drafts" defaultMessage="Drafts"/>
+                      Drafts
                     </PopoverMenuItem>
                     <PopoverMenuItem key="settings">
-                      <FormattedMessage id="settings" defaultMessage="Settings"/>
+                      Settings
                     </PopoverMenuItem>
                     <PopoverMenuItem key="logout">
-                      <FormattedMessage id="logout" defaultMessage="Logout"/>
+                      Logout
                     </PopoverMenuItem>
                   </PopoverMenu>
                 }

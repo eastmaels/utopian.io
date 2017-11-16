@@ -210,10 +210,11 @@ class SubFeed extends React.Component {
     return (
       <div>
         <ScrollToTop />
-        {match.path !== "/@:name" ?
+        {match.path !== "/@:name" && match.params.type !== 'blog' || (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') ?
           <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
+            {this.isModerator() && match.params.filterBy === 'review'? <TabPane tab={<span><Icon type="paper-clip" />Blog Posts</span>} key="blog" /> : null}
             {match.params.projectId && <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />}
             <TabPane tab={<span><CategoryIcon type="ideas" />Suggestions</span>} key="ideas" />
             <TabPane tab={<span><CategoryIcon type="sub-projects" />Sub-Projects</span>} key="sub-projects" />
@@ -230,13 +231,14 @@ class SubFeed extends React.Component {
 
           </Tabs> : null}
 
+
         <Feed
           content={ contributions }
           isFetching={ isFetching }
           hasMore={ hasMore }
           loadMoreContent={ this.loadContributions }
         />
-        {!contributions.length && !isFetching && <EmptyFeed text={match.params.type === 'tasks' ? 'No tasks requests yet' : null}/>}
+        {!contributions.length && !isFetching && <EmptyFeed type={match.params.type} />}
       </div>
     );
   }

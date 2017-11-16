@@ -13,6 +13,8 @@ import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 import Action from '../../components/Button/Action';
 import { Modal } from 'antd';
+
+import Blog from './Blog';
 import Contribution from './Contribution';
 
 import * as R from 'ramda';
@@ -268,12 +270,14 @@ class StoryFull extends React.Component {
 
           </div> : null}
 
-        <Contribution
+        {repository && <Contribution
           type={ postType }
           repository={ repository }
           platform={ metaData.platform }
           id={ repository.id }
-        />
+        />}
+
+        {postType === 'blog' && <Blog />}
 
         <Modal
           visible={this.state.verifyModal}

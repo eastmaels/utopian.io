@@ -17,6 +17,7 @@ const Sidenav = ({ username }) =>
             My profile
           </NavLink>
         </li>
+        <br/><hr />
         <li>
           <NavLink to="/" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/', match, location)}>
             <i className="iconfont icon-headlines" />
@@ -24,16 +25,30 @@ const Sidenav = ({ username }) =>
           </NavLink>
         </li>
         <li>
+          <NavLink to="/write" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/write', match, location)}>
+            <Icon type="plus" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+            New Contribution
+          </NavLink>
+        </li>
+        <br/><hr />
+        <li>
+          <NavLink to="/blog" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/blog', match, location)}>
+            <Icon type="paper-clip" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+            Blog Posts
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/write-blog" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/write-blog', match, location)}>
+            <Icon type="plus" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+            New Blog Post
+          </NavLink>
+        </li>
+        <br/><hr />
+        <li>
           <NavLink to="/all/review" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/all/review', match, location)}>
             <i className="iconfont icon-warning" />
             Review
           </NavLink>
-        </li>
-        <li>
-          <a target="_blank" rel="noopener noreferrer" href={`https://steemit.com/@${username}/transfers`}>
-            <i className="iconfont icon-wallet" />
-            Wallet
-          </a>
         </li>
         <li>
           <NavLink to="/sponsors" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/sponsors', match, location)}>

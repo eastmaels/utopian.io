@@ -33,6 +33,7 @@ class EditorAnnouncement extends React.Component {
     repository: PropTypes.object,
     title: PropTypes.string,
     topics: PropTypes.arrayOf(PropTypes.string),
+    reward: PropTypes.string,
     body: PropTypes.string,
     type: PropTypes.string,
     loading: PropTypes.bool,
@@ -48,6 +49,7 @@ class EditorAnnouncement extends React.Component {
     title: '',
     repository: null,
     topics: [],
+    reward: '50',
     type: 'task-ideas',
     body: '',
     recentTopics: [],
@@ -122,7 +124,7 @@ class EditorAnnouncement extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { title, topics, body, type } = this.props;
+    const { title, topics, body, type, reward } = this.props;
 
     if (this.props.repository !== nextProps.repository) {
       this.setState({
@@ -135,6 +137,7 @@ class EditorAnnouncement extends React.Component {
       title !== nextProps.title ||
       topics !== nextProps.topics ||
       body !== nextProps.body ||
+      reward !== nextProps.reward ||
       type !== nextProps.type
     ) {
       this.setValues(nextProps);
@@ -167,6 +170,7 @@ class EditorAnnouncement extends React.Component {
       title: post.title,
       // @UTOPIAN filtering out utopian-io since it's always added/re-added when posting
       topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
+      reward: post.reward,
       type: post.type || 'task-ideas',
     });
     if (this.input) {
@@ -182,7 +186,7 @@ class EditorAnnouncement extends React.Component {
     // (array or just value for Select, proxy event for inputs and checkboxes)
 
     const values = {
-      ...this.props.form.getFieldsValue(['title', 'type', 'topics']),
+      ...this.props.form.getFieldsValue(['title', 'type', 'topics', 'reward']),
       body: this.input.value,
     };
 
@@ -190,6 +194,8 @@ class EditorAnnouncement extends React.Component {
 
     if (isArray(e)) {
       values.topics = e;
+    } else if (typeof e === 'string') {
+      values.reward = e;
     }else if (e.target.type === 'textarea') {
       values.body = e.target.value;
     } else if (e.target.type === 'text') {
@@ -783,6 +789,25 @@ class EditorAnnouncement extends React.Component {
                 dropdownStyle={{ display: 'none' }}
                 tokenSeparators={[' ', ',']}
               />,
+            )}
+          </Form.Item>
+          <Form.Item
+            className={classNames({ Editor__hidden: isUpdating })}
+            label={
+              <span className="Editor__label">
+              Reward
+            </span>
+            }
+          >
+            {getFieldDecorator('reward', { initialValue: '50' })(
+              <Select onChange={this.onUpdate} disabled={isUpdating}>
+                <Select.Option value="100">
+                  100% Steem Power
+                </Select.Option>
+                <Select.Option value="50">
+                  50% SBD and 50% SP
+                </Select.Option>
+              </Select>,
             )}
           </Form.Item>
           <div className="Editor__bottom">
