@@ -25,6 +25,7 @@ import Moderators from './statics/Moderators';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
 import WriteAnnouncement from './post/Write/WriteAnnouncement';
+import WriteBlog from './post/Write/WriteBlog';
 
 import Drafts from './post/Write/Drafts';
 import RequireLogin from './auth/RequireLogin';
@@ -74,6 +75,15 @@ export default (
         render={(props) => (
           <RequireLogin>
             <WriteAnnouncement {...props} />
+          </RequireLogin>
+        )}
+      />
+      <Route
+        exact
+        path="/write-blog"
+        render={(props) => (
+          <RequireLogin>
+            <WriteBlog {...props} />
           </RequireLogin>
         )}
       />

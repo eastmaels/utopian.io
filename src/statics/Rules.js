@@ -79,10 +79,9 @@ export default (props) =>
       <Rules inEditor={false} type="video-tutorials" />
       <br />
       <Rules inEditor={false} type="copywriting" />
+
       <br />
-
       <hr />
-
       <br />
 
       <h2>Task Requests</h2>
@@ -91,6 +90,15 @@ export default (props) =>
         A task must be explained in great details and provide all the necessary details to actually be completed. In one task request there should not be more than one task and if more they must be related to the category where the task request is being submitted.
         Generic task requests, like "We are looking for contributors" won't be accepted.
         Moderators may request to change a task request if it does not meet the rules.
+      </p>
+
+      <br />
+      <hr />
+      <br />
+
+      <h2>Blog Posts</h2>
+      <p>
+        You can use the Blog Posts section to write about anything Open Source. No special rules apply here as long as your blog post is strictly related to the Open Source movement.
       </p>
     </div>
   </div>);

@@ -10,6 +10,7 @@ import Avatar from '../Avatar';
 import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 
+import Blog from './Blog';
 import Contribution from './Contribution';
 import './Story.less';
 
@@ -82,8 +83,6 @@ class Story extends React.Component {
     const metaData = post.json_metadata;
     const repository = metaData.repository;
     const reviewed = post.reviewed || false;
-
-    if (!repository) return null; // @UTOPIAN @TODO find a better way to hide posts not written via Utopian
 
     let followText = '';
 
@@ -163,12 +162,14 @@ class Story extends React.Component {
               <i className="iconfont icon-unfold Story__more" />
             </Popover>
 
-            <Contribution
+            {repository && <Contribution
               type={ postType }
               repository={ repository }
               platform={ metaData.platform }
               id={ repository.id }
-            />
+            />}
+
+            {postType === 'blog' && <Blog />}
 
             <div className="Story__header">
               <Link to={`/@${post.author}`}>

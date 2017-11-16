@@ -84,7 +84,7 @@ class Project extends React.Component {
     return (
       <div>
         <Helmet>
-          <title>Utopian - {projectName} Contribution Reports </title>
+          <title>Utopian - {projectName} Open Source Contributions </title>
         </Helmet>
         <ScrollToTop />
         <ScrollToTopOnMount />
