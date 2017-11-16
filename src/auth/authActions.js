@@ -54,7 +54,12 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
     payload: {
       promise: steemConnect.revokeToken()
-        .then(() => Cookie.remove('access_token')),
+        .then(() => {
+          Cookie.remove('access_token');
+          if (process.env.NODE_ENV === 'production') {
+            window.location.href = process.env.UTOPIAN_LANDING_URL;
+          }
+        }),
     },
   });
 };
