@@ -21,12 +21,12 @@ export default (props) =>
       <br />
       <h2>Contributions MUST BE Informative and Narrative</h2>
       <p>
-        The contribution must contain as much details as possible and have some graphical contents into it (videos, images, etc.) where applicable. The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be submitted in Utopian. A moderator can request for changes before the contribution will be accepted.
+        The contribution must contain as much details as possible and have some graphical content in it (videos, images, etc.) where applicable. The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be accepted in Utopian. A moderator can request for changes before the contribution will be accepted.
       </p>
       <br />
       <h2>Contributions should be in English</h2>
       <p>
-        Contributions should be in plain english and fully understandable. The only accepted exceptions are: 1. The effort to document an Open Source project in a specific language. 2. Contributions under the Translations category. 3. Open Source projects that are meant to be only for specific languages.</p>
+        Contributions should be in plain English and fully understandable. The only accepted exceptions are: <br />1. The effort to document an Open Source project in a specific language <br />2. Contributions under the Translations category <br />3. Open Source projects that are meant to be for specific languages only</p>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
@@ -35,7 +35,7 @@ export default (props) =>
       <br />
       <h2>Provides Proof Of Work</h2>
       <p>
-        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc. if a code contribution. Contributors must give their usernames on the third party site so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
+        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc, if it's a code contribution. Contributors must give their usernames on the third party site so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
       </p>
       <br />
       <h2>Contributions Must Not Contain Spam</h2>
