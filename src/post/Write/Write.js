@@ -30,7 +30,7 @@ import { getStats } from '../../actions/stats';
 import { getUser } from '../../actions/user';
 import { getGithubProjects } from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
-
+import SimilarPosts from '../../components/Editor/SimilarPosts';
 
 @injectIntl
 @withRouter
@@ -328,8 +328,14 @@ class Write extends React.Component {
       });
   };
 
-  saveDraft = debounce((form) => {
-    const data = this.getNewPostData(form);
+  onUpdate = debounce(form => {
+    const data = this.getNewPostData(form)
+    this.setState({parsedPostData: data})
+    this.saveDraft()
+  }, 400);
+
+  saveDraft = () => {
+    const data = this.state.parsedPostData;
     const postBody = data.body;
     const { location: { search } } = this.props;
     let id = new URLSearchParams(search).get('draft');
@@ -347,10 +353,19 @@ class Write extends React.Component {
     }
 
     this.props.saveDraft({ postData: data, id }, redirect);
-  }, 400);
+  };
 
   render() {
-    const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialPullRequests, initialReward } = this.state;
+    const {
+      initialTitle,
+      initialTopics,
+      initialType,
+      initialBody,
+      initialRepository,
+      initialPullRequests,
+      initialReward,
+      parsedPostData
+     } = this.state;
     const { loading, saving, submitting, user } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
@@ -376,11 +391,12 @@ class Write extends React.Component {
               loading={isSubmitting}
               isUpdating={this.state.isUpdating}
               isReviewed={this.state.isReviewed}
-              onUpdate={this.saveDraft}
+              onUpdate={this.onUpdate}
               onSubmit={this.onSubmit}
               onImageInserted={this.handleImageInserted}
               user={user}
             />
+            <SimilarPosts data={parsedPostData} />
             <Modal
               visible={this.state.warningModal}
               title='Hey. Your Contribution may be better!'

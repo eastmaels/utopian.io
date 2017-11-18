@@ -7,7 +7,7 @@ const GithubBtn = ({ disconnect }) => (
   <button className="ConnectGithub"
     onClick={() => {
       if (!disconnect) {
-        window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.UTOPIAN_GITHUB_CLIENT_ID}&redirect_uri=${process.env.UTOPIAN_GITHUB_REDIRECT_URL}&scope=repo,user,gist&state=${state}`
+        window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.UTOPIAN_GITHUB_CLIENT_ID}&redirect_uri=${process.env.UTOPIAN_GITHUB_REDIRECT_URL}&state=${state}`
       } else {
         disconnect();
       }

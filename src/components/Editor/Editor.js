@@ -20,6 +20,7 @@ const RadioGroup = Radio.Group;
 const Option = Select.Option;
 
 // @UTOPIAN
+import SimilarPosts from './SimilarPosts';
 import { Rules } from '../Rules';
 import { getPullRequests } from '../../actions/pullRequests';
 
