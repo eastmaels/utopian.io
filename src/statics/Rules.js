@@ -30,17 +30,17 @@ export default (props) =>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
-        Contributions must be unique. Users must look first if the same or very similar contribution has been submitted. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
+        Contributions must be unique. Users must first check if the same or very similar contribution has been submitted before. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
       </p>
       <br />
       <h2>Provides Proof Of Work</h2>
       <p>
-        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc, if it's a code contribution. Contributors must give their usernames on the third party site so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
+        The contribution must provide as much detail as possible to verify the actual work done. For example: links to pull requests, forks, branches etc, if it's a code contribution. Contributors must provide the usernames they use on relevant third party sites, so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
       </p>
       <br />
       <h2>Contributions Must Not Contain Spam</h2>
       <p>
-        The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will ask you to edit contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. <b>Contributors must not submit the work of someone else. Plagiarism is also forbidden.</b> Moderators will flag and hide forever spam posts that bring no real value.
+        The contribution should not contain any clear attempt to profit solely from a commercial perspective, and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will ask you to edit contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, but in a way that does not disturb the reader. <b>Contributors must not submit the work of someone else. Plagiarism is also forbidden.</b> Moderators will flag and forever hide spam posts that bring no real value.
       </p>
       <br />
       <h2>Contributions Must Not Contain Defamation</h2>
@@ -49,9 +49,9 @@ export default (props) =>
       </p>
       <br />
       <br />
-      <h2>Contributions Should Not Solicit for Steem Related Activities</h2>
+      <h2>Contributions Should Not Solicit for Steem/Steemit Related Activities</h2>
       <p>
-        Contributions should not ask for Steem/Steemit related activities, such as upvotes, resteems and follows. This is because contributions get posted in the GitHub feed, where project maintainers have no interest in those activities.
+        Contributors should not ask for Steem/Steemit related activities in their posts, such as upvotes, resteems and follows. This is because contributions get posted in the GitHub feed, where project maintainers have no interest in those activities.
       </p>
       <br />
       <h2>Categories Specific Rules</h2>
