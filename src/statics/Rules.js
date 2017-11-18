@@ -40,18 +40,18 @@ export default (props) =>
       <br />
       <h2>Contributions Must Not Contain Spam</h2>
       <p>
-        The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will require to edit the contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. <b>Contributors must not submit work of someone else. Plagiarism is also forbidden.</b> Moderators will flag and hide forever spam posts that bring no real value.
+        The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will ask you to edit contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. <b>Contributors must not submit the work of someone else. Plagiarism is also forbidden.</b> Moderators will flag and hide forever spam posts that bring no real value.
       </p>
       <br />
       <h2>Contributions Must Not Contain Defamation</h2>
       <p>
-        Contributions must not use namecalling directed at other users of steem blockchain. Contributions also may not contain false information about another user that may be perceived as defamotory.
+        Contributions must not use namecalling directed at other users of the Steem blockchain. Contributions may not contain false information about another user that may be perceived as defamatory.
       </p>
       <br />
       <br />
       <h2>Contributions Cannot Refer To Steem</h2>
       <p>
-        Contributions cannot have any direct reference to Steem, Steemit, Steemians and similar. This is because contributions get posted in the Github feed where project maintainers have no interest in your Steemit activities. "Follow", "Upvote", "Resteem" and similar sentences are not allowed.
+        Contributions cannot have any direct reference to Steem, Steemit activities, Steemians and similar contexts. This is because contributions get posted in the Github feed where project maintainers have no interest in your Steemit activities. "Follow", "Upvote", "Resteem" and similar phrases are not allowed.
       </p>
       <br />
       <h2>Categories Specific Rules</h2>
@@ -87,9 +87,9 @@ export default (props) =>
       <h2>Task Requests</h2>
       <p>
         Task requests are meant to be made by the project owner when looking for contributions.
-        A task must be explained in great details and provide all the necessary details to actually be completed. In one task request there should not be more than one task and if more they must be related to the category where the task request is being submitted.
+        A task must be explained in great detail and provide all the necessary details for it to actually be completed. In one task request, there should not be more than one task; and if more, they must be related to the category where the task request is being submitted.
         Generic task requests, like "We are looking for contributors" won't be accepted.
-        Moderators may request to change a task request if it does not meet the rules.
+        Moderators may ask that you change a task request, if it does not meet the rules.
       </p>
 
       <br />
