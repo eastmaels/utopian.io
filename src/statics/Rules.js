@@ -21,7 +21,7 @@ export default (props) =>
       <br />
       <h2>Contributions MUST BE Informative and Narrative</h2>
       <p>
-        The contribution must contain as much details as possible and have some graphical content in it (videos, images, etc.) where applicable. The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be accepted in Utopian. A moderator can request for changes before the contribution will be accepted.
+        The contribution must contain as much detail as possible and have some graphical content in it (images, charts, videos, etc) where applicable. The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be accepted in Utopian. A moderator can request for changes before the contribution will be accepted.
       </p>
       <br />
       <h2>Contributions should be in English</h2>
