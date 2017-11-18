@@ -49,9 +49,9 @@ export default (props) =>
       </p>
       <br />
       <br />
-      <h2>Contributions Cannot Refer To Steem</h2>
+      <h2>Contributions Should Not Solicit for Steem Related Activities</h2>
       <p>
-        Contributions cannot have any direct reference to Steem, Steemit activities, Steemians and similar contexts. This is because contributions get posted in the Github feed where project maintainers have no interest in your Steemit activities. "Follow", "Upvote", "Resteem" and similar phrases are not allowed.
+        Contributions should not ask for Steem/Steemit related activities, such as upvotes, resteems and follows. This is because contributions get posted in the GitHub feed, where project maintainers have no interest in those activities.
       </p>
       <br />
       <h2>Categories Specific Rules</h2>
