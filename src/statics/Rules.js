@@ -79,6 +79,8 @@ export default (props) =>
       <Rules inEditor={false} type="video-tutorials" />
       <br />
       <Rules inEditor={false} type="copywriting" />
+      <br />
+      <Rules inEditor={false} type="blog" />
 
       <br />
       <hr />

@@ -5,6 +5,8 @@ const CategoryIcon = ({type}) => {
   switch (type) {
     case 'sub-projects':
       return <Icon type="copy" />;
+    case 'blog':
+      return <Icon type="paper-clip" />;
     case 'task-ideas':
     case 'ideas':
       return <Icon type="bulb" />;
