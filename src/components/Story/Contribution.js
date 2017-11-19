@@ -54,9 +54,9 @@ const categorySlug = type => {
 const Contribution = ({type, repository, platform, id }) => (
   <div className={`Contribution ${type}`}>
     <b>
-      <CategoryIcon type={type} /> {categorySlug(type)} </b>:
+      <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
-      {' '} <Icon type='github' /> {repository.name}
+      {' '} <Icon type='github' /> {repository.full_name}
     </Link>
     {type.indexOf('task') > -1 && <Icon type="notification" className="task"/> }
   </div>
