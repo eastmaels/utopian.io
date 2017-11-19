@@ -12,6 +12,9 @@ import Avatar from '../Avatar';
 import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 import Action from '../../components/Button/Action';
+import CommentForm from '../../components/Comments/CommentForm'; 
+import Comments from "../../components/Comments/Comments";
+import * as commentsActions from '../../comments/commentsActions';
 import { Modal } from 'antd';
 
 import Blog from './Blog';
@@ -38,9 +41,10 @@ class StoryFull extends React.Component {
     onLikeClick: PropTypes.func,
     onShareClick: PropTypes.func,
     onEditClick: PropTypes.func,
+    sendComment: PropTypes.func,
     user: PropTypes.object.isRequired,
     moderatorAction: PropTypes.func.isRequired,
-    moderators: PropTypes.array,
+    moderators: PropTypes.array
   };
 
   static defaultProps = {
@@ -59,13 +63,19 @@ class StoryFull extends React.Component {
     onLikeClick: () => {},
     onShareClick: () => {},
     onEditClick: () => {},
-    postState: {},
+    sendComment: () => {},
+    postState: {}
   };
 
   constructor(props) {
     super(props);
     this.state = {
       verifyModal: false,
+      moderatorCommentModal: false,
+      reviewsource: 0,
+      commentDefaultFooter: '\n\nYou can contact us on [Discord](https://discord.gg/4NYhZU6).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
+      commentFormText: '\n\nYou can contact us on [Discord](https://discord.gg/4NYhZU6).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
+      modTemplate: '',
       lightbox: {
         open: false,
         index: 0,
@@ -99,6 +109,7 @@ class StoryFull extends React.Component {
     }
   };
 
+
   handleContentClick = (e) => {
     if (e.target.tagName === 'IMG') {
       const tags = this.contentDiv.getElementsByTagName('img');
@@ -115,10 +126,29 @@ class StoryFull extends React.Component {
     }
   };
 
+    setModTemplateByName(name) {
+      /* Moderator Templates Variable */
+      var modTemplates = {
+        "pendingDefault":'Your contribution cannot be approved yet. See the [Utopian Rules](https://utopian.io/rules). Please edit your contribution to reapply for approval.\n\nYou may edit your post [here](https://utopian.io/utopian-io/@' + this.props.post.author + '/' + this.props.post.permlink + '), as shown below: \n<center>![](https://res.cloudinary.com/hpiynhbhq/image/upload/v1511026194/jpmpzo8nf3xnooogpr3u.png)</center>',
+        "pendingWrongRepo": 'Your contribution cannot be approved yet because it is attached to the wrong repository. Please edit your contribution and fix the repository to reapply for approval.\n\nYou may edit your post [here](https://utopian.io/utopian-io/@' + this.props.post.author + '/' + this.props.post.permlink + '), as shown below: \n<center>![](https://res.cloudinary.com/hpiynhbhq/image/upload/v1511026194/jpmpzo8nf3xnooogpr3u.png)</center>', 
+        "pendingPow": 'Your contribution cannot be approved yet because it does not have **proof of work**. See the [Utopian Rules](https://utopian.io/rules). Please edit your contribution and add **proof** (links, screenshots, commits, etc) of your work, to reapply for approval.\n\nYou may edit your post [here](https://utopian.io/utopian-io/@' + this.props.post.author + '/' + this.props.post.permlink + '), as shown below: \n<center>![](https://res.cloudinary.com/hpiynhbhq/image/upload/v1511026194/jpmpzo8nf3xnooogpr3u.png)</center>',
+        "flaggedDefault": 'Your contribution cannot be approved because it does not follow the [Utopian Rules](https://utopian.io/rules).',
+        "flaggedDuplicate": 'Your contribution cannot be approved because it is a duplicate. It is very similar to a contribution that was already accepted [here](https://utopian.io/#PLACE-DUPLICATE-LINK-HERE).',
+        "flaggedNotOpenSource": 'Your contribution cannot be approved because it does not refer to or relate to an **open-source** repository. See [here](https://opensource.com/resources/what-open-source) for a definition of "open-source."',
+        "flaggedSpam": 'Your contribution cannot be approved because it does not follow the [Utopian Rules](https://utopian.io/rules), and is considered as **spam**.'
+      }
+      this.setState({modTemplate: name});
+      this.setState({commentFormText: modTemplates[name] + this.state.commentDefaultFooter});
+    }
+    setModTemplate(event) { 
+      this.setModTemplateByName(event.target.value);
+    }
+
   render() {
     const {
       intl,
       user,
+      username,
       post,
       postState,
       pendingLike,
@@ -213,6 +243,7 @@ class StoryFull extends React.Component {
     const postType = post.json_metadata.type;
     const alreadyChecked = isModerator && (post.reviewed || post.pending || post.flagged);
 
+
     return (
       <div className="StoryFull">
         {!reviewed || alreadyChecked ? <div className="StoryFull__review">
@@ -244,9 +275,12 @@ class StoryFull extends React.Component {
                   primary={ true }
                   text='Hide forever'
                   onClick={() => {
-                    var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user is not responding for over 48 hours to your requests.')
+                    var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user has not been responding for over 48 hours to your requests.')
                     if (confirm) {
                       moderatorAction(post.author, post.permlink, user.name, 'flagged').then(() => history.push('/all/review'));
+                      this.setState({reviewsource: 1})
+                      this.setState({modTemplate: "flaggedDefault"});
+                      this.setState({moderatorCommentModal: true})
                     }
                   }}
                 />}
@@ -256,6 +290,8 @@ class StoryFull extends React.Component {
                   text='Pending Review'
                   onClick={() => {
                     moderatorAction(post.author, post.permlink, user.name, 'pending').then(() => history.push('/all/review'));
+                    this.setState({modTemplate: "pendingDefault"});
+                    this.setState({moderatorCommentModal: true})
                   }}
                 />}
 
@@ -285,12 +321,20 @@ class StoryFull extends React.Component {
           okText='Yes, Verify'
           cancelText='Not yet'
           onCancel={() => {
-            moderatorAction(post.author, post.permlink, user.name, 'pending');
+            var confirm = window.confirm("Would you like to set this post as Pending Review instead?")
+            if (confirm) {
+              moderatorAction(post.author, post.permlink, user.name, 'pending');
+              this.setState({reviewsource: 2})
+              this.setState({modTemplate: "pendingDefault"});
+              this.setState({moderatorCommentModal: true})
+            }
             this.setState({verifyModal: false})
           }}
           onOk={ () => {
             moderatorAction(post.author, post.permlink, user.name, 'reviewed');
             this.setState({verifyModal: false})
+            this.setState({ commentFormText: 'Thank you for the contribution. It has been approved.' + this.state.commentDefaultFooter })
+            this.setState({moderatorCommentModal: true})
           }}
         >
           <p>By moderating contributions on Utopian <b>you will earn 5% of the total author rewards generated on the platform</b> based on the amount of contributions reviewed.</p>
@@ -298,13 +342,64 @@ class StoryFull extends React.Component {
           <ul>
             <li><Icon type="heart" /> This contribution is personal, meaningful and informative.</li>
             <li><Icon type="bulb" /> If it's an idea it is very well detailed and realistic.</li>
-            <li><Icon type="smile" /> This is the first and only time this contribution has been shared with the community. </li>
-            <li><Icon type="search" /> This contribution is verifiable and provide proof of the work.</li>
+        {postType !== 'tutorials' && postType !== 'video-tutorials' ?
+            <li><Icon type="smile" /> This is the first and only time this contribution has been shared with the community. </li> : null
+        }
+            <li><Icon type="search" /> This contribution is verifiable and provides proof of the work.</li>
             <li><Icon type="safety" /> Read all the rules: <Link to="/rules">Read the rules</Link></li>
           </ul>
           <br />
           <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified. Check replies to your comments often to see if the user has submitted the changes you have requested.</p>
           <p><b>Is this contribution ready to be verified? <Link to="/rules">Read the rules</Link></b></p>
+        </Modal>
+
+        {/* Moderator Comment Modal - Allows for moderator to publish template-based comment after marking a post as reviewed/flagged/pending */}
+        
+        <Modal
+          visible={this.state.moderatorCommentModal}
+          title='Write a Moderator Comment'
+          footer={false}
+          // okText='Done' 
+          onCancel={() => {
+            this.setState({moderatorCommentModal: false})
+          }}
+          onOk={ () => {
+            this.setState({moderatorCommentModal: false})
+          }}
+        >
+          <p>Below, you may write a moderation commment for this post. </p><br/> 
+          {post.reviewed ? <p>Since you marked this contribution as <em>verified</em>, you may simply leave the current comment in place.</p> : null}
+          {post.pending && this.state.reviewsource < 2 ? <p>Since you marked this contribution as <em>Pending Review</em>, you should detail what changes (if any) the author should make, or why it couldn't be verified in its current form.</p> : null}
+          {post.pending && this.state.reviewsource == 2 ? <p>Since you chose to mark this contribution as <em>Pending Review</em> instead, you should detail what changes (if any) the author should make, or why you changed your mind about verifying it.</p> : null}
+          {post.pending ? 
+            <div onChange={this.setModTemplate.bind(this)}>
+            <ul class="list">
+              <li class="list__item"><input type="radio" value="pendingDefault" id="pendingDefault" name="modTemplate" checked={this.state.modTemplate === 'pendingDefault'} class="radio-btn"/> <label onClick={() => {this.setModTemplateByName("pendingDefault")}} for="pendingDefault" class="label">Default</label><br/></li>
+              <li class="list__item"><input type="radio" value="pendingWrongRepo" id="pendingWrongRepo" name="modTemplate" checked={this.state.modTemplate === 'pendingWrongRepo'} class="radio-btn"/> <label onClick={() => {this.setModTemplateByName("pendingWrongRepo")}} for="pendingWrongRepo" class="label">Wrong Repository</label><br/></li>
+              <li class="list__item"><input type="radio" value="pendingPow" id="pendingPow" name="modTemplate" checked={this.state.modTemplate === 'pendingPow'} class="radio-btn"/> <label onClick={() => {this.setModTemplateByName("pendingPow")}} for="pendingPow" class="label">Proof of Work Required</label><br/></li>
+            </ul>
+            </div>
+          : null}
+          {post.flagged ? <p>Since you marked this contribution as <em>flagged</em>, try explaining why the post could not be accepted. </p> : null}
+          {post.flagged ?
+            <div onChange={this.setModTemplate.bind(this)}>
+            <ul class="list">
+              <li class="list__item"><input type="radio" value="flaggedDefault" id="flaggedDefault" name="modTemplate" checked={this.state.modTemplate === 'flaggedDefault'} class="radio-btn"/> <label onClick={() => {this.setModTemplateByName("flaggedDefault")}} for="flaggedDefault" class="label">Default</label><br/></li>
+              <li class="list__item"><input type="radio" value="flaggedDuplicate" id="flaggedDuplicate" name="modTemplate" checked={this.state.modTemplate === 'flaggedDuplicate'} class="radio-btn"/> <label onClick={() => {this.setModTemplateByName("flaggedDuplicate")}} for="flaggedDuplicate" class="label">Duplicate Contribution</label><br/></li>
+              <li class="list__item"><input type="radio" value="flaggedNotOpenSource" id="flaggedNotOpenSource" name="modTemplate" checked={this.state.modTemplate === 'flaggedNotOpenSource'} class="radio-btn"/> <label onClick={() => {this.setModTemplateByName("flaggedNotOpenSource")}} for="flaggedNotOpenSource" class="label">Not Related to Open-Source</label><br/></li>
+              <li class="list__item"><input type="radio" value="flaggedSpam" id="flaggedSpam" name="modTemplate" checked={this.state.modTemplate === 'flaggedSpam'} class="radio-btn"/> <label onClick={() => {this.setModTemplateByName("flaggedSpam")}} for="flaggedSpam" class="label">Spam</label><br/></li>
+            </ul>
+            </div>
+          : null}
+          <CommentForm 
+        intl={intl}
+        parentPost={post}
+        username={this.props.user.name}
+        isLoading={this.state.showCommentFormLoading}
+        inputValue={this.state.commentFormText}
+        onSubmit = {() => {}} /* onSubmit, onImageInserted to be fixed in future commit */
+        onImageInserted = {() => {}}
+          />
         </Modal>
 
         {replyUI}
