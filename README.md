@@ -1,6 +1,11 @@
-Originally forked from https://github.com/busyorg/busy.git, [Utopian](https://utopian.io) wants to reward Open Source contributors for their hard work. See the website in action [here.](https://utopian.io)
+[Utopian.io](https://utopian.io) wants to reward Open Source contributors for their hard work. 
+Forked from https://github.com/busyorg/busy, Utopian uses the [STEEM Blockchain](https://steem.io) to reward contributors in cryptocurrency.
 
-## Contributing
+See the website in action [here:](https://utopian.io)
+
+<center><img src="https://steemitimages.com/DQmTdu5ndWC2s1NwdYftLzc4oYhqCrowWqMHE2Q92c93W9F/image.png"/></center>
+  
+## Contributing to this Project
 1. Get in touch on Discord: https://discord.gg/5qMzAJ
 2. Clone this repository locally on your computer. If you don't have `git` installed, simply pressing the "Download ZIP" button and unzipping the file should work.
 3. **Locally**, go to the `webpack/webpack-dev-server.js` file. Change the line that begins with `UTOPIAN_API` to this:
@@ -23,5 +28,8 @@ Utopian is now running on your machine!
 * To access the local website, use any browser and go to `localhost:3000/` (or whatever Terminal says next to "Project is running at".)
 * To make a code change, use any editor to change any file in the code locally. If you change a `.js` file, the `webpack` will probably _automatically_ update itself and reload any browser pages that are viewing your local snapshot.
 * When submitting a pull request, make sure to uncheck/delete the original `webpack-dev-server.js` code change, as that's only used for running the project locally.
+
+#### API Server
+Our sister project [utopian-io/api.utopian.io](https://github.com/utopian-io/api.utopian.io) provides the back-end APIs for Utopian. If you want to run Utopian locally, you **do not** need to run that project, though you may want to check it out anyways!
 ## License
 MIT
