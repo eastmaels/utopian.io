@@ -41,7 +41,6 @@ class StoryFull extends React.Component {
     onLikeClick: PropTypes.func,
     onShareClick: PropTypes.func,
     onEditClick: PropTypes.func,
-    sendComment: PropTypes.func,
     user: PropTypes.object.isRequired,
     moderatorAction: PropTypes.func.isRequired,
     moderators: PropTypes.array
@@ -63,7 +62,6 @@ class StoryFull extends React.Component {
     onLikeClick: () => {},
     onShareClick: () => {},
     onEditClick: () => {},
-    sendComment: () => {},
     postState: {}
   };
 
@@ -277,7 +275,7 @@ class StoryFull extends React.Component {
                   onClick={() => {
                     var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user has not been responding for over 48 hours to your requests.')
                     if (confirm) {
-                      moderatorAction(post.author, post.permlink, user.name, 'flagged').then(() => history.push('/all/review'));
+                      moderatorAction(post.author, post.permlink, user.name, 'flagged');
                       this.setState({reviewsource: 1})
                       this.setState({modTemplate: "flaggedDefault"});
                       this.setState({moderatorCommentModal: true})
@@ -289,7 +287,7 @@ class StoryFull extends React.Component {
                   primary={ true }
                   text='Pending Review'
                   onClick={() => {
-                    moderatorAction(post.author, post.permlink, user.name, 'pending').then(() => history.push('/all/review'));
+                    moderatorAction(post.author, post.permlink, user.name, 'pending');
                     this.setState({modTemplate: "pendingDefault"});
                     this.setState({moderatorCommentModal: true})
                   }}
@@ -323,10 +321,10 @@ class StoryFull extends React.Component {
           onCancel={() => {
             var confirm = window.confirm("Would you like to set this post as Pending Review instead?")
             if (confirm) {
-              moderatorAction(post.author, post.permlink, user.name, 'pending');
               this.setState({reviewsource: 2})
               this.setState({modTemplate: "pendingDefault"});
               this.setState({moderatorCommentModal: true})
+              moderatorAction(post.author, post.permlink, user.name, 'pending');
             }
             this.setState({verifyModal: false})
           }}
@@ -397,8 +395,42 @@ class StoryFull extends React.Component {
         username={this.props.user.name}
         isLoading={this.state.showCommentFormLoading}
         inputValue={this.state.commentFormText}
-        onSubmit = {() => {}} /* onSubmit, onImageInserted to be fixed in future commit */
-        onImageInserted = {() => {}}
+        onSubmit = { /* the current onSubmit does not work because "commentsActions.sendComment().then is not a function" */
+        (parentPost, commentValue, isUpdating, originalComment) => {
+          this.setState({ showCommentFormLoading: true });
+      
+          commentsActions.sendComment(parentPost, commentValue, isUpdating, originalComment);
+            .then(() => {
+              this.setState({
+                showCommentFormLoading: false,
+                moderatorCommentModal: false,
+                commentFormText: '',
+              });
+            })
+            .catch(() => {
+              this.setState({
+                showCommentFormLoading: false,
+                commentFormText: commentValue,
+              });
+            });
+            if ((post.pending) || (post.flagged)) {
+              history.push("/all/review");
+            }
+        }} 
+        onImageInserted = {(blob, callback, errorCallback) => {
+          const username = this.props.user.name;
+      
+          const formData = new FormData();
+          formData.append('files', blob);
+      
+          fetch(`https://busy-img.herokuapp.com/@${username}/uploads`, {
+            method: 'POST',
+            body: formData,
+          })
+            .then(res => res.json())
+            .then(res => callback(res.secure_url, blob.name))
+            .catch(() => errorCallback());
+        }}
           />
         </Modal>
 
