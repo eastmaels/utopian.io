@@ -1,4 +1,4 @@
-Originally forked from https://github.com/busyorg/busy.git, Utopian wants to reward Open Source contributors for their hard work.
+Originally forked from https://github.com/busyorg/busy.git, [Utopian](https://utopian.io) wants to reward Open Source contributors for their hard work. See the website in action [here.](https://utopian.io)
 
 ## Contributing
 1. Get in touch on Discord: https://discord.gg/5qMzAJ
@@ -19,6 +19,9 @@ These commands may take a while to process, because it needs to download everyth
 
 ![](https://steemitimages.com/DQmaaMZtej1YsQYrFXZh3qTLKgCXNTiFYhUb6U2UT4yyb7c/image.png)
 
-Utopian is now running on your machine! To access the local website, use any browser and go to `localhost:3000/` (or whatever Terminal says next to "Project is running at".)
+Utopian is now running on your machine! 
+* To access the local website, use any browser and go to `localhost:3000/` (or whatever Terminal says next to "Project is running at".)
+* To make a code change, use any editor to change any file in the code locally. If you change a `.js` file, the `webpack` will probably _automatically_ update itself and reload any browser pages that are viewing your local snapshot.
+* When submitting a pull request, make sure to uncheck/delete the original `webpack-dev-server.js` code change, as that's only used for running the project locally.
 ## License
 MIT
