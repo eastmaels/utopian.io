@@ -416,7 +416,7 @@ class Write extends React.Component {
                   textAlign: 'center',
                 }}/>
                 <br />
-                The contribution you just wrote seems less informative than others in this category.
+                The contribution you just wrote seems shorter than others in this category.
                 <br /><br />
                 Please make sure you are adding <b>enough information</b> and that your contribution is <b>narrative and brings value</b>.
                 <br /><br />
