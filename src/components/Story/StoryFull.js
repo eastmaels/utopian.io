@@ -275,7 +275,6 @@ class StoryFull extends React.Component {
     const postType = post.json_metadata.type;
     const alreadyChecked = isModerator && (post.reviewed || post.pending || post.flagged);
 
-
     return (
       <div className="StoryFull">
         {!reviewed || alreadyChecked ? <div className="StoryFull__review">
@@ -296,9 +295,9 @@ class StoryFull extends React.Component {
 
           {isModerator && alreadyChecked ? <div>
             <h3><Icon type="safety" /> Moderation Status</h3>
-            {post.reviewed && <p><b>ACCEPTED BY:</b> @{post.moderator}</p>}
-            {post.flagged && <p><b>HIDDEN BY:</b> @{post.moderator}</p>}
-            {post.pending && <p><b>PENDING REVIEW:</b> @{post.moderator}</p>}
+            {post.reviewed && <p><b>ACCEPTED BY:</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {post.flagged && <p><b>HIDDEN BY:</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {post.pending && <p><b>PENDING REVIEW:</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
           </div> : null}
 
           {isModerator ? <div>
@@ -598,9 +597,9 @@ class StoryFull extends React.Component {
         {metaData.pullRequests && metaData.pullRequests.length > 0 ?
           <div>
             <h3><Icon type="github" /> Linked Pull Requests</h3>
-            <ul>
+            <ul className="StoryFull__pullrequests">
               {metaData.pullRequests.map(pr => (
-                <li key={pr.id}>
+                <li key={pr.id} className="StoryFull__pullrequest">
                   <a target="_blank" href={pr.html_url}>{pr.title}</a>
                 </li>
               ))}

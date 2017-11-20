@@ -740,7 +740,7 @@ class Editor extends React.Component {
           <Form.Item
             label={
               <span className="Editor__label">
-              Contribution title
+            Contribution title
             </span>
             }
           >
