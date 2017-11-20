@@ -20,7 +20,7 @@ const categorySlug = type => {
     case 'analysis':
       return 'Analysis for';
     case 'graphics':
-      return 'Design for';
+      return 'Graphics for';
     case 'social':
       return 'Visibility for';
     case 'documentation':
@@ -42,9 +42,9 @@ const categorySlug = type => {
     case 'task-translations':
       return 'Translators for';
     case 'task-analysis':
-      return 'Data Analyst for';
+      return 'Data Analysts for';
     case 'task-graphics':
-      return 'Designer';
+      return 'Designers for';
     case 'task-social':
     case 'social':
       return 'Influencers for';

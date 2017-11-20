@@ -173,7 +173,12 @@ class Story extends React.Component {
               showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
             />}
 
-            {postType === 'blog' && <Blog />}
+            {postType === 'blog' && <Blog 
+            showVerified = {post.reviewed}
+            showPending = {post.pending}
+            showFlagged = {post.flagged}
+            showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
+            />}
 
             <div className="Story__header">
               <Link to={`/@${post.author}`}>
