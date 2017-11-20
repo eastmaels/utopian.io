@@ -65,7 +65,7 @@ export default class UserProfileFeed extends React.Component {
         isFetching={isFetching}
         hasMore={hasMore}
         loadMoreContent={loadMoreContentAction}
-        showBlogs={false}
+        showBlogs={true}
       />
     );
   }
