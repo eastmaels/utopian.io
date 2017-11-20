@@ -51,7 +51,7 @@ const categorySlug = type => {
   }
 };
 
-const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged}) => (
+const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress}) => (
   <div className={`Contribution ${type}`}>
     <b>
       <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
@@ -68,6 +68,11 @@ const Contribution = ({type, repository, platform, id, showVerified, showPending
       <Icon className="markIcon" type="exclamation-circle-o"/>
       </span>
       : null}
+    {showInProgress ? 
+      <span className="markPullRight">
+      <Icon className="markIcon" type="safety"/>
+      </span>
+    : null}
     {type.indexOf('task') > -1 && <Icon type="notification" className="task"/> }
     
   </div>
