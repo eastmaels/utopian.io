@@ -345,6 +345,7 @@ class StoryFull extends React.Component {
           showVerified={ post.reviewed }
           showPending={ post.pending }
           showFlagged={ post.flagged }
+          showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
         />}
 
         {postType === 'blog' && <Blog />}

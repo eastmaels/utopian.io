@@ -143,8 +143,7 @@ class SubFeed extends React.Component {
         }
       } else if (match.path === '/@:name') {
         return contribution.author === match.params.name &&
-          !contribution.flagged &&
-          contribution.reviewed === true;
+          !contribution.flagged;
       } else if (match.params.filterBy && match.params.filterBy === 'review') {
         if (match.params.status && match.params.status === 'pending' && this.isModerator()) {
           return contribution.reviewed === false &&

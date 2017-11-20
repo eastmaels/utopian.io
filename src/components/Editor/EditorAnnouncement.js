@@ -559,7 +559,7 @@ class EditorAnnouncement extends React.Component {
               <h2><CategoryIcon type="analysis"/> Data Analysts</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
-                <li>This category is meant only for requesting data analyses for your Open Source project.</li>
+                <li>This category is meant only for requesting data analysis for your Open Source project.</li>
                 <li>Your request must be very specific about the numbers you wish to extract.</li>
                 <li>You must provide the tools and all the information necessary for the analyses to be actually completed.</li>
               </ul>
