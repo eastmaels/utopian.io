@@ -342,6 +342,9 @@ class StoryFull extends React.Component {
           repository={repository}
           platform={metaData.platform}
           id={repository.id}
+          showVerified={ post.reviewed }
+          showPending={ post.pending }
+          showFlagged={ post.flagged }
         />}
 
         {postType === 'blog' && <Blog />}

@@ -14,17 +14,26 @@ const SideAnnouncement = ({ user }) => {
     return (
         <div className="Announcement">
         <div className="Announcement__container">
-            <h4 className="Announcement__title"><Icon type="global"/> Announcements</h4>
-                <br/>Utopian is now the first community driven STEEM Witness! 
-                
-                <Action
-                id="voteWitness"
-                primary={true}
-                text={<a href="https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true" target="_blank">Vote for Utopian!</a>}
-                onClick={() => {
-                    console.log("Voting for Witness!");
-                }}
-                />
+            <h4 className="Announcement__supertitle"><Icon type="global"/> Announcements</h4>
+                <div className="Announcement__divider"/>
+                <div id="announcement1" className="Announcement__single">
+                    Utopian is now the first community driven STEEM Witness! 
+                    
+                    <Action
+                        id="voteWitness"
+                        primary={true}
+                        text={<a href="https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true" target="_blank">Vote for Utopian!</a>}
+                        onClick={() => {
+                            console.log("Voting for Witness!");
+                        }}
+                    />
+                </div>
+                <div id="announcement2" className="Announcement__single">
+
+                </div>
+                <div id="announcement3" className="Announcement__single">
+                        
+                </div>
         </div>
         </div>
     )

@@ -67,7 +67,8 @@ export default class Feed extends React.Component {
     followUser: PropTypes.func,
     unfollowUser: PropTypes.func,
     loadMoreContent: PropTypes.func,
-    contentType: PropTypes.string
+    showBlogs: PropTypes.bool,
+    filterBy: PropTypes.string
   };
 
   static defaultProps = {
@@ -80,6 +81,7 @@ export default class Feed extends React.Component {
     followUser: () => {},
     unfollowUser: () => {},
     loadMoreContent: () => {},
+    showBlogs: false
   };
 
   handleFollowClick = (post) => {
@@ -147,46 +149,45 @@ export default class Feed extends React.Component {
             userVote.percent > 0
               ? () => votePost(post.id, post.author, post.permlink, 0)
               : () => votePost(post.id, post.author, post.permlink);
-          const reportPost = () => votePost(post.id, -1000);
+          const reportPost = () => votePost(post.id, -1000); 
           return (
-            (post.json_metadata.type == 'blog') ? 
-              (this.props.contentType === 'blog') ?
-                <Story
-                  key={post.id}
-                  post={post}
-                  postState={postState}
-                  pendingLike={pendingLikes.includes(post.id)}
-                  pendingFollow={pendingFollows.includes(post.author)}
-                  pendingBookmark={pendingBookmarks.includes(post.id)}
-                  saving={saving}
-                  ownPost={post.author === user.name}
-                  onFollowClick={this.handleFollowClick}
-                  onSaveClick={() => toggleBookmark(post.id, post.author, post.permlink)}
-                  onReportClick={reportPost}
-                  onLikeClick={likePost}
-                  onShareClick={() => reblog(post.id)}
-                  onEditClick={this.handleEditClick}
-                />
-              : null
-            : 
-              (this.props.contentType !== 'blog') ?
-                  <Story
-                  key={post.id}
-                  post={post}
-                  postState={postState}
-                  pendingLike={pendingLikes.includes(post.id)}
-                  pendingFollow={pendingFollows.includes(post.author)}
-                  pendingBookmark={pendingBookmarks.includes(post.id)}
-                  saving={saving}
-                  ownPost={post.author === user.name}
-                  onFollowClick={this.handleFollowClick}
-                  onSaveClick={() => toggleBookmark(post.id, post.author, post.permlink)}
-                  onReportClick={reportPost}
-                  onLikeClick={likePost}
-                  onShareClick={() => reblog(post.id)}
-                  onEditClick={this.handleEditClick}
-                />
-              : null
+            (this.props.showBlogs) ? 
+                      <Story
+                          key={post.id}
+                          post={post}
+                          postState={postState}
+                          pendingLike={pendingLikes.includes(post.id)}
+                          pendingFollow={pendingFollows.includes(post.author)}
+                          pendingBookmark={pendingBookmarks.includes(post.id)}
+                          saving={saving}
+                          ownPost={post.author === user.name}
+                          onFollowClick={this.handleFollowClick}
+                          onSaveClick={() => toggleBookmark(post.id, post.author, post.permlink)}
+                          onReportClick={reportPost}
+                          onLikeClick={likePost}
+                          onShareClick={() => reblog(post.id)}
+                          onEditClick={this.handleEditClick}
+                      />
+            :
+                  (post.json_metadata.type !== 'blog') ?
+                      <Story
+                          key={post.id}
+                          post={post}
+                          postState={postState}
+                          pendingLike={pendingLikes.includes(post.id)}
+                          pendingFollow={pendingFollows.includes(post.author)}
+                          pendingBookmark={pendingBookmarks.includes(post.id)}
+                          saving={saving}
+                          ownPost={post.author === user.name}
+                          onFollowClick={this.handleFollowClick}
+                          onSaveClick={() => toggleBookmark(post.id, post.author, post.permlink)}
+                          onReportClick={reportPost}
+                          onLikeClick={likePost}
+                          onShareClick={() => reblog(post.id)}
+                          onEditClick={this.handleEditClick}
+                      />
+                  : 
+                      null
           );
         })}
       </ReduxInfiniteScroll>

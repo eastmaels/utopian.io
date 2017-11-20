@@ -130,6 +130,7 @@ class SubFeed extends React.Component {
             isFetching={ isFetching }
             hasMore={ hasMore }
             loadMoreContent={ this.loadResults }
+            showBlogs={((searchSection === 'blog') || (searchSection === 'blogs'))}
           /> :
           <ProjectsFeed
             content={ results }
