@@ -16,6 +16,7 @@ import SignUp from '../../components/Sidebar/SignUp';
 
 import { Icon } from 'antd';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
+import SideAnnouncement from '../../components/Sidebar/SideAnnouncement';
 
 import { getUser } from '../../actions/user';
 import { getGithubProjects } from '../../actions/projects';
@@ -94,7 +95,10 @@ export default class RightSidebar extends React.Component {
     }
 
     return (
+      <span>
+      <SideAnnouncement user={user} />
       <GithubConnection user={user} />
+      </span>
     );
   }
 }

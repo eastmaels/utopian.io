@@ -51,14 +51,25 @@ const categorySlug = type => {
   }
 };
 
-const Contribution = ({type, repository, platform, id }) => (
+const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged}) => (
   <div className={`Contribution ${type}`}>
     <b>
-      <CategoryIcon type={type} /> {categorySlug(type)} </b>:
+      <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
-      {' '} <Icon type='github' /> {repository.name}
+      {' '} <Link to={"https://github.com/" + repository.full_name}><Icon type='github' /></Link> {repository.full_name}
     </Link>
+    {showPending ? 
+      <span className="markPullRight">
+      <Icon className="markIcon" type="sync"/>
+      </span>
+      : null}
+    {showFlagged ? 
+      <span className="markPullRight">
+      <Icon className="markIcon" type="exclamation-circle-o"/>
+      </span>
+      : null}
     {type.indexOf('task') > -1 && <Icon type="notification" className="task"/> }
+    
   </div>
 );
 

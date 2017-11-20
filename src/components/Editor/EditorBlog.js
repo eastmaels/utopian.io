@@ -15,6 +15,8 @@ import Body, { remarkable } from '../Story/Body';
 import Autocomplete from 'react-autocomplete';
 import './Editor.less';
 
+import SimilarPosts from './SimilarPosts';
+import { Rules } from '../Rules';
 import CategoryIcon from '../CategoriesIcons';
 import { getProjects, setProjects } from '../../actions/projects';
 const RadioGroup = Radio.Group;
@@ -55,6 +57,7 @@ class EditorBlog extends React.Component {
     loading: false,
     isUpdating: false,
     saving: false,
+    rulesAccepted: false,
     onUpdate: () => {},
     onSubmit: () => {},
     onError: () => {},
@@ -421,6 +424,13 @@ class EditorBlog extends React.Component {
 
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
+      {!this.state.rulesAccepted && !isUpdating  ? <Rules
+            inEditor={true}
+            type={'blog'}
+            acceptRules={() => this.setState({rulesAccepted: true})} />
+          : null}
+
+        <div className={this.state.rulesAccepted || isUpdating ? 'rulesAccepted' : 'rulesNotAccepted'}>
         <Form.Item
           label={
             <span className="Editor__label">
@@ -606,6 +616,7 @@ class EditorBlog extends React.Component {
                 )}
             </Form.Item>
           </div>
+        </div>
         </div>
       </Form>
     );
