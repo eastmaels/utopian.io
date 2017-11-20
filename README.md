@@ -4,4 +4,4 @@ Originally forked from https://github.com/busyorg/busy.git, Utopian wants to rew
 Get in touch on Discord: https://discord.gg/5qMzAJ
 
 ## License
-GNU Public License v3
+GNU Public License v3.0
