@@ -231,14 +231,13 @@ class SubFeed extends React.Component {
 
           </Tabs> : null}
 
-
         <Feed
           content={ contributions }
           isFetching={ isFetching }
           hasMore={ hasMore }
           loadMoreContent={ this.loadContributions }
           contentType={ match.params.type }
-          showBlogs = { ((match.params.type === 'blog') || (match.params.filterBy === 'review')) }
+          showBlogs = { ((match.path === "/@:name") || (match.params.type === 'blog') || (match.params.filterBy === 'review')) }
         />
         {!contributions.length && !isFetching && <EmptyFeed type={match.params.type} />}
       </div>
