@@ -18,18 +18,18 @@ export default () =>
             Now that you're a moderator, when you go to the <a href="https://utopian.io/all/review">moderation page</a>, you will see <b>new functionalities.</b>
 
             &nbsp;When you open a post for review, you will see 3 new buttons at the top:<br/>
-            <ul>
-            <li><b className="verified">Verified</b> - Marking the post as verified means that the post follows all of the Utopian Rules precisely. 
+            <ul className="Welcome__ul">
+            <li><b className="Welcome__verified">Verified</b> - Marking the post as verified means that the post follows all of the Utopian Rules precisely. 
             The user will not be able to change the repository or contribution category after you verify their contribution.</li>
-            <li><b className="pending">Pending Review</b> - Click this button when you're close to verifying the post but it's not quite there.
+            <li><b className="Welcome__pending">Pending Review</b> - Click this button when you're close to verifying the post but it's not quite there.
             Make sure to click this when you have requested changes from the user and you are still waiting for them.</li>
-            <li><b className="hide">Hide Forever</b> - Click this only in dire cases, if the post has no way of being accepted (for example, it is spam, plagiarism, or doesn't make sense).
+            <li><b className="Welcome__hide">Hide Forever</b> - Click this only in dire cases, if the post has no way of being accepted (for example, it is spam, plagiarism, or doesn't make sense).
             You may also click this if the user has not made your requested changes within 48 hours.</li>
             </ul>
             <br/>
             
             Also, make sure to join our Discord Server if you haven't already:<br/>
-            <center><b><a class="bigButton" href="https://discord.gg/5geMSSZ">Join Utopian on Discord</a></b></center>
+            <center><b><a class="Welcome__bigButton" href="https://discord.gg/5geMSSZ">Join Utopian on Discord</a></b></center>
             <br/>You'll be able to meet many friendly moderators and users there. Not only will you be able to make many friends, but you will also be kept up-to-date on moderator issues and Utopian updates.
             It is mandatory for all moderators to be on the Discord Server. Once you join, please tell everyone your STEEM username and that you are a moderator.
             <br/><h3>
@@ -37,14 +37,14 @@ export default () =>
                 </h3>
             After you click one of the three buttons to mark a post, you should see a dialog pop up asking you to write a "Moderation Comment".
 
-            If you verified the post, the dialog should already have a pre-made comment ready for you to accept. Press <code>Comment</code> and the dialog will disappear, and you're done!<br/>
+            If you verified the post, the dialog should already have a pre-made comment ready for you to accept. Press <code className="Welcome__code">Comment</code> and the dialog will disappear, and you're done!<br/>
 
             However, if you flagged a post or marked it as pending review, the dialog will have at least five pre-made <b>templates</b> you will have to choose from.
-            This will usually be self-explanatory, for example if it's in the wrong repository click <code>Wrong Repository</code> and so on.
+            This will usually be self-explanatory, for example if it's in the wrong repository click <code className="Welcome__code">Wrong Repository</code> and so on.
             <br/>
             Never <b>accept/verify</b> or <b>flag</b> a contribution without providing a moderator comment. You should also comment if you marked it as pending, but this isn't completely mandatory.
             <br/>
-            Lastly, before you start working on reviewing a post, place the link on the <code>#i-am-on-it</code> channel in the Utopian Discord server. 
+            Lastly, before you start working on reviewing a post, place the link on the <code className="Welcome__code">#i-am-on-it</code> channel in the Utopian Discord server. 
             This is to make sure that nobody else works on your post while you're working on it, and that you don't work on a post someone else is already working on.
             <br/><h2>
                 The Rules
@@ -58,12 +58,12 @@ export default () =>
                 The Golden Rule
                 </h3>
             The Utopian Golden Rule is:
-            <center><em><blockquote>
+            <center><em><blockquote className="Welcome__blockquote">
             Help the community to grow and to do better, and never frustrate anyone.
             </blockquote></em></center>
             <br/>
             Be very mindful of the rules, but if the user made a small typo somewhere don't be too stringent.<br/>
-            <ul>
+            <ul className="Welcome__ul">
 
             <li>Tags are a soft rule, and if you see tag spamming, ask the user for removal but that shouldn't be reason to not accept or flag their post.</li><br/>
 
@@ -81,7 +81,7 @@ export default () =>
 
                 <em>Document Last Modified November 20th, 2017</em><br/><br/>
             
-            <br className="bigbreak"/>
+            <br className="Welcome__bigbreak"/>
             
       </p>
       

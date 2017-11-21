@@ -6,13 +6,23 @@ import './EmptyFeed.less';
 
 
 const Text = ({ type }) => {
-  if (type === 'tasks' || (type.indexOf("task") > -1)) return (
+  if (type === 'tasks') return (
     <div className="EmptyFeed">
       <h3>
         No task requests yet.
       </h3>
     </div>
   );
+
+  if (type) {
+    if (type.indexOf("task") > -1) return (
+      <div className="EmptyFeed">
+      <h3>
+        No task requests yet.
+      </h3>
+    </div>
+    );
+  }
 
   if (type === 'blog') return (
     <div className="EmptyFeed">

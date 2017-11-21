@@ -58,7 +58,7 @@ export default (props) =>
       <p>Check <em><a href="https://utopian.io/welcome-moderator">Welcome Moderator</a></em> for guidelines on how to effectively moderate on Utopian, if you are a moderator.</p><br/>
       <h2>Categories Specific Rules</h2>
       <br />
-      <Rules inEditor={false} type="ideas" />
+      <Rules inEditor={false} type="ideas" /> 
       <br />
       <Rules inEditor={false} type="sub-projects" />
       <br />
