@@ -22,6 +22,7 @@ import Help from './statics/Help';
 import Rules from './statics/Rules';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
+import WelcomeModerator from './statics/WelcomeModerator';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
 import WriteAnnouncement from './post/Write/WriteAnnouncement';
@@ -52,6 +53,7 @@ export default (
       */}
       <Route path="/sponsors" exact component={Sponsors} />
       <Route path="/moderators" exact component={Moderators} />
+      <Route path="/welcome-moderator" exact component={WelcomeModerator} />
       <Route
         path="/bookmarks"
         render={() => (

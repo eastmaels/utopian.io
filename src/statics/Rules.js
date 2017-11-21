@@ -54,9 +54,11 @@ export default (props) =>
         Contributors should not ask for Steem/Steemit related activities in their posts, such as upvotes, resteems and follows. This is because contributions get posted in the GitHub feed, where project maintainers have no interest in those activities.
       </p>
       <br />
+      <h2>Moderator Guidelines</h2>
+      <p>Check <em><a href="https://utopian.io/welcome-moderator">Welcome Moderator</a></em> for guidelines on how to effectively moderate on Utopian, if you are a moderator.</p><br/>
       <h2>Categories Specific Rules</h2>
       <br />
-      <Rules inEditor={false} type="ideas" />
+      <Rules inEditor={false} type="ideas" /> 
       <br />
       <Rules inEditor={false} type="sub-projects" />
       <br />
