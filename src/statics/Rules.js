@@ -21,37 +21,37 @@ export default (props) =>
       <br />
       <h2>Contributions MUST BE Informative and Narrative</h2>
       <p>
-        The contribution must contain as much details as possible and have some graphical contents into it (videos, images, etc.) where applicable. The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be submitted in Utopian. A moderator can request for changes before the contribution will be accepted.
+        The contribution must contain as much detail as possible and have some graphical content in it (images, charts, videos, etc) where applicable. The length of the body of the contribution must be enough to give every possible detail about the submitted contribution. If this rule is not met, the contribution won't be accepted in Utopian. A moderator can request for changes before the contribution will be accepted.
       </p>
       <br />
       <h2>Contributions should be in English</h2>
       <p>
-        Contributions should be in plain english and fully understandable. The only accepted exceptions are: 1. The effort to document an Open Source project in a specific language. 2. Contributions under the Translations category. 3. Open Source projects that are meant to be only for specific languages.</p>
+        Contributions should be in plain English and fully understandable. The only accepted exceptions are: <br />1. The effort to document an Open Source project in a specific language <br />2. Contributions under the Translations category <br />3. Open Source projects that are meant to be for specific languages only</p>
       <br />
       <h2>Never Submitted Before</h2>
       <p>
-        Contributions must be unique. Users must look first if the same or very similar contribution has been submitted. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
+        Contributions must be unique. Users must first check if the same or very similar contribution has been submitted before. A moderator will check if the contribution has been reported before and won't accept it in the Utopian feed again if so.
       </p>
       <br />
       <h2>Provides Proof Of Work</h2>
       <p>
-        The contribution must provide every possible detail to verify the actual work. For example: links to pull requests, forks, branches etc. if a code contribution. Contributors must give their usernames on the third party site so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
+        The contribution must provide as much detail as possible to verify the actual work done. For example: links to pull requests, forks, branches etc, if it's a code contribution. Contributors must provide the usernames they use on relevant third party sites, so their work can be verified by moderators. Read all the rules for the specific Utopian categories below.
       </p>
       <br />
       <h2>Contributions Must Not Contain Spam</h2>
       <p>
-        The contribution should not contain any clear attempt to profit from a commercial perspective and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will require to edit the contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, in a way that does not disturb the reader. <b>Contributors must not submit work of someone else. Plagiarism is also forbidden.</b> Moderators will flag and hide forever spam posts that bring no real value.
+        The contribution should not contain any clear attempt to profit solely from a commercial perspective, and should not be written in a way that suggests the contributor is looking to maximise the returns. Moderators will ask you to edit contributions that use unrelated tags or unnecessary/spammy information in the post. Contributors are allowed to use their signature at the bottom of the post and link to their social profiles, but in a way that does not disturb the reader. <b>Contributors must not submit the work of someone else. Plagiarism is also forbidden.</b> Moderators will flag and forever hide spam posts that bring no real value.
       </p>
       <br />
       <h2>Contributions Must Not Contain Defamation</h2>
       <p>
-        Contributions must not use namecalling directed at other users of steem blockchain. Contributions also may not contain false information about another user that may be perceived as defamotory.
+        Contributions must not use namecalling directed at other users of the Steem blockchain. Contributions may not contain false information about another user that may be perceived as defamatory.
       </p>
       <br />
       <br />
-      <h2>Contributions Cannot Refer To Steem</h2>
+      <h2>Contributions Should Not Solicit for Steem/Steemit Related Activities</h2>
       <p>
-        Contributions cannot have any direct reference to Steem, Steemit, Steemians and similar. This is because contributions get posted in the Github feed where project maintainers have no interest in your Steemit activities. "Follow", "Upvote", "Resteem" and similar sentences are not allowed.
+        Contributors should not ask for Steem/Steemit related activities in their posts, such as upvotes, resteems and follows. This is because contributions get posted in the GitHub feed, where project maintainers have no interest in those activities.
       </p>
       <br />
       <h2>Moderator Guidelines</h2>
@@ -91,9 +91,9 @@ export default (props) =>
       <h2>Task Requests</h2>
       <p>
         Task requests are meant to be made by the project owner when looking for contributions.
-        A task must be explained in great details and provide all the necessary details to actually be completed. In one task request there should not be more than one task and if more they must be related to the category where the task request is being submitted.
+        A task must be explained in great detail and provide all the necessary details for it to actually be completed. In one task request, there should not be more than one task; and if more, they must be related to the category where the task request is being submitted.
         Generic task requests, like "We are looking for contributors" won't be accepted.
-        Moderators may request to change a task request if it does not meet the rules.
+        Moderators may ask that you change a task request, if it does not meet the rules.
       </p>
 
       <br />
