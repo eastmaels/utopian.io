@@ -27,7 +27,7 @@ module.exports = {
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'test-category'),
         UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'http://join.utopian.io'),
-        UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'http://api.utopian.io/api/'),
+        UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'http://localhost:4040/api/'),
         UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '1ed58da028b638550c03'),
         UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(process.env.UTOPIAN_GITHUB_REDIRECT_URL || 'http://localhost:3000/github/callback'),
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
