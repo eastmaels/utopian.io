@@ -131,7 +131,7 @@ class SubFeed extends React.Component {
         if (match.params.type === 'all') {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
             contribution.reviewed === true && !contribution.flagged;
-        }else if (match.params.type === 'tasks') {
+        } else if (match.params.type === 'tasks') {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
             contribution.reviewed === true && !contribution.flagged &&
             contribution.json_metadata.type.indexOf('task') > -1;
@@ -144,6 +144,10 @@ class SubFeed extends React.Component {
       } else if (match.path === '/@:name') {
         return contribution.author === match.params.name &&
           !contribution.flagged;
+      } else if ((match.params.type && match.params.type === 'tasks') || (match.path === '/tasks')) {
+        return (contribution.json_metadata.type.indexOf("task") > -1) &&
+          !contribution.flagged &&
+          contribution.reviewed === true;
       } else if (match.params.filterBy && match.params.filterBy === 'review') {
         if (match.params.status && match.params.status === 'pending' && this.isModerator()) {
           return contribution.reviewed === false &&
@@ -163,13 +167,21 @@ class SubFeed extends React.Component {
         return contribution.json_metadata.type === match.params.type &&
           !contribution.flagged &&
           contribution.reviewed === true;
-      }
+      } 
       return contribution.reviewed === true && !contribution.flagged;
     });
 
     return filteredContributions;
   }
 
+  isTask () {
+    if (this.props.match.params.type) {
+      if (this.props.match.params.type.indexOf("task") > -1) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   componentWillReceiveProps (nextProps) {
     const { location } = this.props;
@@ -209,7 +221,7 @@ class SubFeed extends React.Component {
     return (
       <div>
         <ScrollToTop />
-        {match.path !== "/@:name" && match.params.type !== 'blog' || (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') ?
+        {((match.path !== "/@:name" && match.params.type !== 'blog') || (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') && ((match.path !== '/tasks' && !this.isTask()) || ((match.path == '/tasks' || (this.isTask())) && this.isModerator() && match.params.filterBy === 'review'))) && !((match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review'))) ?
           <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
@@ -229,6 +241,23 @@ class SubFeed extends React.Component {
             <TabPane tab={<span><CategoryIcon type="copywriting" />Copywriting</span>} key="copywriting" />
 
           </Tabs> : null}
+        
+        {(match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review')) ?
+        <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
+        <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="tasks" />
+        {match.params.projectId && <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />}
+        <TabPane tab={<span><CategoryIcon type="task-ideas" />Thinkers</span>} key="task-ideas" />
+        <TabPane tab={<span><CategoryIcon type="task-development" />Developers</span>} key="task-development" />
+        <TabPane tab={<span><CategoryIcon type="task-bug-hunting" />Bug Hunters</span>} key="task-bug-hunting" />
+        <TabPane tab={<span><CategoryIcon type="task-translations" />Translators</span>} key="task-translations" />
+        <TabPane tab={<span><CategoryIcon type="task-graphics" />Designers</span>} key="task-graphics" />
+        <TabPane tab={<span><CategoryIcon type="task-analysis" />Analysts</span>} key="task-analysis" />
+        <TabPane tab={<span><CategoryIcon type="task-social" />Influencers</span>} key="task-social" />
+        <TabPane tab={<span><CategoryIcon type="task-documentation" />Tech Writers</span>} key="task-documentation" />
+
+      </Tabs>
+        : null }
+
 
         <Feed
           content={ contributions }
@@ -237,6 +266,7 @@ class SubFeed extends React.Component {
           loadMoreContent={ this.loadContributions }
           contentType={ match.params.type }
           showBlogs = { ((match.path === "/@:name") || (match.params.type === 'blog') || (match.params.filterBy === 'review')) }
+          showTasks = { (match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review')) }
         />
         {!contributions.length && !isFetching && <EmptyFeed type={match.params.type} />}
       </div>

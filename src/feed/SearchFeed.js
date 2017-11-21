@@ -66,6 +66,7 @@ class SubFeed extends React.Component {
   }
 
   loadResults (nextProps = false) {
+
     const { match, getContributions, getProjects, user } = nextProps || this.props;
     const q = match.params.query;
     const searchSection = match.params.searchSection;
@@ -113,6 +114,7 @@ class SubFeed extends React.Component {
       this.loadResults(nextProps);
     }
   }
+
 
   render() {
     const { loading, history, match, location, isModerator } = this.props;
