@@ -46,7 +46,7 @@ const Sidenav = ({ username }) =>
         <br/><hr />
         <li>
           <NavLink to={`/tasks`} activeClassName="Sidenav__item--active">
-          <Icon type="solution" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+          <Icon type="notification" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
             Task Requests
           </NavLink>
         </li>
