@@ -20,7 +20,7 @@ const categorySlug = type => {
     case 'analysis':
       return 'Analysis for';
     case 'graphics':
-      return 'Design for';
+      return 'Graphics for';
     case 'social':
       return 'Visibility for';
     case 'documentation':
@@ -42,23 +42,39 @@ const categorySlug = type => {
     case 'task-translations':
       return 'Translators for';
     case 'task-analysis':
-      return 'Data Analyst for';
+      return 'Data Analysts for';
     case 'task-graphics':
-      return 'Designer';
+      return 'Designers for';
     case 'task-social':
     case 'social':
       return 'Influencers for';
   }
 };
 
-const Contribution = ({type, repository, platform, id }) => (
+const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress}) => (
   <div className={`Contribution ${type}`}>
     <b>
-      <CategoryIcon type={type} /> {categorySlug(type)} </b>:
+      <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
-      {' '} <Icon type='github' /> {repository.name}
+      {' '} <Link to={"https://github.com/" + repository.full_name}><Icon type='github' /></Link> {repository.full_name}
     </Link>
+    {showPending ? 
+      <span className="markPullRight">
+      <Icon className="markIcon" type="sync"/>
+      </span>
+      : null}
+    {showFlagged ? 
+      <span className="markPullRight">
+      <Icon className="markIcon" type="exclamation-circle-o"/>
+      </span>
+      : null}
+    {showInProgress ? 
+      <span className="markPullRight">
+      <Icon className="markIcon" type="safety"/>
+      </span>
+    : null}
     {type.indexOf('task') > -1 && <Icon type="notification" className="task"/> }
+    
   </div>
 );
 

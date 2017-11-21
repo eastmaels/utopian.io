@@ -64,6 +64,24 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
         </div>
       )
+    case 'blog':
+      return (
+        <div className="Editor__rules">
+          <h2><CategoryIcon type="blog"/> Blog Post Rules</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <ul>
+            <li>You may only write blog posts that are related to <b>open-source projects</b> or the <b>open-source movement</b> in general</li>
+            <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
+            <li>Images, screenshots, links and examples are not necessary but preferred.</li>
+            <li>Check to make sure your post does not fit in other categories (e.g. Tutorials or Copywriting).</li>
+            <li>Never write blog posts you have already shared before.</li>
+          </ul>
+          <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted. 
+            <br/>We will be especially stringent for this category as we have seen abuse here in the past.
+          </p>
+          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+        </div>
+      )
     case 'bug-hunting':
       return (
         <div className="Editor__rules">
@@ -72,7 +90,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>In this category you can only report bugs you have found in an Open Source project.</li>
             <li>You must provide every possible detail to reproduce the bug.</li>
-            <li>You must include for example browsers used, devices, operating systems and similar.</li>
+            <li>You must include for example: browsers, devices, operating systems used and similar.</li>
             <li>Never write about bugs you have already shared before or someone else have already reported before.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>

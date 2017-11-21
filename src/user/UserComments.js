@@ -56,6 +56,7 @@ export default class UserProfilePosts extends React.Component {
         isFetching={isFetching}
         hasMore={hasMore}
         loadMoreContent={loadMoreContentAction}
+        showBlogs={false}
       />
     );
   }

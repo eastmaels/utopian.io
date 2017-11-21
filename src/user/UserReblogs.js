@@ -75,6 +75,7 @@ export default class UserReblogs extends React.Component {
           isFetching={isFetching}
           hasMore={hasMore}
           loadMoreContent={loadMoreContentAction}
+          showBlogs={false}
         />
         {content.length === 0 && !isFetching && isOwnProfile && <EmptyUserOwnProfile />}
         {content.length === 0 && !isFetching && !isOwnProfile && <EmptyUserProfile />}

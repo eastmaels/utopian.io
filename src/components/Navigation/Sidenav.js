@@ -45,6 +45,13 @@ const Sidenav = ({ username }) =>
         </li>
         <br/><hr />
         <li>
+          <NavLink to={`/tasks`} activeClassName="Sidenav__item--active">
+          <Icon type="notification" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+            Task Requests
+          </NavLink>
+        </li>
+        <br/><hr />
+        <li>
           <NavLink to="/all/review" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/all/review', match, location)}>
             <i className="iconfont icon-warning" />
             Review

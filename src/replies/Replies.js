@@ -73,6 +73,7 @@ export class IReplies extends React.Component {
               isFetching={fetching}
               hasMore={hasMore}
               loadMoreContent={this.props.getMoreReplies}
+              showBlogs={false}
             />
           </div>
         </div>

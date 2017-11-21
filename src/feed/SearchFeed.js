@@ -66,6 +66,7 @@ class SubFeed extends React.Component {
   }
 
   loadResults (nextProps = false) {
+
     const { match, getContributions, getProjects, user } = nextProps || this.props;
     const q = match.params.query;
     const searchSection = match.params.searchSection;
@@ -114,6 +115,7 @@ class SubFeed extends React.Component {
     }
   }
 
+
   render() {
     const { loading, history, match, location, isModerator } = this.props;
     const { searchSection } = match.params;
@@ -130,6 +132,7 @@ class SubFeed extends React.Component {
             isFetching={ isFetching }
             hasMore={ hasMore }
             loadMoreContent={ this.loadResults }
+            showBlogs={((searchSection === 'blog') || (searchSection === 'blogs'))}
           /> :
           <ProjectsFeed
             content={ results }

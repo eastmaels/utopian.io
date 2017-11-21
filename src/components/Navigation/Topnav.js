@@ -44,6 +44,7 @@ class Topnav extends React.Component {
     if (location.pathname.indexOf('search/documentation') > -1) return 'documentation';
     if (location.pathname.indexOf('search/analysis') > -1) return 'analysis';
     if (location.pathname.indexOf('search/social') > -1) return 'social';
+    if (location.pathname.indexOf('search/blog') > -1) return 'blog';
     return false;
   };
 
@@ -81,10 +82,11 @@ class Topnav extends React.Component {
             <Option value="tutorials"><CategoryIcon type="tutorials"/> Tuts</Option>
             <Option value="video-tutorials"><CategoryIcon type="video-tutorials"/> Video Tuts</Option>
             <Option value="copywriting"><CategoryIcon type="copywriting"/> Copy</Option>
+            <Option value="blog"><CategoryIcon type="blog"/> Blogs</Option>
           </Select>
           <Input
             ref={input => this.searchInput = input}
-            placeholder="Search.."
+            placeholder="Search..."
             onKeyPress={(event) => {
               const q = event.target.value;
               const searchSection = this.state.searchSection;
