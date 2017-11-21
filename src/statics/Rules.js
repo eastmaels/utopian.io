@@ -54,6 +54,8 @@ export default (props) =>
         Contributions cannot have any direct reference to Steem, Steemit, Steemians and similar. This is because contributions get posted in the Github feed where project maintainers have no interest in your Steemit activities. "Follow", "Upvote", "Resteem" and similar sentences are not allowed.
       </p>
       <br />
+      <h2>Moderator Guidelines</h2>
+      <p>Check <em><a href="https://utopian.io/welcome-moderator">Welcome Moderator</a></em> for guidelines on how to effectively moderate on Utopian, if you are a moderator.</p><br/>
       <h2>Categories Specific Rules</h2>
       <br />
       <Rules inEditor={false} type="ideas" />
