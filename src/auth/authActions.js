@@ -31,21 +31,24 @@ export const login = () => (dispatch) => {
           console.log("RESP", resp)
 
           if (resp && resp.user) {
-            const script = document.createElement("script");
-            const userJsonData = resp.account && resp.account.json_metadata ? JSON.parse(resp.account.json_metadata) : {};
-
-            console.log("ACCOUNT ID", resp.account.id);
-
-            window.chat_name = resp.user;
-            window.chat_id = resp.account.id;
-            window.chat_avatar = userJsonData && userJsonData.profile ? userJsonData.profile.profile_image : '';
-            window.chat_link = `https://utopian.io/@${resp.user}`;
-            window.chat_role = 'default';
-
-            script.src = "https://fast.cometondemand.net/11410x_x1fa73.js";
-
-            document.body.appendChild(script);
             dispatch(getFollowing(resp.user));
+
+            setTimeout(function() {
+              const script = document.createElement("script");
+              const userJsonData = resp.account && resp.account.json_metadata ? JSON.parse(resp.account.json_metadata) : {};
+
+              console.log("ACCOUNT ID", resp.account.id);
+
+              window.chat_name = resp.user;
+              window.chat_id = resp.account.id;
+              window.chat_avatar = userJsonData && userJsonData.profile ? userJsonData.profile.profile_image : '';
+              window.chat_link = `https://utopian.io/@${resp.user}`;
+              window.chat_role = 'default';
+
+              script.src = "https://fast.cometondemand.net/11410x_x1fa73.js";
+
+              document.body.appendChild(script);
+            }, 3000);
           }
 
           if (window.ga) {
