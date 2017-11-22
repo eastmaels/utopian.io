@@ -19,7 +19,7 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SideAnnouncement from '../../components/Sidebar/SideAnnouncement';
 
 import { getUser } from '../../actions/user';
-import { getGithubProjects } from '../../actions/projects';
+import { getGithubProjects, getGithubOrgProjects, getGithubOrgProjectsInternal } from '../../actions/projects';
 
 
 @connect(
@@ -31,6 +31,8 @@ import { getGithubProjects } from '../../actions/projects';
   }),
   {
     getGithubProjects,
+    getGithubOrgProjects,
+    getGithubOrgProjectsInternal,
     getUser,
   })
 export default class RightSidebar extends React.Component {
@@ -45,11 +47,38 @@ export default class RightSidebar extends React.Component {
     this.state = {
       randomPeople: this.getRandomPeople(),
       loadedProjects: false,
+      orgProjects: []
     };
   }
 
+  loadGithubData() {
+    const {  user,getUser, getGithubProjects,  getGithubOrgProjects, getGithubOrgProjectsInternal } = this.props;
+    getUser(user.name).then(res => {
+      if (res.response && res.response.github) {
+        getGithubProjects(user.name, true);
+        getGithubOrgProjects(user.name, true).then(res => {
+          for (var i = 0; i < res.response.length; i++) {
+            getGithubOrgProjectsInternal(res.response[i].login, true, true).then(newres => {
+              this.props.user.orgProjects = [];
+              for (var j = 0; j < newres.response.length; j++) {
+                if (this.props.user) {
+                  this.props.user.orgProjects.push(newres.response[j]);
+                }
+              }
+              this.setState({orgProjects: this.props.user.orgProjects});
+            });
+          }
+        });
+      }
+    });
+  }
+
+  componentDidMount () {
+    this.loadGithubData();
+  }
+
   componentDidUpdate () {
-    const { user, getGithubProjects, getUser } = this.props;
+    const { user, getGithubProjects, getGithubOrgProjects, getGithubOrgProjectsInternal, getUser } = this.props;
 
     if (user && user.name && !this.state.loadedProjects) {
 
@@ -57,11 +86,7 @@ export default class RightSidebar extends React.Component {
         loadedProjects: true,
       });
 
-      getUser(user.name).then(res => {
-        if (res.response && res.response.github) {
-          getGithubProjects(user.name, true);
-        }
-      })
+      this.loadGithubData();
     }
   };
 
@@ -80,6 +105,7 @@ export default class RightSidebar extends React.Component {
 
   render() {
     const { user } = this.props;
+    user.orgProjects = this.state.orgProjects;
 
     const InterestingPeopleWithData = () => (
       <InterestingPeople
