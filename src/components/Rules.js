@@ -105,7 +105,13 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon type="translations"/> Translations Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>In order to submit a translation in Utopian you must have translated at least 30% of the project for medium sized projects (500-1000 strings), 10-15% for big projects (1000 and up), 100% for small projects (1 - 500).</li>
+            <li>In order to submit a translation in Utopian, you must translate the proper amount of strings for your project size:
+              <ul>
+              <li><b>Small Projects</b> (those that have less than 500 strings in total) require <b>100%</b> of the project to be translated by you.</li>
+              <li><b>Medium Projects</b> (those that have 500 to 1000 strings in total) require <b>at least 30%</b> of the project to be translated by you.</li>
+              <li><b>Big Projects</b> (those that have more than 1000 strings in total) require <b>10-15%</b> of the project to be translated by you.</li>
+              </ul>
+            </li>
             <li>You must provide your translated text directly on this post or include public links.</li>
             <li>This category is meant only for translations you have updated or created for an Open Source project.</li>
             <li>You must include every possible detail to check the translations and the tools you have used to translate.</li>
@@ -212,7 +218,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon type="video-tutorials"/> Video Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Video Tutorials using machine voice will be rejected.</li>
+            <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>This category is meant only for providing video tutorials about an Open Source project.</li>
             <li>Video Tutorials can be in any language. </li>
             <li>A text intro in english is always mandatory at the top of the post.</li>
@@ -230,13 +236,14 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon type="copywriting"/> Copywriting Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Only merged Pull Requests will be accepted on the official repository or on a fork as long as long as the fork is not just a mirror of the original one. Proof of work required.</li>
-            <li>This category is meant only for showing copywriting work you have completed for an Open Source project.</li>
-            <li>Copywriting can be in any language.</li>
-            <li>A text intro in english is always mandatory at the top of the post.</li>
-            <li>You must be the author.</li>
-            <li>Link Pull Requests you have submitted on Github.</li>
-            <li>Never post copywriting work you have already shared before.</li>
+          <li>Linking pull requests from Github is encouraged, but is not required if not applicable. 
+            <ul><li>Only merged Pull Requests will be accepted on the official repository or on a fork as long as the fork is not just a mirror of the original one.</li>
+            <li>If you don't link a pull request, you will still need to provide a proof of your work, however.</li></ul></li>
+          <li>This category is meant only for showing copywriting work you have completed for an Open Source project.</li>
+          <li>Copywriting can be in any language.</li>
+          <li>A text intro in English is always mandatory at the top of the post.</li>
+          <li>You must be the author of all of your copywriting work.</li>
+          <li>Never post copywriting work you have already shared before.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
