@@ -189,7 +189,7 @@ export function createPost(postData) {
               permlink,
               !isUpdating && reward,
               !isUpdating && extensions,
-            ).then((result) => {
+            ).then(async result => {
 
               if (draftId) {
                 dispatch(deleteDraft(draftId));
@@ -201,10 +201,16 @@ export function createPost(postData) {
                 const createOnAPI = contributionData => dispatch(
                   createContribution(contributionData.author, contributionData.permlink)
                 );
-                createOnAPI({ author, permlink })
-                  .then(() => dispatch(
-                    push(`/${parentPermlink}/@${author}/${permlink}`)
-                  ));
+
+                for (let i = 0; i < 5; ++i) {
+                  await new Promise(resolve => setTimeout(resolve, 1000 * i));
+                  const res = await createOnAPI({ author, permlink });
+                  if (res.status === 200) {
+                    break;
+                  }
+                }
+
+                dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
               } else {
                 const updateOnAPI = contributionData => dispatch(
                   updateContribution(contributionData.author, contributionData.permlink)
