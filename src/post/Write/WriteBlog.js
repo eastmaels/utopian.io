@@ -18,19 +18,14 @@ import {
 import * as Actions from '../../actions/constants';
 import { createPost, saveDraft, newPost } from './editorActions';
 import { notify } from '../../app/Notification/notificationActions';
-import Editor from '../../components/Editor/Editor';
+import EditorBlog from '../../components/Editor/EditorBlog';
 import Affix from '../../components/Utils/Affix';
 
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
-import { Modal, Icon } from 'antd';
 import { getBeneficiaries } from '../../actions/beneficiaries';
-import { getStats } from '../../actions/stats';
-import { getUser } from '../../actions/user';
-import { getGithubProjects } from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
-import SimilarPosts from '../../components/Editor/SimilarPosts';
 
 @injectIntl
 @withRouter
@@ -41,6 +36,7 @@ import SimilarPosts from '../../components/Editor/SimilarPosts';
     loading: getIsEditorLoading(state),
     saving: getIsEditorSaving(state),
     submitting: state.loading,
+    project: state.project,
   }),
   {
     createPost,
@@ -48,12 +44,9 @@ import SimilarPosts from '../../components/Editor/SimilarPosts';
     newPost,
     notify,
     getBeneficiaries,
-    getStats,
-    getUser,
-    getGithubProjects,
   },
 )
-class Write extends React.Component {
+class WriteBlog extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     user: PropTypes.shape().isRequired,
@@ -83,25 +76,16 @@ class Write extends React.Component {
       initialReward: '50',
       initialType: '',
       initialBody: '',
-      initialRepository: null,
-      initialPullRequests: [],
       isUpdating: false,
-      warningModal: false,
       parsedPostData: null,
     };
   }
 
   componentDidMount() {
     this.props.newPost();
-    const { draftPosts, location: { search }, getUser, user, getGithubProjects } = this.props;
+    const { draftPosts, location: { search } } = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
-
-    getUser(user.name).then((res) => {
-      if (res.response && res.response.github) {
-        getGithubProjects(user.name, true);
-      }
-    }); // @UTOPIAN INTERNAL DATA
 
     if (draftPost) {
       const { jsonMetadata, isUpdating } = draftPost;
@@ -123,26 +107,21 @@ class Write extends React.Component {
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
         initialReward: draftPost.reward || '50',
-        initialType: jsonMetadata.type || 'ideas',
+        initialType: 'blog',
         initialBody: draftPost.body || '',
-        isReviewed: draftPost.reviewed || false,
         isUpdating: isUpdating || false,
-        initialRepository: jsonMetadata.repository,
-        initialPullRequests: jsonMetadata.pullRequests || [],
       });
     }
   }
 
-  proceedSubmit = () => {
+  proceedSubmit = (data) => {
     const { getBeneficiaries } = this.props;
-    const data = this.state.parsedPostData;
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
     if (id) {
       data.draftId = id;
     };
 
-    this.setState({warningModal : false});
 
     getBeneficiaries(data.author).then(res => {
       if (res.response && res.response.results) {
@@ -180,18 +159,17 @@ class Write extends React.Component {
           extensions
         };
 
-        console.log("CONTRIBUTION DATA", contributionData);
+        console.log("ANNOUNCEMENT DATA", contributionData);
 
         this.props.createPost(contributionData);
 
       } else {
-        alert("Something went wrong. Please try again!")
+        alert("Something went wrong. Please try again!");
       }
     });
   };
 
   onSubmit = (form) => {
-    const { getStats } = this.props;
     const data = this.getNewPostData(form);
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
@@ -199,23 +177,7 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    this.setState({parsedPostData: data})
-
-    getStats()
-      .then(res => {
-        const { stats } = res.response;
-        const jsonData = data.jsonMetadata;
-        const categoryStats = stats.categories[jsonData.type];
-        const average_posts_length = categoryStats ? categoryStats.average_posts_length : 0;
-        const bodyLength = data.body.length;
-
-        if (bodyLength + 2000 < average_posts_length) {
-          this.setState({warningModal : true});
-        } else {
-          this.proceedSubmit();
-        }
-      })
-      .catch((e) => alert("Something went wrong. Please try again." + e))
+    this.proceedSubmit(data);
   };
 
   getNewPostData = (form) => {
@@ -273,10 +235,7 @@ class Write extends React.Component {
       community: 'utopian',
       app: `utopian/${version}`,
       format: 'markdown',
-      repository: form.repository,
-      pullRequests: form.pullRequests || [],
-      platform: 'github', // @TODO @UTOPIAN hardcoded
-      type: form.type,
+      type: 'blog',
     };
 
     if (tags.length) {
@@ -328,14 +287,9 @@ class Write extends React.Component {
       });
   };
 
-  onUpdate = debounce(form => {
-    const data = this.getNewPostData(form)
-    this.setState({parsedPostData: data})
-    this.saveDraft()
-  }, 400);
-
-  saveDraft = () => {
-    const data = this.state.parsedPostData;
+  saveDraft = debounce((form) => {
+    const projectId = this.props.match.params.projectId;
+    const data = this.getNewPostData(form);
     const postBody = data.body;
     const { location: { search } } = this.props;
     let id = new URLSearchParams(search).get('draft');
@@ -352,21 +306,12 @@ class Write extends React.Component {
       redirect = true;
     }
 
-    this.props.saveDraft({ postData: data, id }, redirect);
-  };
+    this.props.saveDraft({ postData: data, id, projectId, type: 'blog'}, redirect);
+  }, 400);
 
   render() {
-    const {
-      initialTitle,
-      initialTopics,
-      initialType,
-      initialBody,
-      initialRepository,
-      initialPullRequests,
-      initialReward,
-      parsedPostData
-     } = this.state;
-    const { loading, saving, submitting, user } = this.props;
+    const { initialTitle, initialTopics, initialType, initialBody, initialReward } = this.state;
+    const { user, loading, saving, submitting } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
     return (
@@ -378,11 +323,9 @@ class Write extends React.Component {
             </div>
           </Affix>
           <div className="center">
-            <Editor
+            <EditorBlog
               ref={this.setForm}
               saving={saving}
-              repository={initialRepository}
-              pullRequests={initialPullRequests}
               title={initialTitle}
               topics={initialTopics}
               reward={initialReward}
@@ -390,39 +333,10 @@ class Write extends React.Component {
               body={initialBody}
               loading={isSubmitting}
               isUpdating={this.state.isUpdating}
-              isReviewed={this.state.isReviewed}
-              onUpdate={this.onUpdate}
+              onUpdate={this.saveDraft}
               onSubmit={this.onSubmit}
               onImageInserted={this.handleImageInserted}
-              user={user}
             />
-            <SimilarPosts data={parsedPostData} />
-            <Modal
-              visible={this.state.warningModal}
-              title='Hey. Your Contribution may be better!'
-              okText={'Proceed anyways'}
-              cancelText='Keep editing'
-              onCancel={() => this.setState({warningModal: false})}
-              onOk={ () => {
-                  this.proceedSubmit();
-              }}
-            >
-              <p>
-                <Icon type="safety" style={{
-                  fontSize: '100px',
-                  color: 'red',
-                  display: 'block',
-                  clear: 'both',
-                  textAlign: 'center',
-                }}/>
-                <br />
-                The contribution you just wrote seems shorter than others in this category.
-                <br /><br />
-                Please make sure you are adding <b>enough information</b> and that your contribution is <b>narrative and brings value</b>.
-                <br /><br />
-                Submitting the contribution as it is now, will either result in the <b>contribution being refused</b> by the Utopian Moderators or <b>lower votes/exposure</b>.
-              </p>
-            </Modal>
           </div>
         </div>
       </div>
@@ -430,4 +344,4 @@ class Write extends React.Component {
   }
 }
 
-export default Write;
+export default WriteBlog;

@@ -17,7 +17,14 @@
 
     @media screen and (max-width: 736px) {
       .ant-radio-group {
-        justify-content: space-around;
+        justify-content: flex-start;
+
+        .box {
+          width: 120px;
+          height: 120px;
+          margin: 10px;
+          font-size: 12px;
+        }
       }
     }
 
@@ -28,6 +35,9 @@
     .ant-radio-wrapper-checked{
       + .box.ideas{
         background-color: @bg-ideas;
+      }
+      + .box.sub-projects{
+        background-color: @bg-sub-projects;
       }
       + .box.development{
         background-color: @bg-development;
@@ -41,6 +51,12 @@
       + .box.graphics{
         background-color: @bg-graphics;
       }
+      + .box.analysis{
+        background-color: @bg-analysis;
+      }
+      + .box.social{
+        background-color: @bg-social;
+      }
       + .box.documentation{
         span {
           color: @black;
@@ -51,11 +67,14 @@
         border: 1px solid #999;
         background-color: @bg-documentation;
       }
-      + .box.analysis{
-        background-color: @bg-analysis;
+      + .box.tutorials{
+        background-color: @bg-tutorials;
       }
-      + .box.social{
-        background-color: @bg-social;
+      + .box.video-tutorials{
+        background-color: @bg-video-tutorials;
+      }
+      + .box.copywriting{
+        background-color: @bg-copywriting;
       }
       + .box {
         position: relative;
@@ -117,6 +136,13 @@
         }
       }
     }
+    .sub-projects {
+      span {
+        &:before {
+          content: @icon-sub-projects;
+        }
+      }
+    }
     .development {
       span {
         &:before {
@@ -145,13 +171,6 @@
         }
       }
     }
-    .documentation {
-      span {
-        &:before {
-          content: @icon-documentation;
-        }
-      }
-    }
     .analysis {
       span {
         &:before {
@@ -163,6 +182,34 @@
       span {
         &:before {
           content: @icon-social;
+        }
+      }
+    }
+    .documentation {
+      span {
+        &:before {
+          content: @icon-documentation;
+        }
+      }
+    }
+    .tutorials {
+      span {
+        &:before {
+          content: @icon-tutorials;
+        }
+      }
+    }
+    .video-tutorials {
+      span {
+        &:before {
+          content: @icon-video-tutorials;
+        }
+      }
+    }
+    .copywriting {
+      span {
+        &:before {
+          content: @icon-copywriting;
         }
       }
     }

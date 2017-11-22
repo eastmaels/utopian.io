@@ -22,9 +22,11 @@ import Help from './statics/Help';
 import Rules from './statics/Rules';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
+import WelcomeModerator from './statics/WelcomeModerator';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
 import WriteAnnouncement from './post/Write/WriteAnnouncement';
+import WriteBlog from './post/Write/WriteBlog';
 
 import Drafts from './post/Write/Drafts';
 import RequireLogin from './auth/RequireLogin';
@@ -51,6 +53,7 @@ export default (
       */}
       <Route path="/sponsors" exact component={Sponsors} />
       <Route path="/moderators" exact component={Moderators} />
+      <Route path="/welcome-moderator" exact component={WelcomeModerator} />
       <Route
         path="/bookmarks"
         render={() => (
@@ -70,10 +73,19 @@ export default (
       />
       <Route
         exact
-        path="/write-announcement/:projectId"
+        path="/write-task/:projectId"
         render={(props) => (
           <RequireLogin>
             <WriteAnnouncement {...props} />
+          </RequireLogin>
+        )}
+      />
+      <Route
+        exact
+        path="/write-blog"
+        render={(props) => (
+          <RequireLogin>
+            <WriteBlog {...props} />
           </RequireLogin>
         )}
       />

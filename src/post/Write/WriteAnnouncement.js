@@ -28,10 +28,8 @@ import { getProject } from '../../actions/project';
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
-import { Modal, Icon } from 'antd';
 import { getBeneficiaries } from '../../actions/beneficiaries';
-import { getStats } from '../../actions/stats';
-
+import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
 @withRouter
@@ -50,7 +48,6 @@ import { getStats } from '../../actions/stats';
     newPost,
     notify,
     getBeneficiaries,
-    getStats,
     getProject,
   },
 )
@@ -81,11 +78,11 @@ class Write extends React.Component {
     this.state = {
       initialTitle: '',
       initialTopics: [],
+      initialReward: '50',
       initialType: '',
       initialBody: '',
       initialRepository: null,
       isUpdating: false,
-      warningModal: false,
       parsedPostData: null,
     };
   }
@@ -123,6 +120,7 @@ class Write extends React.Component {
       this.setState({
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
+        initialReward: draftPost.reward || '50',
         initialType: jsonMetadata.type || 'ideas',
         initialBody: draftPost.body || '',
         isUpdating: isUpdating || false,
@@ -139,9 +137,8 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-    this.setState({warningModal : false});
 
-    getBeneficiaries().then(res => {
+    getBeneficiaries(data.author).then(res => {
       if (res.response && res.response.results) {
         const allBeneficiaries = res.response.results;
         const beneficiaries = [
@@ -188,7 +185,6 @@ class Write extends React.Component {
   };
 
   onSubmit = (form) => {
-    const { getStats } = this.props;
     const data = this.getNewPostData(form);
     const { location: { search } } = this.props;
     const id = new URLSearchParams(search).get('draft');
@@ -328,12 +324,12 @@ class Write extends React.Component {
 
     data.jsonMetadata.repository = this.props.project;
 
-    this.props.saveDraft({ postData: data, id, projectId, type: 'announcement'}, redirect);
+    this.props.saveDraft({ postData: data, id, projectId, type: 'task'}, redirect);
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialType, initialBody, initialRepository } = this.state;
-    const { loading, saving, submitting, project, match } = this.props;
+    const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialReward } = this.state;
+    const { user, loading, saving, submitting, project, match } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
     if (!Object.keys(project).length || (project && project.id !== parseInt(match.params.projectId))) {
@@ -345,7 +341,7 @@ class Write extends React.Component {
         <div className="post-layout container">
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
-              <GetBoost />
+              <GithubConnection user={user} />
             </div>
           </Affix>
           <div className="center">
@@ -355,6 +351,7 @@ class Write extends React.Component {
               repository={initialRepository || project}
               title={initialTitle}
               topics={initialTopics}
+              reward={initialReward}
               type={initialType}
               body={initialBody}
               loading={isSubmitting}
@@ -363,32 +360,6 @@ class Write extends React.Component {
               onSubmit={this.onSubmit}
               onImageInserted={this.handleImageInserted}
             />
-            <Modal
-              visible={this.state.warningModal}
-              title='Hey. Your Contribution may be better!'
-              okText={'Proceed anyways'}
-              cancelText='Keep editing'
-              onCancel={() => this.setState({warningModal: false})}
-              onOk={ () => {
-                  this.proceedSubmit();
-              }}
-            >
-              <p>
-                <Icon type="safety" style={{
-                  fontSize: '100px',
-                  color: 'red',
-                  display: 'block',
-                  clear: 'both',
-                  textAlign: 'center',
-                }}/>
-                <br />
-                Looking at the contribution you just wrote, seems like there are some things that should be adjusted.
-                <br /><br />
-                Please make sure you are adding <b>enough information</b> and that your contribution is <b>narrative and brings value</b>.
-                <br /><br />
-                Submitting the contribution as it is now, will either result in the <b>contribution being refused</b> by the Utopian Moderators or <b>lower votes</b>.
-              </p>
-            </Modal>
           </div>
         </div>
       </div>

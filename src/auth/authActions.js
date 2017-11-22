@@ -3,6 +3,7 @@ import steemConnect from 'sc2-sdk';
 import Cookie from 'js-cookie';
 import { getFollowing } from '../user/userActions';
 import { initPushpad } from '../helpers/pushpadHelper';
+import { getDrafts } from '../helpers/localStorageHelpers';
 
 Promise.promisifyAll(steemConnect);
 
@@ -33,7 +34,7 @@ export const login = () => (dispatch) => {
           }
 
           initPushpad(resp.user, Cookie.get('access_token'));
-
+          resp.drafts = getDrafts();
           return resp;
         }),
     },
@@ -53,7 +54,12 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
     payload: {
       promise: steemConnect.revokeToken()
-        .then(() => Cookie.remove('access_token')),
+        .then(() => {
+          Cookie.remove('access_token');
+          if (process.env.NODE_ENV === 'production') {
+            window.location.href = process.env.UTOPIAN_LANDING_URL;
+          }
+        }),
     },
   });
 };

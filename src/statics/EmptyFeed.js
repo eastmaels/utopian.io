@@ -5,11 +5,33 @@ import { FormattedMessage } from 'react-intl';
 import './EmptyFeed.less';
 
 
-const Text = ({text}) => {
-  if (text) return (
+const Text = ({ type }) => {
+  if (type === 'tasks') return (
     <div className="EmptyFeed">
       <h3>
-        {text}
+        No task requests yet.
+      </h3>
+    </div>
+  );
+
+  if (type) {
+    if (type.indexOf("task") > -1) return (
+      <div className="EmptyFeed">
+      <h3>
+        No task requests yet.
+      </h3>
+    </div>
+    );
+  }
+
+  if (type === 'blog') return (
+    <div className="EmptyFeed">
+      <h3>
+        No blog posts found. {' '}
+        <Link to="/write-blog">
+          Add Blog Post
+        </Link>
+        .
       </h3>
     </div>
   );
@@ -25,7 +47,7 @@ const Text = ({text}) => {
   </div>)
 }
 
-const EmptyFeed = ({ text }) =>
-  (<Text text={text} />);
+const EmptyFeed = ({ type }) =>
+  (<Text type={type} />);
 
 export default EmptyFeed;

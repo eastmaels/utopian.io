@@ -98,11 +98,11 @@ class Sponsors extends React.PureComponent {
                     </div>
                     <div className="statsTab">
                       <h4>{Math.round(delegatedSP)} SP</h4>
-                      <p><b>Delegated</b></p>
+                      <p><b>Delegated Steem Power</b></p>
                     </div>
                     <div className="statsTab">
                       <h4>{Math.ceil((sponsor.percentage_total_vesting_shares || 0) * 100) / 100}%</h4>
-                      <p><b>Utopian Shares</b></p>
+                      <p><b>Utopian Reward Shares</b></p>
                     </div>
                     <div className="statsTab">
                       <h4>${Math.ceil((sponsor.should_receive_rewards || 0) * 100) / 100}</h4>

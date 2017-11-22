@@ -1,10 +1,10 @@
 import { CALL_API } from '../middlewares/api';
 import * as Actions from '../actions/constants';
 
-export const getBeneficiariesRequest = () => ({
+export const getBeneficiariesRequest = (author) => ({
     [CALL_API]: {
         types: [ Actions.GET_BENEFICIARIES_REQUEST, Actions.GET_BENEFICIARIES_REQUEST, Actions.GET_BENEFICIARIES_REQUEST ],
-        endpoint: `beneficiaries`,
+        endpoint: `beneficiaries?exclude=${author}`,
         schema: null,
         method: 'GET',
         payload: {},
@@ -13,4 +13,4 @@ export const getBeneficiariesRequest = () => ({
     }
 });
 
-export const getBeneficiaries = () => dispatch => dispatch(getBeneficiariesRequest());
+export const getBeneficiaries = (author) => dispatch => dispatch(getBeneficiariesRequest(author));

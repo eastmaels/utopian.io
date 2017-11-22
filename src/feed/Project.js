@@ -84,7 +84,7 @@ class Project extends React.Component {
     return (
       <div>
         <Helmet>
-          <title>Utopian - {projectName} Contribution Reports </title>
+          <title>Utopian - {projectName} Open Source Contributions </title>
         </Helmet>
         <ScrollToTop />
         <ScrollToTopOnMount />
@@ -109,8 +109,8 @@ class Project extends React.Component {
                   </p>
                   <hr />
                   {isOwner && <div>
-                    <Link to={`/write-announcement/${project.id}`}>
-                      <Icon type="notification"/> Add announcement
+                    <Link to={`/write-task/${project.id}`}>
+                      <Icon type="notification"/> Add task request
                     </Link>
                   </div>}
                 </div>

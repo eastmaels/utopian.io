@@ -70,7 +70,7 @@ class Moderators extends React.PureComponent {
                     </div>
                     <div className="statsTab">
                       <h4>{Math.ceil((moderator.percentage_total_rewards_moderators || 0) * 100) / 100}%</h4>
-                      <p><b>Moderator Shares</b></p>
+                      <p><b>Moderator Reward Shares</b></p>
                     </div>
                     <div className="statsTab">
                       <h4>${Math.ceil((moderator.should_receive_rewards || 0) * 100) / 100}</h4>

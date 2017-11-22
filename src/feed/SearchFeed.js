@@ -66,16 +66,13 @@ class SubFeed extends React.Component {
   }
 
   loadResults (nextProps = false) {
+
     const { match, getContributions, getProjects, user } = nextProps || this.props;
     const q = match.params.query;
     const searchSection = match.params.searchSection;
     const skip =  nextProps ? 0 : this.state.skip;
     const limit = 20;
     this.total = nextProps ? 0 : this.total;
-    
-    if(this.total !== 0 && this.total <= this.state.skip){
-      return;
-    }
 
     if (searchSection === 'projects') {
       getProjects({
@@ -118,6 +115,7 @@ class SubFeed extends React.Component {
     }
   }
 
+
   render() {
     const { loading, history, match, location, isModerator } = this.props;
     const { searchSection } = match.params;
@@ -134,6 +132,7 @@ class SubFeed extends React.Component {
             isFetching={ isFetching }
             hasMore={ hasMore }
             loadMoreContent={ this.loadResults }
+            showBlogs={((searchSection === 'blog') || (searchSection === 'blogs'))}
           /> :
           <ProjectsFeed
             content={ results }
