@@ -142,11 +142,10 @@ export const broadcastComment = (
 
   console.log("OPERATIONS", operations)
 
-  return Promise.resolve(); // DEBUG
-  /*return SteemConnect.broadcast(operations).catch(e => {
+  return SteemConnect.broadcast(operations).catch(e => {
     console.log(e);
     alert("Utopian could not communicate with Steem. Please try again later. Your post is saved in the drafts. https://utopian.io/drafts");
-  });*/
+  });
 };
 
 export function createPost(postData) {
