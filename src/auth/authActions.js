@@ -32,7 +32,7 @@ export const login = () => (dispatch) => {
 
           if (resp.user) {
             const script = document.createElement("script");
-            const userJsonData = JSON.parse(resp.account.json_metadata);
+            const userJsonData = resp.account.json_metadata ? JSON.parse(resp.account.json_metadata) : {};
 
             console.log("ACCOUNT ID", resp.account.id);
 
