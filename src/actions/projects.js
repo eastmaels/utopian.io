@@ -36,4 +36,40 @@ export const getGithubProjectsRequest = (account, loggedUser) => ({
   }
 });
 
+export const getGithubOrgProjectsRequest = (account, loggedUser) => ({
+  [CALL_API]: {
+    types: [ Actions.GET_GITHUB_ORG_PROJECTS_REQUEST, Actions.GET_GITHUB_ORG_PROJECTS_SUCCESS, Actions.GET_GITHUB_ORG_PROJECTS_FAILURE ],
+    endpoint: `https://api.github.com/users/${account}/orgs`,
+    schema: null,
+    method: 'GET',
+    headers: {
+      'Accept': 'application/vnd.github.v3.raw+json',
+      'Content-Type': 'application/vnd.github.v3.raw+json',
+    },
+    payload: {},
+    additionalParams: {
+      loggedUser,
+    },
+    absolute: true
+  }
+});
+
+export const getGithubOrgProjectsRequestInternal = (account, loggedUser) => ({
+  [CALL_API]: {
+    types: [ Actions.GET_GITHUB_ORG_PROJECTS_REQUEST_INTERNAL, Actions.GET_GITHUB_ORG_PROJECTS_SUCCESS_INTERNAL, Actions.GET_GITHUB_ORG_PROJECTS_FAILURE_INTERNAL ],
+    endpoint: `https://api.github.com/orgs/${account}/repos`,
+    schema: null,
+    method: 'GET',
+    payload: {},
+    additionalParams: {
+      loggedUser,
+      state: "all"
+    },
+    absolute: true
+  }
+});
+
+
 export const getGithubProjects = (account, loggedUser = false) => dispatch => dispatch(getGithubProjectsRequest(account, loggedUser));
+export const getGithubOrgProjects = (account, loggedUser = false) => dispatch => dispatch(getGithubOrgProjectsRequest(account, loggedUser));
+export const getGithubOrgProjectsInternal = (account, loggedUser = false) => dispatch => dispatch(getGithubOrgProjectsRequestInternal(account, loggedUser));

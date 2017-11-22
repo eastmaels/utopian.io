@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 import './GithubConnection.less';
 
-
 const GithubRepos = ({ user }) => {
   return (
     <div className="GithubRepos">
@@ -24,18 +23,34 @@ const GithubRepos = ({ user }) => {
             <ul>
               {user.projects.map(project => (
                 <li key={project.id}>
-                  <Link to={`/project/${project.full_name}/github/${project.id}/all`}>
-                    <Icon type="github"/> {project.full_name}
+                  <Link className="GithubRepos__projectname" to={`/project/${project.full_name}/github/${project.id}/all`}>
+              {(project.fork === false) ? <Icon type="github"/> : <Icon type="fork"/>}  {(project.owner.login === user.name) ? project.name : <span><span className="GithubRepos__owner">{project.owner.login}</span><span className="GithubRepos__slash">/</span>{project.name}</span>}
                   </Link>
-                  <p className="task">
+                  <span className="task">
                     <small>
                       <Link to={`/write-task/${project.id}`}>
-                        <Icon type="notification"/> Add task request
+                        <Icon type="notification"/>
                       </Link>
                     </small>
-                  </p>
+                  </span>
                 </li>
               ))}
+              {(user.orgProjects) ? user.orgProjects.map(project => (
+                <li key={project.id}>
+                  <Link className="GithubRepos__projectname" to={`/project/${project.full_name}/github/${project.id}/all`}>
+                  <Icon type="solution"/> {(project.owner.login === user.name) ? project.name : <span><span className="GithubRepos__owner">{project.owner.login}</span><span className="GithubRepos__slash">/</span>{project.name}</span>}
+                  </Link>
+                  <span className="task">
+                    <small>
+                      <Link to={`/write-task/${project.id}`}>
+                        <Icon type="notification"/>
+                      </Link>
+                    </small>
+                  </span>
+                </li>
+              ))
+            
+            : null}
             </ul>
           </div> : null
         }
