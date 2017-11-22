@@ -218,7 +218,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon type="video-tutorials"/> Video Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Video Tutorials using machine voice will be rejected.</li>
+            <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>This category is meant only for providing video tutorials about an Open Source project.</li>
             <li>Video Tutorials can be in any language. </li>
             <li>A text intro in english is always mandatory at the top of the post.</li>
@@ -236,13 +236,14 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon type="copywriting"/> Copywriting Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Only merged Pull Requests will be accepted on the official repository or on a fork as long as long as the fork is not just a mirror of the original one. Proof of work required.</li>
-            <li>This category is meant only for showing copywriting work you have completed for an Open Source project.</li>
-            <li>Copywriting can be in any language.</li>
-            <li>A text intro in english is always mandatory at the top of the post.</li>
-            <li>You must be the author.</li>
-            <li>Link Pull Requests you have submitted on Github.</li>
-            <li>Never post copywriting work you have already shared before.</li>
+          <li>Linking pull requests from Github is encouraged, but is not required if not applicable. 
+            <ul><li>Only merged Pull Requests will be accepted on the official repository or on a fork as long as the fork is not just a mirror of the original one.</li>
+            <li>If you don't link a pull request, you will still need to provide a proof of your work, however.</li></ul></li>
+          <li>This category is meant only for showing copywriting work you have completed for an Open Source project.</li>
+          <li>Copywriting can be in any language.</li>
+          <li>A text intro in English is always mandatory at the top of the post.</li>
+          <li>You must be the author of all of your copywriting work.</li>
+          <li>Never post copywriting work you have already shared before.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
