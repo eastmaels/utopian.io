@@ -73,10 +73,6 @@ class SubFeed extends React.Component {
     const skip =  nextProps ? 0 : this.state.skip;
     const limit = 20;
     this.total = nextProps ? 0 : this.total;
-    
-    if(this.total !== 0 && this.total <= this.state.skip){
-      return;
-    }
 
     if (searchSection === 'projects') {
       getProjects({

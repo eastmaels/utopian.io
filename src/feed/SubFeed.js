@@ -127,7 +127,7 @@ class SubFeed extends React.Component {
     const { contributions, match, user } = this.props;
 
     const filteredContributions = contributions.filter(contribution => {
-      if (match.params.projectId && contribution.json_metadata.repository.id) {
+      if (match.params.projectId) {
         if (match.params.type === 'all') {
           return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
             contribution.reviewed === true && !contribution.flagged;
