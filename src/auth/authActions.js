@@ -28,7 +28,26 @@ export const login = () => (dispatch) => {
     payload: {
       promise: steemConnect.me()
         .then((resp) => {
-          dispatch(getFollowing(resp.user));
+          console.log("RESP", resp)
+
+          if (resp.user) {
+            const script = document.createElement("script");
+            const userJsonData = JSON.parse(resp.account.json_metadata);
+
+            console.log("ACCOUNT ID", resp.account.id);
+
+            window.chat_name = resp.user;
+            window.chat_id = resp.account.id;
+            window.chat_avatar = userJsonData && userJsonData.profile ? userJsonData.profile.profile_image : '';
+            window.chat_link = `/@${resp.user}`;
+            window.chat_role = 'default';
+
+            script.src = "//fast.cometondemand.net/11410x_x1fa73.js";
+
+            document.body.appendChild(script);
+            dispatch(getFollowing(resp.user));
+          }
+
           if (window.ga) {
             window.ga('set', 'userId', resp.user);
           }
