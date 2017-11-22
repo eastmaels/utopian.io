@@ -97,12 +97,5 @@ export default (props) =>
       </p>
 
       <br />
-      <hr />
-      <br />
-
-      <h2>Blog Posts</h2>
-      <p>
-        You can use the Blog Posts section to write about anything Open Source. No special rules apply here as long as your blog post is strictly related to the Open Source movement.
-      </p>
     </div>
   </div>);

@@ -22,9 +22,9 @@ const SideAnnouncement = ({ user }) => {
                     <Action
                         id="voteWitness"
                         primary={true}
-                        text={<a href="https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true" target="_blank">Vote for Utopian!</a>}
+                        text="Vote for Utopian!"
                         onClick={() => {
-                            console.log("Voting for Witness!");
+                            window.location.href = 'https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true';
                         }}
                     />
                 </div>
