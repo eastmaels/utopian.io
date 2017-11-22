@@ -30,9 +30,9 @@ export const login = () => (dispatch) => {
         .then((resp) => {
           console.log("RESP", resp)
 
-          if (resp.user) {
+          if (resp && resp.user) {
             const script = document.createElement("script");
-            const userJsonData = resp.account.json_metadata ? JSON.parse(resp.account.json_metadata) : {};
+            const userJsonData = resp.account && resp.account.json_metadata ? JSON.parse(resp.account.json_metadata) : {};
 
             console.log("ACCOUNT ID", resp.account.id);
 
@@ -42,7 +42,7 @@ export const login = () => (dispatch) => {
             window.chat_link = `/@${resp.user}`;
             window.chat_role = 'default';
 
-            script.src = "//fast.cometondemand.net/11410x_x1fa73.js";
+            script.src = "https://fast.cometondemand.net/11410x_x1fa73.js";
 
             document.body.appendChild(script);
             dispatch(getFollowing(resp.user));
