@@ -39,7 +39,7 @@ export const login = () => (dispatch) => {
             window.chat_name = resp.user;
             window.chat_id = resp.account.id;
             window.chat_avatar = userJsonData && userJsonData.profile ? userJsonData.profile.profile_image : '';
-            window.chat_link = `/@${resp.user}`;
+            window.chat_link = `https://utopian.io/@${resp.user}`;
             window.chat_role = 'default';
 
             script.src = "https://fast.cometondemand.net/11410x_x1fa73.js";
