@@ -105,7 +105,13 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon type="translations"/> Translations Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>In order to submit a translation in Utopian you must have translated at least 30% of the project for medium sized projects (500-1000 strings), 10-15% for big projects (1000 and up), 100% for small projects (1 - 500).</li>
+            <li>In order to submit a translation in Utopian, you must translate the proper amount of strings for your project size:
+              <ul>
+              <li><b>Small Projects</b> (those that have less than 500 strings in total) require <b>100%</b> of the project to be translated by you.</li>
+              <li><b>Medium Projects</b> (those that have 500 to 1000 strings in total) require <b>at least 30%</b> of the project to be translated by you.</li>
+              <li><b>Big Projects</b> (those that have more than 1000 strings in total) require <b>10-15%</b> of the project to be translated by you.</li>
+              </ul>
+            </li>
             <li>You must provide your translated text directly on this post or include public links.</li>
             <li>This category is meant only for translations you have updated or created for an Open Source project.</li>
             <li>You must include every possible detail to check the translations and the tools you have used to translate.</li>
