@@ -59,9 +59,9 @@ export default class RightSidebar extends React.Component {
         getGithubOrgProjects(user.name, true).then(res => {
           for (var i = 0; i < res.response.length; i++) {
             getGithubOrgProjectsInternal(res.response[i].login, true, true).then(newres => {
+              this.props.user.orgProjects = [];
               for (var j = 0; j < newres.response.length; j++) {
                 if (this.props.user) {
-                  this.props.user.orgProjects = [];
                   this.props.user.orgProjects.push(newres.response[j]);
                 }
               }

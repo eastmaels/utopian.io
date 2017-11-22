@@ -35,7 +35,12 @@ const GithubRepos = ({ user }) => {
                   </span>
                 </li>
               ))}
-              {(user.orgProjects) ? user.orgProjects.map(project => (
+              {((user.orgProjects) && (user.orgProjects.length >= 1)) ?
+              <span><br/><h5 className="GithubRepos__subtitle">Organization Projects</h5><br/></span>
+              : null
+              }
+
+              {(user.orgProjects && user.orgProjects.length) ? user.orgProjects.map(project => (
                 <li key={project.id}>
                   <Link className="GithubRepos__projectname" to={`/project/${project.full_name}/github/${project.id}/all`}>
                   <Icon type="solution"/> {(project.owner.login === user.name) ? project.name : <span><span className="GithubRepos__owner">{project.owner.login}</span><span className="GithubRepos__slash">/</span>{project.name}</span>}

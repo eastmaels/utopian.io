@@ -89,16 +89,16 @@ class WriteBlog extends React.Component {
   }
 
   loadGithubData() {
-    const {  user, getUser, getGithubProjects,  getGithubOrgProjects, getGithubOrgProjectsInternal } = this.props;
+    const {  user,getUser, getGithubProjects,  getGithubOrgProjects, getGithubOrgProjectsInternal } = this.props;
     getUser(user.name).then(res => {
       if (res.response && res.response.github) {
         getGithubProjects(user.name, true);
         getGithubOrgProjects(user.name, true).then(res => {
           for (var i = 0; i < res.response.length; i++) {
             getGithubOrgProjectsInternal(res.response[i].login, true, true).then(newres => {
+              this.props.user.orgProjects = [];
               for (var j = 0; j < newres.response.length; j++) {
                 if (this.props.user) {
-                  this.props.user.orgProjects = [];
                   this.props.user.orgProjects.push(newres.response[j]);
                 }
               }
