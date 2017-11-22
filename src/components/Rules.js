@@ -202,7 +202,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Machine translated tutorials will be rejected.</li>
             <li>This category is meant only for providing tutorials about an Open Source project.</li>
             <li>Tutorials can be in any language.</li>
-            <li>A text intro in english is always mandatory at the top of the post.</li>
             <li>If your tutorial also contains a video you should use the Video Tutorials category.</li>
             <li>You must be the author of the tutorial.</li>
             <li>If you are not pasting the entire tutorial here you must provide public links to it.</li>
@@ -221,7 +220,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>This category is meant only for providing video tutorials about an Open Source project.</li>
             <li>Video Tutorials can be in any language. </li>
-            <li>A text intro in english is always mandatory at the top of the post.</li>
             <li>You must be the author of the video tutorial.</li>
             <li>You must embed the video directly in this post. At the moment Youtube videos are mandatory.</li>
             <li>Never post video tutorials you have already shared before on the Steem blockchain in general.</li>
