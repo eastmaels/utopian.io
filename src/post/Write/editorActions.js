@@ -199,18 +199,13 @@ export function createPost(postData) {
               // @UTOPIAN
               if (!isUpdating) {
                 const createOnAPI = contributionData => dispatch(
-                  createContribution(contributionData.author, contributionData.permlink)
+                  createContribution(contributionData.author, contributionData.permlink).then(() => {
+                    dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
+                  })
                 );
 
-                for (let i = 0; i < 5; ++i) {
-                  await new Promise(resolve => setTimeout(resolve, 1000 * i));
-                  const res = await createOnAPI({ author, permlink });
-                  if (res.status === 200) {
-                    break;
-                  }
-                }
+                createOnAPI({ author, permlink });
 
-                dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
               } else {
                 const updateOnAPI = contributionData => dispatch(
                   updateContribution(contributionData.author, contributionData.permlink)
