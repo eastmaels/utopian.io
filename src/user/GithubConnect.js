@@ -29,17 +29,25 @@ export default class GithubConnect extends React.Component {
 
     this.state = {
       somethingWrong: false,
+      componentMounted: false,
+      userFound: false,
+      userCreated: false,
+      fullSuccess: false,
     }
   }
 
   componentDidMount() {
+    this.setState({componentMounted: true});
     const { location, createGithubUser, user, history } = this.props;
     const params = querystring.decode(location.search.replace('?', ''));
     const { code, state } = params;
 
     if (user && user.name) {
+      this.setState({userFound: true});
       createGithubUser(user.name, code, state).then(res => {
+        this.setState({userCreated: true});
         if (res.response && res.response.account) {
+          this.setState({fullSuccess: true});
           history.push(`/@${user.name}/projects`);
           return;
         } else {
@@ -62,13 +70,20 @@ export default class GithubConnect extends React.Component {
           <div className="feed-layout container">
             <div className="GithubConn__connecting center">
               <h2><Icon type="github"/> Github + Utopian = <Icon type="heart" /> </h2>
-              {!this.state.somethingWrong && <p>
-                <Icon type="loading"/> Connecting..
-              </p>}
+              {!this.state.somethingWrong && <span><p>
+                <Icon type="loading"/> &nbsp;Connecting to Github<br/>
+              </p>
+              <h5>Watch the progress below:</h5>
+              </span>}
               {this.state.somethingWrong && <div>
-                <p>Something went wrong. Try again</p>
+                <p>Something went wrong. Try again below:</p>
                 <GithubBtn/>
               </div>}
+              <br/><br/>
+              <h6>Connection Started</h6> {(this.state.componentMounted) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
+              <h6>Utopian User Found</h6> {(this.state.userFound) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
+              <h6>Github Connection Attempted</h6> {(this.state.userCreated) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
+              <h6>Github Connection Established</h6> {(this.state.fullSuccess) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
             </div>
           </div>
 
