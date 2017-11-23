@@ -4,22 +4,31 @@ import Avatar from '../Avatar';
 
 import { Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import * as Actions from '../../../src/actions/constants'
 
 import './GithubConnection.less';
 
 const GithubRepos = ({ user }) => {
+  const RequiredScopeVersion = Actions.REQUIRED_SCOPE_VERSION; // REQUIRED GITHUB SCOPE VERSION 
+
+  if (user && user.github && user.github.scopeVersion) {
+
+  } else if (user && user.github) {
+      user.github.scopeVersion = 1;
+  }
+
   return (
     <div className="GithubRepos">
       <div className="GithubRepos__container">
         <h4 className="GithubRepos__title"><Icon type="github"/> Github Connection</h4>
-        {user && user.github && user.github.account ? <div className="GithubRepos__githubinfo">
+        {user && user.github && user.github.account && (user.github.scopeVersion >= RequiredScopeVersion) ? <div className="GithubRepos__githubinfo">
             {user.github.avatar_url && <Avatar username={user.github.avatar_url} size={45} />}
             <span><a target="_blank" href={`https://github.com/${user.github.account}`}>{user.github.account}</a></span>
           </div> : <div>
             <b><br/> Get the best out of Utopian! Connect to Github now to seamlessly sync your projects and contributions with the Github feed.</b>
           </div>}
         <div className="GithubRepos__divider"></div>
-        {user.projects && user.projects.length ? <div>
+        { user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && user.projects && user.projects.length ? <div>
             <ul>
               {user.projects.map(project => (
                 <li key={project.id}>
