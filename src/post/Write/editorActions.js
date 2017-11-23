@@ -199,7 +199,7 @@ export function createPost(postData) {
               // @UTOPIAN
               if (!isUpdating) {
                 const createOnAPI = contributionData => dispatch(
-                  createContribution(contributionData.author, contributionData.permlink);
+                  createContribution(contributionData.author, contributionData.permlink)
                 );
 
                 createOnAPI({ author, permlink }).then(() => {
