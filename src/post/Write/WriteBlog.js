@@ -26,7 +26,7 @@ const version = require('../../../package.json').version;
 
 // @UTOPIAN
 import { getBeneficiaries } from '../../actions/beneficiaries';
-import { getGithubProjects, getGithubOrgProjects, getGithubOrgProjectsInternal } from '../../actions/projects';
+import { getGithubProjects } from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
@@ -47,8 +47,6 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
     notify,
     getBeneficiaries,
     getGithubProjects,
-    getGithubOrgProjects,
-    getGithubOrgProjectsInternal,
     getUser, 
   },
 )
@@ -84,37 +82,21 @@ class WriteBlog extends React.Component {
       initialBody: '',
       isUpdating: false,
       parsedPostData: null,
-      orgProjects: [],
     };
   }
 
   loadGithubData() {
-    const {  user,getUser, getGithubProjects,  getGithubOrgProjects, getGithubOrgProjectsInternal } = this.props;
+    const {  user,getUser, getGithubProjects} = this.props;
     getUser(user.name).then(res => {
       if (res.response && res.response.github) {
         getGithubProjects(user.name, true);
-        if (user && user.github && user.github.scopeVersion && user.github.token) {
-          getGithubOrgProjects(user.name, true, user.github.token).then(res => {
-            for (var i = 0; i < res.response.length; i++) {
-              getGithubOrgProjectsInternal(res.response[i].login, true, true).then(newres => {
-                this.props.user.orgProjects = [];
-                for (var j = 0; j < newres.response.length; j++) {
-                  if (this.props.user) {
-                    this.props.user.orgProjects.push(newres.response[j]);
-                  }
-                }
-                this.setState({orgProjects: this.props.user.orgProjects});
-              });
-            }
-          });
-        }
       }
     });
   }
 
   componentDidMount() {
     this.props.newPost();
-    const { draftPosts, location: { search }, getGithubProjects,  getGithubOrgProjects, getGithubOrgProjectsInternal } = this.props;
+    const { draftPosts, location: { search }, getGithubProjects,  } = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
 
@@ -346,7 +328,6 @@ class WriteBlog extends React.Component {
     const { initialTitle, initialTopics, initialType, initialBody, initialReward } = this.state;
     const { user, loading, saving, submitting } = this.props;
     // this.loadGithubData();
-    user.orgProjects = this.state.orgProjects;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
 
     return (
