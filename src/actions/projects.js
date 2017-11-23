@@ -43,7 +43,7 @@ export const getGithubOrgProjectsRequest = (account, loggedUser, accessToken) =>
     schema: null,
     method: 'GET',
     headers: {
-      'Accept': 'token 0cdbd088a048b51fc2ab999e5b399c3f225af878',
+      'Accept': `token ${accessToken}`,
       'Content-Type': 'application/vnd.github.v3.raw+json',
     },
     payload: {},
