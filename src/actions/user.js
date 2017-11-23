@@ -1,7 +1,9 @@
 import { CALL_API } from '../middlewares/api';
 import * as Actions from '../actions/constants';
 
-export const createGithubUserRequest = (account, code, state) => ({
+export const currentGithubScopeVersion = Actions.CURRENT_SCOPE_VERSION;
+
+export const createGithubUserRequest = (account, code, state, scopeVersion = currentGithubScopeVersion) => ({
   [CALL_API]: {
     types: [ Actions.CREATE_GITHUB_USER_REQUEST, Actions.CREATE_GITHUB_USER_SUCCESS, Actions.CREATE_GITHUB_USER_FAILURE ],
     endpoint: `users`,
@@ -10,10 +12,11 @@ export const createGithubUserRequest = (account, code, state) => ({
     payload: {
       account,
       code,
-      state
+      state,
+      scopeVersion
     },
     additionalParams: {},
-    absolute: false
+    absolute: false,
   }
 });
 
