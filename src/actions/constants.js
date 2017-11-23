@@ -2,8 +2,8 @@ export const GET_PROJECTS_REQUEST = '@projects/GET_PROJECTS_REQUEST';
 export const GET_PROJECTS_SUCCESS = '@projects/GET_PROJECTS_SUCCESS';
 export const GET_PROJECTS_FAILURE = '@projects/GET_PROJECTS_FAILURE';
 
-export const CURRENT_SCOPE_VERSION = 2;
-export const REQUIRED_SCOPE_VERSION = 2; // at least
+export const CURRENT_SCOPE_VERSION = 3;
+export const REQUIRED_SCOPE_VERSION = 3; // at least
 
 export const GET_PROJECT_REQUEST = '@project/GET_PROJECT_REQUEST';
 export const GET_PROJECT_SUCCESS = '@project/GET_PROJECT_SUCCESS';
