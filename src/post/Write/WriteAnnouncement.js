@@ -22,6 +22,7 @@ import { getUser } from '../../actions/user';
 import { notify } from '../../app/Notification/notificationActions';
 import EditorAnnouncement from '../../components/Editor/EditorAnnouncement';
 import Affix from '../../components/Utils/Affix';
+import BannedScreen from '../../statics/BannedScreen';
 
 
 import { getProject } from '../../actions/project';
@@ -358,26 +359,11 @@ class Write extends React.Component {
       return null;
     }
 
-    if (this.state.banned == true) {
-      return (
-        <div><center><br/><br/>
-          <Icon type="safety" style={{
-                  fontSize: '100px',
-                  color: 'red',
-                  display: 'block',
-                  clear: 'both',
-                  textAlign: 'center',
-                }}/>
-                <br/>
-                <b>You have been banned from posting on Utopian.</b><br/>
-                Please contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ" target="_blank"> on Discord here </a> for more information.
-        </center></div>
-      )
-    } else {
 
     return (
       <div className="shifted">
         <div className="post-layout container">
+        <BannedScreen redirector={true}/>
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
               <GithubConnection user={user} />
@@ -405,6 +391,5 @@ class Write extends React.Component {
     );
   }
   }
-}
 
 export default Write;

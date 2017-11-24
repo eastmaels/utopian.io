@@ -91,6 +91,10 @@ export const GET_USER_REQUEST = '@user/GET_USER_REQUEST';
 export const GET_USER_SUCCESS = '@user/GET_USER_SUCCESS';
 export const GET_USER_FAILURE = '@user/GET_USER_FAILURE';
 
+export const GET_BAN_REQUEST = '@user/GET_BAN_REQUEST';
+export const GET_BAN_SUCCESS = '@user/GET_BAN_SUCCESS';
+export const GET_BAN_FAILURE = '@user/GET_BAN_FAILURE';
+
 export const GET_GITHUB_PR_REQUEST = '@pullRequests/GET_GITHUB_PR_REQUEST';
 export const GET_GITHUB_PR_SUCCESS = '@pullRequests/GET_GITHUB_PR_SUCCESS';
 export const GET_GITHUB_PR_FAILURE = '@pullRequests/GET_GITHUB_PR_FAILURE';
