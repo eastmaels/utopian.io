@@ -44,6 +44,7 @@ class BanUser extends React.Component {
     this.state = {
       showBanModal: false,
       banned: 0,
+      banReason: "Violation of the Utopian Rules",
     };
   }
 
@@ -57,6 +58,11 @@ class BanUser extends React.Component {
             this.setState({banned: user.banned});
         } else {
             this.setState({banned: 0});
+        }
+        if (user && user.banReason && (user.banReason !== "<unknown>")) {
+            this.setState({banReason: user.banReason});
+        } else {
+            this.setState({banReason: "Violation of the Utopian Rules"});
         }
     });
   }
@@ -81,7 +87,10 @@ class BanUser extends React.Component {
 
   startBanUser (banned) {
       const { banUser, username, authenticatedUser} = this.props;
-      banUser(username, banned, authenticatedUser.name);
+      var reason = "<unknown>";
+      if (banned == 1) reason = this.state.banReason;
+      banUser(username, banned, authenticatedUser.name, reason);
+      console.log(`/BAN ${username} set to ${banned} by ${authenticatedUser.name} for ${reason}`);
   }
 
   bannedText () {
@@ -116,6 +125,10 @@ class BanUser extends React.Component {
         }
     }
 
+    setReason(x) {
+        this.setState({banReason: x});
+    }
+
 
   render() {
     if (this.isModerator()) { return (
@@ -129,7 +142,7 @@ class BanUser extends React.Component {
     />
     <Modal
               visible={this.state.showBanModal}
-              title='Ban this User?'
+              title={`${this.okText(true)} this user?`}
               okText={this.okText()}
               cancelText={'Cancel'}
               onCancel={() => this.setState({showBanModal: false})}
@@ -141,15 +154,18 @@ class BanUser extends React.Component {
                           newstate = 1;
                       } else {
                           newstate = 0;
+                          this.setState({banReason: "Violation of the Utopian Rules"});
                       }
-                      this.setState({banned: newstate});
                       this.startBanUser(newstate);
-                      setTimeout(() => {this.setState({showBanModal: false})}, 100);
+                      this.setState({showBanModal: false}, () => {this.setState({banned: newstate});});
                   }
               }}
             >
+    <span>
     <p>This user is currently {this.bannedText()} <br/>Would you like to {this.okText(false)} this user?</p>
-
+    {(this.state.banned == 1) && <span>The previous reason for banning was: <em className="prevReason">{this.state.banReason}</em></span>}
+    {(this.state.banned == 0) && <span><br/><h4><center>Ban Reason:</center></h4><center><textarea name="modInput" rows="5" cols="55" className="modInput" id="modInput" value={this.state.banReason} onChange={(e) => {this.setReason(e.target.value)}}/></center></span>}
+    </span>
     </Modal>      </span>
     ); }
     else { return (
