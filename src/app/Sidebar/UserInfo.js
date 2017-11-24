@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Modal } from 'antd';
+
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import _ from 'lodash';
 import urlParse from 'url-parse';
@@ -10,13 +12,16 @@ import {
   getIsAuthenticated,
   getAuthenticatedUser,
 } from '../../reducers';
+
+
 import { openTransfer } from '../../wallet/walletActions';
 import Action from '../../components/Button/Action';
+import BanUser from '../../components/BanUser'
 
 const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) => {
   const location = user && _.get(user.json_metadata, 'profile.location');
   let website = user && _.get(user.json_metadata, 'profile.website');
-
+  let showBanModal = false;
   if (website && website.indexOf('http://') === -1 && website.indexOf('https://') === -1) {
     website = `http://${website}`;
   }
@@ -67,14 +72,22 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
           </div>
         </div>
       </div>}
-    {(user && !isSameUser) && <Action
+    {(user && !isSameUser) && <span><Action
+      primary
       style={{ margin: '5px 0' }}
       text={intl.formatMessage({
         id: 'support',
-        defaultMessage: 'Support',
+        defaultMessage: 'Transfer Funds',
       })}
       onClick={() => props.openTransfer(user.name)}
-    />}
+    />
+
+    <BanUser 
+    username={user.name}
+    intl={intl}
+    />
+    </span> 
+    }
   </div>);
 };
 

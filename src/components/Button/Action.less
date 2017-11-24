@@ -24,6 +24,33 @@
     }
   }
 
+  &--negative {
+    .colorize-button(@red, #c20e0e);
+    
+        color: @white-darker;
+    
+        &:disabled,
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+          color: @white-darker !important;
+        }
+  }
+  &--positive {
+    .colorize-button(@green, #00b637);
+    
+        color: @white-darker;
+    
+        &:disabled,
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+          color: @white-darker !important;
+        }
+  }
+
   &:hover,
   &:focus,
   &:active,

@@ -202,15 +202,10 @@ export function createPost(postData) {
                   createContribution(contributionData.author, contributionData.permlink)
                 );
 
-                for (let i = 0; i < 5; ++i) {
-                  await new Promise(resolve => setTimeout(resolve, 1000 * i));
-                  const res = await createOnAPI({ author, permlink });
-                  if (res.status === 200) {
-                    break;
-                  }
-                }
+                createOnAPI({ author, permlink }).then(() => {
+                  dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
+                })
 
-                dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
               } else {
                 const updateOnAPI = contributionData => dispatch(
                   updateContribution(contributionData.author, contributionData.permlink)

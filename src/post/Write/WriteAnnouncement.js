@@ -30,7 +30,7 @@ const version = require('../../../package.json').version;
 
 // @UTOPIAN
 import { getBeneficiaries } from '../../actions/beneficiaries';
-import { getGithubProjects, getGithubOrgProjects, getGithubOrgProjectsInternal } from '../../actions/projects';
+import { getGithubProjects} from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
@@ -53,8 +53,6 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
     getProject,
     getUser, 
     getGithubProjects,
-    getGithubOrgProjects,
-    getGithubOrgProjectsInternal,
   },
 )
 class Write extends React.Component {
@@ -90,11 +88,18 @@ class Write extends React.Component {
       initialRepository: null,
       isUpdating: false,
       parsedPostData: null,
-      orgProjects: [],
+      banned: false,
     };
   }
 
   componentWillMount () {
+    const { getUser, user } = this.props;
+    getUser(user.name).then(res => {
+      if (user.banned === 1) {
+        this.setState({banned: true});
+      }
+    });
+    
     const { match, getProject } = this.props;
     const { projectId } = match.params;
 
@@ -103,32 +108,17 @@ class Write extends React.Component {
   }
 
   loadGithubData() {
-    const {  user,getUser, getGithubProjects,  getGithubOrgProjects, getGithubOrgProjectsInternal } = this.props;
+    const {  user,getUser, getGithubProjects} = this.props;
     getUser(user.name).then(res => {
       if (res.response && res.response.github) {
         getGithubProjects(user.name, true);
-        if (user && user.github && user.github.scopeVersion && user.github.token) {
-          getGithubOrgProjects(user.name, true, user.github.token).then(res => {
-            for (var i = 0; i < res.response.length; i++) {
-              getGithubOrgProjectsInternal(res.response[i].login, true, true).then(newres => {
-                this.props.user.orgProjects = [];
-                for (var j = 0; j < newres.response.length; j++) {
-                  if (this.props.user) {
-                    this.props.user.orgProjects.push(newres.response[j]);
-                  }
-                }
-                this.setState({orgProjects: this.props.user.orgProjects});
-              });
-            }
-          });
-        }
       }
     });
   }
 
   componentDidMount() {
     this.props.newPost();
-    const { draftPosts, location: { search } , getGithubProjects, getGithubOrgProjects, getGithubOrgProjectsInternal} = this.props;
+    const { draftPosts, location: { search }} = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
 
@@ -364,10 +354,26 @@ class Write extends React.Component {
     const { user, loading, saving, submitting, project, match } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
     // this.loadGithubData();
-    user.orgProjects = this.state.orgProjects;
     if (!Object.keys(project).length || (project && project.id !== parseInt(match.params.projectId))) {
       return null;
     }
+
+    if (this.state.banned == true) {
+      return (
+        <div><center><br/><br/>
+          <Icon type="safety" style={{
+                  fontSize: '100px',
+                  color: 'red',
+                  display: 'block',
+                  clear: 'both',
+                  textAlign: 'center',
+                }}/>
+                <br/>
+                <b>You have been banned from posting on Utopian.</b><br/>
+                Please contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ" target="_blank"> on Discord here </a> for more information.
+        </center></div>
+      )
+    } else {
 
     return (
       <div className="shifted">
@@ -397,6 +403,7 @@ class Write extends React.Component {
         </div>
       </div>
     );
+  }
   }
 }
 

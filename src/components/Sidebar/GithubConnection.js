@@ -17,6 +17,16 @@ const GithubRepos = ({ user }) => {
       user.github.scopeVersion = 1;
   }
 
+  const iconFor = (project) => {
+    if (project.owner.login !== user.github.account) {
+      return ("solution");
+    } 
+    if (project.fork) {
+      return ("fork");
+    }
+    return ("github");
+  }
+
   return (
     <div className="GithubRepos">
       <div className="GithubRepos__container">
@@ -25,15 +35,20 @@ const GithubRepos = ({ user }) => {
             {user.github.avatar_url && <Avatar username={user.github.avatar_url} size={45} />}
             <span><a target="_blank" href={`https://github.com/${user.github.account}`}>{user.github.account}</a></span>
           </div> : <div>
-            <b><br/> Get the best out of Utopian! Connect to Github now to seamlessly sync your projects and contributions with the Github feed.</b>
+            <br/> <b>Get the best out of Utopian!</b> Connecting to Github lets you:
+            <ul className="GithubRepos__bulleted">
+              <li className="GithubRepos__bulletedLi"><span>Seamlessly sync your projects and contributions with the Github feed</span></li>
+              <li className="GithubRepos__bulletedLi"><span>Create task requests for your repositories</span></li>
+            </ul>
+            Click the button below to connect.
           </div>}
         <div className="GithubRepos__divider"></div>
-        { user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && user.projects && user.projects.length ? <div>
+        {user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && user.projects && user.projects.length ? <div>
             <ul>
               {user.projects.map(project => (
                 <li key={project.id}>
                   <Link className="GithubRepos__projectname" to={`/project/${project.full_name}/github/${project.id}/all`}>
-              {(project.fork === false) ? <Icon type="github"/> : <Icon type="fork"/>}  {(project.owner.login === user.name) ? project.name : <span><span className="GithubRepos__owner">{project.owner.login}</span><span className="GithubRepos__slash">/</span>{project.name}</span>}
+              <Icon type={iconFor(project)}/>  {(project.owner.login === user.github.account) ? project.name : <span><span className="GithubRepos__owner">{project.owner.login}</span><span className="GithubRepos__slash">/</span>{project.name}</span>}
                   </Link>
                   <span className="task">
                     <small>
@@ -44,27 +59,6 @@ const GithubRepos = ({ user }) => {
                   </span>
                 </li>
               ))}
-              {((user.orgProjects) && (user.orgProjects.length >= 1)) ?
-              <span><br/><h5 className="GithubRepos__subtitle">Organization Projects</h5><br/></span>
-              : null
-              }
-
-              {(user.orgProjects && user.orgProjects.length) ? user.orgProjects.map(project => (
-                <li key={project.id}>
-                  <Link className="GithubRepos__projectname" to={`/project/${project.full_name}/github/${project.id}/all`}>
-                  <Icon type="solution"/> {(project.owner.login === user.name) ? project.name : <span><span className="GithubRepos__owner">{project.owner.login}</span><span className="GithubRepos__slash">/</span>{project.name}</span>}
-                  </Link>
-                  <span className="task">
-                    <small>
-                      <Link to={`/write-task/${project.id}`}>
-                        <Icon type="notification"/>
-                      </Link>
-                    </small>
-                  </span>
-                </li>
-              ))
-            
-            : null}
             </ul>
           </div> : null
         }
