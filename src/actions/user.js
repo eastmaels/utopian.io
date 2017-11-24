@@ -53,4 +53,18 @@ export const banUserRequest = (account, banned, bannedBy, banReason) => ({
   }
 });
 
+export const getBanRequest = (account) => ({
+  [CALL_API]: {
+    types: [ Actions.GET_BAN_REQUEST, Actions.GET_BAN_SUCCESS, Actions.GET_BAN_FAILURE ],
+    endpoint: `users/${account}/ban`,
+    schema: null,
+    method: 'GET',
+    payload: {},
+    additionalParams: {},
+    absolute: false
+  }
+});
+
+
 export const banUser = (account, banned = 1, bannedBy = "<anonymous-mod>", reason="Violation of Utopian Rules") => dispatch => dispatch(banUserRequest(account, banned, bannedBy, reason));
+export const getBanUser = (account) => dispatch => dispatch(getBanRequest(account));
