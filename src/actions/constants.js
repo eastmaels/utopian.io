@@ -16,6 +16,10 @@ export const GET_PROJECT_REQUEST = '@project/GET_PROJECT_REQUEST';
 export const GET_PROJECT_SUCCESS = '@project/GET_PROJECT_SUCCESS';
 export const GET_PROJECT_FAILURE = '@project/GET_PROJECT_FAILURE';
 
+export const BAN_USER_REQUEST = '@user/BAN_USER_REQUEST';
+export const BAN_USER_SUCCESS = '@user/BAN_USER_SUCCESS';
+export const BAN_USER_FAILURE = '@user/BAN_USER_FAILURE';
+
 export const SET_PROJECT = '@project/SET_PROJECT';
 export const SET_PROJECTS = '@project/SET_PROJECTS';
 

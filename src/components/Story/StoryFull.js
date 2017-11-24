@@ -24,6 +24,7 @@ import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 import Action from '../../components/Button/Action';
 import CommentForm from '../../components/Comments/CommentForm';
 import Comments from "../../components/Comments/Comments";
+import BanUser from '../../components/BanUser';
 import * as commentsActions from '../../comments/commentsActions';
 import { Modal } from 'antd';
 import { notify } from '../../app/Notification/notificationActions';
@@ -332,6 +333,8 @@ class StoryFull extends React.Component {
               text='Verified'
               onClick={() => this.setState({ verifyModal: true })}
             />}
+
+            {!post.reviewed && <span className="floatRight"><BanUser intl={intl} user={post.author}/>&nbsp;&nbsp;</span>}
           </div> : null
           }
 
