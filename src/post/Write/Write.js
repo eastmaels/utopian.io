@@ -88,6 +88,7 @@ class Write extends React.Component {
       isUpdating: false,
       warningModal: false,
       parsedPostData: null,
+      banned: false,
     };
   }
 
@@ -307,6 +308,15 @@ class Write extends React.Component {
     return data;
   };
 
+  componentWillMount() {
+    const { getUser, user } = this.props;
+    getUser(user.name).then(res => {
+      if (user.banned === 1) {
+        this.setState({banned: true});
+      }
+    });
+  }
+
   handleImageInserted = (blob, callback, errorCallback) => {
     const { formatMessage } = this.props.intl;
     this.props.notify(
@@ -374,6 +384,22 @@ class Write extends React.Component {
     const { loading, saving, submitting, user } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
     // this.loadGithubData();
+    if (this.state.banned == true) {
+      return (
+        <div><center><br/><br/>
+          <Icon type="safety" style={{
+                  fontSize: '100px',
+                  color: 'red',
+                  display: 'block',
+                  clear: 'both',
+                  textAlign: 'center',
+                }}/>
+                <br/>
+                <b>You have been banned from posting on Utopian.</b><br/>
+                Please contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ" target="_blank"> on Discord here </a> for more information.
+        </center></div>
+      )
+    } else {
     return (
       <div className="shifted">
         <div className="post-layout container">
@@ -432,6 +458,7 @@ class Write extends React.Component {
         </div>
       </div>
     );
+  }
   }
 }
 

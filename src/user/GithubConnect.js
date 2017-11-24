@@ -82,8 +82,12 @@ export default class GithubConnect extends React.Component {
               <br/><br/>
               <h6>Connection Started</h6> {(this.state.componentMounted) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
               <h6>Utopian User Found</h6> {(this.state.userFound) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
-              <h6>Github Connection Attempted</h6> {(this.state.userCreated) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
-              <h6>Github Connection Established</h6> {(this.state.fullSuccess) ? <Icon type="check-circle"/> : <Icon type="close-circle"/>}
+              <h6>Github Connection Attempted</h6> {(this.state.userCreated) ? <Icon type="check-circle"/> : <Icon type="loading"/>}
+              <h6>Github Connection Established</h6> {(this.state.fullSuccess) ? <Icon type="check-circle"/> : <Icon type="loading"/>}
+              {!this.state.somethingWrong && <span>
+                <br/> 
+                <h5> You will be redirected to your projects soon...</h5>
+                </span>}
             </div>
           </div>
 
