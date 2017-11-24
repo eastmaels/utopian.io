@@ -68,23 +68,6 @@ export const moderatorActionRequest = (author, permlink, moderator, status) => (
   }
 });
 
-export const setHumanVoteSizeRequest = (author, permlink, humanVoteSize) => ({
-  [CALL_API]: {
-    types: [ Actions.SET_CONTRIBUTION_HVS_REQUEST, Actions.SET_CONTRIBUTION_HVS_SUCCESS, Actions.SET_CONTRIBUTION_HVS_FAILURE ],
-    endpoint: `posts/${author}/${permlink}`,
-    schema: null,
-    method: 'PUT',
-    payload: {
-      author,
-      permlink,
-      humanVoteSize
-    },
-    additionalParams: {},
-    absolute: false
-  }
-});
-
-export const setHumanVoteSize = (author, permlink, humanVoteSize) => dispatch => dispatch(setHumanVoteSizeRequest(author, permlink, humanVoteSize));
 export const moderatorAction = (author, permlink, moderator, status) => dispatch => dispatch(moderatorActionRequest(author, permlink, moderator, status));
 
 export const setContribution = (contribution) => ({

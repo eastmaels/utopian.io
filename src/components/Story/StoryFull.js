@@ -25,7 +25,6 @@ import Action from '../../components/Button/Action';
 import CommentForm from '../../components/Comments/CommentForm';
 import Comments from "../../components/Comments/Comments";
 import BanUser from '../../components/BanUser';
-import { setHumanVoteSize } from '../../actions/contribution';
 import * as commentsActions from '../../comments/commentsActions';
 import { Modal } from 'antd';
 import { notify } from '../../app/Notification/notificationActions';
@@ -45,7 +44,6 @@ import './StoryFull.less';
       commentsActions.sendComment(parentPost, body, isUpdating, originalPost),
     notify,
   }, dispatch),
-  { setHumanVoteSize },
 )
 
 @injectIntl
@@ -101,7 +99,6 @@ class StoryFull extends React.Component {
       commentDefaultFooter: '\n\nYou can contact us on [Discord](https://discord.gg/UCvqCsx).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
       commentFormText: '\n\nYou can contact us on [Discord](https://discord.gg/UCvqCsx).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
       modTemplate: '',
-      humanVoteSizeModal: false,
       lightbox: {
         open: false,
         index: 0,
@@ -134,11 +131,6 @@ class StoryFull extends React.Component {
       default:
     }
   };
-
-  sendHumanVoteSize (post, adjust) {
-    const { setHumanVoteSize } = this.props;
-    setHumanVoteSize(post.author, post.permlink, adjust);
-  }
 
 
   handleContentClick = (e) => {
@@ -430,9 +422,6 @@ class StoryFull extends React.Component {
           }}
           onOk={() => {
             this.setState({ moderatorCommentModal: false })
-            if (post.reviewed) {
-              this.setState({ humanVoteSizeModal: true });
-            }
           }}
         >
           <p>Below, you may write a moderation commment for this post. </p><br />
@@ -498,9 +487,6 @@ class StoryFull extends React.Component {
                 if ((post.pending) || (post.flagged)) {
                   history.push("/all/review");
                 }
-                if (post.reviewed) {
-                  this.setState({ humanVoteSizeModal: true });
-                }
               }}
             onImageInserted={(blob, callback, errorCallback) => {
               const username = this.props.user.name;
@@ -517,74 +503,6 @@ class StoryFull extends React.Component {
                 .catch(() => errorCallback());
             }}
           />
-        </Modal>
-
-        <Modal
-          visible={this.state.humanVoteSizeModal}
-          title='Rate this Contribution!'
-          okText='Submit' 
-          footer={false}
-          onCancel={() => {
-              this.setState({ humanVoteSizeModal: false })
-          }}
-          onOk={() => {
-            this.setState({ humanVoteSizeModal: false })
-          }}
-        >
-        How influential, useful, and descriptive was this contribution?<br/>
-        Click one of the buttons below to rate the <b>influence/usefulness</b> of this contribution from <code>XS</code> (extra-small) to <code>XL</code> (extra-large).
-        
-        <Action
-        className="humanVoteSizeBtn"
-        id="humanVoteSizeBtnXS"
-        negative
-        text='XS'
-        onClick={() => {
-          const adjust = -2;
-          this.sendHumanVoteSize(post, adjust);
-        }}
-        />
-        <Action
-        className="humanVoteSizeBtn"
-        id="humanVoteSizeBtnS"
-        primary
-        text='S'
-        onClick={() => {
-          const adjust = -1;
-          this.sendHumanVoteSize(post, adjust);
-        }}
-        />
-        <Action
-        className="humanVoteSizeBtn"
-        id="humanVoteSizeBtnM"
-        primary
-        text='M'
-        onClick={() => {
-          const adjust = 0;
-          this.sendHumanVoteSize(post, adjust);
-        }}
-        />
-        <Action
-        className="humanVoteSizeBtn"
-        id="humanVoteSizeBtnL"
-        primary
-        text='L'
-        onClick={() => {
-          const adjust = 1;
-          this.sendHumanVoteSize(post, adjust);
-        }}
-        />
-        <Action
-        className="humanVoteSizeBtn"
-        id="humanVoteSizeBtnXL"
-        positive
-        text='XL'
-        onClick={() => {
-          const adjust = 2;
-          this.sendHumanVoteSize(post, adjust);
-        }}
-        />
-
         </Modal>
 
         {replyUI}
