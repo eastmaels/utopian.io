@@ -36,7 +36,7 @@ export const getUserRequest = (account) => ({
 
 export const getUser = (account) => dispatch => dispatch(getUserRequest(account));
 
-export const banUserRequest = (account, banned, bannedBy, banReason) => ({
+export const banUserRequest = (account, banned, bannedBy, banReason, bannedUntil) => ({
   [CALL_API]: {
     types: [ Actions.BAN_USER_REQUEST, Actions.BAN_USER_SUCCESS, Actions.BAN_USER_FAILURE ],
     endpoint: `users/${account}/ban`,
@@ -47,6 +47,7 @@ export const banUserRequest = (account, banned, bannedBy, banReason) => ({
       banned,
       bannedBy,
       banReason,
+      bannedUntil,
     },
     additionalParams: {},
     absolute: false
@@ -66,5 +67,5 @@ export const getBanRequest = (account) => ({
 });
 
 
-export const banUser = (account, banned = 1, bannedBy = "<anonymous-mod>", reason="Violation of Utopian Rules") => dispatch => dispatch(banUserRequest(account, banned, bannedBy, reason));
+export const banUser = (account = "undefined", banned = 1, bannedBy = "<anonymous-mod>", reason="Violation of Utopian Rules", bannedUntil = new Date(0)) => dispatch => dispatch(banUserRequest(account, banned, bannedBy, reason, bannedUntil));
 export const getBanUser = (account) => dispatch => dispatch(getBanRequest(account));
