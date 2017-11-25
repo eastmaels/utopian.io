@@ -55,13 +55,18 @@ class BanUser extends React.Component {
     this.doChangeDate = this.doChangeDate.bind(this);
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { getModerators, getUser, username, banUser } = this.props;
+    if (username) {
+        console.log("banUser.js -> username: ", username);
+    } else {
+        return;
+    }
     this.setState({nowdate: new Date(Date.now())});
     getModerators();
     getUser(username).then((res) => {
         const user = res.response;
-        console.log("TESTLOG", user);
+        console.log("banUser.js -> user: ", user);
         if (user && user.banned) {
             console.log("user", user);
             if ((user.banned == 1) && (Date.parse(user.bannedUntil) > this.nowDate())) {
@@ -102,9 +107,9 @@ class BanUser extends React.Component {
 
   };
 
-  componentDidMount() {
-    //   console.log(this.props.username);
-  }
+//   componentDidMount() {
+//     //   console.log(this.props.username);
+//   }
 
   user () {
       const { getUser } = this.props;
