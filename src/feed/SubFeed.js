@@ -129,9 +129,11 @@ class SubFeed extends React.Component {
     const filteredContributions = contributions.filter(contribution => {
       if (match.params.repoId && contribution.json_metadata.repository) {
         if (match.params.type === 'all') {
+          // console.log("PATH /all ");
           return contribution.json_metadata.repository.id === parseInt(match.params.repoId) &&
             contribution.reviewed === true && !contribution.flagged;
         } else if (match.params.type === 'tasks') {
+          // console.log("PATH1 /tasks ");
           return contribution.json_metadata.repository.id === parseInt(match.params.repoId) &&
             contribution.reviewed === true && !contribution.flagged &&
             contribution.json_metadata.type.indexOf('task') > -1;
@@ -142,13 +144,16 @@ class SubFeed extends React.Component {
             contribution.json_metadata.type === match.params.type;
         }
       } else if (match.path === '/@:name') {
+        // console.log("PATH /@:name ", contribution.author, match.params.name, contribution.reviewed, contribution.pending, contribution.flagged);
         return contribution.author === match.params.name &&
           !contribution.flagged;
-      } else if ((match.params.type && match.params.type === 'tasks') || (match.path === '/tasks')) {
+      } else if ((match.params.type && match.params.type === 'tasks') || (match.path === '/tasks') || (match.filterBy === 'review' && contribution.reviewed === false && contribution.flagged === false)) {
+        // console.log("PATH2 /tasks ",contribution.json_metadata.type, contribution.reviewed);
         return (contribution.json_metadata.type.indexOf("task") > -1) &&
           !contribution.flagged &&
           contribution.reviewed === true;
       } else if (match.params.filterBy && match.params.filterBy === 'review') {
+        // console.log("PATH /review");
         if (match.params.status && match.params.status === 'pending' && this.isModerator()) {
           return contribution.reviewed === false &&
             contribution.pending === true &&
@@ -266,7 +271,7 @@ class SubFeed extends React.Component {
           loadMoreContent={ this.loadContributions }
           contentType={ match.params.type }
           showBlogs = { ((match.path === "/@:name") || (match.params.type === 'blog') || (match.params.filterBy === 'review')) }
-          showTasks = { (match.path === '/tasks' || (this.isTask()) ||  (match.params.filterBy === 'review')) }
+          showTasks = { (match.path === '/tasks' || (this.isTask()) ||  (match.params.filterBy === 'review') || (match.path === '/@:name')) }
         />
         {!contributions.length && !isFetching && <EmptyFeed type={match.params.type} />}
       </div>

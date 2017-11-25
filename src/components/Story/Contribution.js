@@ -51,12 +51,25 @@ const categorySlug = type => {
   }
 };
 
+const parsedRepoName = (author, name) => {
+  if ((author.length + name.length) < 35) {
+    return `${author}/${name}`;
+  }
+  if (author.length > 15) {
+    author = author.substr(0, 15) + "...";
+  }
+  if (name.length > 23) {
+    name = name.substr(0, 23) + "...";
+  }
+  return `${author}/${name}`;
+}
+
 const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress}) => (
   <div className={`Contribution ${type}`}>
     <b>
       <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
-      {' '} <Icon type='github' /> {repository.full_name}
+      {' '} <Icon type='github' /> {parsedRepoName(repository.owner.login, repository.name)}
     </Link>
     {showPending ? 
       <span className="markPullRight">

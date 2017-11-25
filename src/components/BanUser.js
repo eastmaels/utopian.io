@@ -33,7 +33,7 @@ class BanUser extends React.Component {
     intl: PropTypes.shape().isRequired,
     authenticated: PropTypes.bool.isRequired,
     authenticatedUser: PropTypes.shape().isRequired,
-    username: PropTypes.string.isRequired,
+    username: PropTypes.shape().isRequired,
   };
 
   static defaultProps = {
@@ -55,14 +55,18 @@ class BanUser extends React.Component {
     this.doChangeDate = this.doChangeDate.bind(this);
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const { getModerators, getUser, username, banUser } = this.props;
+    if (username) {
+      console.log("banUser.js -> username: ", username);
+    } else {
+      return;
+    }
     this.setState({nowdate: new Date(Date.now())});
     getModerators();
-
     getUser(username).then((res) => {
       const user = res.response;
-      console.log("TESTLOG", user);
+      console.log("banUser.js -> user: ", user);
       if (user && user.banned) {
         console.log("user", user);
         if ((user.banned == 1) && (Date.parse(user.bannedUntil) > this.nowDate())) {
@@ -103,9 +107,9 @@ class BanUser extends React.Component {
 
   };
 
-  componentDidMount() {
-    //   console.log(this.props.username);
-  }
+//   componentDidMount() {
+//     //   console.log(this.props.username);
+//   }
 
   user () {
     const { getUser } = this.props;
@@ -263,13 +267,13 @@ class BanUser extends React.Component {
             <option value={60}>60 days</option>
         </select></span>
         <br/><h4>Ban Reason:</h4><br/><center><textarea name="modInput" rows="5" cols="55" className="modInput" id="modInput" value={this.state.banReason} onChange={(e) => {this.setReason(e.target.value)}}/></center>
-        
-        
+
+
         </span>
 
 
       }
-    
+
     </span>
     </Modal>      </span>
       ); }
