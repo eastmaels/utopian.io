@@ -39,6 +39,7 @@ class BannedScreen extends React.Component {
         this.state = {
             isBanned: 0,
             banReason: "Violation of the Utopian Rules",
+            bannedUntil: new Date(Date.now()),
         };
       }
 
@@ -46,24 +47,34 @@ class BannedScreen extends React.Component {
     const { authenticatedUser, getBanUser, getUser } = this.props;
     getBanUser(authenticatedUser.name).then((res) => {
         if (res && res.response && res.response.banReason && (res.response.banReason != "<unknown>")) {
+            // console.log("BannedScreen.js => compWillMount() => ...");
             this.setState({banReason: res.response.banReason});
+            // console.log(" - banReason: ", res.response.banReason);
         }
-        if (res && res.response && res.response.banned) {
-            this.setState({isBanned: res.response.banned});
+        if (res && res.response && res.response.bannedUntil) {
+            // console.log(" - bannedUntil: ", Date.parse(res.response.bannedUntil));
+            this.setState({bannedUntil: Date.parse(res.response.bannedUntil)});
+        }
+        if (res && res.response && (res.response.banned == 1)) {
+            if (res.response.bannedUntil && (Date.parse(res.response.bannedUntil) > (new Date(Date.now()+100)))) {
+                this.setState({isBanned: res.response.banned});
+            } else {
+                this.setState({isBanned: 0});
+            }
         }
     })
   }
 
   render() {
-      console.log("Checking for user ban...");
+      // console.log("BannedScreen.js -> render()");
     if (this.props.redirector === true) {
-        console.log("-> redirector mode");
+        // console.log("    -> redirector mode");
         if (this.state.isBanned == 1) {
-            console.log("BANNED, redirecting");
+            // console.log("    ==> BANNED, redirecting, state:", this.state);
             window.location.href = "/banned";
             return (<span><Icon type="loading"/></span>);
         } else {
-            console.log("NOT BANNED, staying");
+            // console.log("     ==> NOT BANNED, staying, state:", this.state);
             return (<span></span>);
         }
     }
@@ -83,10 +94,10 @@ class BannedScreen extends React.Component {
 
       <p className="container pb-5">
       <b className="BannedScreen_sectitle">
-          What can I do?
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;What can I do?
           </b><br/>
 
-      You will no longer be allowed to <b>post contributions</b> on Utopian. 
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You will no longer be allowed to <b>post contributions</b> on Utopian. 
 
       However, you will still be allowed to:
       <ul className="BannedScreen__ul">
@@ -99,13 +110,12 @@ class BannedScreen extends React.Component {
 
       <p className="container pb-5">
     <b className="BannedScreen_sectitle">
-          Why was I banned?
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Why was I banned?
       </b><br/>
-      You were banned by a moderator due to violations of the Utopian Rules. <br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You were banned by a moderator due to violations of the Utopian Rules. <br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The reason listed for your ban is: <em><code className="BannedScreen__code">{this.state.banReason}</code></em>.<br/>
 
-      The reason listed for your ban is: <em><code className="BannedScreen__code">{this.state.banReason}</code></em>.<br/>
-
-      Feel free to contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ">on Discord</a> for more information, or if you would like to appeal against your ban.
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feel free to contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ">on Discord</a> for more information, or if you would like to appeal against your ban.
       </p>  
       
     </div>

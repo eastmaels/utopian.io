@@ -266,7 +266,7 @@ class SubFeed extends React.Component {
           loadMoreContent={ this.loadContributions }
           contentType={ match.params.type }
           showBlogs = { ((match.path === "/@:name") || (match.params.type === 'blog') || (match.params.filterBy === 'review')) }
-          showTasks = { (match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review')) }
+          showTasks = { (match.path === '/tasks' || (this.isTask()) ||  (match.params.filterBy === 'review')) }
         />
         {!contributions.length && !isFetching && <EmptyFeed type={match.params.type} />}
       </div>

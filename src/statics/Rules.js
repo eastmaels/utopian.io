@@ -47,15 +47,18 @@ export default (props) =>
       <p>
         Contributions must not use namecalling directed at other users of the Steem blockchain. Contributions may not contain false information about another user that may be perceived as defamatory.
       </p>
-      <br />
-      <br />
+      <br/>
       <h2>Contributions Should Not Solicit for Steem/Steemit Related Activities</h2>
       <p>
         Contributors should not ask for Steem/Steemit related activities in their posts, such as upvotes, resteems and follows. This is because contributions get posted in the GitHub feed, where project maintainers have no interest in those activities.
       </p>
       <br />
-      <h2>Moderator Guidelines</h2>
-      <p>Check <em><a href="https://utopian.io/welcome-moderator">Welcome Moderator</a></em> for guidelines on how to effectively moderate on Utopian, if you are a moderator.</p><br/>
+      <h2>Moderators</h2>
+      <p>For moderators, check <em><a href="https://utopian.io/welcome-moderator">Welcome Moderator</a></em> for guidelines on how to effectively moderate on Utopian.</p><br/>
+      <p>For contributors, remember that Utopian Moderators reserve the right to a) verify acceptable posts, b) deliberate and review pending posts, and c) flag/hide posts that do not follow the rules.
+      Additionally, moderators reserve the right to apply temporal or permanent bans who have shown a history of consistently disobeying the rules. <br/>
+      Lastly, the Utopian Bot's vote on your post is not based on human input as of now, and is unrelated to the moderator of your post. If you believe your post got a low vote, please check the 
+      &nbsp;<code>#human-curators</code> channel on our Discord server.</p>
       <h2>Categories Specific Rules</h2>
       <br />
       <Rules inEditor={false} type="ideas" /> 
