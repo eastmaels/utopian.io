@@ -16,7 +16,8 @@ import {
 
 import { openTransfer } from '../../wallet/walletActions';
 import Action from '../../components/Button/Action';
-import BanUser from '../../components/BanUser'
+import BanUser from '../../components/BanUser';
+import CreateModerator from '../../components/CreateModerator';
 
 const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) => {
   const location = user && _.get(user.json_metadata, 'profile.location');
@@ -83,6 +84,10 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
     />
 
     <BanUser 
+    username={user.name}
+    intl={intl}
+    />
+    <CreateModerator 
     username={user.name}
     intl={intl}
     />

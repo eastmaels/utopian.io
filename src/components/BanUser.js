@@ -275,7 +275,10 @@ class BanUser extends React.Component {
             }
     
     </span>
-    </Modal>      </span>
+    </Modal>      
+    
+    
+    </span>
     ); }
     else { return (
         <span>
