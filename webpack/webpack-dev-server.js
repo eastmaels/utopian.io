@@ -23,7 +23,7 @@ module.exports = {
         SENTRY_PUBLIC_DSN: null,
         STEEMCONNECT_HOST: JSON.stringify(process.env.STEEMCONNECT_HOST || 'https://v2.steemconnect.com'),
         STEEMCONNECT_REDIRECT_URL: JSON.stringify(process.env.STEEMCONNECT_REDIRECT_URL || 'http://localhost:3000/callback'),
-        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'wss://steemd.privex.io'),
+        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'https://api.steemit.com'),
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'test-category'),
         UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'http://join.utopian.io'),

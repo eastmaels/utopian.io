@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Menu, Popover, Tooltip, Input, Badge, Select } from 'antd';
 import steemconnect from 'sc2-sdk';
 
-import { getProjects, setProjects } from '../../actions/projects';
+import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 
 import Icon from 'antd/lib/icon';
 import Autocomplete from 'react-autocomplete';
@@ -22,9 +22,9 @@ const Option = Select.Option;
 
 @connect(
   state => ({
-    projects: state.projects,
+    repos: state.repos,
   }),
-  { getProjects, setProjects },
+  { getGithubRepos, setGithubRepos },
 )
 class Topnav extends React.Component {
 
@@ -109,9 +109,9 @@ class Topnav extends React.Component {
       onSeeAllClick,
       onMenuItemClick,
       notifications,
-      projects,
-      getProjects,
-      setProjects,
+      repos,
+      getGithubRepos,
+      setGithubRepos,
       history,
     } = this.props;
 

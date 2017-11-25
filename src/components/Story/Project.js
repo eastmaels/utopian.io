@@ -10,7 +10,7 @@ import './Story.less';
 class Project extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
-    project: PropTypes.shape().isRequired,
+    repo: PropTypes.shape().isRequired,
   };
 
   static defaultProps = {
@@ -18,32 +18,32 @@ class Project extends React.Component {
 
   render() {
     const {
-      project,
+      repo,
     } = this.props;
 
     return (
       <div className="Story">
         <div className="Story__content">
           <div className="Story__header">
-            <a target="_blank" href={`https://github.com/${project.owner.login}`}>
-              <Avatar username={project.owner.avatar_url} size={30} />
+            <a target="_blank" href={`https://github.com/${repo.owner.login}`}>
+              <Avatar username={repo.owner.avatar_url} size={30} />
             </a>
             <div className="Story__header__text">
-              <Link to={`/project/${project.owner.login}/${project.name}/github/${project.id}/all`}>
+              <Link to={`/project/${repo.owner.login}/${repo.name}/github/${repo.id}/all`}>
                 <h4>
-                  {project.owner.login}
+                  {repo.owner.login}
                 </h4>
               </Link>
             </div>
           </div>
           <div className="Story__content">
-            <Link to={`/project/${project.owner.login}/${project.name}/github/${project.id}/all`} className="Story__content__title">
+            <Link to={`/project/${repo.owner.login}/${repo.name}/github/${repo.id}/all`} className="Story__content__title">
               <h2>
-                {project.full_name}
+                {repo.full_name}
               </h2>
             </Link>
-            <Link to={`/project/${project.owner.login}/${project.name}/github/${project.id}/all`} className="Story__content__preview">
-              <StoryPreview text={project.description || ''} />
+            <Link to={`/project/${repo.owner.login}/${repo.name}/github/${repo.id}/all`} className="Story__content__preview">
+              <StoryPreview text={repo.description || ''} />
             </Link>
           </div>
         </div>

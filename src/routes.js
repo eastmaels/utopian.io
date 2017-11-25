@@ -23,6 +23,7 @@ import Rules from './statics/Rules';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
 import WelcomeModerator from './statics/WelcomeModerator';
+import BannedScreen from './statics/BannedScreen';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
 import WriteAnnouncement from './post/Write/WriteAnnouncement';
@@ -54,6 +55,7 @@ export default (
       <Route path="/sponsors" exact component={Sponsors} />
       <Route path="/moderators" exact component={Moderators} />
       <Route path="/welcome-moderator" exact component={WelcomeModerator} />
+      <Route path="/banned" exact component={BannedScreen} />
       <Route
         path="/bookmarks"
         render={() => (
@@ -73,7 +75,7 @@ export default (
       />
       <Route
         exact
-        path="/write-task/:projectId"
+        path="/write-task/:repoId"
         render={(props) => (
           <RequireLogin>
             <WriteAnnouncement {...props} />
@@ -137,7 +139,7 @@ export default (
       <Route path="/@:name" component={User} />
       <Route path="/:category/@:author/:permlink" component={Post} />
       <Route path="/search/:searchSection?/:query?/" exact component={Page} />
-      <Route path="/project/:author/:project/:platform/:projectId/:type?" exact component={Project}/>
+      <Route path="/project/:author/:repo/:platform/:repoId/:type?" exact component={Project}/>
       <Route path="/:type?/:filterBy?/:status?" component={Page} />
 
     </Switch>

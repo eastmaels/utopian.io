@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
-import { getProject, setProject } from '../actions/project';
+import { getGithubRepo, setGithubRepo } from '../actions/project';
 
 import { Icon } from 'antd';
 import SubFeed from './SubFeed';
@@ -23,11 +23,11 @@ import './Project.less';
 @connect(
   state => ({
     authenticated: getIsAuthenticated(state),
-    projects: state.projects,
-    project: state.project,
+    repos: state.repos,
+    repo: state.repo,
     user: getAuthenticatedUser(state),
   }),
-  { getProject, setProject }
+  { getGithubRepo, setGithubRepo }
 )
 class Project extends React.Component {
   static propTypes = {
@@ -38,10 +38,10 @@ class Project extends React.Component {
   };
 
   componentWillMount () {
-    const { projects, project, match, getProject, setProject, history, location } = this.props;
-    const { projectId } = match.params;
-    const id = parseInt(projectId);
-    const projectInState = R.find(R.propEq('id', id))(projects);
+    const { repos, repo, match, getGithubRepo, setGithubRepo, history, location } = this.props;
+    const { repoId } = match.params;
+    const id = parseInt(repoId);
+    const projectInState = R.find(R.propEq('id', id))(repos);
 
     // @UTOPIAN supporting old version where type was not mandatory
     if (!match.params.type) {
@@ -52,23 +52,23 @@ class Project extends React.Component {
     }
 
     if(!projectInState) {
-      getProject(id);
+      getGithubRepo(id);
       return;
     }
 
-    if (projectInState && (project && project.id !== id)) {
-      setProject(projectInState);
+    if (projectInState && (repo && repo.id !== id)) {
+      setGithubRepo(projectInState);
     }
   }
 
   componentWillReceiveProps (nextProps) {
-    const { projects, project, match, setProject } = this.props;
-    const { projectId } = nextProps.match.params;
-    const id = parseInt(projectId);
-    const projectInState = R.find(R.propEq('id', id))(projects);
+    const { repos, repo, match, setGithubRepo } = this.props;
+    const { repoId } = nextProps.match.params;
+    const id = parseInt(repoId);
+    const projectInState = R.find(R.propEq('id', id))(repos);
 
-    if (projectInState && (project && project.id !== id)) {
-      setProject(projectInState);
+    if (projectInState && (repo && repo.id !== id)) {
+      setGithubRepo(projectInState);
     }
   }
 
@@ -77,9 +77,9 @@ class Project extends React.Component {
   }
 
   render() {
-    const { authenticated, match, location, project, user } = this.props;
-    const { project: projectName } = match.params;
-    const isOwner = R.find(R.propEq('id', project.id))(user.projects || []);
+    const { authenticated, match, location, repo, user } = this.props;
+    const { repo: projectName } = match.params;
+    const isOwner = R.find(R.propEq('id', repo.id))(user.repos || []);
 
     return (
       <div>
@@ -97,25 +97,25 @@ class Project extends React.Component {
             </Affix>
             <Affix className="rightContainer" stickPosition={77}>
               <div className="right">
-                <RightSidebar />
+                <RightSidebar match={match}/>
               </div>
             </Affix>
             <div className="center">
               <div className="Project">
                 <div className="Project__details">
-                <h2><Icon type='github' /> { project.full_name }</h2>
+                <h2><Icon type='github' /> { repo.full_name }</h2>
                 <p>
-                    <a href={ project.html_url } target="_blank"> { project.html_url } </a>
+                    <a href={ repo.html_url } target="_blank"> { repo.html_url } </a>
                   </p>
                   <hr />
                   {isOwner && <div>
-                    <Link to={`/write-task/${project.id}`}>
+                    <Link to={`/write-task/${repo.id}`}>
                       <Icon type="notification"/> Add task request
                     </Link>
                   </div>}
                 </div>
               </div>
-              <Route path={`/project/:author/:project/:platform/:projectId/:type?`} component={SubFeed} />
+              <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed} />
             </div>
           </div>
         </div>

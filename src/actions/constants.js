@@ -1,6 +1,6 @@
-export const GET_PROJECTS_REQUEST = '@projects/GET_PROJECTS_REQUEST';
-export const GET_PROJECTS_SUCCESS = '@projects/GET_PROJECTS_SUCCESS';
-export const GET_PROJECTS_FAILURE = '@projects/GET_PROJECTS_FAILURE';
+export const GET_GITHUB_REPOS_REQUEST = '@projects/GET_GITHUB_REPOS_REQUEST';
+export const GET_GITHUB_REPOS_SUCCESS = '@projects/GET_GITHUB_REPOS_SUCCESS';
+export const GET_GITHUB_REPOS_FAILURE = '@projects/GET_GITHUB_REPOS_FAILURE';
 
 export const CURRENT_SCOPE_VERSION = 5;
 export const REQUIRED_SCOPE_VERSION = 5; // at least
@@ -12,6 +12,14 @@ export const REQUIRED_SCOPE_VERSION = 5; // at least
 5: fully fixed organization bugs
 */
 
+export const GET_GITHUB_REPO_REQUEST = '@project/GET_GITHUB_REPO_REQUEST';
+export const GET_GITHUB_REPO_SUCCESS = '@project/GET_GITHUB_REPO_SUCCESS';
+export const GET_GITHUB_REPO_FAILURE = '@project/GET_GITHUB_REPO_FAILURE';
+
+export const CREATE_PROJECT_ACCOUNT_REQUEST = '@project/CREATE_PROJECT_ACCOUNT_REQUEST';
+export const CREATE_PROJECT_ACCOUNT_SUCCESS = '@project/CREATE_PROJECT_ACCOUNT_SUCCESS';
+export const CREATE_PROJECT_ACCOUNT_FAILURE = '@project/CREATE_PROJECT_ACCOUNT_FAILURE';
+
 export const GET_PROJECT_REQUEST = '@project/GET_PROJECT_REQUEST';
 export const GET_PROJECT_SUCCESS = '@project/GET_PROJECT_SUCCESS';
 export const GET_PROJECT_FAILURE = '@project/GET_PROJECT_FAILURE';
@@ -20,8 +28,8 @@ export const BAN_USER_REQUEST = '@user/BAN_USER_REQUEST';
 export const BAN_USER_SUCCESS = '@user/BAN_USER_SUCCESS';
 export const BAN_USER_FAILURE = '@user/BAN_USER_FAILURE';
 
-export const SET_PROJECT = '@project/SET_PROJECT';
-export const SET_PROJECTS = '@project/SET_PROJECTS';
+export const SET_GITHUB_REPO = '@project/SET_GITHUB_REPO';
+export const SET_GITHUB_REPOS = '@project/SET_GITHUB_REPOS';
 
 export const GET_CONTRIBUTIONS_REQUEST = '@contributions/GET_CONTRIBUTIONS_REQUEST';
 export const GET_CONTRIBUTIONS_SUCCESS = '@contributions/GET_CONTRIBUTIONS_SUCCESS';
@@ -90,6 +98,10 @@ export const GET_GITHUB_ORG_PROJECTS_FAILURE_INTERNAL = '@user/GET_GITHUB_ORG_PR
 export const GET_USER_REQUEST = '@user/GET_USER_REQUEST';
 export const GET_USER_SUCCESS = '@user/GET_USER_SUCCESS';
 export const GET_USER_FAILURE = '@user/GET_USER_FAILURE';
+
+export const GET_BAN_REQUEST = '@user/GET_BAN_REQUEST';
+export const GET_BAN_SUCCESS = '@user/GET_BAN_SUCCESS';
+export const GET_BAN_FAILURE = '@user/GET_BAN_FAILURE';
 
 export const GET_GITHUB_PR_REQUEST = '@pullRequests/GET_GITHUB_PR_REQUEST';
 export const GET_GITHUB_PR_SUCCESS = '@pullRequests/GET_GITHUB_PR_SUCCESS';

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import people from '../../helpers/people';
 
 import {
   getIsAuthenticated,
@@ -10,17 +8,16 @@ import {
   getFollowingList,
 } from '../../reducers';
 
-import InterestingPeople from '../../components/Sidebar/InterestingPeople';
-import StartNow from '../../components/Sidebar/StartNow';
 import SignUp from '../../components/Sidebar/SignUp';
 
 import { Icon } from 'antd';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SideAnnouncement from '../../components/Sidebar/SideAnnouncement';
+import ProjectSponsors from '../../components/Sidebar/ProjectSponsors';
 
 import { getUser } from '../../actions/user';
-import { getGithubProjects} from '../../actions/projects';
-
+import { getProjectsByGithub } from '../../actions/projects';
+import { getProject } from '../../actions/project';
 
 @connect(
   state => ({
@@ -30,8 +27,9 @@ import { getGithubProjects} from '../../actions/projects';
     followingList: getFollowingList(state),
   }),
   {
-    getGithubProjects,
+    getProjectsByGithub,
     getUser,
+    getProject,
   })
 export default class RightSidebar extends React.Component {
   static propTypes = {
@@ -43,17 +41,16 @@ export default class RightSidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      randomPeople: this.getRandomPeople(),
       loadedProjects: false,
     };
   }
 
   loadGithubData() {
-    const {  user, getUser, getGithubProjects} = this.props;
+    const {  user, getUser, getProjectsByGithub} = this.props;
     if (user && user.name) {
       getUser(user.name).then(res => {
         if (res.response && res.response.github) {
-          getGithubProjects(user.name, true);
+          getProjectsByGithub(user.name, true);
         }
       });
     }
@@ -64,7 +61,7 @@ export default class RightSidebar extends React.Component {
   }
 
   componentDidUpdate () {
-    const { user, getGithubProjects, getUser } = this.props;
+    const { user, getProjectsByGithub, getUser } = this.props;
 
     if (user && user.name && !this.state.loadedProjects) {
 
@@ -73,33 +70,15 @@ export default class RightSidebar extends React.Component {
       });
 
       this.loadGithubData();
-
     }
 
   };
 
-  getRandomPeople = () => people
-    .reduce((res, item) => {
-      if (!this.props.followingList.includes(item)) {
-        res.push({ name: item });
-      }
-      return res;
-    }, [])
-    .sort(() => 0.5 - Math.random()).slice(0, 5);
-
-  handleRefreshInterestingPeople = () => this.setState({
-    randomPeople: this.getRandomPeople(),
-  });
-
   render() {
-    const { user } = this.props;
+    const { user, match } = this.props;
 
-    const InterestingPeopleWithData = () => (
-      <InterestingPeople
-        users={this.state.randomPeople}
-        onRefresh={this.handleRefreshInterestingPeople}
-      />
-    );
+    console.log("MATCH", match)
+
 
     if (!this.props.authenticated) {
       return (
@@ -109,8 +88,14 @@ export default class RightSidebar extends React.Component {
 
     return (
       <span>
-      <SideAnnouncement user={user} />
-      <GithubConnection user={user} />
+        {!match || !match.params.repoId ? <SideAnnouncement user={user} /> : null}
+        <GithubConnection user={user} />
+        {match && match.params.repoId ? <ProjectSponsors
+            externalId={parseInt(match.params.repoId)}
+            platform={match.params.platform}
+            owner={user}
+          /> :
+          null}
       </span>
     );
   }

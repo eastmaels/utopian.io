@@ -41,8 +41,8 @@ export const saveDraft = (post, redirect) => dispatch =>
       promise: addDraftLocaleStorage(post)
         .then((resp) => {
           if (redirect) {
-            if (post.projectId && post.type === 'task') {
-              dispatch(push(`/write-task/${post.projectId}/?draft=${post.id}`));
+            if (post.repoId && post.type === 'task') {
+              dispatch(push(`/write-task/${post.repoId}/?draft=${post.id}`));
             } else if (post.type === 'blog') {
               dispatch(push(`/write-blog?draft=${post.id}`));
             } else {

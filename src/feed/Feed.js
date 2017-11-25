@@ -209,11 +209,14 @@ export default class Feed extends React.Component {
                   saving={saving}
                   ownPost={post.author === user.name}
                   onFollowClick={this.handleFollowClick}
-                  onSaveClick={() => toggleBookmark(post.id, post.author, post.permlink)}
-                  onReportClick={reportPost}
-                  onLikeClick={likePost}
-                  onShareClick={() => reblog(post.id)}
                   onEditClick={this.handleEditClick}
+                  sliderMode={sliderMode}
+                  rewardFund={rewardFund}
+                  defaultVotePercent={defaultVotePercent}
+                  onLikeClick={this.handleLikeClick}
+                  onReportClick={this.handleReportClick}
+                  onShareClick={this.handleShareClick}
+                  onSaveClick={this.handleSaveClick}
                 />
                 : null
             );
@@ -224,6 +227,7 @@ export default class Feed extends React.Component {
                   key={post.id}
                   id={post.id}
                   post={post}
+                  user={user}
                   postState={postState}
                   pendingLike={pendingLikes.includes(post.id)}
                   pendingFollow={pendingFollows.includes(post.author)}
@@ -231,11 +235,14 @@ export default class Feed extends React.Component {
                   saving={saving}
                   ownPost={post.author === user.name}
                   onFollowClick={this.handleFollowClick}
-                  onSaveClick={() => toggleBookmark(post.id, post.author, post.permlink)}
-                  onReportClick={reportPost}
-                  onLikeClick={likePost}
-                  onShareClick={() => reblog(post.id)}
                   onEditClick={this.handleEditClick}
+                  sliderMode={sliderMode}
+                  rewardFund={rewardFund}
+                  defaultVotePercent={defaultVotePercent}
+                  onLikeClick={this.handleLikeClick}
+                  onReportClick={this.handleReportClick}
+                  onShareClick={this.handleShareClick}
+                  onSaveClick={this.handleSaveClick}
                 />
                 : null
             );

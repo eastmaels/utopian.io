@@ -86,7 +86,7 @@ class Page extends React.Component {
             </Affix>
             <Affix className="rightContainer" stickPosition={77}>
               <div className="right">
-                <RightSidebar />
+                <RightSidebar match={match}/>
               </div>
             </Affix>
             <div className="center">

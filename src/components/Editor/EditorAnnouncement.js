@@ -16,14 +16,14 @@ import Autocomplete from 'react-autocomplete';
 import './Editor.less';
 
 import CategoryIcon from '../CategoriesIcons';
-import { getProjects, setProjects } from '../../actions/projects';
+import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 const RadioGroup = Radio.Group;
 
 @connect(
   state => ({
-    projects: state.projects,
+    repos: state.repos,
   }),
-  { getProjects, setProjects },
+  { getGithubRepos, setGithubRepos },
 )
 @injectIntl
 class EditorAnnouncement extends React.Component {

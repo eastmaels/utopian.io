@@ -15,7 +15,7 @@ import Body, { remarkable } from '../Story/Body';
 import Autocomplete from 'react-autocomplete';
 import './Editor.less';
 
-import { getProjects, setProjects } from '../../actions/projects';
+import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 
@@ -27,10 +27,10 @@ import { getPullRequests } from '../../actions/pullRequests';
 
 @connect(
   state => ({
-    projects: state.projects,
+    repos: state.repos,
   }),
-  { getProjects,
-    setProjects,
+  { getGithubRepos,
+    setGithubRepos,
     getPullRequests,
   },
 )
@@ -499,7 +499,7 @@ class Editor extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { intl, loading, isUpdating, isReviewed, type, saving, getProjects, projects, setProjects, user, getPullRequests, pullRequests } = this.props;
+    const { intl, loading, isUpdating, isReviewed, type, saving, getGithubRepos, repos, setGithubRepos, user, getPullRequests, pullRequests } = this.props;
 
     const chosenType = this.state.currentType || type || 'ideas';
 
@@ -630,7 +630,7 @@ class Editor extends React.Component {
                     this.setState({loading: true, loaded: false});
                     this.search.refs.input.click();
 
-                    getProjects({
+                    getGithubRepos({
                       q,
                     }).then(() => {
                       this.setState({loaded: true, loading: false});
@@ -648,26 +648,26 @@ class Editor extends React.Component {
 
                     this.search.refs.input.click();
 
-                    getProjects(q).then(() => {
+                    getGithubRepos(q).then(() => {
                       this.setState({loaded: true, loading: false});
                       this.search.refs.input.click();
                     });
                   }
                 },
               }}
-              items={ projects }
-              getItemValue={project => project.full_name}
-              onSelect={(value, project) => {
+              items={ repos }
+              getItemValue={repo => repo.full_name}
+              onSelect={(value, repo) => {
                 const update = () => {
                   this.setState({
-                    value: project.full_name,
-                    repository: project,
+                    value: repo.full_name,
+                    repository: repo,
                   });
-                  this.onUpdate(project, 'repository');
+                  this.onUpdate(repo, 'repository');
                 };
 
                 if (user.github && !isReviewed && (chosenType === 'development' || chosenType === 'documentation' || chosenType === 'copywriting')) {
-                  getPullRequests(project.full_name).then(res => {
+                  getPullRequests(repo.full_name).then(res => {
                     if (res.response && res.response.length > 0) {
                       const prs = res.response.filter(pr => pr.user.login === user.github.account);
                       this.setState({
@@ -682,18 +682,18 @@ class Editor extends React.Component {
                 this.setState({value});
 
                 if (value === '') {
-                  setProjects([]);
+                  setGithubRepos([]);
                   this.setState({loaded: false, repository: null});
                 }
 
               }}
-              renderItem={(project, isHighlighted) => (
+              renderItem={(repo, isHighlighted) => (
                 <div
                   className='Topnav__search-item'
-                  key={project.full_name}
+                  key={repo.full_name}
                 >
-                  <span><Icon type='github' /> <b>{project.full_name}</b></span>
-                  <span>{project.html_url}</span>
+                  <span><Icon type='github' /> <b>{repo.full_name}</b></span>
+                  <span>{repo.html_url}</span>
                 </div>
               )}
               renderMenu={(items, value) => (

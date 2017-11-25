@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { push } from 'react-router-redux';
 import kebabCase from 'lodash/kebabCase';
 import debounce from 'lodash/debounce';
 import isArray from 'lodash/isArray';
@@ -20,6 +21,7 @@ import { createPost, saveDraft, newPost } from './editorActions';
 import { notify } from '../../app/Notification/notificationActions';
 import Editor from '../../components/Editor/Editor';
 import Affix from '../../components/Utils/Affix';
+import BannedScreen from '../../statics/BannedScreen';
 
 const version = require('../../../package.json').version;
 
@@ -28,7 +30,7 @@ import { Modal, Icon } from 'antd';
 import { getBeneficiaries } from '../../actions/beneficiaries';
 import { getStats } from '../../actions/stats';
 import { getUser } from '../../actions/user';
-import { getGithubProjects} from '../../actions/projects';
+import { getProjectsByGithub} from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SimilarPosts from '../../components/Editor/SimilarPosts';
 
@@ -50,7 +52,7 @@ import SimilarPosts from '../../components/Editor/SimilarPosts';
     getBeneficiaries,
     getStats,
     getUser,
-    getGithubProjects,
+    getProjectsByGithub,
   },
 )
 class Write extends React.Component {
@@ -93,17 +95,17 @@ class Write extends React.Component {
   }
 
   loadGithubData() {
-    const {  user,getUser, getGithubProjects} = this.props;
+    const {  user,getUser, getProjectsByGithub} = this.props;
     getUser(user.name).then(res => {
       if (res.response && res.response.github) {
-        getGithubProjects(user.name, true);
+        getProjectsByGithub(user.name, true);
       }
     });
   }
 
   componentDidMount() {
     this.props.newPost();
-    const { draftPosts, location: { search }, getUser, user, getGithubProjects, } = this.props;
+    const { draftPosts, location: { search }, getUser, user, getProjectsByGithub, } = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
 
@@ -385,25 +387,10 @@ class Write extends React.Component {
     const { loading, saving, submitting, user } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
     // this.loadGithubData();
-    if (this.state.banned == true) {
-      return (
-        <div><center><br/><br/>
-          <Icon type="safety" style={{
-                  fontSize: '100px',
-                  color: 'red',
-                  display: 'block',
-                  clear: 'both',
-                  textAlign: 'center',
-                }}/>
-                <br/>
-                <b>You have been banned from posting on Utopian.</b><br/>
-                Please contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ" target="_blank"> on Discord here </a> for more information.
-        </center></div>
-      )
-    } else {
     return (
       <div className="shifted">
         <div className="post-layout container">
+          <BannedScreen redirector={true}/>
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
               <GithubConnection user={user} />
@@ -459,7 +446,6 @@ class Write extends React.Component {
         </div>
       </div>
     );
-  }
   }
 }
 

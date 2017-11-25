@@ -18,14 +18,14 @@ import './Editor.less';
 import SimilarPosts from './SimilarPosts';
 import { Rules } from '../Rules';
 import CategoryIcon from '../CategoriesIcons';
-import { getProjects, setProjects } from '../../actions/projects';
+import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 const RadioGroup = Radio.Group;
 
 @connect(
   state => ({
-    projects: state.projects,
+    repos: state.repos,
   }),
-  { getProjects, setProjects },
+  { getGithubRepos, setGithubRepos },
 )
 @injectIntl
 class EditorBlog extends React.Component {

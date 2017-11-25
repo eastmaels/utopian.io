@@ -70,14 +70,14 @@ class SubFeed extends React.Component {
     const limit = 20;
     this.total = nextProps ? 0 : this.total;
 
-    if (match.params.projectId) {
+    if (match.params.repoId) {
       getContributions({
         limit,
         skip,
         section: 'project',
         sortBy: 'created',
         platform: match.params.platform,
-        projectId: match.params.projectId,
+        projectId: match.params.repoId,
         type: match.params.type || 'all'
       }).then(res => {
         this.total = res.response.total;
@@ -127,16 +127,16 @@ class SubFeed extends React.Component {
     const { contributions, match, user } = this.props;
 
     const filteredContributions = contributions.filter(contribution => {
-      if (match.params.projectId && contribution.json_metadata.repository) {
+      if (match.params.repoId && contribution.json_metadata.repository) {
         if (match.params.type === 'all') {
-          return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
+          return contribution.json_metadata.repository.id === parseInt(match.params.repoId) &&
             contribution.reviewed === true && !contribution.flagged;
         } else if (match.params.type === 'tasks') {
-          return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
+          return contribution.json_metadata.repository.id === parseInt(match.params.repoId) &&
             contribution.reviewed === true && !contribution.flagged &&
             contribution.json_metadata.type.indexOf('task') > -1;
         } else {
-          return contribution.json_metadata.repository.id === parseInt(match.params.projectId) &&
+          return contribution.json_metadata.repository.id === parseInt(match.params.repoId) &&
             contribution.reviewed === true &&
             !contribution.flagged &&
             contribution.json_metadata.type === match.params.type;
@@ -167,7 +167,7 @@ class SubFeed extends React.Component {
         return contribution.json_metadata.type === match.params.type &&
           !contribution.flagged &&
           contribution.reviewed === true;
-      } 
+      }
       return contribution.reviewed === true && !contribution.flagged;
     });
 
@@ -210,8 +210,8 @@ class SubFeed extends React.Component {
         return history.push(`/${type}/${match.params.filterBy}`);
       }
 
-      if (match.params.projectId) {
-        return history.push(`/project/${match.params.author}/${match.params.project}/${match.params.platform}/${match.params.projectId}/${type}`);
+      if (match.params.repoId) {
+        return history.push(`/project/${match.params.author}/${match.params.repo}/${match.params.platform}/${match.params.repoId}/${type}`);
       }
 
       history.push(`/${type}`);
@@ -226,7 +226,7 @@ class SubFeed extends React.Component {
             {this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
             {this.isModerator() && match.params.filterBy === 'review'? <TabPane tab={<span><Icon type="paper-clip" />Blog Posts</span>} key="blog" /> : null}
-            {match.params.projectId && <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />}
+            {match.params.repoId && <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />}
             <TabPane tab={<span><CategoryIcon type="ideas" />Suggestions</span>} key="ideas" />
             <TabPane tab={<span><CategoryIcon type="sub-projects" />Sub-Projects</span>} key="sub-projects" />
             <TabPane tab={<span><CategoryIcon type="development" />Development</span>} key="development" />
@@ -241,22 +241,22 @@ class SubFeed extends React.Component {
             <TabPane tab={<span><CategoryIcon type="copywriting" />Copywriting</span>} key="copywriting" />
 
           </Tabs> : null}
-        
-        {(match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review')) ?
-        <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
-        <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="tasks" />
-        {match.params.projectId && <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />}
-        <TabPane tab={<span><CategoryIcon type="task-ideas" />Thinkers</span>} key="task-ideas" />
-        <TabPane tab={<span><CategoryIcon type="task-development" />Developers</span>} key="task-development" />
-        <TabPane tab={<span><CategoryIcon type="task-bug-hunting" />Bug Hunters</span>} key="task-bug-hunting" />
-        <TabPane tab={<span><CategoryIcon type="task-translations" />Translators</span>} key="task-translations" />
-        <TabPane tab={<span><CategoryIcon type="task-graphics" />Designers</span>} key="task-graphics" />
-        <TabPane tab={<span><CategoryIcon type="task-analysis" />Analysts</span>} key="task-analysis" />
-        <TabPane tab={<span><CategoryIcon type="task-social" />Influencers</span>} key="task-social" />
-        <TabPane tab={<span><CategoryIcon type="task-documentation" />Tech Writers</span>} key="task-documentation" />
 
-      </Tabs>
-        : null }
+        {(match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review')) ?
+          <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
+            {/*<TabPane tab={<span><Icon type="appstore-o" />All</span>} key="tasks" />*/}
+            <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />
+            <TabPane tab={<span><CategoryIcon type="task-ideas" />Thinkers</span>} key="task-ideas" />
+            <TabPane tab={<span><CategoryIcon type="task-development" />Developers</span>} key="task-development" />
+            <TabPane tab={<span><CategoryIcon type="task-bug-hunting" />Bug Hunters</span>} key="task-bug-hunting" />
+            <TabPane tab={<span><CategoryIcon type="task-translations" />Translators</span>} key="task-translations" />
+            <TabPane tab={<span><CategoryIcon type="task-graphics" />Designers</span>} key="task-graphics" />
+            <TabPane tab={<span><CategoryIcon type="task-analysis" />Analysts</span>} key="task-analysis" />
+            <TabPane tab={<span><CategoryIcon type="task-social" />Influencers</span>} key="task-social" />
+            <TabPane tab={<span><CategoryIcon type="task-documentation" />Tech Writers</span>} key="task-documentation" />
+
+          </Tabs>
+          : null }
 
 
         <Feed
@@ -266,7 +266,7 @@ class SubFeed extends React.Component {
           loadMoreContent={ this.loadContributions }
           contentType={ match.params.type }
           showBlogs = { ((match.path === "/@:name") || (match.params.type === 'blog') || (match.params.filterBy === 'review')) }
-          showTasks = { (match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review')) }
+          showTasks = { (match.path === '/tasks' || (this.isTask()) ||  (match.params.filterBy === 'review')) }
         />
         {!contributions.length && !isFetching && <EmptyFeed type={match.params.type} />}
       </div>

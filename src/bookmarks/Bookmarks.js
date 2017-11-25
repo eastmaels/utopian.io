@@ -52,7 +52,7 @@ export default class Bookmarks extends React.Component {
   }
 
   render() {
-    const { reloading, feed, posts } = this.props;
+    const { reloading, feed, posts, match } = this.props;
 
     const content = getFeedContentFromState('bookmarks', 'all', feed, posts);
     const isFetching = getFeedLoadingFromState('bookmarks', 'all', feed) || reloading;
@@ -72,7 +72,7 @@ export default class Bookmarks extends React.Component {
           </Affix>
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
-              <RightSidebar />
+              <RightSidebar match={match}/>
             </div>
           </Affix>
           <div className="center">

@@ -19,8 +19,8 @@ import { responsiveReducer } from './vendor/responsive';
 import settingsReducer, * as fromSettings from './settings/settingsReducer';
 
 // @UTOPIAN
-import projectsReducer from './reducers/projects';
-import projectReducer from './reducers/project';
+import reposReducer from './reducers/repos';
+import repoReducer from './reducers/repo';
 import contributionsReducer from './reducers/contributions';
 import sponsorsReducer from './reducers/sponsors';
 import moderatorsReducer from './reducers/moderators';
@@ -36,8 +36,8 @@ const reducers = combineReducers({
   posts: postsReducer,
   contributions: contributionsReducer, // @UTOPIAN
   contribution: contributionReducer, // @UTOPIAN
-  projects: projectsReducer, // @UTOPIAN
-  project: projectReducer, // @UTOPIAN
+  repos: reposReducer, // @UTOPIAN
+  repo: repoReducer, // @UTOPIAN
   loading: loadingReducer, // @UTOPIAN
   sponsors: sponsorsReducer, // @UTOPIAN
   moderators: moderatorsReducer, // @UTOPIAN

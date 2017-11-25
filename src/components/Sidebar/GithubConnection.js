@@ -17,11 +17,11 @@ const GithubRepos = ({ user }) => {
       user.github.scopeVersion = 1;
   }
 
-  const iconFor = (project) => {
-    if (project.owner.login !== user.github.account) {
+  const iconFor = (repo) => {
+    if (repo.owner.login !== user.github.account) {
       return ("solution");
     } 
-    if (project.fork) {
+    if (repo.fork) {
       return ("fork");
     }
     return ("github");
@@ -43,16 +43,16 @@ const GithubRepos = ({ user }) => {
             Click the button below to connect.
           </div>}
         <div className="GithubRepos__divider"></div>
-        {user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && user.projects && user.projects.length ? <div>
+        {user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && user.repos && user.repos.length ? <div>
             <ul>
-              {user.projects.map(project => (
-                <li key={project.id}>
-                  <Link className="GithubRepos__projectname" to={`/project/${project.full_name}/github/${project.id}/all`}>
-              <Icon type={iconFor(project)}/>  {(project.owner.login === user.github.account) ? project.name : <span><span className="GithubRepos__owner">{project.owner.login}</span><span className="GithubRepos__slash">/</span>{project.name}</span>}
+              {user.repos.map(repo => (
+                <li key={repo.id}>
+                  <Link className="GithubRepos__projectname" to={`/project/${repo.full_name}/github/${repo.id}/all`}>
+              <Icon type={iconFor(repo)}/>  {(repo.owner.login === user.github.account) ? repo.name : <span><span className="GithubRepos__owner">{repo.owner.login}</span><span className="GithubRepos__slash">/</span>{repo.name}</span>}
                   </Link>
                   <span className="task">
                     <small>
-                      <Link to={`/write-task/${project.id}`}>
+                      <Link to={`/write-task/${repo.id}`}>
                         <Icon type="notification"/>
                       </Link>
                     </small>
