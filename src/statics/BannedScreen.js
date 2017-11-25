@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Modal, Icon } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
-import { createHashHistory } from 'history'
 import urlParse from 'url-parse';
 import {
     getIsAuthenticated,
@@ -13,7 +12,6 @@ import {
 import { getUser, banUser, getBanUser } from '../actions/user'
 import './BannedScreen.less';
 
-export const history = createHashHistory()
 
 @connect(
     state => ({
