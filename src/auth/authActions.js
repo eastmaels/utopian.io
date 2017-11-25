@@ -4,6 +4,7 @@ import Cookie from 'js-cookie';
 import { getFollowing } from '../user/userActions';
 import { initPushpad } from '../helpers/pushpadHelper';
 import { getDrafts } from '../helpers/localStorageHelpers';
+import getImage from '../helpers/getImage';
 
 Promise.promisifyAll(steemConnect);
 
@@ -35,13 +36,12 @@ export const login = () => (dispatch) => {
 
             setTimeout(function() {
               const script = document.createElement("script");
-              const userJsonData = resp.account && resp.account.json_metadata ? JSON.parse(resp.account.json_metadata) : {};
 
               console.log("ACCOUNT ID", resp.account.id);
 
               window.chat_name = resp.user;
               window.chat_id = resp.account.id;
-              window.chat_avatar = userJsonData && userJsonData.profile ? userJsonData.profile.profile_image : '';
+              window.chat_avatar = getImage(`@${resp.user}?s=${68}`);
               window.chat_link = `https://utopian.io/@${resp.user}`;
               window.chat_role = 'default';
 

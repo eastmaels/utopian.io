@@ -72,7 +72,7 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
           </div>
         </div>
       </div>}
-    {(user && !isSameUser) && <span><Action
+    {(user && user.name && !isSameUser) && <span><Action
       primary
       style={{ margin: '5px 0' }}
       text={intl.formatMessage({

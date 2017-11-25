@@ -33,7 +33,7 @@ class BanUser extends React.Component {
     intl: PropTypes.shape().isRequired,
     authenticated: PropTypes.bool.isRequired,
     authenticatedUser: PropTypes.shape().isRequired,
-    username: PropTypes.shape().isRequired,
+    username: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -50,14 +50,15 @@ class BanUser extends React.Component {
   componentWillMount () {
     const { getModerators, getUser, username } = this.props;
     getModerators();
+
     getUser(username).then((res) => {
-        const user = res.response;
-        // console.log("TESTLOG", user);
-        if (user && user.banned) {
-            this.setState({banned: user.banned});
-        } else {
-            this.setState({banned: 0});
-        }
+      const user = res.response;
+      // console.log("TESTLOG", user);
+      if (user && user.banned) {
+        this.setState({banned: user.banned});
+      } else {
+        this.setState({banned: 0});
+      }
     });
   }
 

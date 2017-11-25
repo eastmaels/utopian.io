@@ -17,7 +17,7 @@ import {
   getAuthenticatedUserName,
 } from '../../reducers';
 import Body from './Body';
-import StoryFooter from './StoryFooter';
+import StoryFooter from '../StoryFooter/StoryFooter';
 import Avatar from '../Avatar';
 import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
@@ -50,14 +50,18 @@ import './StoryFull.less';
 class StoryFull extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
+    user: PropTypes.shape().isRequired,
     post: PropTypes.shape().isRequired,
     postState: PropTypes.shape().isRequired,
+    rewardFund: PropTypes.shape().isRequired,
+    defaultVotePercent: PropTypes.number.isRequired,
     pendingLike: PropTypes.bool,
     pendingFollow: PropTypes.bool,
     pendingBookmark: PropTypes.bool,
     commentCount: PropTypes.number,
     saving: PropTypes.bool,
     ownPost: PropTypes.bool,
+    sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     onFollowClick: PropTypes.func,
     onSaveClick: PropTypes.func,
     onReportClick: PropTypes.func,
@@ -65,7 +69,6 @@ class StoryFull extends React.Component {
     onShareClick: PropTypes.func,
     onEditClick: PropTypes.func,
     sendComment: PropTypes.func,
-    user: PropTypes.object.isRequired,
     moderatorAction: PropTypes.func.isRequired,
     moderators: PropTypes.array
   };
@@ -80,6 +83,7 @@ class StoryFull extends React.Component {
     commentCount: 0,
     saving: false,
     ownPost: false,
+    sliderMode: 'auto',
     onFollowClick: () => { },
     onSaveClick: () => { },
     onReportClick: () => { },
@@ -118,10 +122,10 @@ class StoryFull extends React.Component {
     switch (key) {
       case 'follow':
         this.props.onFollowClick(this.props.post);
-        return;
+        break;
       case 'save':
         this.props.onSaveClick();
-        return;
+        break;
       case 'report':
         this.props.onReportClick();
         break;
@@ -189,7 +193,10 @@ class StoryFull extends React.Component {
       pendingBookmark,
       commentCount,
       saving,
+      rewardFund,
       ownPost,
+      sliderMode,
+      defaultVotePercent,
       onLikeClick,
       onShareClick,
       moderatorAction,
@@ -231,11 +238,11 @@ class StoryFull extends React.Component {
               <FormattedMessage id="post_reply_show_original_post" defaultMessage="Show original post" />
             </Link>
           </h4>
-          {post.depth > 1 && <h4>
+          {post.depth > 1 && (<h4>
             <Link to={`/${post.category}/@${post.parent_author}/${post.parent_permlink}`}>
               <FormattedMessage id="post_reply_show_parent_discussion" defaultMessage="Show parent discussion" />
             </Link>
-          </h4>}
+          </h4>)}
         </div>
       );
     }
@@ -575,7 +582,7 @@ class StoryFull extends React.Component {
           }
           <Body full body={post.body} json_metadata={post.json_metadata} />
         </div>
-        {open &&
+        {open && (
           <Lightbox
             mainSrc={images[index]}
             nextSrc={images[(index + 1) % images.length]}
@@ -602,7 +609,8 @@ class StoryFull extends React.Component {
                   index: (index + (images.length + 1)) % images.length,
                 },
               })}
-          />}
+          />
+        )}
         <div className="StoryFull__topics">
           {tags && tags.map(tag => <Topic key={tag} name={tag} />)}
         </div>
@@ -618,6 +626,11 @@ class StoryFull extends React.Component {
             </ul>
           </div> : null}
         {reviewed && <StoryFooter
+          user={user}
+          ownPost={ownPost}
+          rewardFund={rewardFund}
+          sliderMode={sliderMode}
+          defaultVotePercent={defaultVotePercent}
           post={post}
           postState={postState}
           pendingLike={pendingLike}

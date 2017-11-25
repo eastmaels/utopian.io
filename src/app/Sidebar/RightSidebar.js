@@ -49,12 +49,14 @@ export default class RightSidebar extends React.Component {
   }
 
   loadGithubData() {
-    const {  user,getUser, getGithubProjects} = this.props;
-    getUser(user.name).then(res => {
-      if (res.response && res.response.github) {
-        getGithubProjects(user.name, true);
-      }
-    });
+    const {  user, getUser, getGithubProjects} = this.props;
+    if (user && user.name) {
+      getUser(user.name).then(res => {
+        if (res.response && res.response.github) {
+          getGithubProjects(user.name, true);
+        }
+      });
+    }
   }
 
   componentDidMount () {

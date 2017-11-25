@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import find from 'lodash/find';
 import { Helmet } from 'react-helmet';
 import sanitize from 'sanitize-html';
+import { getHasDefaultSlider } from '../helpers/user';
+import getImage from '../helpers/getImage';
 import {
   getAuthenticatedUser,
   getBookmarks,
@@ -14,6 +16,9 @@ import {
   getFollowingList,
   getPendingFollows,
   getIsEditorSaving,
+  getVotingPower,
+  getRewardFund,
+  getVotePercent,
 } from '../reducers';
 import { editPost } from './Write/editorActions';
 import { votePost } from './postActions';
@@ -38,7 +43,9 @@ import { moderatorAction } from '../actions/contribution';
     pendingFollows: getPendingFollows(state),
     saving: getIsEditorSaving(state),
     moderators: state.moderators,
-    state,
+    sliderMode: getVotingPower(state),
+    rewardFund: getRewardFund(state),
+    defaultVotePercent: getVotePercent(state),
   }),
   {
     editPost,
@@ -60,9 +67,12 @@ class PostContent extends React.Component {
     pendingReblogs: PropTypes.arrayOf(PropTypes.number),
     followingList: PropTypes.arrayOf(PropTypes.string),
     pendingFollows: PropTypes.arrayOf(PropTypes.string),
-    bookmarks: PropTypes.shape(),
     pendingBookmarks: PropTypes.arrayOf(PropTypes.number).isRequired,
     saving: PropTypes.bool.isRequired,
+    rewardFund: PropTypes.shape().isRequired,
+    defaultVotePercent: PropTypes.number.isRequired,
+    bookmarks: PropTypes.shape(),
+    sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     editPost: PropTypes.func,
     toggleBookmark: PropTypes.func,
     votePost: PropTypes.func,
@@ -78,6 +88,7 @@ class PostContent extends React.Component {
     followingList: [],
     pendingFollows: [],
     bookmarks: {},
+    sliderMode: 'auto',
     editPost: () => {},
     toggleBookmark: () => {},
     votePost: () => {},
@@ -100,30 +111,22 @@ class PostContent extends React.Component {
     }
   }
 
-  handleLikeClick = () => {
-    const { user, content } = this.props;
-    const userVote = find(content.active_votes, { voter: user.name }) || {};
-    if (userVote.percent > 0) {
-      this.props.votePost(content.id, content.author, content.permlink, 0);
+  handleLikeClick = (post, postState, weight = 10000) => {
+    const { sliderMode, user, defaultVotePercent } = this.props;
+    if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {
+      this.props.votePost(post.id, post.author, post.permlink, weight);
+    } else if (postState.isLiked) {
+      this.props.votePost(post.id, post.author, post.permlink, 0);
     } else {
-      this.props.votePost(content.id, content.author, content.permlink);
+      this.props.votePost(post.id, post.author, post.permlink, defaultVotePercent);
     }
-  }
+  };
 
-  handleReportClick = () => {
-    const { content } = this.props;
-    this.props.votePost(content.id, content.author, content.permlink, -1000);
-  }
+  handleReportClick = post => this.props.votePost(post.id, post.author, post.permlink, -10000);
 
-  handleShareClick = () => {
-    const { content } = this.props;
-    this.props.reblog(content.id);
-  }
+  handleShareClick = post => this.props.reblog(post.id);
 
-  handleSaveClick = () => {
-    const { content } = this.props;
-    this.props.toggleBookmark(content.id, content.author, content.permlink);
-  }
+  handleSaveClick = post => this.props.toggleBookmark(post.id, post.author, post.permlink);
 
   handleFollowClick = (post) => {
     const isFollowed = this.props.followingList.includes(post.author);
@@ -134,9 +137,7 @@ class PostContent extends React.Component {
     }
   };
 
-  handleEditClick = () => {
-    this.props.editPost(this.props.content);
-  }
+  handleEditClick = post => this.props.editPost(post);
 
   render() {
     const {
@@ -150,6 +151,9 @@ class PostContent extends React.Component {
       bookmarks,
       pendingBookmarks,
       saving,
+      sliderMode,
+      rewardFund,
+      defaultVotePercent,
       moderatorAction,
       moderators,
       history,
@@ -178,7 +182,7 @@ class PostContent extends React.Component {
     const htmlBody = getHtml(body, {}, 'text');
     const bodyText = sanitize(htmlBody, { allowedTags: [] });
     const desc = `${bodyText.substring(0, 140)} by ${author}`;
-    const image = postMetaImage || `${process.env.STEEMCONNECT_IMG_HOST}/@${author}`;
+    const image = postMetaImage || getImage(`@${author}`);
     const canonicalUrl = `${canonicalHost}${content.url}`;
     const url = `${busyHost}${content.url}`;
     const metaTitle = `${title} - Utopian`;
@@ -220,6 +224,9 @@ class PostContent extends React.Component {
           pendingFollow={pendingFollows.includes(content.author)}
           pendingBookmark={pendingBookmarks.includes(content.id)}
           saving={saving}
+          rewardFund={rewardFund}
+          sliderMode={sliderMode}
+          defaultVotePercent={defaultVotePercent}
           ownPost={author === user.name}
           onLikeClick={this.handleLikeClick}
           onReportClick={this.handleReportClick}

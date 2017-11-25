@@ -25,7 +25,6 @@ const UserCard = ({ username, alt }) =>
 
 UserCard.propTypes = {
   username: PropTypes.string.isRequired,
-  alt: PropTypes.oneOf(PropTypes.string, PropTypes.bool),
 };
 
 UserCard.defaultProps = {

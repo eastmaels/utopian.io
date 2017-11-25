@@ -9,7 +9,7 @@ import Cookie from 'js-cookie';
 import { getAuthenticatedUser, getLocale } from './reducers';
 
 import { login, logout } from './auth/authActions';
-import { getRate, getTrendingTopics } from './app/appActions';
+import { getRate, getRewardFund, getTrendingTopics } from './app/appActions';
 import Topnav from './components/Navigation/Topnav';
 import Transfer from './wallet/Transfer';
 import * as reblogActions from './app/Reblog/reblogActions';
@@ -25,6 +25,7 @@ import getTranslations, { getAvailableLocale } from './translations';
     login,
     logout,
     getRate,
+    getRewardFund,
     getTrendingTopics,
     getRebloggedList: reblogActions.getRebloggedList,
   },
@@ -39,6 +40,7 @@ export default class Wrapper extends React.PureComponent {
     logout: PropTypes.func,
     getRebloggedList: PropTypes.func,
     getRate: PropTypes.func,
+    getRewardFund: PropTypes.func,
     getTrendingTopics: PropTypes.func,
   };
 
@@ -47,6 +49,7 @@ export default class Wrapper extends React.PureComponent {
     logout: () => {},
     getRebloggedList: () => {},
     getRate: () => {},
+    getRewardFund: () => {},
     getTrendingTopics: () => {},
   };
 
@@ -54,6 +57,7 @@ export default class Wrapper extends React.PureComponent {
     if (Cookie.get('access_token')) {
       this.props.login();
     }
+    this.props.getRewardFund();
     this.props.getRebloggedList();
     this.props.getRate();
     this.props.getTrendingTopics();
