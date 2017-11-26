@@ -63,7 +63,7 @@ module.exports = {
         },
       },
       {
-        test: /\.css|.less$/,
+        test: /\.(css|less)$/,
         use: [
           'isomorphic-style-loader',
           'css-loader',
