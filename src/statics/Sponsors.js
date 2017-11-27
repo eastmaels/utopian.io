@@ -44,8 +44,21 @@ class Sponsors extends React.PureComponent {
   }
 
   render () {
-    const { createSponsor, loading, sponsors, stats } = this.props;
+    const { createSponsor, loading, sponsors, stats, match, location } = this.props;
     const isLoading = loading === Actions.CREATE_SPONSOR_SUCCESS;
+
+    if (location.search.indexOf('plain') > -1) {
+      return (
+        <div>
+          {sponsors.map(sponsor => {
+            const voteWitness = () => ('(<a href="https://v2.steemconnect.com/sign/account-witness-vote?witness='+sponsor.account+'&approve=1">Vote for Witness</a>)');
+            return (
+              <div key={sponsor.account}>@{sponsor.account} {sponsor.is_witness ? voteWitness() : null}</div>
+            )
+          })}
+        </div>
+      )
+    }
 
     return (
       <div className="main-panel help-section">
@@ -101,16 +114,16 @@ class Sponsors extends React.PureComponent {
                       <p><b>Delegated Steem Power</b></p>
                     </div>
                     <div className="statsTab">
-                      <h4>{Math.ceil((sponsor.percentage_total_vesting_shares || 0) * 100) / 100}%</h4>
+                      <h4>{!sponsor.opted_out ? Math.ceil((sponsor.percentage_total_vesting_shares || 0) * 100) / 100 + '%' : 'OPTED OUT'}</h4>
                       <p><b>Utopian Reward Shares</b></p>
                     </div>
                     <div className="statsTab">
-                      <h4>${Math.ceil((sponsor.should_receive_rewards || 0) * 100) / 100}</h4>
-                      <p><b>Will Receive</b></p>
+                      <h4>{!sponsor.opted_out ? '$' + Math.ceil((sponsor.should_receive_rewards || 0) * 100) / 100 : 'OPTED OUT'}</h4>
+                      <p><b>Should Receive More</b></p>
                       <p style={{fontSize: '12px'}}><em>(Not including pending rewards. Will accumulate pending rewards once released)</em></p>
                     </div>
                     <div className="statsTab">
-                      <h4>${Math.ceil((sponsor.total_paid_rewards || 0) * 100) / 100}</h4>
+                      <h4>{!sponsor.opted_out ? '$' + Math.ceil((sponsor.total_paid_rewards || 0) * 100) / 100 : 'OPTED OUT'}</h4>
                       <p><b>Rewards Received</b></p>
                     </div>
                   </div>
@@ -143,7 +156,7 @@ class Sponsors extends React.PureComponent {
                   if (res.status === 500 || res.status === 404) {
                     alert(res.message);
                   } else {
-                    window.location.href=`https://v2.steemconnect.com/sign/delegate-vesting-shares?delegator=${account}&delegatee=utopian-io&vesting_shares=${sp}%20SP`;
+                    window.location.href=`https://v2.steemconnect.com/sign/delegate-vesting-shares?delegator=${account}&delegatee=utopian-io&vesting_shares=${sp}%20SP&redirect_uri=${window.location.href}`;
                     this.setState({sponsorModal: false});
                   }
                 });

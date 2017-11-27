@@ -22,10 +22,10 @@ export const setGithubRepos = (repos) => ({
   payload: repos
 });
 
-export const getProjectsByGithubRequest = (account, loggedUser) => ({
+export const getReposByGithub = (account, loggedUser) => ({
   [CALL_API]: {
-    types: [ Actions.GET_GITHUB_PROJECTS_REQUEST, Actions.GET_GITHUB_PROJECTS_SUCCESS, Actions.GET_GITHUB_PROJECTS_FAILURE ],
-    endpoint: `users/${account}/projects`,
+    types: [ Actions.GET_USER_REPOS_GITHUB_REQUEST, Actions.GET_USER_REPOS_GITHUB_SUCCESS, Actions.GET_USER_REPOS_GITHUB_FAILURE ],
+    endpoint: `users/${account}/repos`,
     schema: null,
     method: 'GET',
     payload: {},

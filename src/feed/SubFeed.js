@@ -34,6 +34,8 @@ class SubFeed extends React.Component {
     user: PropTypes.shape().isRequired,
     match: PropTypes.shape().isRequired,
     moderators: PropTypes.array,
+    isOwner: PropTypes.bool,
+    project: PropTypes.shape() || null,
   };
 
   state = {
@@ -198,7 +200,8 @@ class SubFeed extends React.Component {
   }
 
   render() {
-    const { loading, history, match, location, isModerator } = this.props;
+    const { loading, history, match, loaded, location, isModerator, isOwner, project } = this.props;
+
     const contributions = this.renderContributions();
     const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
     const hasMore = this.total > contributions.length;

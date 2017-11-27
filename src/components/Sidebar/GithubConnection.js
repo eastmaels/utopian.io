@@ -14,13 +14,13 @@ const GithubRepos = ({ user }) => {
   if (user && user.github && user.github.scopeVersion) {
 
   } else if (user && user.github) {
-      user.github.scopeVersion = 1;
+    user.github.scopeVersion = 1;
   }
 
   const iconFor = (repo) => {
     if (repo.owner.login !== user.github.account) {
       return ("solution");
-    } 
+    }
     if (repo.fork) {
       return ("fork");
     }
@@ -43,12 +43,13 @@ const GithubRepos = ({ user }) => {
             Click the button below to connect.
           </div>}
         <div className="GithubRepos__divider"></div>
+        <div className="GithubRepos__repos">
         {user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && user.repos && user.repos.length ? <div>
             <ul>
               {user.repos.map(repo => (
                 <li key={repo.id}>
                   <Link className="GithubRepos__projectname" to={`/project/${repo.full_name}/github/${repo.id}/all`}>
-              <Icon type={iconFor(repo)}/>  {(repo.owner.login === user.github.account) ? repo.name : <span><span className="GithubRepos__owner">{repo.owner.login}</span><span className="GithubRepos__slash">/</span>{repo.name}</span>}
+                    <Icon type={iconFor(repo)}/>  {(repo.owner.login === user.github.account) ? repo.name : <span><span className="GithubRepos__owner">{repo.owner.login}</span><span className="GithubRepos__slash">/</span>{repo.name}</span>}
                   </Link>
                   <span className="task">
                     <small>
@@ -62,6 +63,7 @@ const GithubRepos = ({ user }) => {
             </ul>
           </div> : null
         }
+        </div>
         <GithubBtn />
       </div>
     </div>

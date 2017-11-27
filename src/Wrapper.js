@@ -5,8 +5,11 @@ import { IntlProvider } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 import Cookie from 'js-cookie';
+import Loading from './components/Icon/Loading';
 
 import { getAuthenticatedUser, getLocale } from './reducers';
+import { getReposByGithub } from './actions/projects';
+import { getUser } from './actions/user';
 
 import { login, logout } from './auth/authActions';
 import { getRate, getRewardFund, getTrendingTopics } from './app/appActions';
@@ -28,6 +31,8 @@ import getTranslations, { getAvailableLocale } from './translations';
     getRewardFund,
     getTrendingTopics,
     getRebloggedList: reblogActions.getRebloggedList,
+    getReposByGithub,
+    getUser,
   },
 )
 export default class Wrapper extends React.PureComponent {
@@ -53,6 +58,11 @@ export default class Wrapper extends React.PureComponent {
     getTrendingTopics: () => {},
   };
 
+  state = {
+    loadedRepos: false,
+    loadingRepos: false,
+  };
+
   componentWillMount() {
     if (Cookie.get('access_token')) {
       this.props.login();
@@ -61,6 +71,23 @@ export default class Wrapper extends React.PureComponent {
     this.props.getRebloggedList();
     this.props.getRate();
     this.props.getTrendingTopics();
+  }
+
+  componentDidUpdate () {
+    const { user, getUser, getReposByGithub } = this.props;
+
+    if (user && user.name && !this.state.loadedRepos && !this.state.loadingRepos) {
+      this.setState({loadingRepos: true});
+      getUser(user.name).then(res => {
+        if (res.response && res.response.github) {
+          getReposByGithub(user.name, true).then( () => {
+            this.setState({loadedRepos: true, loadingRepos: false});
+          })
+        }else{
+          this.setState({loadedRepos: true, loadingRepos: false});
+        }
+      });
+    }
   }
 
   handleMenuItemClick = (key) => {
@@ -96,7 +123,6 @@ export default class Wrapper extends React.PureComponent {
 
   render() {
     const { locale: appLocale, user, location } = this.props;
-
     const locale = getAvailableLocale(appLocale);
     const translations = getTranslations(appLocale);
 
@@ -107,7 +133,7 @@ export default class Wrapper extends React.PureComponent {
             <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} history={this.props.history} location={location} />
           </Layout.Header>
           <div className="content">
-            {this.props.children}
+            {this.state.loadedRepos ? this.props.children : <Loading />}
             <Transfer />
           </div>
         </Layout>

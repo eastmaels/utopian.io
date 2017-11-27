@@ -15,7 +15,7 @@ export const getGithubRepoRequest = repoId => ({
 
 export const getGithubRepo = repoId => dispatch => dispatch(getGithubRepoRequest(repoId));
 
-export const createProjectAccountRequest = (externalId, projectName, platform, owner) => ({
+export const createProjectAccountRequest = (externalId, projectName, platform, owner, accessToken) => ({
   [CALL_API]: {
     types: [ Actions.CREATE_PROJECT_ACCOUNT_REQUEST, Actions.CREATE_PROJECT_ACCOUNT_SUCCESS, Actions.CREATE_PROJECT_ACCOUNT_FAILURE ],
     endpoint: `projects`,
@@ -25,15 +25,31 @@ export const createProjectAccountRequest = (externalId, projectName, platform, o
       owner,
       platform,
       project_name: projectName,
-      external_id: externalId
+      external_id: externalId,
+      access_token: accessToken,
     },
     additionalParams: {},
-    absolute: true
+    absolute: false
   }
 });
 
-export const createProjectAccount = (externalId, projectName, platform, owner) => dispatch => dispatch(createProjectAccountRequest(externalId, projectName, platform, owner));
+export const createProjectAccount = (externalId, projectName, platform, owner, accessToken) => dispatch => dispatch(createProjectAccountRequest(externalId, projectName, platform, owner, accessToken));
 
+export const createProjectSponsorRequest = (platform, externalId, sponsor) => ({
+  [CALL_API]: {
+    types: [ Actions.CREATE_PROJECT_SPONSOR_REQUEST, Actions.CREATE_PROJECT_SPONSOR_SUCCESS, Actions.CREATE_PROJECT_SPONSOR_FAILURE ],
+    endpoint: `projects/${platform}/${externalId}/sponsors`,
+    schema: null,
+    method: 'POST',
+    payload: {
+      sponsor,
+    },
+    additionalParams: {},
+    absolute: false
+  }
+});
+
+export const createProjectSponsor = (platform, externalId, sponsor) => dispatch => dispatch(createProjectSponsorRequest(platform, externalId, sponsor));
 
 export const getProjectRequest = (platform, externalId) => ({
   [CALL_API]: {
@@ -43,11 +59,31 @@ export const getProjectRequest = (platform, externalId) => ({
     method: 'GET',
     payload: {},
     additionalParams: {},
-    absolute: true
+    absolute: false
   }
 });
 
 export const getProject = (platform, externalId) => dispatch => dispatch(getProjectRequest(platform, externalId));
+
+
+export const voteWithSponsorsRequest = (author, permlink, platform, externalId, vote, access_token) => ({
+  [CALL_API]: {
+    types: [ Actions.VOTE_WITH_SPONSORS_REQUEST, Actions.VOTE_WITH_SPONSORS_SUCCESS, Actions.VOTE_WITH_SPONSORS_FAILURE ],
+    endpoint: `projects/${platform}/${externalId}/sponsors/vote`,
+    schema: null,
+    method: 'POST',
+    payload: {
+      author,
+      permlink,
+      vote,
+      access_token,
+    },
+    additionalParams: {},
+    absolute: false
+  }
+});
+
+export const voteWithSponsors = (author, permlink, platform, externalId, vote, access_token) => dispatch => dispatch(voteWithSponsorsRequest(author, permlink, platform, externalId, vote, access_token));
 
 export const setGithubRepo = (repo) => ({
   type: Actions.SET_GITHUB_REPO,

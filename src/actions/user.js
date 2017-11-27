@@ -66,6 +66,5 @@ export const getBanRequest = (account) => ({
   }
 });
 
-
 export const banUser = (account = "undefined", banned = 1, bannedBy = "<anonymous-mod>", reason="Violation of Utopian Rules", bannedUntil = new Date(0)) => dispatch => dispatch(banUserRequest(account, banned, bannedBy, reason, bannedUntil));
 export const getBanUser = (account) => dispatch => dispatch(getBanRequest(account));

@@ -30,7 +30,7 @@ import { Modal, Icon } from 'antd';
 import { getBeneficiaries } from '../../actions/beneficiaries';
 import { getStats } from '../../actions/stats';
 import { getUser } from '../../actions/user';
-import { getProjectsByGithub} from '../../actions/projects';
+import { getReposByGithub} from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SimilarPosts from '../../components/Editor/SimilarPosts';
 
@@ -52,7 +52,7 @@ import SimilarPosts from '../../components/Editor/SimilarPosts';
     getBeneficiaries,
     getStats,
     getUser,
-    getProjectsByGithub,
+    getReposByGithub,
   },
 )
 class Write extends React.Component {
@@ -95,17 +95,17 @@ class Write extends React.Component {
   }
 
   loadGithubData() {
-    const {  user,getUser, getProjectsByGithub} = this.props;
+    const {  user,getUser, getReposByGithub} = this.props;
     getUser(user.name).then(res => {
       if (res.response && res.response.github) {
-        getProjectsByGithub(user.name, true);
+        getReposByGithub(user.name, true);
       }
     });
   }
 
   componentDidMount() {
     this.props.newPost();
-    const { draftPosts, location: { search }, getUser, user, getProjectsByGithub, } = this.props;
+    const { draftPosts, location: { search }, getUser, user, getReposByGithub, } = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
 
@@ -154,8 +154,10 @@ class Write extends React.Component {
 
     getBeneficiaries(data.author).then(res => {
       if (res.response && res.response.results) {
+        let utopianAssignedWeight = 0;
+        const beneficiariesArr = [];
         const allBeneficiaries = res.response.results;
-        const beneficiaries = [
+        /*const beneficiaries = [
           ...allBeneficiaries.map(beneficiary => {
             let assignedWeight = 0;
             if (beneficiary.vesting_shares) { // this is a sponsor
@@ -177,21 +179,60 @@ class Write extends React.Component {
               weight: assignedWeight || 1
             }
           })
-        ];
+        ];*/
 
-        const extensions = [[0, {
-          beneficiaries
-        }]];
+        allBeneficiaries.forEach((beneficiary, index) => {
+          let assignedWeight = 0;
+          if (beneficiary.vesting_shares) { // this is a sponsor
+            const sponsorSharesPercent = beneficiary.percentage_total_vesting_shares;
+            // 20% of all the rewards dedicated to sponsors
+            const sponsorsDedicatedWeight = 2000;
+            assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
 
-        const contributionData = {
-          ...data,
-          extensions
-        };
+            if (!beneficiary.opted_out) {
+              beneficiariesArr.push({
+                account: beneficiary.account,
+                weight: assignedWeight || 1
+              });
+            } else {
+              utopianAssignedWeight = utopianAssignedWeight + assignedWeight;
+            }
+          } else {
+            // this is a moderator
+            const moderatorSharesPercent = beneficiary.percentage_total_rewards_moderators;
+            // 5% all the rewards dedicated to moderators
+            // This does not sum up. The total ever taken from an author is 20%
+            const moderatorsDedicatedWeight = 500;
+            assignedWeight = Math.round((moderatorsDedicatedWeight * moderatorSharesPercent ) / 100);
 
-        console.log("CONTRIBUTION DATA", contributionData);
+            beneficiariesArr.push({
+              account: beneficiary.account,
+              weight: assignedWeight || 1
+            });
+          }
 
-        this.props.createPost(contributionData);
+          if (index + 1 === allBeneficiaries.length) {
+            if (utopianAssignedWeight > 0) {
+              beneficiariesArr.push({
+                account: 'utopian-io',
+                weight: utopianAssignedWeight || 1
+              })
+            }
 
+            const extensions = [[0, {
+              beneficiariesArr
+            }]];
+
+            const contributionData = {
+              ...data,
+              extensions
+            };
+
+            console.log("CONTRIBUTION DATA", contributionData);
+
+            this.props.createPost(contributionData);
+          }
+        });
       } else {
         alert("Something went wrong. Please try again!")
       }

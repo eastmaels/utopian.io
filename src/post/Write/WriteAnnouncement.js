@@ -31,7 +31,7 @@ const version = require('../../../package.json').version;
 
 // @UTOPIAN
 import { getBeneficiaries } from '../../actions/beneficiaries';
-import { getProjectsByGithub} from '../../actions/projects';
+import { getReposByGithub} from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
@@ -53,7 +53,7 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
     getBeneficiaries,
     getGithubRepo,
     getUser,
-    getProjectsByGithub,
+    getReposByGithub,
   },
 )
 class Write extends React.Component {
@@ -109,10 +109,10 @@ class Write extends React.Component {
   }
 
   loadGithubData() {
-    const {  user,getUser, getProjectsByGithub} = this.props;
+    const {  user,getUser, getReposByGithub} = this.props;
     getUser(user.name).then(res => {
       if (res.response && res.response.github) {
-        getProjectsByGithub(user.name, true);
+        getReposByGithub(user.name, true);
       }
     });
   }
@@ -160,49 +160,89 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
-
     getBeneficiaries(data.author).then(res => {
       if (res.response && res.response.results) {
+        let utopianAssignedWeight = 0;
+        const beneficiariesArr = [];
         const allBeneficiaries = res.response.results;
-        const beneficiaries = [
-          ...allBeneficiaries.map(beneficiary => {
-            let assignedWeight = 0;
-            if (beneficiary.vesting_shares) { // this is a sponsor
-              const sponsorSharesPercent = beneficiary.percentage_total_vesting_shares;
-              // 20% of all the rewards dedicated to sponsors
-              const sponsorsDedicatedWeight = 2000;
-              assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
-            } else {
-              // this is a moderator
-              const moderatorSharesPercent = beneficiary.percentage_total_rewards_moderators;
-              // 5% all the rewards dedicated to moderators
-              // This does not sum up. The total ever taken from an author is 20%
-              const moderatorsDedicatedWeight = 500;
-              assignedWeight = Math.round((moderatorsDedicatedWeight * moderatorSharesPercent ) / 100);
-            }
+        /*const beneficiaries = [
+         ...allBeneficiaries.map(beneficiary => {
+         let assignedWeight = 0;
+         if (beneficiary.vesting_shares) { // this is a sponsor
+         const sponsorSharesPercent = beneficiary.percentage_total_vesting_shares;
+         // 20% of all the rewards dedicated to sponsors
+         const sponsorsDedicatedWeight = 2000;
+         assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
+         } else {
+         // this is a moderator
+         const moderatorSharesPercent = beneficiary.percentage_total_rewards_moderators;
+         // 5% all the rewards dedicated to moderators
+         // This does not sum up. The total ever taken from an author is 20%
+         const moderatorsDedicatedWeight = 500;
+         assignedWeight = Math.round((moderatorsDedicatedWeight * moderatorSharesPercent ) / 100);
+         }
 
-            return {
+         return {
+         account: beneficiary.account,
+         weight: assignedWeight || 1
+         }
+         })
+         ];*/
+
+        allBeneficiaries.forEach((beneficiary, index) => {
+          let assignedWeight = 0;
+          if (beneficiary.vesting_shares) { // this is a sponsor
+            const sponsorSharesPercent = beneficiary.percentage_total_vesting_shares;
+            // 20% of all the rewards dedicated to sponsors
+            const sponsorsDedicatedWeight = 2000;
+            assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
+
+            if (!beneficiary.opted_out) {
+              beneficiariesArr.push({
+                account: beneficiary.account,
+                weight: assignedWeight || 1
+              });
+            } else {
+              utopianAssignedWeight = utopianAssignedWeight + assignedWeight;
+            }
+          } else {
+            // this is a moderator
+            const moderatorSharesPercent = beneficiary.percentage_total_rewards_moderators;
+            // 5% all the rewards dedicated to moderators
+            // This does not sum up. The total ever taken from an author is 20%
+            const moderatorsDedicatedWeight = 500;
+            assignedWeight = Math.round((moderatorsDedicatedWeight * moderatorSharesPercent ) / 100);
+
+            beneficiariesArr.push({
               account: beneficiary.account,
               weight: assignedWeight || 1
+            });
+          }
+
+          if (index + 1 === allBeneficiaries.length) {
+            if (utopianAssignedWeight > 0) {
+              beneficiariesArr.push({
+                account: 'utopian-io',
+                weight: utopianAssignedWeight || 1
+              })
             }
-          })
-        ];
 
-        const extensions = [[0, {
-          beneficiaries
-        }]];
+            const extensions = [[0, {
+              beneficiariesArr
+            }]];
 
-        const contributionData = {
-          ...data,
-          extensions
-        };
+            const contributionData = {
+              ...data,
+              extensions
+            };
 
-        console.log("ANNOUNCEMENT DATA", contributionData);
+            console.log("CONTRIBUTION DATA", contributionData);
 
-        this.props.createPost(contributionData);
-
+            this.props.createPost(contributionData);
+          }
+        });
       } else {
-        alert("Something went wrong. Please try again!");
+        alert("Something went wrong. Please try again!")
       }
     });
   };

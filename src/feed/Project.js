@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
+import { getUser } from '../actions/user';
 import { getGithubRepo, setGithubRepo } from '../actions/project';
+import { getReposByGithub } from '../actions/projects';
+import { getProject, createProjectAccount, createProjectSponsor } from '../actions/project';
 
 import { Icon } from 'antd';
 import SubFeed from './SubFeed';
@@ -27,7 +30,14 @@ import './Project.less';
     repo: state.repo,
     user: getAuthenticatedUser(state),
   }),
-  { getGithubRepo, setGithubRepo }
+  { getGithubRepo,
+    setGithubRepo,
+    getProject,
+    createProjectAccount,
+    createProjectSponsor,
+    getReposByGithub,
+    getUser,
+  }
 )
 class Project extends React.Component {
   static propTypes = {
@@ -36,6 +46,17 @@ class Project extends React.Component {
     location: PropTypes.shape().isRequired,
     match: PropTypes.shape().isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      loadedRepo: false,
+      loadedProject: false,
+      loadingProject: false,
+      isOwner: false,
+      project: null,
+    };
+  }
 
   componentWillMount () {
     const { repos, repo, match, getGithubRepo, setGithubRepo, history, location } = this.props;
@@ -52,7 +73,9 @@ class Project extends React.Component {
     }
 
     if(!projectInState) {
-      getGithubRepo(id);
+      getGithubRepo(id).then(() => {
+        this.setState({loadedRepo: true})
+      });
       return;
     }
 
@@ -60,26 +83,89 @@ class Project extends React.Component {
       setGithubRepo(projectInState);
     }
   }
+  /*
+   componentDidMount() {
+   this.loadGithubData();
+   }
+
+   componentDidUpdate() {
+   const { user } = this.props;
+
+   if (user && user.name && !this.state.loadedProjects) {
+   this.loadGithubData();
+   }
+   }
+   */
 
   componentWillReceiveProps (nextProps) {
-    const { repos, repo, match, setGithubRepo } = this.props;
+    const { user, repos, repo, match, getGithubRepo, setGithubRepo } = this.props;
     const { repoId } = nextProps.match.params;
     const id = parseInt(repoId);
     const projectInState = R.find(R.propEq('id', id))(repos);
 
+    if (match.params.repoId !== nextProps.match.params.repoId) {
+      this.setState({loadedProject: false, loadedRepo: false});
+      getGithubRepo(nextProps.match.params.repoId).then(() => {
+        this.setState({loadedRepo: true})
+      });
+    }
+/*
     if (projectInState && (repo && repo.id !== id)) {
       setGithubRepo(projectInState);
     }
+
+
+    if (user && user.name && match.params.repoId && nextProps.match.params.repoId && match.params.repoId !== nextProps.match.params.repoId) {
+      this.setState({loadingProject: true});
+      this.loadGithubData();
+    }
+ */
   }
 
-  constructor(props) {
-    super(props);
+  componentDidUpdate () {
+    const { user } = this.props;
+
+    if (user && user.name && this.state.loadedRepo && !this.state.loadedProject && !this.state.loadingProject) {
+      this.setState({loadingProject: true});
+      this.loadGithubData();
+    }
+  }
+
+  loadSponsorship(isOwner) {
+    const { getProject, match } = this.props;
+    const repoId = parseInt(match.params.repoId);
+    getProject(match.params.platform, repoId).then(res => {
+      let project = null;
+      if (res.status !== 404 && res.response.name) {
+        project = res.response;
+      }
+      this.setState({
+        project,
+        isOwner: isOwner ? true : false,
+        loadedProject: true,
+        loadingProject: false,
+      });
+    })
+  }
+
+  loadGithubData() {
+    const { user, repo, match} = this.props;
+    const repoId = parseInt(match.params.repoId);
+    const isOwner = R.find(R.propEq('id', repoId))(user.repos || []);
+    if(repo.fork !== true) {
+      this.loadSponsorship(isOwner);
+    } else {
+      this.setState({
+        isOwner: isOwner ? true : false,
+        loadedProject: true,
+        loadingProject: false,
+      });
+    }
   }
 
   render() {
-    const { authenticated, match, location, repo, user } = this.props;
+    const { authenticated, match, createProjectSponsor, createProjectAccount, location, history, repo, user } = this.props;
     const { repo: projectName } = match.params;
-    const isOwner = R.find(R.propEq('id', repo.id))(user.repos || []);
 
     return (
       <div>
@@ -97,25 +183,31 @@ class Project extends React.Component {
             </Affix>
             <Affix className="rightContainer" stickPosition={77}>
               <div className="right">
-                <RightSidebar match={match}/>
+                <RightSidebar
+                  createProjectSponsor={createProjectSponsor}
+                  createProjectAccount={createProjectAccount}
+                  match={match}
+                  isOwner={this.state.isOwner}
+                  project={this.state.project}
+                />
               </div>
             </Affix>
             <div className="center">
               <div className="Project">
                 <div className="Project__details">
-                <h2><Icon type='github' /> { repo.full_name }</h2>
-                <p>
+                  <h2><Icon type='github' /> { repo.full_name }</h2>
+                  <p>
                     <a href={ repo.html_url } target="_blank"> { repo.html_url } </a>
                   </p>
                   <hr />
-                  {isOwner && <div>
+                  {this.state.isOwner && <div>
                     <Link to={`/write-task/${repo.id}`}>
                       <Icon type="notification"/> Add task request
                     </Link>
                   </div>}
                 </div>
               </div>
-              <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed} />
+              {this.state.loadedProject && this.state.loadedRepo ? <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed}/> : null}
             </div>
           </div>
         </div>

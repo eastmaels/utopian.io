@@ -33,7 +33,7 @@ export const needs = [getAccountWithFollowingCount];
 
 import EmptyFeed from '../statics/EmptyFeed';
 
-import { getProjectsByGithub } from '../actions/projects';
+import { getReposByGithub } from '../actions/projects';
 import * as Actions from '../actions/constants';
 
 @connect(
@@ -45,7 +45,7 @@ import * as Actions from '../actions/constants';
   }), {
     getAccountWithFollowingCount,
     openTransfer,
-    getProjectsByGithub,
+    getReposByGithub,
   })
 export default class User extends React.Component {
   static propTypes = {
@@ -74,13 +74,13 @@ export default class User extends React.Component {
   }
 
   componentWillMount() {
-    const {getProjectsByGithub, match} = this.props;
+    const {getReposByGithub, match} = this.props;
     if (!this.props.user.name) {
       this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
       return;
     }
 
-    getProjectsByGithub(match.params.name).then(res => {
+    getReposByGithub(match.params.name).then(res => {
       this.setState({
         githubProjects: res.response || []
       })
@@ -89,7 +89,7 @@ export default class User extends React.Component {
 
 
   componentDidUpdate(prevProps) {
-    const {getProjectsByGithub, match, authenticatedUser, user} = this.props;
+    const {getReposByGithub, match, authenticatedUser, user} = this.props;
 
     if (prevProps.match.params.name !== this.props.match.params.name) {
       this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
@@ -98,7 +98,7 @@ export default class User extends React.Component {
     if (prevProps.user !== user) {
       const isOnwer = authenticatedUser && authenticatedUser.name === match.params.name;
 
-      getProjectsByGithub(match.params.name, isOnwer).then(res => {
+      getReposByGithub(match.params.name, isOnwer).then(res => {
         this.setState({
           githubProjects: res.response || []
         })
@@ -120,7 +120,7 @@ export default class User extends React.Component {
   }
 
   render() {
-    const { authenticated, authenticatedUser, match, loading, getProjectsByGithub } = this.props;
+    const { authenticated, authenticatedUser, match, loading, getReposByGithub } = this.props;
     const username = this.props.match.params.name;
     const { user } = this.props;
     const { profile = {} } = user.json_metadata || {};
@@ -196,14 +196,14 @@ export default class User extends React.Component {
                   return (
                     <ProjectsFeed
                       content={ this.state.githubProjects }
-                      isFetching={ loading === Actions.GET_GITHUB_PROJECTS_REQUEST }
+                      isFetching={ loading === Actions.GET_USER_REPOS_GITHUB_REQUEST }
                       hasMore={ false }
                       loadMoreContent={() => null}
                     />
                   )
                 }
 
-                if(!this.state.githubProjects.length && loading !== Actions.GET_GITHUB_PROJECTS_REQUEST) {
+                if(!this.state.githubProjects.length && loading !== Actions.GET_USER_REPOS_GITHUB_REQUEST) {
                   return <EmptyFeed text={'No projects found'} />
                 }
               }}

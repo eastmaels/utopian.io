@@ -146,7 +146,7 @@ export default class Buttons extends React.Component {
 
     let likeTooltip = <span>{intl.formatMessage({ id: 'like' })}</span>;
     if (postState.isLiked) {
-      likeTooltip = <span>{intl.formatMessage({ id: 'unlike', defaultMessage: 'Unlike' })}</span>;
+      likeTooltip = <span>{intl.formatMessage({ id: 'unlike', defaultMessage: 'Change vote' })}</span>;
     } else if (defaultVotePercent !== 10000) {
       likeTooltip = (
         <span>
