@@ -228,7 +228,7 @@ class Write extends React.Component {
             }
 
             const extensions = [[0, {
-              beneficiariesArr
+              beneficiaries: beneficiariesArr
             }]];
 
             const contributionData = {

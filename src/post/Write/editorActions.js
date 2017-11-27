@@ -189,37 +189,40 @@ export function createPost(postData) {
               permlink,
               !isUpdating && reward,
               !isUpdating && extensions,
-            ).then(async result => {
+            ).then(result => {
+              console.log("RES", result);
+              if (result) {
 
-              if (draftId) {
-                dispatch(deleteDraft(draftId));
-                dispatch(addEditedPost(permlink));
+                if (draftId) {
+                  dispatch(deleteDraft(draftId));
+                  dispatch(addEditedPost(permlink));
+                }
+
+                // @UTOPIAN
+                if (!isUpdating) {
+                  const createOnAPI = contributionData => dispatch(
+                    createContribution(contributionData.author, contributionData.permlink)
+                  );
+
+                  createOnAPI({ author, permlink }).then(() => {
+                    dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
+                  })
+
+                } else {
+                  const updateOnAPI = contributionData => dispatch(
+                    updateContribution(contributionData.author, contributionData.permlink)
+                  );
+                  updateOnAPI({ author, permlink }).then(() => dispatch(
+                    push(`/${parentPermlink}/@${author}/${permlink}`)
+                  ));
+                }
+
+                if (window.ga) {
+                  window.ga('send', 'event', 'post', 'submit', '', 10);
+                }
+
+                return result;
               }
-
-              // @UTOPIAN
-              if (!isUpdating) {
-                const createOnAPI = contributionData => dispatch(
-                  createContribution(contributionData.author, contributionData.permlink)
-                );
-
-                createOnAPI({ author, permlink }).then(() => {
-                  dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
-                })
-
-              } else {
-                const updateOnAPI = contributionData => dispatch(
-                  updateContribution(contributionData.author, contributionData.permlink)
-                );
-                updateOnAPI({ author, permlink }).then(() => dispatch(
-                  push(`/${parentPermlink}/@${author}/${permlink}`)
-                ));
-              }
-
-              if (window.ga) {
-                window.ga('send', 'event', 'post', 'submit', '', 10);
-              }
-
-              return result;
             })
           }
         ),

@@ -154,8 +154,8 @@ class Write extends React.Component {
 
     getBeneficiaries(data.author).then(res => {
       if (res.response && res.response.results) {
-        let utopianAssignedWeight = 0;
         const beneficiariesArr = [];
+        let utopianAssignedWeight = 0;
         const allBeneficiaries = res.response.results;
         /*const beneficiaries = [
           ...allBeneficiaries.map(beneficiary => {
@@ -212,6 +212,7 @@ class Write extends React.Component {
           }
 
           if (index + 1 === allBeneficiaries.length) {
+
             if (utopianAssignedWeight > 0) {
               beneficiariesArr.push({
                 account: 'utopian-io',
@@ -220,7 +221,7 @@ class Write extends React.Component {
             }
 
             const extensions = [[0, {
-              beneficiariesArr
+              beneficiaries: beneficiariesArr
             }]];
 
             const contributionData = {
