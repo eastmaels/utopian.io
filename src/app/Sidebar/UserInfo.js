@@ -6,6 +6,7 @@ import { Modal } from 'antd';
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import _ from 'lodash';
 import urlParse from 'url-parse';
+import querystring from 'querystring';
 
 import {
   getUser,
@@ -16,7 +17,8 @@ import {
 
 import { openTransfer } from '../../wallet/walletActions';
 import Action from '../../components/Button/Action';
-import BanUser from '../../components/BanUser'
+import BanUser from '../../components/BanUser';
+import CreateModerator from '../../components/CreateModerator';
 
 const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) => {
   const location = user && _.get(user.json_metadata, 'profile.location');
@@ -33,6 +35,12 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
   }
 
   const isSameUser = authenticated && authenticatedUser.name === user.name;
+
+  const currentUsername = () => {
+    if (user && user.name) return (user.name);
+    var atName = window.location.pathname.replace(/^\/([^\/]*).*$/, '$1');
+    return atName.replace("@", "");
+  }
   return (<div>
     {user.name &&
       <div style={{ wordBreak: 'break-word' }}>
@@ -83,7 +91,11 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
     />
 
     <BanUser 
-    username={user.name}
+    username={currentUsername()}
+    intl={intl}
+    />
+    <CreateModerator 
+    username={currentUsername()}
     intl={intl}
     />
     </span> 

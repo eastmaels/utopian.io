@@ -20,7 +20,7 @@ export const createGithubUserRequest = (account, code, state, scopeVersion = cur
   }
 });
 
-export const createGithubUser = (account, code, state) => dispatch => dispatch(createGithubUserRequest(account, code, state));
+export const createGithubUser = (account, code = "-", state = "-") => dispatch => dispatch(createGithubUserRequest(account, code, state));
 
 export const getUserRequest = (account) => ({
   [CALL_API]: {
