@@ -190,7 +190,7 @@ export function createPost(postData) {
               !isUpdating && reward,
               !isUpdating && extensions,
             ).then(result => {
-              console.log("RES", result);
+
               if (result) {
 
                 if (draftId) {
