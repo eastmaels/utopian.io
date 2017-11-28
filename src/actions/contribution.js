@@ -59,7 +59,7 @@ export const moderatorActionRequest = (author, permlink, moderator, status) => (
       author,
       permlink,
       moderator,
-      reviewed: status === 'reviewed',
+      reviewed: status === 'reviewed' ,
       flagged: status === 'flagged',
       pending: status === 'pending',
     },

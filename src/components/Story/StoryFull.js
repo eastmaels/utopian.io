@@ -316,10 +316,11 @@ class StoryFull extends React.Component {
               onClick={() => {
                 var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user has not been responding for over 48 hours to your requests.')
                 if (confirm) {
-                  moderatorAction(post.author, post.permlink, user.name, 'flagged');
-                  this.setState({ reviewsource: 1 })
-                  this.setModTemplateByName("flaggedDefault");
-                  this.setState({ moderatorCommentModal: true })
+                  moderatorAction(post.author, post.permlink, user.name, 'flagged').then(() => {
+                    this.setState({ reviewsource: 1 })
+                    this.setModTemplateByName("flaggedDefault");
+                    this.setState({ moderatorCommentModal: true })
+                  });
                 }
               }}
             />}
@@ -381,10 +382,11 @@ class StoryFull extends React.Component {
             this.setState({ verifyModal: false })
           }}
           onOk={() => {
-            moderatorAction(post.author, post.permlink, user.name, 'reviewed');
-            this.setState({ verifyModal: false })
-            this.setState({ commentFormText: 'Thank you for the contribution. It has been approved.' + this.state.commentDefaultFooter })
-            this.setState({ moderatorCommentModal: true })
+            moderatorAction(post.author, post.permlink, user.name, 'reviewed').then(() => {
+              this.setState({ verifyModal: false })
+              this.setState({ commentFormText: 'Thank you for the contribution. It has been approved.' + this.state.commentDefaultFooter })
+              this.setState({ moderatorCommentModal: true })
+            });
           }}
         >
           <p>By moderating contributions on Utopian <b>you will earn 5% of the total author rewards generated on the platform</b> based on the amount of contributions reviewed.</p>
