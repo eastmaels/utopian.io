@@ -14,7 +14,7 @@ import {
 import { getModerators } from '../actions/moderators';
 import { moderatorAction } from '../actions/contribution';
 import Action from './Button/Action';
-import { getUser, banUser, createGithubUser } from '../actions/user'
+import { getUser, banUser, createUser } from '../actions/user'
 import * as R from 'ramda';
 import './BanUser.less';
 
@@ -25,7 +25,7 @@ import './BanUser.less';
     authenticatedUser: getAuthenticatedUser(state),
     moderators: state.moderators,
   }),
-  { banUser, getUser, getModerators, createGithubUser },
+  { banUser, getUser, getModerators, createUser },
 )
 @injectIntl
 class BanUser extends React.Component {
@@ -56,7 +56,7 @@ class BanUser extends React.Component {
   }
 
   componentDidMount () {
-    const { getModerators, getUser, username, banUser, createGithubUser } = this.props;
+    const { getModerators, getUser, username, banUser, createUser } = this.props;
     if (username) {
       console.log("banUser.js -> username: ", username);
     } else {
@@ -68,14 +68,14 @@ class BanUser extends React.Component {
     getUser(username).then((res) => {
       if (res.status === 404) {
         console.log("USER DOES NOT EXIST, creating...", res);
-        createGithubUser(username).then((restwo) => console.log("CREATED",restwo));
+        createUser(username).then((restwo) => console.log("CREATED",restwo));
         return;
       }
       console.log("USER EXISTS", res)
     })
       .catch((e) => {
         console.log("USER DOES NOT EXIST, creating...", e);
-        createGithubUser(username).then((res) => console.log("CREATED",res));
+        createUser(username).then((res) => console.log("CREATED",res));
       });
     getUser(username).then((res) => {
       const user = res.response;
