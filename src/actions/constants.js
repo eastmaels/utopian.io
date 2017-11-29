@@ -36,6 +36,10 @@ export const BAN_USER_REQUEST = '@user/BAN_USER_REQUEST';
 export const BAN_USER_SUCCESS = '@user/BAN_USER_SUCCESS';
 export const BAN_USER_FAILURE = '@user/BAN_USER_FAILURE';
 
+export const CHECK_USER_REQUEST = '@user/CHECK_USER_REQUEST';
+export const CHECK_USER_SUCCESS = '@user/CHECK_USER_SUCCESS';
+export const CHECK_USER_FAILURE = '@user/CHECK_USER_FAILURE';
+
 export const SET_GITHUB_REPO = '@project/SET_GITHUB_REPO';
 export const SET_GITHUB_REPOS = '@project/SET_GITHUB_REPOS';
 
