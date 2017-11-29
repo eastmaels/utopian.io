@@ -3,66 +3,46 @@ import PropTypes from 'prop-types';
 import { find } from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getHasDefaultSlider } from '../helpers/user';
 import {
-  getAuthenticatedUser,
   getComments,
   getCommentsList,
   getCommentsPendingVotes,
   getIsAuthenticated,
   getAuthenticatedUserName,
-  getVotingPower,
-  getRewardFund,
-  getVotePercent,
 } from '../reducers';
-import CommentsList from '../components/Comments/Comments';
+import CommentsList from '../components/Comments_b4/Comments';
 import * as commentsActions from './commentsActions';
 import { notify } from '../app/Notification/notificationActions';
 import './Comments.less';
 
 @connect(
   state => ({
-    user: getAuthenticatedUser(state),
     comments: getComments(state),
     commentsList: getCommentsList(state),
     pendingVotes: getCommentsPendingVotes(state),
     authenticated: getIsAuthenticated(state),
     username: getAuthenticatedUserName(state),
-    sliderMode: getVotingPower(state),
-    rewardFund: getRewardFund(state),
-    defaultVotePercent: getVotePercent(state),
   }),
-  dispatch =>
-    bindActionCreators(
-      {
-        getComments: commentsActions.getComments,
-        voteComment: (id, percent, vote) => commentsActions.likeComment(id, percent, vote),
-        sendComment: (parentPost, body, isUpdating, originalPost) =>
-          commentsActions.sendComment(parentPost, body, isUpdating, originalPost),
-        notify,
-      },
-      dispatch,
-    ),
+  dispatch => bindActionCreators({
+    getComments: commentsActions.getComments,
+    voteComment: (id, percent, vote) => commentsActions.likeComment(id, percent, vote),
+    sendComment: (parentPost, body, isUpdating, originalPost) =>
+      commentsActions.sendComment(parentPost, body, isUpdating, originalPost),
+    notify,
+  }, dispatch),
 )
 export default class Comments extends React.Component {
   static propTypes = {
     authenticated: PropTypes.bool.isRequired,
-    user: PropTypes.shape().isRequired,
-    rewardFund: PropTypes.shape().isRequired,
-    defaultVotePercent: PropTypes.number.isRequired,
-    sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     username: PropTypes.string,
     post: PropTypes.shape(),
     comments: PropTypes.shape(),
     commentsList: PropTypes.shape(),
-    pendingVotes: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        percent: PropTypes.number,
-      }),
-    ),
+    pendingVotes: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      percent: PropTypes.number,
+    })),
     show: PropTypes.bool,
-    notify: PropTypes.func,
     getComments: PropTypes.func,
     voteComment: PropTypes.func,
     sendComment: PropTypes.func,
@@ -70,17 +50,15 @@ export default class Comments extends React.Component {
 
   static defaultProps = {
     username: undefined,
-    sliderMode: 'auto',
     post: {},
     comments: {},
     commentsList: {},
     pendingVotes: [],
     show: false,
-    notify: () => {},
     getComments: () => {},
     voteComment: () => {},
     sendComment: () => {},
-  };
+  }
 
   state = {
     sortOrder: 'trending',
@@ -110,45 +88,37 @@ export default class Comments extends React.Component {
       }
     });
     return newNestedComments;
-  };
+  }
 
-  handleLikeClick = (id, weight = 10000) => {
-    const { commentsList, sliderMode, user, defaultVotePercent } = this.props;
-    const userVote = find(commentsList[id].active_votes, { voter: user.name }) || {};
-
-    if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {
-      this.props.voteComment(id, weight, 'like');
-    } else if (userVote.percent > 0) {
-      this.props.voteComment(id, 0, 'like');
-    } else {
-      this.props.voteComment(id, defaultVotePercent, 'like');
-    }
-  };
-
-  handleDislikeClick = (id) => {
-    const { commentsList, pendingVotes, user } = this.props;
+  handleLikeClick = (id) => {
+    const { commentsList, pendingVotes, username } = this.props;
     if (pendingVotes[id]) return;
 
-    const userVote = find(commentsList[id].active_votes, { voter: user.name }) || {};
+    const userVote = find(commentsList[id].active_votes, { voter: username }) || {};
+
+    if (userVote.percent > 0) {
+      this.props.voteComment(id, 0, 'like');
+    } else {
+      this.props.voteComment(id, 10000, 'like');
+    }
+  }
+
+  handleDisLikeClick = (id) => {
+    const { commentsList, pendingVotes, username } = this.props;
+    if (pendingVotes[id]) return;
+
+    const userVote = find(commentsList[id].active_votes, { voter: username }) || {};
 
     if (userVote.percent < 0) {
       this.props.voteComment(id, 0, 'dislike');
     } else {
       this.props.voteComment(id, -10000, 'dislike');
     }
-  };
+  }
+
 
   render() {
-    const {
-      user,
-      post,
-      comments,
-      pendingVotes,
-      show,
-      sliderMode,
-      rewardFund,
-      defaultVotePercent,
-    } = this.props;
+    const { post, comments, pendingVotes, show } = this.props;
     const postId = post.id;
     let fetchedCommentsList = [];
 
@@ -164,27 +134,19 @@ export default class Comments extends React.Component {
       commentsChildren = this.getNestedComments(comments, comments.childrenById[postId], {});
     }
 
-    return (
-      fetchedCommentsList && (
-        <CommentsList
-          user={user}
-          parentPost={post}
-          comments={fetchedCommentsList}
-          authenticated={this.props.authenticated}
-          username={this.props.username}
-          commentsChildren={commentsChildren}
-          pendingVotes={pendingVotes}
-          loading={comments.isFetching}
-          show={show}
-          notify={this.props.notify}
-          rewardFund={rewardFund}
-          sliderMode={sliderMode}
-          defaultVotePercent={defaultVotePercent}
-          onLikeClick={this.handleLikeClick}
-          onDislikeClick={this.handleDislikeClick}
-          onSendComment={this.props.sendComment}
-        />
-      )
-    );
+    return fetchedCommentsList &&
+      <CommentsList
+        parentPost={post}
+        comments={fetchedCommentsList}
+        authenticated={this.props.authenticated}
+        username={this.props.username}
+        commentsChildren={commentsChildren}
+        pendingVotes={pendingVotes}
+        loading={comments.isFetching}
+        show={show}
+        onLikeClick={this.handleLikeClick}
+        onDislikeClick={this.handleDisLikeClick}
+        onSendComment={this.props.sendComment}
+      />;
   }
 }

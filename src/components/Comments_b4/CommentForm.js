@@ -4,30 +4,30 @@ import ReactDOM from 'react-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Input, Icon } from 'antd';
 import Dropzone from 'react-dropzone';
-import { isValidImage, MAXIMUM_UPLOAD_SIZE } from '../../helpers/image';
 import Body, { remarkable } from '../Story/Body';
-import './EmbeddedCommentForm.less';
+import Avatar from '../Avatar';
+import './CommentForm.less';
 
 @injectIntl
-class EmbeddedCommentForm extends React.Component {
+class CommentForm extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     parentPost: PropTypes.shape().isRequired,
+    username: PropTypes.string.isRequired,
+    isSmall: PropTypes.bool,
     isLoading: PropTypes.bool,
     inputValue: PropTypes.string.isRequired,
     onImageInserted: PropTypes.func,
-    onImageInvalid: PropTypes.func,
     onSubmit: PropTypes.func,
-    onClose: PropTypes.func,
   };
 
   static defaultProps = {
+    username: undefined,
+    isSmall: false,
     isLoading: false,
     inputValue: '',
     onImageInserted: () => {},
-    onImageInvalid: () => {},
     onSubmit: () => {},
-    onClose: () => {},
   };
 
   state = {
@@ -91,17 +91,11 @@ class EmbeddedCommentForm extends React.Component {
         if (item.kind === 'file') {
           e.preventDefault();
 
-          const blob = item.getAsFile();
-
-          if (!isValidImage(blob)) {
-            this.props.onImageInvalid();
-            return;
-          }
-
           this.setState({
             imageUploading: true,
           });
 
+          const blob = item.getAsFile();
           this.props.onImageInserted(blob, this.insertImage, () =>
             this.setState({
               imageUploading: false,
@@ -114,11 +108,6 @@ class EmbeddedCommentForm extends React.Component {
 
   handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      if (!isValidImage(e.target.files[0])) {
-        this.props.onImageInvalid();
-        return;
-      }
-
       this.setState({
         imageUploading: true,
       });
@@ -180,96 +169,91 @@ class EmbeddedCommentForm extends React.Component {
   };
 
   render() {
-    const { intl, isLoading } = this.props;
-    const buttonClass = isLoading
-      ? 'EmbeddedCommentForm__button_disabled'
-      : 'EmbeddedCommentForm__button_primary';
+    const { intl, username, isSmall, isLoading } = this.props;
+    const buttonClass = isLoading ? 'CommentForm__button_disabled' : 'CommentForm__button_primary';
 
     return (
-      <div className="EmbeddedCommentForm">
-        <div className="EmbeddedCommentForm__dropzone-base">
-          <Dropzone
-            disableClick
-            style={{}}
-            accept="image/*"
-            maxSize={MAXIMUM_UPLOAD_SIZE}
-            onDropRejected={this.props.onImageInvalid}
-            onDrop={this.handleDrop}
-            onDragEnter={this.handleDragEnter}
-            onDragLeave={this.handleDragLeave}
-          >
-            {this.state.dropzoneActive && (
-              <div className="EmbeddedCommentForm__dropzone">
-                <div>
-                  <i className="iconfont icon-picture" />
-                  <FormattedMessage id="drop_image" defaultMessage="Drop your images here" />
+      <div className="CommentForm">
+        <Avatar username={username} size={!isSmall ? 40 : 32} />
+        <div className="CommentForm__text">
+          <div className="CommentForm__dropzone-base">
+            <Dropzone
+              disableClick
+              style={{}}
+              accept="image/*"
+              onDrop={this.handleDrop}
+              onDragEnter={this.handleDragEnter}
+              onDragLeave={this.handleDragLeave}
+            >
+              {this.state.dropzoneActive && (
+                <div className="CommentForm__dropzone">
+                  <div>
+                    <i className="iconfont icon-picture" />
+                    <FormattedMessage id="drop_image" defaultMessage="Drop your images here" />
+                  </div>
                 </div>
-              </div>
-            )}
-            <Input
-              id="commentFormInput"
-              ref={ref => this.setInput(ref)}
-              value={this.state.inputValue}
-              autosize={{ minRows: 2, maxRows: 6 }}
-              onChange={this.handleCommentTextChange}
-              placeholder={intl.formatMessage({
-                id: 'comment_placeholder',
-                defaultMessage: 'Write a comment',
-              })}
-              type="textarea"
-              disabled={isLoading}
-            />
-          </Dropzone>
-        </div>
-        <p className="EmbeddedCommentForm__imagebox">
-          <input
-            type="file"
-            accept="image/*"
-            id={`inputfile-edit${this.props.parentPost.id}`}
-            onChange={this.handleImageChange}
-          />
-          <label htmlFor={`inputfile-edit${this.props.parentPost.id}`}>
-            {this.state.imageUploading ? (
-              <Icon type="loading" />
-            ) : (
-              <i className="iconfont icon-picture" />
-            )}
-            {this.state.imageUploading ? (
-              <FormattedMessage id="image_uploading" defaultMessage="Uploading your image..." />
-            ) : (
-              <FormattedMessage
-                id="select_or_past_image"
-                defaultMessage="Select image or paste it from the clipboard."
+              )}
+              <Input
+                id="commentFormInput"
+                ref={ref => this.setInput(ref)}
+                value={this.state.inputValue}
+                autosize={{ minRows: 2, maxRows: 6 }}
+                onChange={this.handleCommentTextChange}
+                placeholder={intl.formatMessage({
+                  id: 'comment_placeholder',
+                  defaultMessage: 'Write a comment',
+                })}
+                type="textarea"
+                disabled={isLoading}
               />
-            )}
-          </label>
-        </p>
-        <button
-          onClick={this.handleSubmit}
-          disabled={isLoading}
-          className={`EmbeddedCommentForm__button ${buttonClass}`}
-        >
-          {isLoading && <Icon type="loading" />}
-          {isLoading ? (
-            <FormattedMessage id="comment_update_progress" defaultMessage="Updating" />
-          ) : (
-            <FormattedMessage id="comment_update_send" defaultMessage="Update comment" />
-          )}
-        </button>
-        <a role="presentation" className="EmbeddedCommentForm__close" onClick={this.props.onClose}>
-          <FormattedMessage id="close" defaultMessage="Close" />
-        </a>
-        {this.state.inputValue && (
-          <div className="EmbeddedCommentForm__preview">
-            <span className="Editor__label">
-              <FormattedMessage id="preview" defaultMessage="Preview" />
-            </span>
-            <Body body={remarkable.render(this.state.inputValue)} />
+            </Dropzone>
           </div>
-        )}
+          <p className="CommentForm__imagebox">
+            <input
+              type="file"
+              id={`inputfile${this.props.parentPost.id}`}
+              onChange={this.handleImageChange}
+            />
+            <label htmlFor={`inputfile${this.props.parentPost.id}`}>
+              {this.state.imageUploading ? (
+                <Icon type="loading" />
+              ) : (
+                <i className="iconfont icon-picture" />
+              )}
+              {this.state.imageUploading ? (
+                <FormattedMessage id="image_uploading" defaultMessage="Uploading your image..." />
+              ) : (
+                <FormattedMessage
+                  id="select_or_past_image"
+                  defaultMessage="Select image or paste it from the clipboard."
+                />
+              )}
+            </label>
+          </p>
+          <button
+            onClick={this.handleSubmit}
+            disabled={isLoading}
+            className={`CommentForm__button ${buttonClass}`}
+          >
+            {isLoading && <Icon type="loading" />}
+            {isLoading ? (
+              <FormattedMessage id="comment_send_progress" defaultMessage="Commenting" />
+            ) : (
+              <FormattedMessage id="comment_send" defaultMessage="Comment" />
+            )}
+          </button>
+          {this.state.inputValue && (
+            <div className="CommentForm__preview">
+              <span className="Editor__label">
+                <FormattedMessage id="preview" defaultMessage="Preview" />
+              </span>
+              <Body body={remarkable.render(this.state.inputValue)} />
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 }
 
-export default EmbeddedCommentForm;
+export default CommentForm;
