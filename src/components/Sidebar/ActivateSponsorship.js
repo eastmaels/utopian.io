@@ -53,11 +53,11 @@ class ActivateSponsorship extends React.Component {
             </span> : null}
 
             {project && project.sponsorship.rejected.status === false ? <span className="Announcement__content">
-                Your request for activing the Sponsorship module for this project is now <b>under review</b>.
+                Your request for activating the Sponsorship module for this project is now <b>under review</b>.
             </span> : null}
 
             {project && project.sponsorship.rejected.status === true ? <span className="Announcement__content">
-              Your request for activing the Sponsorship module has been rejected for the following reason:<br/>
+              Your request for activating the Sponsorship module has been rejected for the following reason:<br/>
                 <b>{project.sponsorship.rejected.message}</b>
             </span> : null}
 

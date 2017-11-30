@@ -1,15 +1,9 @@
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/mixins.less";
 
-.CommentForm {
+.EmbeddedCommentForm {
   position: relative;
   margin-top: 8px;
-  display: flex;
-
-  &__text {
-    width: 100%;
-    margin-left: 12px;
-  }
 
   &__dropzone-base {
     position: relative;
@@ -25,7 +19,7 @@
     z-index: 1;
     border-radius: 4px;
     background: fade(@purple, 60%);
-    color: @white;
+    color: white;
 
     & > div {
       margin: auto;
@@ -89,5 +83,10 @@
       vertical-align: -1px;
       margin-right: 8px;
     }
+  }
+
+  &__close {
+    margin-left: 8px;
+    font-weight: bold;
   }
 }

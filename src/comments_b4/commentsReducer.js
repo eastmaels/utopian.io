@@ -1,4 +1,5 @@
 import * as commentsTypes from './commentsActions';
+import * as userTypes from '../user/userActions';
 
 const initialState = {
   childrenById: {},
@@ -42,6 +43,17 @@ const commentsData = (state = {}, action) => {
         ...state,
         ...mapCommentsBasedOnId(action.payload.content, action),
       };
+    case userTypes.GET_USER_COMMENTS_SUCCESS:
+    case userTypes.GET_MORE_USER_COMMENTS_SUCCESS: {
+      const commentsMoreList = {};
+      action.payload.forEach((comment) => {
+        commentsMoreList[comment.id] = comment;
+      });
+      return {
+        ...state,
+        ...commentsMoreList,
+      };
+    }
     case commentsTypes.RELOAD_EXISTING_COMMENT:
       return {
         ...state,
@@ -69,6 +81,8 @@ const comments = (state = initialState, action) => {
     case commentsTypes.GET_COMMENTS_START:
     case commentsTypes.GET_COMMENTS_SUCCESS:
     case commentsTypes.GET_COMMENTS_ERROR:
+    case userTypes.GET_USER_COMMENTS_SUCCESS:
+    case userTypes.GET_MORE_USER_COMMENTS_SUCCESS:
       return {
         ...state,
         comments: commentsData(state.comments, action),

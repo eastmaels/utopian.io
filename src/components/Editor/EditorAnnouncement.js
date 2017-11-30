@@ -666,7 +666,7 @@ class EditorAnnouncement extends React.Component {
           <Form.Item
             label={
               <span className="Editor__label">
-              Contribution title
+              Task request title
             </span>
             }
           >

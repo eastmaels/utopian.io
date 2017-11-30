@@ -1,36 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { MAXIMUM_UPLOAD_SIZE_HUMAN } from '../../helpers/image';
+import { FormattedMessage } from 'react-intl';
 import { sortComments } from '../../helpers/sortHelpers';
 import Loading from '../Icon/Loading';
 import CommentForm from './CommentForm';
 import Comment from './Comment';
 import './Comments.less';
 
-@injectIntl
 class Comments extends React.Component {
   static propTypes = {
-    intl: PropTypes.shape().isRequired,
-    user: PropTypes.shape().isRequired,
     authenticated: PropTypes.bool.isRequired,
     username: PropTypes.string,
     parentPost: PropTypes.shape(),
     comments: PropTypes.arrayOf(PropTypes.shape()),
     commentsChildren: PropTypes.shape(),
-    pendingVotes: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        percent: PropTypes.number,
-      }),
-    ),
-    rewardFund: PropTypes.shape().isRequired,
-    defaultVotePercent: PropTypes.number.isRequired,
-    sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
+    pendingVotes: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      percent: PropTypes.number,
+    })),
     loading: PropTypes.bool,
     show: PropTypes.bool,
-    notify: PropTypes.func,
     onLikeClick: PropTypes.func,
     onDislikeClick: PropTypes.func,
     onSendComment: PropTypes.func,
@@ -42,10 +32,8 @@ class Comments extends React.Component {
     comments: [],
     commentsChildren: undefined,
     pendingVotes: [],
-    sliderMode: 'auto',
     loading: false,
     show: false,
-    notify: () => {},
     onLikeClick: () => {},
     onDislikeClick: () => {},
     onSendComment: () => {},
@@ -57,7 +45,6 @@ class Comments extends React.Component {
       sort: 'BEST',
       showCommentFormLoading: false,
       commentFormText: '',
-      commentSubmitted: false,
     };
   }
 
@@ -86,27 +73,12 @@ class Comments extends React.Component {
       .catch(() => errorCallback());
   };
 
-  handleImageInvalid = () => {
-    const { formatMessage } = this.props.intl;
-    this.props.notify(
-      formatMessage(
-        {
-          id: 'notify_uploading_image_invalid',
-          defaultMessage:
-            'This file is invalid. Only image files with maximum size of {size} are supported',
-        },
-        { size: MAXIMUM_UPLOAD_SIZE_HUMAN },
-      ),
-      'error',
-    );
-  };
-
   submitComment = (parentPost, commentValue) => {
     this.setState({ showCommentFormLoading: true });
     this.props
       .onSendComment(parentPost, commentValue)
       .then(() => {
-        this.setState({ showCommentFormLoading: false, commentFormText: '', commentSubmitted: true });
+        this.setState({ showCommentFormLoading: false, commentFormText: '' });
       })
       .catch(() => {
         this.setState({
@@ -118,7 +90,6 @@ class Comments extends React.Component {
 
   render() {
     const {
-      user,
       comments,
       loading,
       show,
@@ -128,9 +99,6 @@ class Comments extends React.Component {
       onDislikeClick,
       authenticated,
       username,
-      sliderMode,
-      rewardFund,
-      defaultVotePercent,
     } = this.props;
     const { sort } = this.state;
 
@@ -157,25 +125,22 @@ class Comments extends React.Component {
           </div>
         </div>
 
-        {authenticated && (
+        {authenticated &&
           <CommentForm
             parentPost={this.props.parentPost}
             username={username}
             onSubmit={this.submitComment}
             isLoading={this.state.showCommentFormLoading}
             inputValue={this.state.commentFormText}
-            submitted={this.state.commentSubmitted}
             onImageInserted={this.handleImageInserted}
-            onImageInvalid={this.handleImageInvalid}
-          />)}
+          />}
         {loading && <Loading />}
         {!loading &&
           show &&
           comments &&
-          sortComments(comments, sort).map(comment => (
-            <Comment
+          sortComments(comments, sort).map(comment =>
+            (<Comment
               key={comment.id}
-              user={user}
               depth={0}
               authenticated={authenticated}
               username={username}
@@ -185,15 +150,11 @@ class Comments extends React.Component {
               rootPostAuthor={this.props.parentPost && this.props.parentPost.author}
               commentsChildren={commentsChildren}
               pendingVotes={pendingVotes}
-              notify={this.props.notify}
-              rewardFund={rewardFund}
-              sliderMode={sliderMode}
-              defaultVotePercent={defaultVotePercent}
               onLikeClick={onLikeClick}
               onDislikeClick={onDislikeClick}
               onSendComment={this.props.onSendComment}
-            />
-          ))}
+            />),
+          )}
       </div>
     );
   }
