@@ -185,7 +185,7 @@ class WriteBlog extends React.Component {
             const sponsorsDedicatedWeight = 2000;
             assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
 
-            if (!beneficiary.opted_out) {
+            if (!beneficiary.opted_out && beneficiary.account !== 'utopian-io') {
               beneficiariesArr.push({
                 account: beneficiary.account,
                 weight: assignedWeight || 1
