@@ -5,6 +5,8 @@ import { getFollowing } from '../user/userActions';
 import { initPushpad } from '../helpers/pushpadHelper';
 import { getDrafts } from '../helpers/localStorageHelpers';
 import getImage from '../helpers/getImage';
+import * as request from 'superagent';
+import sc2 from '../sc2';
 
 Promise.promisifyAll(steemConnect);
 
@@ -27,7 +29,7 @@ export const login = () => (dispatch) => {
   dispatch({
     type: LOGIN,
     payload: {
-      promise: steemConnect.me()
+      promise: sc2.profile()
         .then((resp) => {
           console.log("RESP", resp)
 
@@ -58,8 +60,8 @@ export const login = () => (dispatch) => {
           initPushpad(resp.user, Cookie.get('access_token'));
           resp.drafts = getDrafts();
           return resp;
-        }),
-    },
+        })
+    }
   });
 };
 
@@ -67,21 +69,21 @@ export const reload = () => dispatch =>
   dispatch({
     type: RELOAD,
     payload: {
-      promise: steemConnect.me(),
-    },
+      promise: sc2.profile()
+    }
   });
 
 export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
     payload: {
-      promise: steemConnect.revokeToken()
+      promise: request.get(process.env.UTOPIAN_API + 'logout')
         .then(() => {
-          Cookie.remove('access_token');
+          Cookie.remove('session');
           if (process.env.NODE_ENV === 'production') {
             window.location.href = process.env.UTOPIAN_LANDING_URL;
           }
-        }),
-    },
+        })
+    }
   });
 };

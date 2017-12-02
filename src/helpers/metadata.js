@@ -1,15 +1,13 @@
 import Promise from 'bluebird';
-import SteemConnect from 'sc2-sdk';
 import omit from 'lodash/omit';
+import sc2 from '../sc2';
 
-Promise.promisifyAll(SteemConnect, { context: SteemConnect });
-
-const getMetadata = () => SteemConnect.me().then(resp => resp.user_metadata);
+const getMetadata = () => sc2.profile().then(resp => resp.user_metadata);
 
 export const saveSettingsMetadata = settings =>
   getMetadata()
     .then(metadata =>
-      SteemConnect.updateUserMetadata({
+      sc2.updateMetadata({
         ...metadata,
         settings: {
           ...metadata.settings,
@@ -22,7 +20,7 @@ export const saveSettingsMetadata = settings =>
 export const setLocaleMetadata = locale =>
   getMetadata()
     .then(metadata =>
-      SteemConnect.updateUserMetadata({
+      sc2.updateMetadata({
         ...metadata,
         locale,
       }),
@@ -32,7 +30,7 @@ export const setLocaleMetadata = locale =>
 export const addDraftMetadata = draft =>
   getMetadata()
     .then(metadata =>
-      SteemConnect.updateUserMetadata({
+      sc2.updateMetadata({
         ...metadata,
         drafts: {
           ...metadata.drafts,
@@ -45,7 +43,7 @@ export const addDraftMetadata = draft =>
 export const deleteDraftMetadata = draftId =>
   getMetadata()
     .then(metadata =>
-      SteemConnect.updateUserMetadata({
+      sc2.updateMetadata({
         ...metadata,
         drafts: omit(metadata.drafts, draftId),
       }),
@@ -55,7 +53,7 @@ export const deleteDraftMetadata = draftId =>
 export const toggleBookmarkMetadata = (id, author, permlink) =>
   getMetadata()
     .then(metadata =>
-      SteemConnect.updateUserMetadata({
+      sc2.updateMetadata({
         ...metadata,
         bookmarks:
           metadata.bookmarks && metadata.bookmarks[id]

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import steemconnect from 'sc2-sdk';
 import { FormattedMessage } from 'react-intl';
+import sc2 from '../sc2';
 
 const Error401 = () =>
   (<div className="main-panel">
@@ -21,7 +21,7 @@ const Error401 = () =>
             id="@statics/need_login"
             defaultMessage="You need to login to use this feature, please"
           />{' '}
-          <a href={steemconnect.getLoginURL()}>
+          <a href={sc2.getLoginURL()}>
             <FormattedMessage id="login" defaultMessage="Login" />
           </a>
           <br />

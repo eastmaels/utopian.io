@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Menu, Popover, Tooltip, Input, Badge, Select } from 'antd';
-import steemconnect from 'sc2-sdk';
 
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
-import { confirmExistence } from '../../actions/user';
+import sc2 from '../../sc2';
 
 import Icon from 'antd/lib/icon';
 import Autocomplete from 'react-autocomplete';
@@ -25,7 +24,7 @@ const Option = Select.Option;
   state => ({
     repos: state.repos,
   }),
-  { getGithubRepos, setGithubRepos, confirmExistence },
+  { getGithubRepos, setGithubRepos },
 )
 class Topnav extends React.Component {
 
@@ -113,15 +112,10 @@ class Topnav extends React.Component {
       repos,
       getGithubRepos,
       setGithubRepos,
-      confirmExistence,
       history,
     } = this.props;
 
     let content;
-
-    if (username && username !== '' && username !== null) {
-      confirmExistence(username);
-    }
 
     const notificationsCount =
       notifications && notifications.filter(notification => !notification.read).length;
@@ -224,7 +218,7 @@ class Topnav extends React.Component {
               |
             </Menu.Item>
             <Menu.Item key="login">
-              <a href={steemconnect.getLoginURL(next)}>
+              <a href={sc2.getLoginUrl(next)}>
                 <FormattedMessage id="login" defaultMessage="Log in"/>
               </a>
             </Menu.Item>

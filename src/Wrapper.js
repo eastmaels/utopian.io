@@ -64,7 +64,7 @@ export default class Wrapper extends React.PureComponent {
   };
 
   componentWillMount() {
-    if (Cookie.get('access_token')) {
+    if (Cookie.get('session')) {
       this.props.login();
     }
     this.props.getRewardFund();

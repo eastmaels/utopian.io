@@ -36,22 +36,6 @@ export const getUserRequest = (account) => ({
 
 export const getUser = (account) => dispatch => dispatch(getUserRequest(account));
 
-export const confirmExistenceRequest = (account) => ({
-  [CALL_API]: {
-    types: [ Actions.CHECK_USER_REQUEST, Actions.CHECK_USER_SUCCESS, Actions.CHECK_USER_FAILURE ],
-    endpoint: `users/${account}/check`,
-    schema: null,
-    method: 'POST',
-    payload: {
-      account
-    },
-    additionalParams: {},
-    absolute: false
-  }
-});
-
-export const confirmExistence = (account) => dispatch => dispatch(confirmExistenceRequest(account));
-
 export const banUserRequest = (account, banned, bannedBy, banReason, bannedUntil) => ({
   [CALL_API]: {
     types: [ Actions.BAN_USER_REQUEST, Actions.BAN_USER_SUCCESS, Actions.BAN_USER_FAILURE ],
