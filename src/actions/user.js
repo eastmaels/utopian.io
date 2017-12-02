@@ -3,9 +3,9 @@ import * as Actions from '../actions/constants';
 
 export const currentGithubScopeVersion = Actions.CURRENT_SCOPE_VERSION;
 
-export const createGithubUserRequest = (account, code, state, scopeVersion = currentGithubScopeVersion) => ({
+export const createUserRequest = (account, code, state, scopeVersion = currentGithubScopeVersion) => ({
   [CALL_API]: {
-    types: [ Actions.CREATE_GITHUB_USER_REQUEST, Actions.CREATE_GITHUB_USER_SUCCESS, Actions.CREATE_GITHUB_USER_FAILURE ],
+    types: [ Actions.CREATE_USER_REQUEST, Actions.CREATE_USER_SUCCESS, Actions.CREATE__USER_FAILURE ],
     endpoint: `users`,
     schema: null,
     method: 'POST',
@@ -20,7 +20,7 @@ export const createGithubUserRequest = (account, code, state, scopeVersion = cur
   }
 });
 
-export const createGithubUser = (account, code = "-", state = "-") => dispatch => dispatch(createGithubUserRequest(account, code, state));
+export const createUser = (account, code = "-", state = "-") => dispatch => dispatch(createUserRequest(account, code, state));
 
 export const getUserRequest = (account) => ({
   [CALL_API]: {
