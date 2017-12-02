@@ -1,5 +1,4 @@
 import Promise from 'bluebird';
-import steemConnect from 'sc2-sdk';
 import Cookie from 'js-cookie';
 import { getFollowing } from '../user/userActions';
 import { initPushpad } from '../helpers/pushpadHelper';
@@ -7,8 +6,6 @@ import { getDrafts } from '../helpers/localStorageHelpers';
 import getImage from '../helpers/getImage';
 import * as request from 'superagent';
 import sc2 from '../sc2';
-
-Promise.promisifyAll(steemConnect);
 
 export const LOGIN = '@auth/LOGIN';
 export const LOGIN_START = '@auth/LOGIN_START';

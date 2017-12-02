@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import { createCommentPermlink, getBodyPatchIfSmaller } from '../vendor/steemitHelpers';
 import { notify } from '../app/Notification/notificationActions';
-import SteemConnect from 'sc2-sdk';
+import sc2 from '../sc2';
 
 const version = require('../../package.json').version;
 
@@ -101,7 +101,7 @@ export const sendComment = (parentPost, body, isUpdating = false, originalCommen
   return dispatch({
     type: SEND_COMMENT,
     payload: {
-      promise: SteemConnect
+      promise: sc2
         .comment(parentAuthor, parentPermlink, author, permlink, '', newBody, jsonMetadata)
         .then((resp) => {
           const focusedComment = {
@@ -145,7 +145,7 @@ export const likeComment = (commentId, weight = 10000, vote = 'like', retryCount
   dispatch({
     type: LIKE_COMMENT,
     payload: {
-      promise: SteemConnect.vote(voter, author, permlink, weight).then((res) => {
+      promise: sc2.vote(voter, author, permlink, weight).then((res) => {
         // reload comment data to fetch payout after vote
         steemAPI.getContentAsync(author, permlink).then((data) => {
           dispatch(reloadExistingComment(data));

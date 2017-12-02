@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import steem from 'steem';
-import steemConnect from 'sc2-sdk';
+import sc2 from '../sc2';
 import { Form, Input, Radio, Modal } from 'antd';
 import { closeTransfer } from './walletActions';
 import { getIsAuthenticated, getAuthenticatedUser, getIsTransferVisible, getTransferTo } from '../reducers';
@@ -79,7 +79,7 @@ export default class Transfer extends React.Component {
         };
         if (values.memo) transferQuery.memo = values.memo;
 
-        const win = window.open(steemConnect.sign('transfer', transferQuery), '_blank');
+        const win = window.open(sc2.sign('transfer', transferQuery), '_blank');
         win.focus();
         this.props.closeTransfer();
       }

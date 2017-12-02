@@ -1,6 +1,5 @@
 import Promise from 'bluebird';
 import assert from 'assert';
-import SteemConnect from 'sc2-sdk';
 import { push } from 'react-router-redux';
 import { createAction } from 'redux-actions';
 import { addDraftLocaleStorage, deleteDraftLocaleStorage } from '../../helpers/localStorageHelpers';
@@ -9,6 +8,7 @@ import { createPermlink, getBodyPatchIfSmaller } from '../../vendor/steemitHelpe
 
 // @UTOPIAN
 import { createContribution, updateContribution } from '../../actions/contribution';
+import sc2 from '../../sc2';
 
 export const CREATE_POST = '@editor/CREATE_POST';
 export const CREATE_POST_START = '@editor/CREATE_POST_START';
@@ -142,7 +142,7 @@ export const broadcastComment = (
 
   console.log("OPERATIONS", operations)
 
-  return SteemConnect.broadcast(operations).catch(e => {
+  return sc2.broadcast(operations).catch(e => {
     console.log(e);
     alert("Utopian could not communicate with Steem. Please try again later. Your post is saved in the drafts. https://utopian.io/drafts");
   });

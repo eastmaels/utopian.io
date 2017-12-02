@@ -51,7 +51,7 @@ class Sponsors extends React.PureComponent {
       return (
         <div>
           {sponsors.map(sponsor => {
-            const voteWitness = () => ('(<a href="https://v2.steemconnect.com/sign/account-witness-vote?witness='+sponsor.account+'&approve=1">Vote for Witness</a>)');
+            const voteWitness = () => ('(<a href="' + process.env.STEEMCONNECT_HOST + '/sign/account-witness-vote?witness='+sponsor.account+'&approve=1">Vote for Witness</a>)');
             return (
               <div key={sponsor.account}>@{sponsor.account} {sponsor.is_witness ? voteWitness() : null}</div>
             )
@@ -156,7 +156,7 @@ class Sponsors extends React.PureComponent {
                   if (res.status === 500 || res.status === 404) {
                     alert(res.message);
                   } else {
-                    window.location.href=`https://v2.steemconnect.com/sign/delegate-vesting-shares?delegator=${account}&delegatee=utopian-io&vesting_shares=${sp}%20SP&redirect_uri=${window.location.href}`;
+                    window.location.href=`${process.env.STEEMCONNECT_HOST}/sign/delegate-vesting-shares?delegator=${account}&delegatee=utopian-io&vesting_shares=${sp}%20SP&redirect_uri=${window.location.href}`;
                     this.setState({sponsorModal: false});
                   }
                 });
