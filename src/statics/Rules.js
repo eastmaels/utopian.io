@@ -5,6 +5,13 @@ import './Rules.less';
 export default (props) =>
   (<div className="main-panel help-section">
     <div className="container text-center my-5">
+    <h2>
+        See our FAQ
+      </h2>
+      <p>
+        Click <b><a href="/faq">here</a></b> to view our <em>Frequently Asked Questions</em> (FAQ) page, where we detail the most asked questions and their answers.
+      </p>
+      <br />
       <h2>
         Check the Github Repository
       </h2>

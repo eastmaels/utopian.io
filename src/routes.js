@@ -23,6 +23,7 @@ import Rules from './statics/Rules';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
 import WelcomeModerator from './statics/WelcomeModerator';
+import Faq from './statics/Faq';
 import BannedScreen from './statics/BannedScreen';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
@@ -55,6 +56,7 @@ export default (
       <Route path="/sponsors" exact component={Sponsors} />
       <Route path="/moderators" exact component={Moderators} />
       <Route path="/welcome-moderator" exact component={WelcomeModerator} />
+      <Route path="/faq" exact component={Faq} />
       <Route path="/banned" exact component={BannedScreen} />
       <Route
         path="/bookmarks"

@@ -130,13 +130,26 @@ class BanUser extends React.Component {
   }
 
   isPermitted () {
-    const { moderators, authenticatedUser } = this.props;
+    const { moderators, authenticatedUser, username } = this.props;
     const check = R.find(R.propEq('account', authenticatedUser.name))(moderators);
+    var first = false; var second = false;
     if (check && check.supermoderator && (check.supermoderator == true)) {
-      return true;
+      first = true;
     } else {
-      return false;
+      first = false;
     }
+    const other = R.find(R.propEq('account', username))(moderators);
+    if (other && other.supermoderator && (other.supermoderator == true)) {
+      second = false;
+    } else {
+      second = true;
+    }
+    if (check && check.administrator && (check.administrator == true)) {
+      first = true;
+      second = true;
+    }
+    return (first && second);
+
   }
 
   startBanUser (banned) {
