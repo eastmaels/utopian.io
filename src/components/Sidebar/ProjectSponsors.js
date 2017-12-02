@@ -19,6 +19,24 @@ class ProjectSponsors extends React.Component {
     }
   }
 
+  loadSponsor (sponsor, project, callback) {
+    steem.api.getVestingDelegations(sponsor, -1, 1000, function(err, delegations) {
+      const isDelegating = R.find(R.propEq('delegatee', project.steem_account.account))(delegations);
+
+      if (isDelegating) {
+        steem.api.getDynamicGlobalProperties(function(err, result) {
+          if (!err) {
+            const VS = parseInt(isDelegating.vesting_shares);
+            const delegatedSP = steem.formatter.vestToSteem(VS, result.total_vesting_shares, result.total_vesting_fund_steem);
+            callback(delegatedSP);
+          } else {
+            callback(false);
+          }
+        })
+      }
+    });
+  }
+
   componentDidMount () {
     const { project } = this.props;
     const sponsorsArr = [];
@@ -26,29 +44,19 @@ class ProjectSponsors extends React.Component {
 
     project.sponsors.forEach((sponsorObj, index) => {
       const sponsor = sponsorObj.account;
-
-      steem.api.getVestingDelegations(sponsor, -1, 1000, function(err, delegations) {
-        const isDelegating = R.find(R.propEq('delegatee', project.steem_account.account))(delegations);
-
-        if (isDelegating) {
-          steem.api.getDynamicGlobalProperties(function(err, result) {
-            if (!err) {
-              const VS = parseInt(isDelegating.vesting_shares);
-              const delegatedSP = steem.formatter.vestToSteem(VS, result.total_vesting_shares, result.total_vesting_fund_steem);
-
-              sponsorsArr.push({
+      this.loadSponsor(sponsor, project, (delegatedSP) => {
+        if (delegatedSP) {
+          this.setState({
+            sponsors: [
+              ...this.state.sponsors,
+              {
                 account: sponsor,
                 delegated: `${Math.round(delegatedSP)} SP`
-              })
-            }
-            if (index + 1 === project.sponsors.length) {
-              _self.setState({
-                sponsors: sponsorsArr,
-              })
-            }
+              }
+            ],
           })
         }
-      });
+      })
     });
   }
 
