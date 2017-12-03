@@ -164,8 +164,7 @@ class StoryFooter extends React.Component {
       if (!this.state.voteWithSponsors) {
         this.props.onLikeClick(this.props.post, this.props.postState, this.state.sliderValue * 100);
       } else {
-        const access_token = Cookie.get('access_token');
-        voteWithSponsors(post.author, post.permlink, postData.platform, postData.repository.id, this.state.sliderSponsorsValue * 100, access_token).then(() => {
+        voteWithSponsors(post.author, post.permlink, postData.platform, postData.repository.id, this.state.sliderSponsorsValue * 100).then(() => {
           setTimeout(() => updateContribution(post.author, post.permlink), 1000);
         }).catch(() => setTimeout(() => updateContribution(post.author, post.permlink), 1000))
       }

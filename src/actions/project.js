@@ -15,7 +15,7 @@ export const getGithubRepoRequest = repoId => ({
 
 export const getGithubRepo = repoId => dispatch => dispatch(getGithubRepoRequest(repoId));
 
-export const createProjectAccountRequest = (externalId, projectName, platform, owner, accessToken) => ({
+export const createProjectAccountRequest = (externalId, projectName, platform, owner) => ({
   [CALL_API]: {
     types: [ Actions.CREATE_PROJECT_ACCOUNT_REQUEST, Actions.CREATE_PROJECT_ACCOUNT_SUCCESS, Actions.CREATE_PROJECT_ACCOUNT_FAILURE ],
     endpoint: `projects`,
@@ -25,15 +25,14 @@ export const createProjectAccountRequest = (externalId, projectName, platform, o
       owner,
       platform,
       project_name: projectName,
-      external_id: externalId,
-      access_token: accessToken,
+      external_id: externalId
     },
     additionalParams: {},
     absolute: false
   }
 });
 
-export const createProjectAccount = (externalId, projectName, platform, owner, accessToken) => dispatch => dispatch(createProjectAccountRequest(externalId, projectName, platform, owner, accessToken));
+export const createProjectAccount = (externalId, projectName, platform, owner) => dispatch => dispatch(createProjectAccountRequest(externalId, projectName, platform, owner));
 
 export const createProjectSponsorRequest = (platform, externalId, sponsor) => ({
   [CALL_API]: {
@@ -66,7 +65,7 @@ export const getProjectRequest = (platform, externalId) => ({
 export const getProject = (platform, externalId) => dispatch => dispatch(getProjectRequest(platform, externalId));
 
 
-export const voteWithSponsorsRequest = (author, permlink, platform, externalId, vote, access_token) => ({
+export const voteWithSponsorsRequest = (author, permlink, platform, externalId, vote) => ({
   [CALL_API]: {
     types: [ Actions.VOTE_WITH_SPONSORS_REQUEST, Actions.VOTE_WITH_SPONSORS_SUCCESS, Actions.VOTE_WITH_SPONSORS_FAILURE ],
     endpoint: `projects/${platform}/${externalId}/sponsors/vote`,
@@ -75,15 +74,14 @@ export const voteWithSponsorsRequest = (author, permlink, platform, externalId, 
     payload: {
       author,
       permlink,
-      vote,
-      access_token,
+      vote
     },
     additionalParams: {},
     absolute: false
   }
 });
 
-export const voteWithSponsors = (author, permlink, platform, externalId, vote, access_token) => dispatch => dispatch(voteWithSponsorsRequest(author, permlink, platform, externalId, vote, access_token));
+export const voteWithSponsors = (author, permlink, platform, externalId, vote) => dispatch => dispatch(voteWithSponsorsRequest(author, permlink, platform, externalId, vote, access_token));
 
 export const setGithubRepo = (repo) => ({
   type: Actions.SET_GITHUB_REPO,

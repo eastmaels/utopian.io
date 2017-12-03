@@ -132,7 +132,7 @@ export const broadcastComment = (
     if (reward === '100') {
       commentOptionsConfig.percent_steem_dollars = 0;
     } else {
-      commentOptionsConfig.percent_steem_dollars = 5000;
+      commentOptionsConfig.percent_steem_dollars = 10000;
     }
 
     commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
