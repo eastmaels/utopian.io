@@ -5,7 +5,7 @@ export const currentGithubScopeVersion = Actions.CURRENT_SCOPE_VERSION;
 
 export const createUserRequest = (account, code, state, scopeVersion = currentGithubScopeVersion) => ({
   [CALL_API]: {
-    types: [ Actions.CREATE_USER_REQUEST, Actions.CREATE_USER_SUCCESS, Actions.CREATE__USER_FAILURE ],
+    types: [ Actions.CREATE_USER_REQUEST, Actions.CREATE_USER_SUCCESS, Actions.CREATE_USER_FAILURE ],
     endpoint: `users`,
     schema: null,
     method: 'POST',
