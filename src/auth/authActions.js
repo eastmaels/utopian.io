@@ -54,7 +54,7 @@ export const login = () => (dispatch) => {
             window.ga('set', 'userId', resp.user);
           }
 
-          initPushpad(resp.user, Cookie.get('access_token'));
+          //initPushpad(resp.user, Cookie.get('access_token'));
           resp.drafts = getDrafts();
           return resp;
         })

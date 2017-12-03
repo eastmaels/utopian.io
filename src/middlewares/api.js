@@ -1,28 +1,33 @@
 import { get, post, put } from 'superagent';
 import { merge, path } from 'ramda';
+import Cookie from 'js-cookie';
 
 export const CALL_API = 'CALL_API';
 const API_ROOT = process.env.UTOPIAN_API;
 
 const callApi = (endpoint, schema, method, payload, additionalParams, absolute?) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) && !absolute
-          ? API_ROOT + endpoint : endpoint
+          ? API_ROOT + endpoint : endpoint;
+  const session = Cookie.get('session');
 
   switch (method) {
     case 'GET':
       return get(fullUrl)
+        .set({ session })
         .then(res => {
           return res.body
         });
     case 'POST':
       return post(fullUrl)
         .send(payload)
+        .set({ session })
         .then(res => {
           return res.body
         });
     case 'PUT':
       return put(fullUrl)
         .send(payload)
+        .set({ session })
         .then(res => {
           return res.body
         });

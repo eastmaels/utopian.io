@@ -30,7 +30,7 @@ function updateMetadata(metadata) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/profile';
   const session = Cookie.get('session');
   return request.put(endpoint)
-                .send(metadata)
+                .send({user_metadata: metadata})
                 .set('session', session)
                 .then(res => res.body);
 }
