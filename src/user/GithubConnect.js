@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getAuthenticatedUser } from '../reducers';
 import { Icon } from 'antd';
 import * as querystring from 'querystring';
-import { createGithubUser } from '../actions/user';
+import { createUser } from '../actions/user';
 
 import GithubBtn from '../components/Button/Github';
 
@@ -13,7 +13,7 @@ import './GithubConnect.less';
 @connect(state => ({
   user: getAuthenticatedUser(state),
 }), {
-  createGithubUser,
+  createUser,
 })
 export default class GithubConnect extends React.Component {
   static propTypes = {
@@ -38,13 +38,13 @@ export default class GithubConnect extends React.Component {
 
   componentDidMount() {
     this.setState({componentMounted: true});
-    const { location, createGithubUser, user, history } = this.props;
+    const { location, createUser, user, history } = this.props;
     const params = querystring.decode(location.search.replace('?', ''));
     const { code, state } = params;
 
     if (user && user.name) {
       this.setState({userFound: true});
-      createGithubUser(user.name, code, state).then(res => {
+      createUser(user.name, code, state).then(res => {
         this.setState({userCreated: true});
         if (res.response && res.response.account) {
           this.setState({fullSuccess: true});
