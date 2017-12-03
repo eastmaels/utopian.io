@@ -74,7 +74,9 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
     payload: {
-      promise: request.get(process.env.UTOPIAN_API + 'logout')
+      promise: request
+        .get(process.env.UTOPIAN_API + 'logout')
+        .set({ session: Cookie.get('session') })
         .then(() => {
           Cookie.remove('session');
           if (process.env.NODE_ENV === 'production') {
