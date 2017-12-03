@@ -235,6 +235,7 @@ class Topnav extends React.Component {
               <Link className="Topnav__brand" to="/">
                 <img src="/img/utopian-logo-120x120.png"/>
               </Link>
+              <span className="Topnav__version">beta</span>
             </div>
             <div className="center">
               <div className="Topnav__input-container">
