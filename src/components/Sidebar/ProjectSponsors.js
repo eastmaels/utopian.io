@@ -100,7 +100,7 @@ class ProjectSponsors extends React.Component {
           className="project-sponsors-modal"
           visible={this.state.sponsorModal}
           title='Become a Project Sponsor!'
-          okText='Proceed to SteemConnect'
+          okText='Proceed to Delegation'
           cancelText='Later'
           onCancel={() => this.setState({sponsorModal: false})}
           onOk={ () => {
@@ -114,7 +114,7 @@ class ProjectSponsors extends React.Component {
 
             // 0 is allowed to undelegate
             if (sp === 'undefined' || sp === '') {
-              alert(`Please enter the amount of Steem Power you wish to delegate.`);
+              alert(`Please enter the amount of Steem Power you wish to delegate. You may enter 0 if you would like to undelegate or revoke sponsorship.`);
               return;
             }
 
@@ -122,7 +122,8 @@ class ProjectSponsors extends React.Component {
               if (res.status === 500 || res.status === 404) {
                 alert(res.message);
               } else {
-                window.location.href=`https://v2.steemconnect.com/sign/delegate-vesting-shares?delegator=${sponsor}&delegatee=${account}&vesting_shares=${sp}%20SP&redirect_uri=${window.location.href}`;
+                var scBase = process.env.STEEMCONNECT_HOST || "https://v2.steemconnect.com";
+                window.location.href=`${scBase}/sign/delegate-vesting-shares?delegator=${sponsor}&delegatee=${account}&vesting_shares=${sp}%20SP&redirect_uri=${window.location.href}`;
                 this.setState({sponsorModal: false});
               }
             });
