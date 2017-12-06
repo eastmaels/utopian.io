@@ -11,10 +11,9 @@ function getLoginUrl(state) {
 
   const url = encodeURIComponent(process.env.STEEMCONNECT_REDIRECT_URL);
   const redirect = `redirect_uri=${url}`;
-  var utopianAppName = "utopian-io";
-  if (process.env.STEEMCONNECT_HOST && process.env.STEEMCONNECT_HOST === "https://v2.steemconnect.com") utopianAppName = "utopian.app";
+
   const response = 'response_type=code';
-  const clientId = `client_id=${encodeURIComponent(utopianAppName)}`;
+  const clientId = `client_id=${encodeURIComponent('utopian-io')}`;
   state = `state=${state ? encodeURIComponent(state) : ''}`;
   return `${auth}?${clientId}&${response}&${redirect}&${state}&scope=`;
 }
