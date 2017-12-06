@@ -8,7 +8,10 @@ const API_ROOT = process.env.UTOPIAN_API;
 const callApi = (endpoint, schema, method, payload, additionalParams, absolute?) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) && !absolute
           ? API_ROOT + endpoint : endpoint;
-  const session = Cookie.get('session');
+  let session = undefined;
+  if (fullUrl.indexOf(API_ROOT) !== -1) {
+    session = Cookie.get('session');
+  }
 
   switch (method) {
     case 'GET':

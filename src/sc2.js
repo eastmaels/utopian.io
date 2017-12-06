@@ -13,7 +13,7 @@ function getLoginUrl(state) {
   const redirect = `redirect_uri=${url}`;
 
   const response = 'response_type=code';
-  const clientId = `client_id=${encodeURIComponent('utopian-io')}`;
+  const clientId = `client_id=${encodeURIComponent('utopian.app')}`;
   state = `state=${state ? encodeURIComponent(state) : ''}`;
   return `${auth}?${clientId}&${response}&${redirect}&${state}&scope=`;
 }

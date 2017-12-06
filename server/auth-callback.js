@@ -15,7 +15,8 @@ function authCallback(req, res) {
         throw new Error('HTTP ' + loginRes.status + '\n' + loginRes.body);
       }
       res.cookie('session', loginRes.body.session, {
-        maxAge: loginRes.body.expiry - Date.now()
+        maxAge: loginRes.body.expiry - Date.now(),
+        sameSite: true
       });
       res.redirect(next);
     }).catch(err => {
