@@ -65,24 +65,24 @@ class Topnav extends React.Component {
     const { history, location } = this.props;
 
     return (
-      <div className="Search">
+      <div className="Search SearchSelector">
 
-        <InputGroup compact>
-          <Select defaultValue={this.searchSelected(location) || 'projects'} onChange={(section) => this.setState({searchSection: section})}>
-            <Option value="projects"><Icon type="github" className="iconfont icon-search" /> Projects</Option>
-            <Option value="ideas"><CategoryIcon type="ideas"/> Suggestions</Option>
-            <Option value="sub-projects"><CategoryIcon type="sub-projects"/> Sub-Projects</Option>
-            <Option value="development"><CategoryIcon type="development"/> Code</Option>
-            <Option value="bug-hunting"><CategoryIcon type="bug-hunting"/> Bugs</Option>
-            <Option value="translations"><CategoryIcon type="translations"/> Translations</Option>
-            <Option value="graphics"><CategoryIcon type="graphics"/> Graphics</Option>
-            <Option value="analysis"><CategoryIcon type="analysis"/> Analysis</Option>
-            <Option value="social"><CategoryIcon type="social"/> Visibility</Option>
-            <Option value="documentation"><CategoryIcon type="documentation"/> Docs</Option>
-            <Option value="tutorials"><CategoryIcon type="tutorials"/> Tuts</Option>
-            <Option value="video-tutorials"><CategoryIcon type="video-tutorials"/> Video Tuts</Option>
-            <Option value="copywriting"><CategoryIcon type="copywriting"/> Copy</Option>
-            <Option value="blog"><CategoryIcon type="blog"/> Blogs</Option>
+        <InputGroup className="SearchSelector" compact>
+          <Select className="SearchSelector" defaultValue={this.searchSelected(location) || 'projects'} onChange={(section) => this.setState({searchSection: section})}>
+            <Option className="SearchSelector" value="projects"><Icon type="github" className="SearchSelectorGit iconfont icon-search" /> Projects</Option>
+            <Option value="ideas"><CategoryIcon className="SearchSelector" type="ideas"/> Suggestions</Option>
+            <Option value="sub-projects"><CategoryIcon className="SearchSelector" type="sub-projects"/> Sub-Projects</Option>
+            <Option value="development"><CategoryIcon className="SearchSelector" type="development"/> Code</Option>
+            <Option value="bug-hunting"><CategoryIcon className="SearchSelector" type="bug-hunting"/> Bugs</Option>
+            <Option value="translations"><CategoryIcon className="SearchSelector" type="translations"/> Translations</Option>
+            <Option value="graphics"><CategoryIcon className="SearchSelector" type="graphics"/> Graphics</Option>
+            <Option value="analysis"><CategoryIcon className="SearchSelector" type="analysis"/> Analysis</Option>
+            <Option value="social"><CategoryIcon className="SearchSelector" type="social"/> Visibility</Option>
+            <Option value="documentation"><CategoryIcon className="SearchSelector" type="documentation"/> Docs</Option>
+            <Option value="tutorials"><CategoryIcon className="SearchSelector" type="tutorials"/> Tuts</Option>
+            <Option value="video-tutorials"><CategoryIcon className="SearchSelector" type="video-tutorials"/> Video Tuts</Option>
+            <Option value="copywriting"><CategoryIcon className="SearchSelector" type="copywriting"/> Copy</Option>
+            <Option value="blog"><CategoryIcon className="SearchSelector" type="blog"/> Blogs</Option>
           </Select>
           <Input
             ref={input => this.searchInput = input}
@@ -167,7 +167,7 @@ class Topnav extends React.Component {
              </Popover>
              </Tooltip>
              </Menu.Item>*/}
-            <Menu.Item key="more">
+            <Menu.Item className="UWhite" key="more">
               <Popover
                 placement="bottom"
                 trigger="click"
@@ -209,17 +209,17 @@ class Topnav extends React.Component {
       content = (
         <div className="Topnav__menu-container">
           <Menu className="Topnav__menu-container__menu" mode="horizontal">
-            <Menu.Item key="signup">
-              <a target="_blank" rel="noopener noreferrer" href="https://steemit.com/pick_account">
-                <FormattedMessage id="signup" defaultMessage="Sign up"/>
+            <Menu.Item key="signup" className="UWhite">
+              <a target="_blank" rel="noopener noreferrer" className="UWhite" href="https://steemit.com/pick_account">
+                <FormattedMessage id="signup" className="UWhite" defaultMessage="Sign up"/>
               </a>
             </Menu.Item>
-            <Menu.Item key="divider" disabled>
+            <Menu.Item key="divider" className="UWhite" disabled>
               |
             </Menu.Item>
-            <Menu.Item key="login">
-              <a href={sc2.getLoginUrl(next)}>
-                <FormattedMessage id="login" defaultMessage="Log in"/>
+            <Menu.Item className="UWhite" key="login">
+              <a href={sc2.getLoginUrl(next)} className="UWhite">
+                <FormattedMessage id="login" className="UWhite" defaultMessage="Log in"/>
               </a>
             </Menu.Item>
           </Menu>
@@ -233,9 +233,9 @@ class Topnav extends React.Component {
           <div className="topnav-layout container">
             <div className="left">
               <Link className="Topnav__brand" to="/">
-                <img src="/img/utopian-logo-120x120.png"/>
+                <img src="/img/utopian-logo.png"/>
               </Link>
-              <span className="Topnav__version">beta</span>
+              <span className="Topnav__version"></span>
             </div>
             <div className="center">
               <div className="Topnav__input-container">

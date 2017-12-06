@@ -80,7 +80,7 @@
 }
 
 .Topnav {
-  background-color: @white;
+  background-color: @black;
   border-bottom: 1px solid #e9e7e7;
   height: 56px;
   line-height: 56px;
@@ -142,7 +142,7 @@
   }
 
   &__search-menu {
-    background: @white;
+    background: @black;
     border: solid 1px #e9e7e7;
     overflow-y: scroll;
     max-height: 300px;
@@ -176,8 +176,8 @@
     padding: 0 @base-spacing;
     position: relative;
     height: 55px;
-    border-left: solid 1px #e9e7e7;
-    border-right: solid 1px #e9e7e7;
+    border-left: solid 1.5px #b3b3b3cc;
+    border-right: solid 0px #d3d3d3;
 
     @media screen and (max-width: 736px) {
       padding-top: 55px;
@@ -185,12 +185,30 @@
 
   }
 
+  .UWhite {
+    color: rgba(255, 255, 255, 0.8) !important; 
+  }
+
+  .SearchSelector {
+    background-color: @black !important;
+    color: white !important;
+  }
+
+  .ant-select-selection {
+    background-color: @black !important;
+  }
+
+  .SearchSelectorGit {
+    color: white !important;
+  }
 
   &__menu-container {
     display: flex;
     justify-content: flex-end;
 
     &__menu {
+      background-color: @black !important;
+      color: rgba(255, 255, 255, 0.65) !important; 
       flex-shrink: 0;
       height: 55px !important;
       border: 0 !important;
