@@ -45,7 +45,7 @@ const GithubRepos = ({ user }) => {
         <div className="GithubRepos__divider"></div>
         <div className="GithubRepos__repos">
         {user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && user.repos && user.repos.length ? <div>
-            <ul>
+            <ul style={{listStyleType: "none"}}>
               {user.repos.map(repo => (
                 <li key={repo.id}>
                   <Link className="GithubRepos__projectname" to={`/project/${repo.full_name}/github/${repo.id}/all`}>

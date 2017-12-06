@@ -10,7 +10,7 @@ const isActive = (item, match, location) => location.pathname === item;
 const Sidenav = ({ username }) =>
   (<div>
     {username &&
-      <ul className="Sidenav">
+      <ul className="Sidenav" style={{listStyleType: 'none'}}>
         <li>
           <NavLink to={`/@${username}`} activeClassName="Sidenav__item--active">
             <i className="iconfont icon-mine" />
