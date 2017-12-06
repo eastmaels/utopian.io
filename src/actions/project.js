@@ -81,7 +81,7 @@ export const voteWithSponsorsRequest = (author, permlink, platform, externalId, 
   }
 });
 
-export const voteWithSponsors = (author, permlink, platform, externalId, vote) => dispatch => dispatch(voteWithSponsorsRequest(author, permlink, platform, externalId, vote, access_token));
+export const voteWithSponsors = (author, permlink, platform, externalId, vote) => dispatch => dispatch(voteWithSponsorsRequest(author, permlink, platform, externalId, vote));
 
 export const setGithubRepo = (repo) => ({
   type: Actions.SET_GITHUB_REPO,
