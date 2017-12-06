@@ -95,6 +95,7 @@ class Topnav extends React.Component {
                 history.push(`/search/${searchSection}/${q}`);
               }
             }}
+            className="searchBar"
           />
         </InputGroup>
 
@@ -233,7 +234,8 @@ class Topnav extends React.Component {
           <div className="topnav-layout container">
             <div className="left">
               <Link className="Topnav__brand" to="/">
-                <img src="/img/utopian-logo.png"/>
+              {/* /img/utopian-logo.png TEMPORARY TESTING REPLACEMENT */}
+                <img id="MainLogo" src="https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets/img/utopian-logo.png"/>
               </Link>
               <span className="Topnav__version"></span>
             </div>
