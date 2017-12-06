@@ -49,10 +49,16 @@ class Topnav extends React.Component {
     return false;
   };
 
+  handleChangeSearchType(section) {
+    this.setState({ searchSection: section })
+    this.props.history.push(`/search/${section}`);    
+  }
+
   constructor (props) {
     super(props)
     this.renderItems = this.renderItems.bind(this);
     this.searchSelected = this.searchSelected.bind(this);
+    this.handleChangeSearchType = this.handleChangeSearchType.bind(this);
     this.state = {
       searchSection: this.searchSelected(props.location) || 'projects',
     };
@@ -68,8 +74,8 @@ class Topnav extends React.Component {
     return (
       <div className="Search">
 
-        <InputGroup compact>
-          <Select defaultValue={this.searchSelected(location) || 'projects'} onChange={(section) => this.setState({searchSection: section})}>
+        <InputGroup compact>                                                
+          <Select defaultValue={this.searchSelected(location) || 'projects'} onChange={this.handleChangeSearchType}>
             <Option value="projects"><Icon type="github" className="iconfont icon-search" /> Projects</Option>
             <Option value="ideas"><CategoryIcon type="ideas"/> Suggestions</Option>
             <Option value="sub-projects"><CategoryIcon type="sub-projects"/> Sub-Projects</Option>
