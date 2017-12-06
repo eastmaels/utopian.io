@@ -170,10 +170,11 @@ class Topnav extends React.Component {
              </Menu.Item>*/}
             <Menu.Item className="UWhite" key="more">
               <Popover
+                className="TopPopover"
                 placement="bottom"
                 trigger="click"
                 content={
-                  <PopoverMenu onSelect={onMenuItemClick}>
+                  <PopoverMenu onSelect={onMenuItemClick} className="TopPopover">
                     <PopoverMenuItem key="new-contribution">
                       New Contribution
                     </PopoverMenuItem>
@@ -198,7 +199,7 @@ class Topnav extends React.Component {
                   </PopoverMenu>
                 }
               >
-                <a className="Topnav__link Topnav__link--light">
+                <a className="Topnav__whitelink Topnav__whitelink--light">
                   <i className="iconfont icon-switch"/>
                 </a>
               </Popover>

@@ -28,9 +28,35 @@
   color: #fff !important;
 }
 
+.PopoverMenu {
+  background-color: @black !important;
+}
+
+.ant-popover-arrow {
+  color: @black !important;
+  background-color: @black !important;
+}
+
+.ant-popover-inner-content {
+  background-color: @black !important;
+}
+
+.PopoverMenuItem > a {
+  color: rgb(228, 228, 228) !important;
+}
+
+.TopPopover {
+  color: #fff !important;
+  background-color: @black !important;
+}
+
 .Search,
 .Searchmobile {
   border-bottom: 1px solid #e9e7e7 !important;
+  .ant-input {
+    background-color: @black !important;
+    color: #fff !important;
+  }
 
   > span {
     display: flex !important;
@@ -42,7 +68,7 @@
       border-radius: 0;
       height: 100%;
       border: 0;
-      border-right: 1px solid #e9e7e7 !important;
+      border-right: 1px solid #b3b3b3cc !important;
 
       @media screen and (max-width: 736px) {
         min-width: 30%;
@@ -148,7 +174,7 @@
 
   &__search-menu {
     background: @black;
-    border: solid 1px #e9e7e7;
+    border: solid 1px #b3b3b3cc;
     overflow-y: scroll;
     max-height: 300px;
 
@@ -269,6 +295,30 @@
       border: none !important;
     }
   }
+  &__link {
+    i {
+      color: rgba(0, 0, 0, 0.65);
+      vertical-align: middle;
+    }
+
+    &--light {
+      i {
+        font-weight: normal !important;
+      }
+    }
+  }
+  &__whitelink {
+    i {
+      color: rgba(255, 255, 255, 0.65);
+      vertical-align: middle;
+    }
+
+    &--light {
+      i {
+        font-weight: normal !important;
+      }
+    }
+  }
   &__newReport {
     color: @white !important;
 
@@ -287,16 +337,5 @@
     }
   }
 
-  &__link {
-    i {
-      color: rgba(0, 0, 0, 0.65);
-      vertical-align: middle;
-    }
-
-    &--light {
-      i {
-        font-weight: normal !important;
-      }
-    }
-  }
+  
 }
