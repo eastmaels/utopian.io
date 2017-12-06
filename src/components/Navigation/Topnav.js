@@ -50,8 +50,27 @@ class Topnav extends React.Component {
   };
 
   handleChangeSearchType(section) {
+    const { history } = this.props
     this.setState({ searchSection: section })
-    this.props.history.push(`/search/${section}`);    
+
+    const validPaths = [
+      'projects',
+      'ideas',
+      'development',
+      'bug-hunting',
+      'translations',
+      'graphics',
+      'documentation',
+      'analysis',
+      'social',
+      'blog',
+      ''
+    ]
+    // Only change path if we are on a 1st level url of one of the valid paths
+    if (validPaths.includes(history.location.pathname.substring(1))
+      && history.location.pathname.split('/').length != 1) {
+      history.push(`/${section}`);
+    }
   }
 
   constructor (props) {
