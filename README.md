@@ -3,7 +3,7 @@ Forked from https://github.com/busyorg/busy, Utopian uses the [STEEM Blockchain]
 
 See the website in action [here:](https://utopian.io)
 
-<center><img src="https://steemitimages.com/DQmTdu5ndWC2s1NwdYftLzc4oYhqCrowWqMHE2Q92c93W9F/image.png"/></center>
+<center><img src="https://steemitimages.com/DQmYgMbYHNtiNmA6TbSL34tNwaMvxsQu2o5zrDvnbDks8bY/image.png"/></center>
   
 ## Contributing to this Project
 1. Get in touch on Discord: https://discord.gg/5qMzAJ
