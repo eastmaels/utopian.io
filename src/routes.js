@@ -23,6 +23,7 @@ import Rules from './statics/Rules';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
 import WelcomeModerator from './statics/WelcomeModerator';
+import PostShortlink from './statics/PostShortlink';
 import Faq from './statics/Faq';
 import BannedScreen from './statics/BannedScreen';
 import Team from './statics/Team';
@@ -82,6 +83,13 @@ export default (
           <RequireLogin>
             <WriteAnnouncement {...props} />
           </RequireLogin>
+        )}
+      />
+      <Route
+        exact
+        path="/u/:postId"
+        render={(props) => (
+            <PostShortlink {...props} />
         )}
       />
       <Route

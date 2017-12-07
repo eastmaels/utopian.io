@@ -47,6 +47,10 @@ export const GET_CONTRIBUTIONS_REQUEST = '@contributions/GET_CONTRIBUTIONS_REQUE
 export const GET_CONTRIBUTIONS_SUCCESS = '@contributions/GET_CONTRIBUTIONS_SUCCESS';
 export const GET_CONTRIBUTIONS_FAILURE = '@contributions/GET_CONTRIBUTIONS_FAILURE';
 
+export const GET_POSTBYID_REQUEST = '@contributions/GET_POSTBYID_REQUEST';
+export const GET_POSTBYID_SUCCESS = '@contributions/GET_POSTBYID_SUCCESS';
+export const GET_POSTBYID_FAILURE = '@contributions/GET_POSTBYID_FAILURE';
+
 export const SET_CONTRIBUTION = '@contribution/SET_CONTRIBUTION';
 
 export const GET_CONTRIBUTION_REQUEST = '@contribution/GET_CONTRIBUTION_REQUEST';

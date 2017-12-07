@@ -17,3 +17,20 @@ export const getContributionsRequest = query => ({
 });
 
 export const getContributions = query => dispatch => dispatch(getContributionsRequest(query));
+
+export const getPostByIdRequest = (postId) => ({
+    [CALL_API]: {
+        types: [ Actions.GET_POSTBYID_REQUEST, Actions.GET_POSTBYID_SUCCESS, Actions.GET_POSTBYID_FAILURE ],
+        endpoint: `posts/byid/?${querystring.encode(postId)}`,
+        schema: null,
+        method: 'GET',
+        payload: {
+            postId: postId,
+        },
+        additionalParams: {
+        },
+        absolute: false
+    }
+});
+
+export const getPostById = (postId) => dispatch => dispatch(getPostByIdRequest(query));
