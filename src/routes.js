@@ -87,9 +87,9 @@ export default (
       />
       <Route
         exact
-        path="/u/:postId"
-        render={(props) => (
-            <PostShortlink {...props} />
+        path="/c/:postId"
+        render={() => (
+            <PostShortlink />
         )}
       />
       <Route

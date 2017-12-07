@@ -12,7 +12,7 @@ import './Moderators.less';
     }), { getPostById })
 class Sponsors extends React.PureComponent {
     static propTypes = {
-        postId: PropTypes.string,
+        postId: PropTypes.object,
     }
     static defaultProps = {
         postId: '404',
@@ -31,15 +31,19 @@ class Sponsors extends React.PureComponent {
     }
     componentWillMount() {
         const { postId } = this.props;
+        console.log("POST ID: ", postId);
         if (postId === '404') {
             this.fallBack();
         }
     }
     render() {
-        const { postId, getPostById } = this.props;
+        const { postId, getPostById, match } = this.props;
         var success = false;
+        var sId = '404';
+        if (postId && postId !== '404') sId = postId;
+        else sId = match.params.postId;
         try {
-            getPostById(parseInt(postId)).then((post) => {
+            getPostById(parseInt(sId)).then((post) => {
                 if (post && post.url) {
                     console.log("POST SHORTLINK, redirecting to: ", post.url);
                     window.location.href = post.url;

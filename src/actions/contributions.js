@@ -21,7 +21,7 @@ export const getContributions = query => dispatch => dispatch(getContributionsRe
 export const getPostByIdRequest = (postId) => ({
     [CALL_API]: {
         types: [ Actions.GET_POSTBYID_REQUEST, Actions.GET_POSTBYID_SUCCESS, Actions.GET_POSTBYID_FAILURE ],
-        endpoint: `posts/byid/?${querystring.encode(postId)}`,
+        endpoint: `posts/byid/${postId}`,
         schema: null,
         method: 'GET',
         payload: {
