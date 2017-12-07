@@ -33,7 +33,7 @@ if (process.env.SENTRY_PUBLIC_DSN) {
 }
 
 const session = Cookie.get('session');
-if (!session && process.env.NODE_ENV === 'production') {
+if (!session && process.env.UTOPIAN_LANDING_URL) {
   window.location.href = process.env.UTOPIAN_LANDING_URL;
 }
 
