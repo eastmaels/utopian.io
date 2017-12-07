@@ -8,15 +8,15 @@ import { Icon } from 'antd';
 import './Moderators.less';
 
 @connect(
-    (state, ownProps) => ({
+    (state) => ({
     }), { getPostById })
-class Sponsors extends React.PureComponent {
-    static propTypes = {
-        postId: PropTypes.object,
-    }
-    static defaultProps = {
-        postId: '404',
-    }
+class PostShortlink extends React.PureComponent {
+    // static propTypes = {
+    //     postId: PropTypes.object,
+    // }
+    // static defaultProps = {
+    //     postId: '404',
+    // }
     constructor (props) {
       super(props);
   
@@ -30,23 +30,23 @@ class Sponsors extends React.PureComponent {
         window.location.href = "/";
     }
     componentWillMount() {
-        const { postId } = this.props;
-        console.log("POST ID: ", postId);
-        if (postId === '404') {
+        console.log("POST SHORTLINK MOUNTING");
+        const { match } = this.props;
+        if (!match.params.postId || match.params.postId === '404') {
             this.fallBack();
         }
+        console.log("POST ID: ", match.params.postId);
     }
     render() {
-        const { postId, getPostById, match } = this.props;
+        const { getPostById, match } = this.props;
         var success = false;
-        var sId = '404';
-        if (postId && postId !== '404') sId = postId;
-        else sId = match.params.postId;
+        if (!match.params.postId) this.fallBack();
+        var postId = match.params.postId;
         try {
-            getPostById(parseInt(sId)).then((post) => {
-                if (post && post.url) {
-                    console.log("POST SHORTLINK, redirecting to: ", post.url);
-                    window.location.href = post.url;
+            getPostById(parseInt(postId)).then((post) => {
+                if (post && post.response && post.response.url) {
+                    console.log("POST SHORTLINK, redirecting to: ", post.response.url);
+                    window.location.href = post.response.url;
                 } else {
                     console.log("POST SHORTLINK ERROR, post: ", post);
                     this.fallBack();
@@ -57,9 +57,10 @@ class Sponsors extends React.PureComponent {
             this.fallBack();
         }
         return (
-            <div class="main">
+            <div className="main">
             <center>
-                <Icon type="loading" style={{paddingTop:"20px",fontSize: "70px", color: "purple"}}/>
+                <br/><br/>
+                <Icon type="loading" style={{paddingTop:"20px",fontSize: "40px", color: "black"}}/>
             </center>
             </div>
         );
@@ -67,3 +68,5 @@ class Sponsors extends React.PureComponent {
 
 
 }
+
+export default PostShortlink;

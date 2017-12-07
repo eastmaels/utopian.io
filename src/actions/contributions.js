@@ -33,4 +33,4 @@ export const getPostByIdRequest = (postId) => ({
     }
 });
 
-export const getPostById = (postId) => dispatch => dispatch(getPostByIdRequest(query));
+export const getPostById = (postId) => dispatch => dispatch(getPostByIdRequest(postId));
