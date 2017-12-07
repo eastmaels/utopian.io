@@ -9,11 +9,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 require('dotenv').config();
 
-
 const DEFAULTS = {
   isDevelopment: process.env.NODE_ENV !== 'production',
   baseDir: path.resolve(__dirname, '..'),
 };
+
+let UTOPIAN_LANDING_URL = process.env.UTOPIAN_LANDING_URL;
+if (!DEFAULTS.isDevelopment && UTOPIAN_LANDING_URL === undefined) {
+  UTOPIAN_LANDING_URL = 'http://join.utopian.io';
+}
 
 const POSTCSS_LOADER = {
   loader: 'postcss-loader',
@@ -55,7 +59,7 @@ function makePlugins(options) {
         STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'https://api.steemit.com'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
-        UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'http://join.utopian.io'),
+        UTOPIAN_LANDING_URL: JSON.stringify(UTOPIAN_LANDING_URL),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'https://api.utopian.io/api/'),
         UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '06b0ef5509fc7de00493'),
         UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(process.env.UTOPIAN_GITHUB_REDIRECT_URL || 'https://utopian.io/github/callback'),
