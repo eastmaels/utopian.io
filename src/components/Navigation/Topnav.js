@@ -45,32 +45,47 @@ class Topnav extends React.Component {
     if (location.pathname.indexOf('search/analysis') > -1) return 'analysis';
     if (location.pathname.indexOf('search/social') > -1) return 'social';
     if (location.pathname.indexOf('search/blog') > -1) return 'blog';
+
+    const which = location.pathname.substring(1); 
+    if (which === 'all' || which === '/all') return 'projects';
+    if (location.pathname.split('/').length != 1 && this.inValidPaths(which)) {
+      return which;
+    }
     return false;
   };
 
-  handleChangeSearchType(section) {
-    const { history } = this.props
-    this.setState({ searchSection: section })
-
+  inValidPaths(x) {
     const validPaths = [
       'projects',
       'ideas',
+      'sub-projects',
       'development',
       'bug-hunting',
       'translations',
       'graphics',
-      'documentation',
       'analysis',
       'social',
+      'documentation',
+      'tutorials',
+      'video-tutorials',
+      'copywriting',
       'blog',
       ''
     ]
+    return validPaths.includes(x);
+  }
+
+  handleChangeSearchType(section) {
+    const { history } = this.props;
+    this.setState({ searchSection: section });
+
     // Only change path if we are on a 1st level url of one of the valid paths
-    if (validPaths.includes(history.location.pathname.substring(1))
+    if (this.inValidPaths(history.location.pathname.substring(1))
       && history.location.pathname.split('/').length != 1) {
       history.push(`/${section}`);
     }
   }
+
 
   constructor (props) {
     super(props)
@@ -89,6 +104,7 @@ class Topnav extends React.Component {
   renderSearch () {
     const { history, location } = this.props;
 
+
     return (
       <div className="Search SearchSelector">
 
@@ -104,7 +120,7 @@ class Topnav extends React.Component {
             <Option value="analysis"><CategoryIcon className="SearchSelector" type="analysis"/> Analysis</Option>
             <Option value="social"><CategoryIcon className="SearchSelector" type="social"/> Visibility</Option>
             <Option value="documentation"><CategoryIcon className="SearchSelector" type="documentation"/> Docs</Option>
-            <Option value="tutorials"><CategoryIcon className="SearchSelector" type="tutorials"/> Tuts</Option>
+            <Option value="tutorials"><CategoryIcon className="SearchSelector" type="tutorials"/> Tutorials</Option>
             <Option value="video-tutorials"><CategoryIcon className="SearchSelector" type="video-tutorials"/> Video Tuts</Option>
             <Option value="copywriting"><CategoryIcon className="SearchSelector" type="copywriting"/> Copy</Option>
             <Option value="blog"><CategoryIcon className="SearchSelector" type="blog"/> Blogs</Option>
