@@ -51,6 +51,10 @@ export const GET_POSTBYID_REQUEST = '@contributions/GET_POSTBYID_REQUEST';
 export const GET_POSTBYID_SUCCESS = '@contributions/GET_POSTBYID_SUCCESS';
 export const GET_POSTBYID_FAILURE = '@contributions/GET_POSTBYID_FAILURE';
 
+// export const ADD_PREFIX_REQUEST = '@contributions/ADD_PREFIX_REQUEST';
+// export const ADD_PREFIX_SUCCESS = '@contributions/ADD_PREFIX_SUCCESS';
+// export const ADD_PREFIX_FAILURE = '@contributions/ADD_PREFIX_FAILURE';
+
 export const SET_CONTRIBUTION = '@contribution/SET_CONTRIBUTION';
 
 export const GET_CONTRIBUTION_REQUEST = '@contribution/GET_CONTRIBUTION_REQUEST';

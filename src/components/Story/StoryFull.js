@@ -25,6 +25,7 @@ import Action from '../../components/Button/Action';
 import CommentForm from '../Comments/CommentForm';
 import Comments from "../Comments/Comments";
 import BanUser from '../../components/BanUser';
+// import { addPostPrefix } from '../../actions/contributions';
 import * as commentsActions from '../../comments/commentsActions';
 import { Modal } from 'antd';
 import { notify } from '../../app/Notification/notificationActions';
@@ -43,6 +44,7 @@ import './StoryFull.less';
     sendComment: (parentPost, body, isUpdating, originalPost) =>
       commentsActions.sendComment(parentPost, body, isUpdating, originalPost),
     notify,
+    // addPostPrefix
   }, dispatch),
 )
 
@@ -216,6 +218,7 @@ class StoryFull extends React.Component {
     const getShortLink = (post) => {
       return `https://utopian.io/u/${post.id}`;
     }
+
     let followText = '';
 
     if (postState.userFollowed && !pendingFollow) {
