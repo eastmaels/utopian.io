@@ -230,7 +230,7 @@ class SubFeed extends React.Component {
       <div>
         <ScrollToTop />
         {((match.path !== "/@:name" && match.params.type !== 'blog') || (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') && ((match.path !== '/tasks' && !this.isTask()) || ((match.path == '/tasks' || (this.isTask())) && this.isModerator() && match.params.filterBy === 'review'))) && !((match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review'))) ?
-          <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
+          <Tabs activeKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
             {this.isModerator() && match.params.filterBy === 'review'? <TabPane tab={<span><Icon type="paper-clip" />Blog Posts</span>} key="blog" /> : null}
@@ -251,7 +251,7 @@ class SubFeed extends React.Component {
           </Tabs> : null}
 
         {(match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review')) ?
-          <Tabs defaultActiveKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
+          <Tabs activeKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {/*<TabPane tab={<span><Icon type="appstore-o" />All</span>} key="tasks" />*/}
             <TabPane tab={<span><Icon type="notification" />Tasks Requests</span>} key="tasks" />
             <TabPane tab={<span><CategoryIcon type="task-ideas" />Thinkers</span>} key="task-ideas" />
