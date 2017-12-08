@@ -42,8 +42,15 @@ class PostShortlink extends React.PureComponent {
         var success = false;
         if (!match.params.postId) this.fallBack();
         var postId = match.params.postId;
+        const toInt = (x) => {
+            if (x === parseInt(x, 10) || !isNaN(x)) {
+                return parseInt(x);
+            }
+            return x;
+        }
+
         try {
-            getPostById(parseInt(postId)).then((post) => {
+            getPostById(toInt(postId)).then((post) => {
                 if (post && post.response && post.response.url) {
                     console.log("POST SHORTLINK, redirecting to: ", post.response.url);
                     window.location.href = post.response.url;

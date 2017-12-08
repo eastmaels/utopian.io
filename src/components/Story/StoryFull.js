@@ -213,6 +213,9 @@ class StoryFull extends React.Component {
     const isModerator = isLogged && R.find(R.propEq('account', user.name))(moderators) && !isAuthor;
     const reviewed = post.reviewed || false;
 
+    const getShortLink = (post) => {
+      return `https://utopian.io/u/${post.id}`;
+    }
     let followText = '';
 
     if (postState.userFollowed && !pendingFollow) {
@@ -527,6 +530,10 @@ class StoryFull extends React.Component {
               defaultMessage="{count} comments"
             />
           </a>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          <span className="StoryFull__shortlink" style={{color: "green"}} onClick={() => {window.prompt("Copy this contribution's short link below: ", getShortLink(post))}}>
+          <Icon type="paper-clip" style={{color: "green"}}/> Copy Short Link
+          </span>
         </h3>
         <div className="StoryFull__header">
           <Link to={`/@${post.author}`}>
@@ -550,7 +557,7 @@ class StoryFull extends React.Component {
               }
             >
               <span className="StoryFull__header__text__date">
-                <FormattedRelative value={`${post.created}Z`} />
+                <FormattedRelative value={`${post.created}Z`} /> 
               </span>
             </Tooltip>
           </div>
