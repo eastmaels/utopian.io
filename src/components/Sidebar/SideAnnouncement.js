@@ -13,7 +13,7 @@ import { setTimeout } from 'timers';
 const SideAnnouncement = ({ user }) => {
   var SHOW_ANNOUNCEMENT_1 = 1;
   var SHOW_ANNOUNCEMENT_2 = 1;
-  var SHOW_ANNOUNCEMENT_3 = 0;
+  var SHOW_ANNOUNCEMENT_3 = 1;
   const NUMBER_OF_ANNOUNCEMENTS = () => {return (SHOW_ANNOUNCEMENT_1 + SHOW_ANNOUNCEMENT_2 + SHOW_ANNOUNCEMENT_3);}
   const witnessCheck = async () => {
     for (var i = 0; i < user.witness_votes.length; ++i) {
@@ -56,7 +56,10 @@ const SideAnnouncement = ({ user }) => {
                 {(SHOW_ANNOUNCEMENT_3 === 1) ?
                 <span><br/><br/>
                 <div id="announcement3" className="Announcement__single">
-                    <b className="Announcement__subtitle"></b>&nbsp;&nbsp;
+                <b className="Announcement__subtitle">Public Poll</b>&nbsp;&nbsp; 
+                    <span className="Announcement__content">
+                    Utopian's public polls are out! <a href="https://steemit.com/utopian-io/@utopian-io/the-public-poll-is-open-you-can-vote-and-participate-to-our-decisional-process">Click here to participate.</a>
+                    </span>
                 </div>
                 </span>
                 : null}
