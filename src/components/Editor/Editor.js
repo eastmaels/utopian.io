@@ -697,7 +697,7 @@ class Editor extends React.Component {
                 </div>
               )}
               renderMenu={(items, value) => (
-                <div className="Topnav__search-menu">
+                <div className="Topnav__search-menu-reg">
                   <div>
                     {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
                     {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
