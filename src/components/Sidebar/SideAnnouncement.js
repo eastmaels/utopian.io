@@ -39,7 +39,7 @@ const SideAnnouncement = ({ user }) => {
                         text="Vote for Utopian!"
                         onClick={() => {
                             console.log("Thanks for voting @utopian-io as STEEM Witness! We love you!");
-                            window.location.href = 'https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true';
+                            window.location.href = `https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true&redirect_uri=${window.location.href}`;
                         }}
                     />
                 </div>
@@ -49,7 +49,7 @@ const SideAnnouncement = ({ user }) => {
                 <div id="announcement2" className="Announcement__single">
                     <b className="Announcement__subtitle">Reddit</b>&nbsp;&nbsp; 
                     <span className="Announcement__content">
-                    Utopian now has its own subreddit at <a href="https://reddit.com/r/utopianio">/r/utopianio</a>!
+                    Utopian now has its own subreddit at <a style={{fontFamily: "monospace"}} href="https://reddit.com/r/utopianio">/r/utopianio</a>!
                     </span>
                 </div></span>
                 : null}
