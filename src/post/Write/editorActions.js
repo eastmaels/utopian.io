@@ -144,7 +144,8 @@ export const broadcastComment = (
 
   return sc2.broadcast(operations).catch(e => {
     console.log(e);
-    alert("Utopian could not communicate with Steem. Please try again later. Your post is saved in the drafts. https://utopian.io/drafts");
+    if (commentOp) console.log("ORIGINAL COMMENT OBJECT: ", commentOp);
+    alert("Utopian could not connect to Steem. Please try again later (or use a different browser). Your post may have been saved in Drafts: https://utopian.io/drafts");
   });
 };
 

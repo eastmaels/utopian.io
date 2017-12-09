@@ -82,6 +82,7 @@ class Topnav extends React.Component {
     // Only change path if we are on a 1st level url of one of the valid paths
     if (this.inValidPaths(history.location.pathname.substring(1))
       && history.location.pathname.split('/').length != 1) {
+      if (section === 'projects') section = 'all';
       history.push(`/${section}`);
     }
   }
