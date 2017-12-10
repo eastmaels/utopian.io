@@ -49,7 +49,7 @@ const SideAnnouncement = ({ user }) => {
                 <div id="announcement2" className="Announcement__single">
                     <b className="Announcement__subtitle">Reddit</b>&nbsp;&nbsp; 
                     <span className="Announcement__content">
-                    Utopian now has its own subreddit at <a style={{fontFamily: "monospace"}} href="https://reddit.com/r/utopianio">/r/utopianio</a>!
+                    Utopian now has its own subreddit at <a style={{fontFamily: "monospace"}} target="_blank" href="https://reddit.com/r/utopianio">/r/utopianio</a>!
                     </span>
                 </div></span>
                 : null}
@@ -58,7 +58,7 @@ const SideAnnouncement = ({ user }) => {
                 <div id="announcement3" className="Announcement__single">
                 <b className="Announcement__subtitle">Public Poll</b>&nbsp;&nbsp; 
                     <span className="Announcement__content">
-                    Utopian's public polls are out! <a href="https://steemit.com/utopian-io/@utopian-io/the-public-poll-is-open-you-can-vote-and-participate-to-our-decisional-process">Click here to participate.</a>
+                    Utopian's public polls are out! <a target="_blank" href="https://steemit.com/utopian-io/@utopian-io/the-public-poll-is-open-you-can-vote-and-participate-to-our-decisional-process">Click here to participate.</a>
                     </span>
                 </div>
                 </span>
