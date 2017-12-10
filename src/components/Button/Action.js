@@ -4,8 +4,8 @@ import { Icon } from 'antd';
 import classNames from 'classnames';
 import './Action.less';
 
-const Action = ({ text, loading, disabled, primary, style, small, onClick, id, negative, positive, deepblue}) => (
-  <button id={id} disabled={disabled} style={style} className={classNames('Action', { 'ant-btn-lg': !small, 'Action--primary': primary, 'Action--negative': negative, 'Action--positive': positive, 'Action--deepblue': deepblue, })} onClick={onClick}>
+const Action = ({ text, loading, disabled, primary, compact, style, small, onClick, id, negative, positive, deepblue}) => (
+  <button id={id} disabled={disabled} style={style} className={classNames('Action', { 'ant-btn-lg': !small, 'Action--primary': primary, 'Action--negative': negative, 'Action--positive': positive, 'Action--compact': compact, 'Action--deepblue': deepblue, })} onClick={onClick}>
     {loading && <Icon type="loading" />}
     {text}
   </button>);
