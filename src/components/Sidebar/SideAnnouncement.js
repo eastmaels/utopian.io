@@ -32,8 +32,8 @@ const SideAnnouncement = ({ user }) => {
                 <div className="Announcement__divider"/>
                 {(SHOW_ANNOUNCEMENT_1 === 1) ? <div id="announcement1" className="Announcement__single">
                 <b className="Announcement__subtitle">Witness</b>&nbsp;&nbsp;&nbsp;&nbsp;<span className="Announcement__content">Utopian is now the first community driven STEEM Witness!</span> 
-                    
-                    <Action
+                    &nbsp;&nbsp;<a target="_blank" href={`https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true&redirect_uri=${window.location.href}`}>Vote for Utopian!</a>
+                    {/* <Action
                         id="voteWitness"
                         primary={true}
                         text="Vote for Utopian!"
@@ -41,7 +41,7 @@ const SideAnnouncement = ({ user }) => {
                             console.log("Thanks for voting @utopian-io as STEEM Witness! We love you!");
                             window.location.href = `https://v2.steemconnect.com/sign/account-witness-vote?witness=utopian-io&approve=true&redirect_uri=${window.location.href}`;
                         }}
-                    />
+                    /> */}
                 </div>
                 : null}
                 {(SHOW_ANNOUNCEMENT_2 === 1) ?

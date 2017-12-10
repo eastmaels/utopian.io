@@ -69,7 +69,7 @@ const Contribution = ({type, repository, platform, id, showVerified, showPending
     <b>
       <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
-      {' '} <Icon type='github' /> {parsedRepoName(repository.owner.login, repository.name)}
+      {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> {parsedRepoName(repository.owner.login, repository.name)}
     </Link>
     {showPending ? 
       <span className="markPullRight">

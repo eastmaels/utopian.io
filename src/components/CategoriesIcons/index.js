@@ -1,42 +1,44 @@
 import * as React from 'react';
 import { Icon } from 'antd';
+import "../../styles/custom.less";
+import "../../styles/fonts.less";
 
 const CategoryIcon = ({type}) => {
   switch (type) {
     case 'sub-projects':
-      return <Icon type="copy" />;
+      return <Icon style={{}} type="copy" />;
     case 'blog':
-      return <Icon type="paper-clip" />;
+      return <Icon style={{}} type="paper-clip" />;
     case 'task-ideas':
     case 'ideas':
-      return <Icon type="bulb" />;
+      return <Icon style={{}} type="bulb" />;
     case 'task-development':
     case 'development':
-      return <Icon type="code" />;
+      return <Icon style={{}} type="code" />;
     case 'task-bug-hunting':
     case 'bug-hunting':
-      return <Icon type="eye-o" />;
+      return <Icon style={{}} type="eye-o" />;
     case 'task-translations':
     case 'translations':
-      return <Icon type="flag" />;
+      return <Icon style={{}} type="flag" />;
     case 'task-analysis':
     case 'analysis':
-      return <Icon type="dot-chart" />;
+      return <Icon style={{}} type="dot-chart" />;
     case 'task-graphics':
     case 'graphics':
-      return <Icon type="layout" />;
+      return <Icon style={{}} type="layout" />;
     case 'task-social':
     case 'social':
-      return <Icon type="share-alt" />;
+      return <Icon style={{}} type="share-alt" />;
     case 'task-documentation':
     case 'documentation':
-      return <Icon type="book" />;
+      return <Icon style={{}} type="book" />;
     case 'tutorials':
-      return <Icon type="file-unknown" />;
+      return <Icon style={{}} type="file-unknown" />;
     case 'video-tutorials':
-      return <Icon type="video-camera" />;
+      return <Icon style={{}} type="video-camera" />;
     case 'copywriting':
-      return <Icon type="edit" />;
+      return <Icon style={{}} type="edit" />;
   }
 };
 

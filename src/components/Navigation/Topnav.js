@@ -173,11 +173,11 @@ class Topnav extends React.Component {
             <Menu.Item key="write" className="Topnav__item-write-new nobottom">
               <Action deepblue={true} style={{ margin: '3px 0' }} 
               text={
-              <Tooltip placement="bottom" title='Write a new Contributor Report'>
+              // <Tooltip placement="bottom" title={<span><a href="/write" style={{color: "white"}}>Write a new Contributor Report</a></span>}>
                 <Link to="/write" className="Topnav__newReport">
-                  <span><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">Contribution</span></span>
+                  <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">Contribution</span></span>
                 </Link>
-              </Tooltip>
+              // </Tooltip>
               }
               onclick={() => {window.location.href="/write"}}
               />

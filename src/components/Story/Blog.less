@@ -1,12 +1,20 @@
 @import (reference) "../../styles/modules/variables.less";
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/fonts.less";
+@bg-borderwidth: 10px;
+@bg-radius: 3px;
+@bgcolor: white;
 
 .Blog {
-  margin-bottom: 15px;
-  padding: 10px;
-  color: @white;
+  font-size: 13px;
+  margin-bottom: 4px;
+  padding-top: 7px;
+  padding-left: 16px;
   background: @blue;
+  border-top: @bg-borderwidth solid @bg-blog;
+  border-radius: @bg-radius;
+  background: @bgcolor;
+  color: @grey-mortar;
   position: relative;
 }
 

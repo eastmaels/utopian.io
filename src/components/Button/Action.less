@@ -9,13 +9,19 @@
   .colorize-button(#c2ccd3, #99aab5);
 
   font-family: 'Roboto', sans-serif !important;
+  text-decoration: none !important;
   font-weight: 500 !important;
   letter-spacing: 1.2px;
   color: @white;
   width: 100%;
 
+  a, a:hover, a:active, a:visited, a:focus {
+    text-decoration:none;
+  }
+
+
   &--primary {
-    .colorize-button(@buttonblue, rgb(56, 108, 254));
+    .colorize-button(@superblue, rgb(56, 108, 254));
     font-family: 'Roboto', sans-serif;
 
     color: @white-darker;
@@ -26,6 +32,7 @@
     &:active,
     &.active {
       color: @white-darker !important;
+      text-decoration: none !important;
     }
   }
 

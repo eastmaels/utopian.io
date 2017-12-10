@@ -1,10 +1,15 @@
 @import (reference) "../../styles/modules/variables.less";
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/fonts.less";
+@bg-borderwidth: 10px;
+@bg-radius: 3px;
+@bgcolor: white;
 
 .Contribution {
-  margin-bottom: 15px;
-  padding: 10px;
+  font-size: 13px;
+  margin-bottom: 4px;
+  padding-top: 7px;
+  padding-left: 16px;
   color: @white;
   background: @blue;
   position: relative;
@@ -20,9 +25,9 @@
   }
 
   a {
-    color: @white;
+    color: @grey-mortar;
     &:hover {
-      color: @white;
+      color: @grey-mortar;
       text-decoration: underline;
     }
   }
@@ -37,40 +42,66 @@
 
   &.task-ideas,
   &.ideas {
-    background: @bg-ideas;
+    border-top: @bg-borderwidth solid @bg-ideas;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.sub-projects {
-    background: @bg-sub-projects;
+    border-top: @bg-borderwidth solid @bg-sub-projects;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.task-development,
   &.development {
-    background: @bg-development;
+    border-top: @bg-borderwidth solid @bg-development;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.task-bug-hunting,
   &.bug-hunting {
-    background: @bg-bug-hunting;
+    border-top: @bg-borderwidth solid @bg-bug-hunting;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.task-translations,
   &.translations {
-    background: @bg-translations;
+    border-top: @bg-borderwidth solid @bg-translations;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.task-analysis,
   &.analysis {
-    background: @bg-analysis;
+    border-top: @bg-borderwidth solid @bg-analysis;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.task-graphics,
   &.graphics {
-    background: @bg-graphics;
+    border-top: @bg-borderwidth solid @bg-graphics;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.task-social,
   &.social {
-    background: @bg-social;
+    border-top: @bg-borderwidth solid @bg-social;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.task-documentation,
   &.documentation {
     color: @black;
-    background: @bg-documentation;
-    border: 1px solid #999;
+    border-top: @bg-borderwidth solid @bg-documentation;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
     a {
       color: @black;
       &:hover {
@@ -80,12 +111,21 @@
     }
   }
   &.tutorials {
-    background: @bg-tutorials;
+    border-top: @bg-borderwidth solid @bg-tutorials;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.video-tutorials {
-    background: @bg-video-tutorials;
+    border-top: @bg-borderwidth solid @bg-video-tutorials;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
   &.copywriting {
-    background: @bg-copywriting;
+    border-top: @bg-borderwidth solid @bg-copywriting;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @grey-mortar;
   }
 }
