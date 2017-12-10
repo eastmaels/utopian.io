@@ -171,7 +171,7 @@ class Topnav extends React.Component {
         <div className="Topnav__menu-container">
           <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
             <Menu.Item key="write" className="Topnav__item-write-new nobottom">
-              <Action deepblue={true} style={{ margin: '3px 0' }} 
+              <Action primary={true} style={{ margin: '3px 0' }} 
               text={
               // <Tooltip placement="bottom" title={<span><a href="/write" style={{color: "white"}}>Write a new Contributor Report</a></span>}>
                 <Link to="/write" className="Topnav__newReport">
