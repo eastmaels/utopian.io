@@ -548,7 +548,7 @@ class StoryFull extends React.Component {
             <Link to={`/@${post.author}`}>
               {post.author}
               <Tooltip title={intl.formatMessage({ id: 'reputation_score', defaultMessage: 'Reputation score' })}>
-                <Tag>
+                <Tag className="StoryFull__reputationTag">
                   {formatter.reputation(post.author_reputation)}
                 </Tag>
               </Tooltip>
