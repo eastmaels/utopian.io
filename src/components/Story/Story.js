@@ -78,6 +78,28 @@ class Story extends React.Component {
     }
   };
 
+  allTags(tagList) {
+    if (!tagList) return <em>No Tags Provided</em>;
+    var ret = "";
+    for (var i = 0; i < tagList.length; ++i) {
+        if (tagList[i] === 'utopian-io') continue;
+        ret += tagList[i];
+        if (i !== tagList.length - 1) ret += ", ";
+    }
+    return <span><b>Tags: &nbsp;&nbsp;</b>{ret}</span>;
+  }
+
+  tagNumber(tagList, number) {
+    if (!tagList) return <span></span>;
+    var cnt = 0;
+    for (var i = 0; i < tagList.length; ++i) {
+      if (tagList[i] === 'utopian-io') continue;
+      ++cnt;
+      if (cnt === number) break;
+    }
+  return <span>{tagList[cnt]}</span>;
+  }
+
   render() {
     const {
       intl,
@@ -224,6 +246,21 @@ class Story extends React.Component {
             fullMode={false}
           />}
 
+          <div className="Story__content">
+            <Link to={post.url} className="Story__content__title">
+              <h2>
+                {post.title || (
+                <span>
+                    <Tag color="#4f545c">RE</Tag>
+                  {post.root_title}
+                  </span>
+                )}
+              </h2>
+            </Link>
+            <Link to={post.url} className="Story__content__preview">
+              <StoryPreview post={post.body} />
+            </Link>
+          </div>
           <div className="Story__header">
             <Link to={`/@${post.author}`}>
               <Avatar username={post.author} size={30} />
@@ -233,7 +270,7 @@ class Story extends React.Component {
                 <h4>
                   {post.author}
                   <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
-                    <Tag>{formatter.reputation(post.author_reputation)}</Tag>
+                    <Tag className="Story__reputationTag">{formatter.reputation(post.author_reputation)}</Tag>
                   </Tooltip>
                 </h4>
               </Link>
@@ -249,22 +286,16 @@ class Story extends React.Component {
                   <FormattedRelative value={`${post.created}Z`} />
                 </span>
               </Tooltip>
+              &nbsp;-&nbsp;
+              <Tooltip title={this.allTags(post.json_metadata.tags)}>
+              {post.json_metadata.tags.length >= 2 && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 0)}</Tag>
+              </span>}
+              {post.json_metadata.tags.length >= 3 && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 1)}</Tag>
+              </span>}
+              </Tooltip>
             </div>
-          </div>
-          <div className="Story__content">
-            <Link to={post.url} className="Story__content__title">
-              <h2>
-                {post.title || (
-                <span>
-                    <Tag color="#4f545c">RE</Tag>
-                  {post.root_title}
-                  </span>
-                )}
-              </h2>
-            </Link>
-            <Link to={post.url} className="Story__content__preview">
-              <StoryPreview post={post.body} />
-            </Link>
           </div>
           <div className="Story__footer">
             {reviewed && <StoryFooter
