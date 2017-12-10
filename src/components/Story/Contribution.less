@@ -40,6 +40,8 @@
     color: white !important;
   }
 
+  
+
   &.task-ideas,
   &.ideas {
     border-top: @bg-borderwidth solid @bg-ideas;
@@ -127,5 +129,70 @@
     border-radius: @bg-radius;
     background: @bgcolor;
     color: @grey-mortar;
+  }
+  &.yesfull {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    color: @white !important;
+    a {
+      color: @white !important;
+      :hover {
+        color: @white !important;
+        text-decoration: underline;
+      }
+    }
+  }
+  &.yesfull.task-ideas,
+  &.yesfull.ideas {
+    background: @bg-ideas;
+  }
+  &.yesfull.sub-projects {
+    background: @bg-sub-projects;
+  }
+  &.yesfull.task-development,
+  &.yesfull.development {
+    background: @bg-development;
+  }
+  &.yesfull.task-bug-hunting,
+  &.yesfull.bug-hunting {
+    background: @bg-bug-hunting;
+  }
+  &.yesfull.task-translations,
+  &.yesfull.translations {
+    background: @bg-translations;
+  }
+  &.yesfull.task-analysis,
+  &.yesfull.analysis {
+    background: @bg-analysis;
+  }
+  &.yesfull.task-graphics,
+  &.yesfull.graphics {
+    background: @bg-graphics;
+  }
+  &.yesfull.task-social,
+  &.yesfull.social {
+    background: @bg-social;
+  }
+  &.yesfull.task-documentation,
+  &.yesfull.documentation {
+    color: @black;
+    background: @bg-documentation;
+    border: 1px solid #999;
+    a {
+      color: @black;
+      &:hover {
+        color: @black;
+        text-decoration: underline;
+      }
+    }
+  }
+  &.yesfull.tutorials {
+    background: @bg-tutorials;
+  }
+  &.yesfull.video-tutorials {
+    background: @bg-video-tutorials;
+  }
+  &.yesfull.copywriting {
+    background: @bg-copywriting;
   }
 }

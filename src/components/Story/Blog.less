@@ -16,6 +16,19 @@
   background: @bgcolor;
   color: @grey-mortar;
   position: relative;
+  &.yesfull {
+    background: @bg-blog;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    color: @white !important;
+    a {
+      color: @white !important;
+      :hover {
+        color: @white !important;
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 .markPullRight {

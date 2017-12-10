@@ -213,6 +213,7 @@ class Story extends React.Component {
             showPending={ post.pending }
             showFlagged={ post.flagged }
             showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
+            fullMode={false}
           />}
 
           {postType === 'blog' && <Blog
@@ -220,6 +221,7 @@ class Story extends React.Component {
             showPending = {post.pending}
             showFlagged = {post.flagged}
             showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
+            fullMode={false}
           />}
 
           <div className="Story__header">

@@ -64,13 +64,21 @@ const parsedRepoName = (author, name) => {
   return `${author}/${name}`;
 }
 
-const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress}) => (
-  <div className={`Contribution ${type}`}>
+const modeClass = fm => {
+  if (fm === true) return "yesfull";
+  return "nofull";
+}
+
+const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress, fullMode}) => (
+  <div className={`Contribution ${type} ${modeClass(fullMode)}`}>
+    <span>
     <b>
       <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
       {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> {parsedRepoName(repository.owner.login, repository.name)}
     </Link>
+    </span>
+
     {showPending ? 
       <span className="markPullRight">
       <Icon className="markIcon" type="sync"/>

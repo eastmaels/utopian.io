@@ -4,8 +4,13 @@ import { Icon } from 'antd';
 
 import './Blog.less';
 
-const Blog = ({showPending, showFlagged, showInProgress}) => (
-  <div className={`Blog`}>
+const modeClass = fm => {
+  if (fm === true) return "yesfull";
+  return "nofull";
+}
+
+const Blog = ({showPending, showFlagged, showInProgress, fullMode}) => (
+  <div className={`Blog ${modeClass(fullMode)}`}>
     <b>
       <Icon type="paper-clip" /> Blog Post </b>
       {showPending ? 
