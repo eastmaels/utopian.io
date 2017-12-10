@@ -63,12 +63,14 @@ class SubFeed extends React.Component {
   }
 
   componentDidMount() {
+    // console.log("[c] Subfeed mounted")
     this.loadContributions();
   }
 
   loadContributions (nextProps = false) {
     const { match, getContributions, user } = nextProps || this.props;
     const skip =  nextProps ? 0 : this.state.skip;
+    // console.log('[c] m',match);
     const limit = 20;
     this.total = nextProps ? 0 : this.total;
 
@@ -177,6 +179,7 @@ class SubFeed extends React.Component {
       }
       return contribution.reviewed === true && !contribution.flagged;
     });
+    // console.log("[c] f", filteredContributions);
 
     return filteredContributions;
   }
@@ -192,7 +195,7 @@ class SubFeed extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     const { location } = this.props;
-
+    // console.log("[c] componentwil")
     if (location.pathname !== nextProps.location.pathname) {
       this.total = 0; // @TODO @UTOPIAN antipattern - requires better implementation
       this.loadContributions(nextProps);

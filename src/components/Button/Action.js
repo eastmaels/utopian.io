@@ -11,7 +11,7 @@ const Action = ({ text, loading, disabled, primary, style, small, onClick, id, n
   </button>);
 
 Action.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
   primary: PropTypes.bool,

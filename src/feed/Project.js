@@ -71,10 +71,9 @@ class Project extends React.Component {
       history.push(`${locationPath}/all`);
       return;
     }
-
     if(!projectInState) {
       getGithubRepo(id).then(() => {
-        this.setState({loadedRepo: true})
+        this.setState({loadedRepo: true});
       });
       return;
     }
@@ -105,8 +104,10 @@ class Project extends React.Component {
 
     if (match.params.repoId !== nextProps.match.params.repoId) {
       this.setState({loadedProject: false, loadedRepo: false});
+      // console.log("[c] repo loading")
       getGithubRepo(nextProps.match.params.repoId).then(() => {
-        this.setState({loadedRepo: true})
+        // console.log("[c] Repo loaded");
+        this.setState({loadedRepo: true});
       });
     }
 /*
@@ -139,6 +140,7 @@ class Project extends React.Component {
       if (res.status !== 404 && res.response.name) {
         project = res.response;
       }
+      // console.log("[c] got project", res);
       this.setState({
         project,
         isOwner: isOwner ? true : false,
@@ -166,7 +168,8 @@ class Project extends React.Component {
   render() {
     const { authenticated, match, createProjectSponsor, createProjectAccount, location, history, repo, user } = this.props;
     const { repo: projectName } = match.params;
-
+    if (!this.state.loadedProject) this.loadGithubData();
+    if (!this.state.loadedRepo) // console.log("[c]", this.state.loadedProject);
     return (
       <div>
         <Helmet>
@@ -207,7 +210,7 @@ class Project extends React.Component {
                   </div>}
                 </div>
               </div>
-              {this.state.loadedProject && this.state.loadedRepo ? <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed}/> : null}
+              {true ? <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed}/> : null}
             </div>
           </div>
         </div>
