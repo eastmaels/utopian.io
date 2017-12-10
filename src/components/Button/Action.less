@@ -1,5 +1,6 @@
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/fonts.less";
 
 .Action {
   .btn;
@@ -7,11 +8,15 @@
 
   .colorize-button(#c2ccd3, #99aab5);
 
+  font-family: 'Roboto', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 1.2px;
   color: @white;
   width: 100%;
 
   &--primary {
-    .colorize-button(@purple, #2a3574);
+    .colorize-button(@buttonblue, rgb(56, 108, 254));
+    font-family: 'Roboto', sans-serif;
 
     color: @white-darker;
 
@@ -71,7 +76,8 @@
     color: @white;
   }
 
-  & .anticon {
+  & .anticon { 
+
     vertical-align: -1px;
     margin-right: 8px;
   }

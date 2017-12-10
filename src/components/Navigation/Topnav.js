@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Menu, Popover, Tooltip, Input, Badge, Select } from 'antd';
+import Action from '../Button/Action';
 
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 import sc2 from '../../sc2';
@@ -169,12 +170,17 @@ class Topnav extends React.Component {
       content = (
         <div className="Topnav__menu-container">
           <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
-            <Menu.Item key="write" className="Topnav__item-write">
+            <Menu.Item key="write" className="Topnav__item-write-new nobottom">
+              <Action deepblue={true} style={{ margin: '3px 0' }} 
+              text={
               <Tooltip placement="bottom" title='Write a new Contributor Report'>
                 <Link to="/write" className="Topnav__newReport">
-                  <span><i className="iconfont icon-add"/> <span className="Topnav__newReport_text">Contribution</span></span>
+                  <span><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">Contribution</span></span>
                 </Link>
               </Tooltip>
+              }
+              onclick={() => {window.location.href="/write"}}
+              />
             </Menu.Item>
             <Menu.Item key="user" className="Topnav__item-user">
               <Link className="Topnav__user" to={`/@${username}`}>
