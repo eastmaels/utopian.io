@@ -89,10 +89,14 @@ class Story extends React.Component {
     return <span><b>Tags: &nbsp;&nbsp;</b>{ret}, <em>utopian-io</em></span>;
   }
 
-  tagNumber(tagList, number) { // utopian-io utopian development code tasks
+  tagNumber(tagList, number) { 
     if (!tagList) return <span></span>;
     const indexOfUtopian = tagList.indexOf("utopian-io");
     if (indexOfUtopian > -1) tagList.splice(indexOfUtopian, 1);
+    const indexOfNothing = tagList.indexOf("");
+    if (indexOfNothing > -1) tagList.splice(indexOfNothing, 1);
+    const indexOfSpace = tagList.indexOf(" ");
+    if (indexOfSpace > -1) tagList.splice(indexOfSpace, 1);
     // console.log(tagList);
     return <span>{tagList[number]}</span>;
   }
@@ -273,7 +277,7 @@ class Story extends React.Component {
               {(post.json_metadata.tags.length >= 4) && <span>
                 <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 3)}</Tag>
               </span>}
-              {true && <span>
+              {false && <span>
                 <Tag className="Story__postTag">utopian-io</Tag>
               </span>}
               </Tooltip>
