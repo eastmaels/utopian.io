@@ -24,7 +24,7 @@ class Sponsors extends React.PureComponent {
     this.state = {
       sponsorModal: false,
       delegationTypeModal: false,
-      delegationSP: 100,
+      delegationSP: 1500,
       delegationAccount: "",
       total_vesting_shares: 0,
       total_vesting_fund_steem: 0,
@@ -58,7 +58,9 @@ class Sponsors extends React.PureComponent {
 
   generateSteemURI(from, amount) {
     from = from.replace("@", "");
-    const amtVests = (10 * (parseFloat(amount) / parseFloat(this.state.total_vesting_fund_steem))) * parseFloat(this.state.total_vesting_shares);
+    console.log("Generating for amount ", amount, " vesting_fund_steem: ", this.state.total_vesting_fund_steem, " vesting_shares var:", this.state.total_vesting_shares);
+    const amtVests =  ((parseFloat(amount) / parseFloat(this.state.total_vesting_fund_steem))) * parseFloat(this.state.total_vesting_shares);
+    console.log("DELEGATING ", amtVests, " VESTS.");
     const preSuffix = [
       [
         "delegate_vesting_shares",
@@ -189,7 +191,7 @@ class Sponsors extends React.PureComponent {
                     alert(res.message);
                   } else {
                     this.setState({delegationAccount: account});
-                    this.setState({delegatedSP: sp});
+                    this.setState({delegationSP: sp});
                     this.setState({delegationTypeModal: true});
                     this.setState({sponsorModal: false});
                   }
