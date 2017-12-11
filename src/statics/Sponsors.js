@@ -58,9 +58,18 @@ class Sponsors extends React.PureComponent {
 
   generateSteemURI(from, amount) {
     from = from.replace("@", "");
+    steem.api.getDynamicGlobalProperties(function(err, result) {
+      console.log("RES", result);
+      if (!err) {
+        _self.setState({
+          total_vesting_shares: result.total_vesting_shares,
+          total_vesting_fund_steem: result.total_vesting_fund_steem,
+        });
+      }
+    })
     const vestsPerSteem = (parseFloat('1.000')) / (parseFloat(steem.formatter.vestToSteem(1, parseFloat(this.state.total_vesting_shares), parseFloat(this.state.total_vesting_fund_steem))));
     const amtVests = parseFloat(amount) * parseFloat(vestsPerSteem);
-    const suffix = window.btoa(JSON.stringify([
+    const preSuffix = [
       [
         "delegate_vesting_shares",
         {
@@ -69,8 +78,11 @@ class Sponsors extends React.PureComponent {
           "vesting_shares": (amtVests).toString(),
         }
       ]
-    ]));
-    return `steem://sign/tx/${suffix}`;
+    ];
+    const suffix = window.btoa(JSON.stringify(preSuffix));
+    console.log("DELEGATION JSON: ", preSuffix);
+    console.log("[dev] ", vestsPerSteem, "-", amtVests, "-", this.state.total_vesting_shares, "-", this.state.total_vesting_fund_steem, "-", parseFloat(2));
+    return `steem://sign/tx/${suffix}#e30=`;
   }
 
   render () {
@@ -239,7 +251,7 @@ class Sponsors extends React.PureComponent {
             >
             There are multiple methods you can use to delegate:<br/>
             <ul style={{listStyleType: 'disc'}}>
-            <li> <b>Vessel</b> Click the Green button to use Vessel's desktop app. You must have version 0.20.0 or higher. </li>
+            <li> <b>Vessel</b> Click the Green button to use Vessel's desktop app. You must have version 0.2.0 or higher. </li>
             <li> <b>SteemConnect</b> Click the Blue button to use Steemconnect, a Steemit-made website to delegate.</li>
             </ul>
             </Modal>
