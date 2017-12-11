@@ -8,46 +8,46 @@ import './Contribution.less';
 const categorySlug = type => {
   switch (type) {
     case 'ideas':
-      return 'Suggestion for';
+      return 'SUGGESTION';
     case 'sub-projects':
-      return 'Project for';
+      return 'PROJECT';
     case 'development':
-      return 'Development of';
+      return 'DEVELOPMENT';
     case 'bug-hunting':
-      return 'Bug in';
+      return 'BUG';
     case 'translations':
-      return 'Translation for';
+      return 'TRANSLATION';
     case 'analysis':
-      return 'Analysis for';
+      return 'ANALYSIS';
     case 'graphics':
-      return 'Graphics for';
+      return 'GRAPHICS';
     case 'social':
-      return 'Visibility for';
+      return 'VISIBILITY';
     case 'documentation':
-      return 'Documentation for';
+      return 'DOCUMENTATION';
     case 'tutorials':
-      return 'Tutorial for';
+      return 'TUTORIAL';
     case 'video-tutorials':
-      return 'Video Tutorial for';
+      return 'VIDEO TUTORIAL';
     case 'copywriting':
-      return 'Copywriting for';
+      return 'COPYWRITING';
     case 'task-ideas':
-      return 'Thinkers for';
+      return 'THINKERS';
     case 'task-development':
-      return 'Developers for';
+      return 'DEVELOPERS';
     case 'task-bug-hunting':
-      return 'Bug Hunters for';
+      return 'BUG HUNTERS';
     case 'task-documentation':
-      return 'Tech Writers for';
+      return 'TECH WRITERS';
     case 'task-translations':
-      return 'Translators for';
+      return 'TRANSLATORS';
     case 'task-analysis':
-      return 'Data Analysts for';
+      return 'DATA ANALYSTS';
     case 'task-graphics':
-      return 'Designers for';
+      return 'DESIGNERS';
     case 'task-social':
     case 'social':
-      return 'Influencers for';
+      return 'INFLUENCERS';
   }
 };
 
@@ -72,8 +72,8 @@ const modeClass = fm => {
 const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress, fullMode}) => (
   <div className={`Contribution ${type} ${modeClass(fullMode)}`}>
     <span>
-    <b>
-      <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
+    
+      <CategoryIcon type={type} /> {categorySlug(type)} &nbsp; <b>&middot;</b> &nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
       {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> {parsedRepoName(repository.owner.login, repository.name)}
     </Link>
