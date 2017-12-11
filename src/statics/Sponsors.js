@@ -58,7 +58,7 @@ class Sponsors extends React.PureComponent {
 
   generateSteemURI(from, amount) {
     from = from.replace("@", "");
-    const amtVests = (parseFloat(amount) / parseFloat(this.state.total_vesting_fund_steem)) * parseFloat(this.state.total_vesting_shares);
+    const amtVests = (10 * (parseFloat(amount) / parseFloat(this.state.total_vesting_fund_steem))) * parseFloat(this.state.total_vesting_shares);
     const preSuffix = [
       [
         "delegate_vesting_shares",
