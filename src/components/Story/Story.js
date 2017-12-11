@@ -86,13 +86,14 @@ class Story extends React.Component {
         ret += tagList[i];
         if (i !== tagList.length - 1) ret += ", ";
     }
-    return <span><b>Tags: &nbsp;&nbsp;</b>{ret}</span>;
+    return <span><b>Tags: &nbsp;&nbsp;</b>{ret}, <em>utopian-io</em></span>;
   }
 
   tagNumber(tagList, number) { // utopian-io utopian development code tasks
     if (!tagList) return <span></span>;
     const indexOfUtopian = tagList.indexOf("utopian-io");
     if (indexOfUtopian > -1) tagList.splice(indexOfUtopian, 1);
+    // console.log(tagList);
     return <span>{tagList[number]}</span>;
   }
 
@@ -258,18 +259,37 @@ class Story extends React.Component {
             </Link>
           </div>
           <div className="Story__header">
-            <Link to={`/@${post.author}`}>
-              <Avatar username={post.author} size={30} />
-            </Link>
-            <div className="Story__header__text">
+          <div className="Story__postTags nomobile">
+              <Tooltip title={this.allTags(post.json_metadata.tags)}>
+              {(post.json_metadata.tags.length >= 1) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 0)}</Tag>
+              </span>}
+              {(post.json_metadata.tags.length >= 2) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 1)}</Tag>
+              </span>}
+              {(post.json_metadata.tags.length >= 3) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 2)}</Tag>
+              </span>}
+              {(post.json_metadata.tags.length >= 4) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 3)}</Tag>
+              </span>}
+              {true && <span>
+                <Tag className="Story__postTag">utopian-io</Tag>
+              </span>}
+              </Tooltip>
+              {(post.json_metadata.tags.length >= 2) && <span><br/><br/></span>}
+           </div>
+            <div className="Story__header__text Story__firstLine">
+            
               <Link to={`/@${post.author}`}>
-                <h4>
-                  {post.author}
+                <h4 className="Story__firstLine">
+                  <Avatar username={post.author} size={30} className="Story__avatar"/> <span className="Story__author">{post.author}</span>
                   <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
                     <Tag className="Story__reputationTag nomobile">{formatter.reputation(post.author_reputation)}</Tag>
                   </Tooltip>
                 </h4>
               </Link>
+
               <span className="yesmobile">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
               <Tooltip
                 title={
@@ -283,17 +303,7 @@ class Story extends React.Component {
                   <FormattedRelative value={`${post.created}Z`} />
                 </span>
               </Tooltip>
-              <div className="Story__postTags nomobile">
-              {(post.json_metadata.tags.length >= 2) && <span>&nbsp;-&nbsp;</span>}
-              <Tooltip title={this.allTags(post.json_metadata.tags)}>
-              {(post.json_metadata.tags.length >= 2) && <span>
-                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 0)}</Tag>
-              </span>}
-              {(post.json_metadata.tags.length >= 3) && <span>
-                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 1)}</Tag>
-              </span>}
-              </Tooltip>
-              </div>
+              
             </div>
           </div>
           <div className="Story__footer">
