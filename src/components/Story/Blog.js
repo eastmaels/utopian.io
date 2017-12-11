@@ -12,7 +12,7 @@ const modeClass = fm => {
 const Blog = ({showPending, showFlagged, showInProgress, fullMode}) => (
   <div className={`Blog ${modeClass(fullMode)}`}>
   
-      <Icon type="paper-clip" /> BLOG POST &nbsp;<b>&middot;</b>&nbsp;
+      <Icon type="paper-clip" /> BLOG POST &nbsp;
       {showPending ? 
       <span className="markPullRight">
       <Icon className="markIcon" type="sync"/>
