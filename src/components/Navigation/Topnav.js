@@ -289,8 +289,8 @@ class Topnav extends React.Component {
               <span className="Topnav__version"></span>
             </div>
             <div className="center">
-              <div className="Topnav__input-container">
-                { window.outerWidth > 736 && this.renderSearch() }
+              <div className="Topnav__input-container nomobile">
+                { this.renderSearch() }
               </div>
             </div>
             <div className="right">
@@ -298,8 +298,8 @@ class Topnav extends React.Component {
             </div>
           </div>
         </div>
-        <div className="Searchmobile">
-          { window.outerWidth <= 736 && this.renderSearch() }
+        <div className="Searchmobile yesmobile">
+          { this.renderSearch() }
         </div>
       </div>
     );

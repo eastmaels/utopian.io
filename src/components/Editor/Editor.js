@@ -128,6 +128,35 @@ class Editor extends React.Component {
         selectInput.setAttribute('autocapitalize', 'none');
       }
     }
+
+    const removeChat = () => {
+        if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
+          if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
+            if (!document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
+              document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.add("Component__block");
+              console.log("Blocking Chat");
+            }
+          }
+        }
+    }
+    removeChat();
+    setTimeout(removeChat, 2000);
+    setTimeout(removeChat, 2500);
+    setTimeout(removeChat, 4000);
+  }
+
+
+  
+
+  componentWillUnmount() {
+    if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
+      if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
+        if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
+          document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.remove("Component__block");
+          console.log("Unblocking Chat");
+        }
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {

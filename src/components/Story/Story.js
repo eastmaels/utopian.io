@@ -89,15 +89,11 @@ class Story extends React.Component {
     return <span><b>Tags: &nbsp;&nbsp;</b>{ret}</span>;
   }
 
-  tagNumber(tagList, number) {
+  tagNumber(tagList, number) { // utopian-io utopian development code tasks
     if (!tagList) return <span></span>;
-    var cnt = 0;
-    for (var i = 0; i < tagList.length; ++i) {
-      if (tagList[i] === 'utopian-io') continue;
-      ++cnt;
-      if (cnt === number) break;
-    }
-  return <span>{tagList[cnt]}</span>;
+    const indexOfUtopian = tagList.indexOf("utopian-io");
+    if (indexOfUtopian > -1) tagList.splice(indexOfUtopian, 1);
+    return <span>{tagList[number]}</span>;
   }
 
   render() {
@@ -270,10 +266,11 @@ class Story extends React.Component {
                 <h4>
                   {post.author}
                   <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
-                    <Tag className="Story__reputationTag">{formatter.reputation(post.author_reputation)}</Tag>
+                    <Tag className="Story__reputationTag nomobile">{formatter.reputation(post.author_reputation)}</Tag>
                   </Tooltip>
                 </h4>
               </Link>
+              <span className="yesmobile">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
               <Tooltip
                 title={
                   <span>
@@ -286,15 +283,17 @@ class Story extends React.Component {
                   <FormattedRelative value={`${post.created}Z`} />
                 </span>
               </Tooltip>
-              &nbsp;-&nbsp;
+              <div className="Story__postTags nomobile">
+              {(post.json_metadata.tags.length >= 2) && <span>&nbsp;-&nbsp;</span>}
               <Tooltip title={this.allTags(post.json_metadata.tags)}>
-              {post.json_metadata.tags.length >= 2 && <span>
+              {(post.json_metadata.tags.length >= 2) && <span>
                 <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 0)}</Tag>
               </span>}
-              {post.json_metadata.tags.length >= 3 && <span>
+              {(post.json_metadata.tags.length >= 3) && <span>
                 <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 1)}</Tag>
               </span>}
               </Tooltip>
+              </div>
             </div>
           </div>
           <div className="Story__footer">

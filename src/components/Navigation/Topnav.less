@@ -21,6 +21,14 @@
 @media screen and (max-width: 736px) {
   .Searchmobile {
     display: block;
+    background-color: @black !important;
+    .ant-select, .SearchSelector, .ant-select-selection, .ant-select-selection--single {
+      background-color: @black !important;
+      color: @white !important;
+    }
+  }
+  .ant-select-dropdown, .ant-select-dropdown--single, .ant-select-dropdown-placement-bottomLeft {
+    margin-top: 53px !important;
   }
 }
 
@@ -370,4 +378,12 @@
   }
 
   
+}
+
+.cometchat_ccmobiletab_redirect {
+  font-size: 12px !important;
+} // Fix annoying comet chat mobile
+
+.Component__block {
+  display: none; 
 }
