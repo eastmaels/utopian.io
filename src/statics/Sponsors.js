@@ -49,25 +49,16 @@ class Sponsors extends React.PureComponent {
     const vestsPerSteem = (1.000) / (steem.formatter.vestToSteem(1, this.state.total_vesting_shares, this.state.total_vesting_fund_steem));
   }
 
-   openInNewTab(url) {
+   openURI(url, inNewTab) {
         var a = document.createElement("a");
-        a.target = "_blank";
+        if (inNewTab === true) a.target = "_blank";
         a.href = url;
         a.click();
     }
 
   generateSteemURI(from, amount) {
     from = from.replace("@", "");
-    steem.api.getDynamicGlobalProperties(function(err, result) {
-      console.log("RES", result);
-      if (!err) {
-        _self.setState({
-          total_vesting_shares: result.total_vesting_shares,
-          total_vesting_fund_steem: result.total_vesting_fund_steem,
-        });
-      }
-    })
-    const vestsPerSteem = (parseFloat('1.000')) / (parseFloat(steem.formatter.vestToSteem(1, parseFloat(this.state.total_vesting_shares), parseFloat(this.state.total_vesting_fund_steem))));
+    const vestsPerSteem = (parseFloat('0.100')) / (parseFloat(steem.formatter.vestToSteem(1, parseFloat(this.state.total_vesting_shares), parseFloat(this.state.total_vesting_fund_steem))));
     const amtVests = parseFloat(amount) * parseFloat(vestsPerSteem);
     const preSuffix = [
       [
@@ -209,9 +200,9 @@ class Sponsors extends React.PureComponent {
             >
               <p>
                 You can become an <b>Utopian Sponsor</b> by delegating your <b>Steem Power</b>.
-                Delegating means that you are lending your Steem Power to Utopian for as long as you wish and have it back at any time.
+                Delegating means that you are securely lending your Steem Power to Utopian for as long as you wish and have it back at any time.
                 <br /><br />
-                <b>20% of the total author rewards generated on Utopian are dedicated to the Sponsors and shared based on the delegated amount.</b>
+                <b>20% of the total author rewards generated on Utopian are dedicated to the Sponsors and shared proportionally based on the delegated amount.</b>
                 <br /><br />
                 In addition Utopian will give you credit on <b>every promotional activity, official news and on the dedicated sponsor sections</b>.
                 <br /><br />
@@ -238,21 +229,21 @@ class Sponsors extends React.PureComponent {
                   positive={true}
                   style={{color: "white"}}
                   text={<span>Use Vessel App</span>}
-                  onClick={() => {this.setState({delegationTypeModal: false}); this.openInNewTab(this.generateSteemURI(this.state.delegationAccount, this.state.delegationSP));}}
+                  onClick={() => {this.setState({delegationTypeModal: false}); this.openURI(this.generateSteemURI(this.state.delegationAccount, this.state.delegationSP), false);}}
                   /><br/>
                   <Action
                   primary={true}
                   style={{color: "white"}}
                   text={<span>Use SteemConnect.com</span>}
-                  onClick={() => {this.setState({delegationTypeModal: false}); this.openInNewTab(`${steemconnectHost}/sign/delegate-vesting-shares?delegator=${this.state.delegationAccount}&delegatee=utopian-io&vesting_shares=${this.state.delegationSP}%20SP&redirect_uri=${window.location.href}`);}}
+                  onClick={() => {this.setState({delegationTypeModal: false}); this.openURI(`${steemconnectHost}/sign/delegate-vesting-shares?delegator=${this.state.delegationAccount}&delegatee=utopian-io&vesting_shares=${this.state.delegationSP}%20SP&redirect_uri=${window.location.href}`, true);}}
                   />
                   </span>
               }
             >
-            There are multiple methods you can use to delegate:<br/>
+            There are multiple secure methods you can use to delegate:<br/>
             <ul style={{listStyleType: 'disc'}}>
-            <li> <b>Vessel</b> Click the Green button to use Vessel's desktop app. You must have version 0.2.0 or higher. </li>
-            <li> <b>SteemConnect</b> Click the Blue button to use Steemconnect, a Steemit-made website to delegate.</li>
+            <li> <b>Vessel</b> Click the Green button to use Vessel's desktop app to delegate. You must have version 0.2.0 or higher. </li>
+            <li> <b>SteemConnect</b> Click the Blue button to use Steemconnect, a website maintained by Steemit, to delegate.</li>
             </ul>
             </Modal>
 
