@@ -28,6 +28,7 @@ class Sponsors extends React.PureComponent {
       delegationAccount: "",
       total_vesting_shares: 0,
       total_vesting_fund_steem: 0,
+      vestsPerSteem: 1.00,
     };
   }
 
@@ -45,6 +46,31 @@ class Sponsors extends React.PureComponent {
         });
       }
     })
+    const vestsPerSteem = (1.000) / (steem.formatter.vestToSteem(1, this.state.total_vesting_shares, this.state.total_vesting_fund_steem));
+  }
+
+   openInNewTab(url) {
+        var a = document.createElement("a");
+        a.target = "_blank";
+        a.href = url;
+        a.click();
+    }
+
+  generateSteemURI(from, amount) {
+    from = from.replace("@", "");
+    const vestsPerSteem = (parseFloat('1.000')) / (parseFloat(steem.formatter.vestToSteem(1, parseFloat(this.state.total_vesting_shares), parseFloat(this.state.total_vesting_fund_steem))));
+    const amtVests = parseFloat(amount) * parseFloat(vestsPerSteem);
+    const suffix = window.btoa(JSON.stringify([
+      [
+        "delegate_vesting_shares",
+        {
+          "delegator": from,
+          "delegatee": "utopian-io",
+          "vesting_shares": (amtVests).toString(),
+        }
+      ]
+    ]));
+    return `steem://sign/tx/${suffix}`;
   }
 
   render () {
@@ -198,18 +224,20 @@ class Sponsors extends React.PureComponent {
                 <span>
                 <Action
                   positive={true}
-                  text={<span><a target="_blank" href="steem://sign/tx/W1siZGVsZWdhdGVfdmVzdGluZ19zaGFyZXMiLHsiZGVsZWdhdG9yIjoiIiwiZGVsZWdhdGVlIjoidXRvcGlhbi1pbyIsInZlc3Rpbmdfc2hhcmVzIjoiMTAwIn1dXQ==#eyJ2ZXN0aW5nX3NoYXJlcyI6eyJwcm9tcHQiOnRydWUsImxhYmVsIjoiIiwidHlwZSI6InZlc3RzIn0sImRlbGVnYXRvciI6eyJ0eXBlIjoidGV4dCIsInByb21wdCI6dHJ1ZX0sImRlbGVnYXRlZSI6eyJ0eXBlIjoidGV4dCJ9fQ==">Vessel</a></span>}
-                  onClick={() => {this.setState({delegationTypeModal: false});}}
-                  />
+                  style={{color: "white"}}
+                  text={<span>Use Vessel App</span>}
+                  onClick={() => {this.setState({delegationTypeModal: false}); this.openInNewTab(this.generateSteemURI(this.state.delegationAccount, this.state.delegationSP));}}
+                  /><br/>
                   <Action
                   primary={true}
-                  text={<span><a target="_blank" href={`${steemconnectHost}/sign/delegate-vesting-shares?delegator=${this.state.delegationAccount}&delegatee=utopian-io&vesting_shares=${this.state.delegationSP}%20SP&redirect_uri=${window.location.href}`}>SteemConnect</a></span>}
-                  onClick={() => {this.setState({delegationTypeModal: false})}}
+                  style={{color: "white"}}
+                  text={<span>Use SteemConnect.com</span>}
+                  onClick={() => {this.setState({delegationTypeModal: false}); this.openInNewTab(`${steemconnectHost}/sign/delegate-vesting-shares?delegator=${this.state.delegationAccount}&delegatee=utopian-io&vesting_shares=${this.state.delegationSP}%20SP&redirect_uri=${window.location.href}`);}}
                   />
                   </span>
               }
             >
-            There are multiple methods you can use to delegate!
+            There are multiple methods you can use to delegate:<br/>
             <ul style={{listStyleType: 'disc'}}>
             <li> <b>Vessel</b> Click the Green button to use Vessel's desktop app. You must have version 0.20.0 or higher. </li>
             <li> <b>SteemConnect</b> Click the Blue button to use Steemconnect, a Steemit-made website to delegate.</li>
