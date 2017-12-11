@@ -17,7 +17,7 @@ import { getHtml } from './Body';
 import { getProxyImageURL } from '../../helpers/image';
 
 const StoryPreview = ({ text }) => {
-
+  console.log("StoryPreview", text);
   return (
     <div>
       <BodyShort key="text" className="Story__content__body" body={text} />

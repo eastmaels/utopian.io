@@ -78,6 +78,15 @@ class Story extends React.Component {
     }
   };
 
+  postPreview(body) {
+    const MAX_LENGTH = 50;
+    var suffix = "...";
+    if (!body) return body;
+    if (body.length < MAX_LENGTH) return body;
+    if (body[MAX_LENGTH-1] === '.') suffix = "..";
+    return (body.substr(0, MAX_LENGTH) + suffix);
+  }
+
   allTags(tagList) {
     if (!tagList) return <em>No Tags Provided</em>;
     var ret = "";
@@ -259,13 +268,13 @@ class Story extends React.Component {
               </h2>
             </Link>
             <Link to={post.url} className="Story__content__preview">
-              <StoryPreview post={post.body} />
+              <StoryPreview text={post.body} />
             </Link>
           </div>
           <div className="Story__header">
           <div className="Story__postTags nomobile">
               <Tooltip title={this.allTags(post.json_metadata.tags)}>
-              {(post.json_metadata.tags.length >= 1) && <span>
+              {(post.json_metadata.tags.length > 1) && <span>
                 <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 0)}</Tag>
               </span>}
               {(post.json_metadata.tags.length >= 2) && <span>
