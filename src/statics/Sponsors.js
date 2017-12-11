@@ -58,9 +58,7 @@ class Sponsors extends React.PureComponent {
 
   generateSteemURI(from, amount) {
     from = from.replace("@", "");
-    const vestsPerSteem = (parseFloat('1.000')) / (parseFloat(steem.formatter.vestToSteem(1, parseFloat(this.state.total_vesting_shares), parseFloat(this.state.total_vesting_fund_steem))));
-    const preVests = parseFloat(amount) * parseFloat(vestsPerSteem);
-    const amtVests = (preVests) / (10.000);
+    const amtVests = (parseFloat(amount) * this.state.total_vesting_fund_steem) / this.state.total_vesting_shares;
     const preSuffix = [
       [
         "delegate_vesting_shares",
@@ -73,7 +71,6 @@ class Sponsors extends React.PureComponent {
     ];
     const suffix = window.btoa(JSON.stringify(preSuffix));
     console.log("DELEGATION JSON: ", preSuffix);
-    console.log("[dev] ", vestsPerSteem, "-", amtVests, "-", this.state.total_vesting_shares, "-", this.state.total_vesting_fund_steem, "-", parseFloat(2));
     return `steem://sign/tx/${suffix}#e30=`;
   }
 
