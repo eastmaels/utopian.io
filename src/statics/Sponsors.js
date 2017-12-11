@@ -59,8 +59,9 @@ class Sponsors extends React.PureComponent {
   generateSteemURI(from, amount) {
     from = from.replace("@", "");
     console.log("Generating for amount ", amount, " vesting_fund_steem: ", this.state.total_vesting_fund_steem, " vesting_shares var:", this.state.total_vesting_shares);
-    const amtVests =  ((parseFloat(amount) / parseFloat(this.state.total_vesting_fund_steem))) * parseFloat(this.state.total_vesting_shares);
-    console.log("DELEGATING ", amtVests, " VESTS.");
+    const amt =  ((parseFloat(amount) / parseFloat(this.state.total_vesting_fund_steem))) * parseFloat(this.state.total_vesting_shares);
+    const amtVests = `${amt.toFixed(6)} VESTS`;
+    console.log("DELEGATING ", amtVests);
     const preSuffix = [
       [
         "delegate_vesting_shares",
