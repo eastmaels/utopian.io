@@ -81,21 +81,23 @@ const Contribution = ({type, repository, platform, id, showVerified, showPending
 
     {showPending ? 
       <span className="markPullRight">
-      <Icon className="markIcon" type="sync"/>
+      <Icon type="sync" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
+      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
       : null}
     {showFlagged ? 
       <span className="markPullRight">
-      <Icon className="markIcon" type="exclamation-circle-o"/>
+      <Icon type="markIcon" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
+      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
       : null}
     {showInProgress ? 
       <span className="markPullRight">
-      <Icon className="markIcon" type="safety"/>
+      <Icon type="safety" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
+      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
     : null}
-    {type.indexOf('task') > -1 && <Icon type="notification" className={`task ${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/> }
-    
+    {(!showPending && !showFlagged && !showInProgress && (type.indexOf('task') > -1)) && <span className="markPullRight"><b><Icon type="notification" className=""/></b></span> }
   </div>
 );
 

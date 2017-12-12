@@ -277,14 +277,23 @@ class Topnav extends React.Component {
       );
     }
 
+    const logoSource = () => {
+      const prefix = "https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets";
+      // should be prefix = ""; (this is just testing)
+      if (window.innerWidth > 736) {
+        return `${prefix}/img/utopian-logo.png`;
+      } else {
+        return `${prefix}/img/utopian-sole.png`;
+      }
+    }
+
     return (
       <div>
         <div className="Topnav">
           <div className="topnav-layout container">
             <div className="left">
               <Link className="Topnav__brand" to="/">
-              {/* /img/utopian-logo.png TEMPORARY TESTING REPLACEMENT */}
-                <img id="MainLogo" src="https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets/img/utopian-logo.png"/>
+                <img id="MainLogo" src={logoSource()}/>
               </Link>
               <span className="Topnav__version"></span>
             </div>
