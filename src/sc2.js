@@ -15,7 +15,17 @@ function getLoginUrl(state) {
   const response = 'response_type=code';
   const clientId = `client_id=${encodeURIComponent('utopian.app')}`;
   state = `state=${state ? encodeURIComponent(state) : ''}`;
-  return `${auth}?${clientId}&${response}&${redirect}&${state}&scope=`;
+  const scopes = [
+    'vote',
+    'comment',
+    'comment_delete',
+    'comment_options',
+    'custom_json',
+    'claim_reward_balance',
+    'offline'
+  ].join(',');
+  const scope = `scope=${encodeURIComponent(scopes)}`;
+  return `${auth}?${clientId}&${response}&${redirect}&${state}&${scope}`;
 }
 
 function profile() {
