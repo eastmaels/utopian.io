@@ -5,6 +5,18 @@ import Cookie from 'js-cookie';
 export const CALL_API = 'CALL_API';
 const API_ROOT = process.env.UTOPIAN_API;
 
+function processReq(req, session) {
+  if (session) req.set({ session });
+  return req.then(res => {
+    return res.body;
+  }).catch(err => {
+    if (err.status === 407 && session) {
+      Cookie.remove('session');
+      window.location.reload(true);
+    }
+  })
+}
+
 const callApi = (endpoint, schema, method, payload, additionalParams, absolute?) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) && !absolute
           ? API_ROOT + endpoint : endpoint;
@@ -15,25 +27,11 @@ const callApi = (endpoint, schema, method, payload, additionalParams, absolute?)
 
   switch (method) {
     case 'GET':
-      return get(fullUrl)
-        .set({ session })
-        .then(res => {
-          return res.body
-        });
+      return processReq(get(fullUrl), session);
     case 'POST':
-      return post(fullUrl)
-        .send(payload)
-        .set({ session })
-        .then(res => {
-          return res.body
-        });
+      return processReq(post(fullUrl).send(payload), session);
     case 'PUT':
-      return put(fullUrl)
-        .send(payload)
-        .set({ session })
-        .then(res => {
-          return res.body
-        });
+      return processReq(put(fullUrl).send(payload), session);
     default:
       return null;
   }
