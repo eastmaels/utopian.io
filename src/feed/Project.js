@@ -136,7 +136,7 @@ class Project extends React.Component {
     const repoId = parseInt(match.params.repoId);
     getProject(match.params.platform, repoId).then(res => {
       let project = null;
-      if (res.status !== 404 && res.response.name) {
+      if (res.status !== 404 && res.response && res.response.name) {
         project = res.response;
       }
       this.setState({
