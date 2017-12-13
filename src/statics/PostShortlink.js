@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getPostById } from '../actions/contributions';
 import { Link } from 'react-router-dom';
 
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import './Moderators.less';
 
 @connect(

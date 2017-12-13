@@ -9,13 +9,54 @@
   &-menu-item {
     .anticon-github {
       font-size: 16px;
-      color: #444;
+      color: rgb(255, 255, 255);
+      @media screen and (max-width: 736px) {
+        margin-right: 2px !important;
+      }
+      @media screen and (min-width: 737px) {
+        margin-right: 5px !important;
+      }
     }
   }
 }
 
 .Searchmobile {
   display: none;
+}
+
+.from-topnav.md-react-icon {
+  @media screen and (max-width: 736px) {
+    margin-right: 2px !important;
+  }
+  @media screen and (min-width: 737px) {
+    margin-right: 5px !important;
+  }
+  margin-bottom: 3px !important;
+  &.md-sub-projects {
+      margin-bottom: 5px !important;
+  }
+  &.md-documentation {
+      margin-bottom: 2px !important;
+  }
+  &.md-copywriting {
+      margin-bottom: -1px !important;
+  }
+}
+
+.from-story.md-react-icon {
+  margin-bottom: 4px !important;
+  &.md-documentation {
+    margin-bottom: 2px !important;
+  }
+  &.md-copywriting {
+    margin-bottom: 1px !important;
+  }
+  &.md-graphics {
+    margin-bottom: 3px !important;
+  }
+  &.md-bug-hunting {
+    margin-bottom: 3px !important;
+  }
 }
 
 @media screen and (max-width: 736px) {
@@ -89,7 +130,7 @@
 
     .ant-select {
       outline: 0;
-      min-width: 25%;
+      min-width: 30%;
       border-radius: 0;
       height: 100%;
       border: 0;

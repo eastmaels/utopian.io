@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Input, Icon } from 'antd';
+import { Input, Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import Dropzone from 'react-dropzone';
 import Scroll from 'react-scroll';
 import { isValidImage, MAXIMUM_UPLOAD_SIZE } from '../../helpers/image';

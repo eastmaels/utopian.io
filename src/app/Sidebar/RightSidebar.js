@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
 
 import {
@@ -10,7 +10,7 @@ import {
 
 import SignUp from '../../components/Sidebar/SignUp';
 
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SideAnnouncement from '../../components/Sidebar/SideAnnouncement';
 import ProjectSponsors from '../../components/Sidebar/ProjectSponsors';

@@ -1,44 +1,47 @@
 import * as React from 'react';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import "../../styles/custom.less";
 import "../../styles/fonts.less";
+import "./categoryIcon.less";
 
-const CategoryIcon = ({type}) => {
+const CategoryIcon = ({from, type}) => {
   switch (type) {
     case 'sub-projects':
-      return <Icon style={{}} type="copy" />;
+      return <ReactIcon.MdExtension className={`md-react-icon md-sub-projects ${from || "from-unspecified"}`} />;
     case 'blog':
-      return <Icon style={{}} type="paper-clip" />;
+      return <ReactIcon.MdLibraryBooks className={`md-react-icon md-blog ${from || "from-unspecified"}`} />;
     case 'task-ideas':
     case 'ideas':
-      return <Icon style={{}} type="bulb" />;
+      return <ReactIcon.MdLightbulbOutline className={`md-react-icon md-ideas ${from || "from-unspecified"}`} />;
     case 'task-development':
     case 'development':
-      return <Icon style={{}} type="code" />;
+      return <ReactIcon.MdCode className={`md-react-icon md-development ${from || "from-unspecified"}`} />;
     case 'task-bug-hunting':
     case 'bug-hunting':
-      return <Icon style={{}} type="eye-o" />;
+      return <ReactIcon.MdBugReport className={`md-react-icon md-bug-hunting ${from || "from-unspecified"}`} />;
     case 'task-translations':
     case 'translations':
-      return <Icon style={{}} type="flag" />;
+      return <ReactIcon.MdTranslate className={`md-react-icon md-translations ${from || "from-unspecified"}`} />;
     case 'task-analysis':
     case 'analysis':
-      return <Icon style={{}} type="dot-chart" />;
+      return <ReactIcon.MdInsertChart className={`md-react-icon md-analysis ${from || "from-unspecified"}`} />;
     case 'task-graphics':
     case 'graphics':
-      return <Icon style={{}} type="layout" />;
+      return <ReactIcon.MdWeb className={`md-react-icon md-graphics ${from || "from-unspecified"}`} />;
     case 'task-social':
     case 'social':
-      return <Icon style={{}} type="share-alt" />;
+      return <ReactIcon.MdShare  className={`md-react-icon md-social ${from || "from-unspecified"}`} />;
     case 'task-documentation':
     case 'documentation':
-      return <Icon style={{}} type="book" />;
+      return <ReactIcon.MdAssignment className={`md-react-icon md-documentation ${from || "from-unspecified"}`} />;
     case 'tutorials':
-      return <Icon style={{}} type="file-unknown" />;
+      return <ReactIcon.MdLiveHelp className={`md-react-icon md-tutorials ${from || "from-unspecified"}`} />;
     case 'video-tutorials':
-      return <Icon style={{}} type="video-camera" />;
+      return <ReactIcon.MdOndemandVideo className={`md-react-icon md-video-tutorials ${from || "from-unspecified"}`} />;
     case 'copywriting':
-      return <Icon style={{}} type="edit" />;
+      return <ReactIcon.MdTextsms className={`md-react-icon md-copywriting ${from || "from-unspecified"}`} />;
+    default:
+      return <ReactIcon.MdLocalAirport className={`md-react-icon ${from || "from-unspecified"}`} />;
   }
 };
 

@@ -19,7 +19,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'ideas':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="ideas"/> Suggestion Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="ideas"/> Suggestion Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Suggestions are minor features/enhancements that you would like to have in an Open Source project.</li>
@@ -34,7 +34,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'sub-projects':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="sub-projects"/> Sub-Project Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="sub-projects"/> Sub-Project Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>A Sub-Project is a set of new unseen features having a great impact on the project.</li>
@@ -51,7 +51,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'development':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="development"/> Development Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="development"/> Development Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Only merged Pull Requests will be accepted or Open Source projects you maintain never posted on Utopian before, forks included as long as the fork is not just a mirror of the original one. Proof of work required.</li>
@@ -68,7 +68,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'blog':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="blog"/> Blog Post Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="blog"/> Blog Post Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>You must provide an original format/s. You can't post about news found in the web or general thoughts, unless you have a unique and consistent format. <a href="https://utopian.io/utopian-io/@utopian-io/2xqdoa-utopian-weekly-1-the-weekly-open-source-newsletter">Example of a good format</a>.</li>
@@ -87,7 +87,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'bug-hunting':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="bug-hunting"/> Bug Hunting Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bug Hunting Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>In this category you can only report bugs you have found in an Open Source project.</li>
@@ -102,7 +102,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'translations':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="translations"/> Translations Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="translations"/> Translations Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>In order to submit a translation in Utopian, you must translate the proper amount of strings for your project size:
@@ -127,7 +127,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'graphics':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="graphics"/> Graphics Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="graphics"/> Graphics Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>We reserve the right to reject a graphic contribution if we believe the work is not enough to be rewarded.</li>
@@ -145,7 +145,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'analysis':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="analysis"/> Analysis Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="analysis"/> Analysis Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>This category is meant only for providing a data analysis you have generated for an Open Source project.</li>
@@ -161,7 +161,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'social':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="analysis"/> Visibility Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="analysis"/> Visibility Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>This category is meant only for providing results of online social engagement, adv and similar for an Open Source project.</li>
@@ -177,7 +177,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'documentation':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="documentation"/> Documentation Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="documentation"/> Documentation Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Only merged Pull Requests on the official repository will be accepted or on a fork as long as long as the fork is not just a mirror of the original one. Proof of work required..</li>
@@ -196,7 +196,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'tutorials':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="tutorials"/> Tutorial Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="tutorials"/> Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Machine translated tutorials will be rejected.</li>
@@ -214,7 +214,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'video-tutorials':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="video-tutorials"/> Video Tutorial Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="video-tutorials"/> Video Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Video Tutorials using a machine voice will be rejected.</li>
@@ -231,7 +231,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
     case 'copywriting':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon type="copywriting"/> Copywriting Rules</h2>
+          <h2><CategoryIcon from="from-rules"  type="copywriting"/> Copywriting Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
           <li>Linking pull requests from Github is encouraged, but is not required if not applicable. 

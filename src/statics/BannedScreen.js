@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Icon } from 'antd';
+import { Modal, Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 import urlParse from 'url-parse';

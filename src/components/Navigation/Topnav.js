@@ -10,6 +10,7 @@ import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 import sc2 from '../../sc2';
 
 import Icon from 'antd/lib/icon';
+import * as ReactIcon from 'react-icons/lib/md';
 import Autocomplete from 'react-autocomplete';
 import Avatar from '../Avatar';
 import Notifications from './Notifications/Notifications';
@@ -103,6 +104,14 @@ class Topnav extends React.Component {
     return items;
   }
 
+  shortLong(shorter, longer) {
+    const size = window.innerWidth;
+    if (size <= 736) {
+      return shorter;
+    } 
+    return longer;
+  }
+
   renderSearch () {
     const { history, location } = this.props;
 
@@ -112,20 +121,20 @@ class Topnav extends React.Component {
 
         <InputGroup className="SearchSelector" compact>
           <Select className="SearchSelector" defaultValue={this.searchSelected(location) || 'projects'} onChange={this.handleChangeSearchType}>
-            <Option className="SearchSelector" value="projects"><Icon type="github" className="SearchSelectorGit iconfont icon-search" /> Projects</Option>
-            <Option value="ideas"><CategoryIcon className="SearchSelector" type="ideas"/> Suggestions</Option>
-            <Option value="sub-projects"><CategoryIcon className="SearchSelector" type="sub-projects"/> Sub-Projects</Option>
-            <Option value="development"><CategoryIcon className="SearchSelector" type="development"/> Code</Option>
-            <Option value="bug-hunting"><CategoryIcon className="SearchSelector" type="bug-hunting"/> Bugs</Option>
-            <Option value="translations"><CategoryIcon className="SearchSelector" type="translations"/> Translations</Option>
-            <Option value="graphics"><CategoryIcon className="SearchSelector" type="graphics"/> Graphics</Option>
-            <Option value="analysis"><CategoryIcon className="SearchSelector" type="analysis"/> Analysis</Option>
-            <Option value="social"><CategoryIcon className="SearchSelector" type="social"/> Visibility</Option>
-            <Option value="documentation"><CategoryIcon className="SearchSelector" type="documentation"/> Docs</Option>
-            <Option value="tutorials"><CategoryIcon className="SearchSelector" type="tutorials"/> Tutorials</Option>
-            <Option value="video-tutorials"><CategoryIcon className="SearchSelector" type="video-tutorials"/> Video Tuts</Option>
-            <Option value="copywriting"><CategoryIcon className="SearchSelector" type="copywriting"/> Copy</Option>
-            <Option value="blog"><CategoryIcon className="SearchSelector" type="blog"/> Blogs</Option>
+            <Option className="SearchSelector" value="projects"><Icon type="github" style={{color: "white"}} className="SearchSelectorGit iconfont icon-search" /> Projects</Option>
+            <Option value="ideas"><CategoryIcon from="from-topnav"  className="SearchSelector" type="ideas"/> Suggestions</Option>
+            <Option value="sub-projects"><CategoryIcon from="from-topnav"  className="SearchSelector" type="sub-projects"/> Sub-Projects</Option>
+            <Option value="development"><CategoryIcon from="from-topnav"  className="SearchSelector" type="development"/> {this.shortLong("Code", "Development")}</Option>
+            <Option value="bug-hunting"><CategoryIcon from="from-topnav"  className="SearchSelector" type="bug-hunting"/> {this.shortLong("Bugs", "Bug Reports")}</Option>
+            <Option value="translations"><CategoryIcon from="from-topnav"  className="SearchSelector" type="translations"/> Translations</Option>
+            <Option value="graphics"><CategoryIcon from="from-topnav"  className="SearchSelector" type="graphics"/> Graphics</Option>
+            <Option value="analysis"><CategoryIcon from="from-topnav"  className="SearchSelector" type="analysis"/> Analysis</Option>
+            <Option value="social"><CategoryIcon from="from-topnav"  className="SearchSelector" type="social"/> Visibility</Option>
+            <Option value="documentation"><CategoryIcon from="from-topnav"  className="SearchSelector" type="documentation"/> {this.shortLong("Docs", "Documentation")}</Option>
+            <Option value="tutorials"><CategoryIcon from="from-topnav"  className="SearchSelector" type="tutorials"/> Tutorials</Option>
+            <Option value="video-tutorials"><CategoryIcon from="from-topnav"  className="SearchSelector" type="video-tutorials"/> {this.shortLong("Video Tuts", "Video Tutorials")}</Option>
+            <Option value="copywriting"><CategoryIcon from="from-topnav"  className="SearchSelector" type="copywriting"/> {this.shortLong("Copy", "Copywriting")}</Option>
+            <Option value="blog"><CategoryIcon from="from-topnav"  className="SearchSelector" type="blog"/> {this.shortLong("Blogs", "Blog Posts")}</Option>
           </Select>
           <Input
             ref={input => this.searchInput = input}

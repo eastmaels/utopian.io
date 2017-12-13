@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 import steem from 'steem';
 import Action from '../components/Button/Action';
-import { Modal, Icon } from 'antd';
+import { Modal, Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import './Sponsors.less';
 
 @connect(

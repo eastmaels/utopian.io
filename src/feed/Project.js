@@ -10,7 +10,7 @@ import { getGithubRepo, setGithubRepo } from '../actions/project';
 import { getReposByGithub } from '../actions/projects';
 import { getProject, createProjectAccount, createProjectSponsor } from '../actions/project';
 
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import SubFeed from './SubFeed';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import RightSidebar from '../app/Sidebar/RightSidebar';

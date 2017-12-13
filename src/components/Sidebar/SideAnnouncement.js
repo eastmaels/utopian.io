@@ -2,7 +2,7 @@ import React from 'react';
 import Avatar from '../Avatar';
 import steem from 'steem';
 
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import { Link } from 'react-router-dom';
 import Action from '../../components/Button/Action';
 

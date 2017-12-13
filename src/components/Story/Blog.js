@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import CategoryIcon from '../CategoriesIcons/index';
 
 import './Blog.less';
 
@@ -12,7 +13,7 @@ const modeClass = fm => {
 const Blog = ({showPending, showFlagged, showInProgress, fullMode}) => (
   <div className={`Blog ${modeClass(fullMode)}`}>
   
-      <Icon type="paper-clip" className="bgBlog"/> BLOG POST &nbsp;
+      <CategoryIcon from="from-story" type="blog" /> BLOG POST &nbsp;
       {showPending ? 
       <span className="markPullRight">
       <Icon className="markIcon" type="sync"/>

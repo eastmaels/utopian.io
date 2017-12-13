@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md'; 
 import CategoryIcon from '../CategoriesIcons';
 
 import './Contribution.less';
@@ -73,7 +73,7 @@ const Contribution = ({type, repository, platform, id, showVerified, showPending
   <div className={`Contribution ${type} ${modeClass(fullMode)}`}>
     <span>
     
-      <span className={`Contribution__c-${type}`}><CategoryIcon type={type}/></span> {categorySlug(type)} &nbsp; <b>&middot;</b> &nbsp;
+      <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}><CategoryIcon from="from-story" type={type}/></span> {categorySlug(type)} &nbsp; <b>&middot;</b> &nbsp;
     <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
       {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> {parsedRepoName(repository.owner.login, repository.name)}
     </Link>

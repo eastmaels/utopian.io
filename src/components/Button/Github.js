@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import Action from '../Button/Action';
 const state = Math.random().toString(36).substring(7);
 import './Github.less';
