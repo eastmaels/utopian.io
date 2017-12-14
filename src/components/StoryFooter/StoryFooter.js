@@ -74,7 +74,7 @@ class StoryFooter extends React.Component {
     const _self = this;
     if(isOwner && repository.fork !== true) {
       getProject(postData.platform, postData.repository.id).then(res => {
-        if (res.status !== 404 && res.response.name && res.response.sponsorship.enabled === true) {
+        if (res.status !== 404 && res.response && res.response.name && res.response.sponsorship.enabled === true) {
           const project = res.response;
           const projectAccount = project.steem_account.account;
           steem.api.getAccounts([projectAccount], function(err, accounts) {
