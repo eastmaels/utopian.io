@@ -114,7 +114,7 @@ export default class Buttons extends React.Component {
     const ratio = totalPayout / voteRshares;
 
     const upVotesPreview = take(upVotes, 10).map(vote => (
-      <p key={vote.voter}>
+      <p key={vote.voter} className={`${(vote.voter == 'utopian-io') ? 'Buttons__makeBold' : ''}`}>
         <Link style={{ color: '#FFF'}} to={`/@${vote.voter}`}>{vote.voter}</Link>
 
         {vote.rshares * ratio > 0.01 && (
@@ -140,7 +140,7 @@ export default class Buttons extends React.Component {
 
     const commentsLink =
       post.url.indexOf('#') !== -1 ? post.url : { pathname: post.url, hash: '#comments' };
-      console.log(post.cashout_time);
+      // console.log(post.cashout_time);
     const showEditLink = ownPost && post.cashout_time !== '1969-12-31T23:59:59' && (new Date(post.cashout_time + "Z") < new Date(0));
     //const showReblogLink = !ownPost && post.parent_author === '';
     const showReblogLink = false; // @UTOPIAN forced no reblog
@@ -169,9 +169,13 @@ export default class Buttons extends React.Component {
             {pendingLike ? (
               <Icon type="loading" />
             ) : (
+              <span>
+              {this.state.sliderVisible ? 
               <i
-                className={`iconfont icon-${this.state.sliderVisible ? 'right' : 'praise_fill'}`}
+                className={`iconfont icon-right`}
               />
+              : <ReactIcon.MdThumbUp className="Buttons__likeBtn"/>}
+              </span>
             )}
           </a>
         </Tooltip>
@@ -199,7 +203,7 @@ export default class Buttons extends React.Component {
         </span>
         <Tooltip title={intl.formatMessage({ id: 'comment', defaultMessage: 'Comment' })}>
           <Link className="Buttons__link" to={commentsLink} onClick={this.handleCommentClick}>
-            <i className="iconfont icon-message_fill" />
+            <ReactIcon.MdInsertComment className="Buttons__commentBtn"/>
           </Link>
         </Tooltip>
         <span className="Buttons__number">

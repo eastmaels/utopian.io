@@ -209,7 +209,7 @@ storiesOf('Profile', module)
   );
 
 storiesOf('Comments', module).add('Comments', () =>
-  (<Comments
+  (<Comments 
     authenticated={false}
     user={{}}
     comments={rootComments}

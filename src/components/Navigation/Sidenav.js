@@ -34,7 +34,7 @@ const Sidenav = ({ username }) =>
         <br/><hr />
         <li>
           <NavLink to="/blog" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/blog', match, location)}>
-            <CategoryIcon from="from-sidenav" type="blog" style={{'verticalAlign': 'middle', 'fontSize': '22px'}}/>
+            <CategoryIcon from="from-sidenav" type="blog" style={{'margin-left': '10px', 'verticalAlign': 'middle', 'fontSize': '22px',}}/>
             Blog Posts
           </NavLink>
         </li>

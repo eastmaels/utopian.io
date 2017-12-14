@@ -44,6 +44,7 @@ import './Comment.less';
     onLikeClick: PropTypes.func,
     onDislikeClick: PropTypes.func,
     onSendComment: PropTypes.func,
+    moderators: PropTypes.array,
   };
 
   static defaultProps = {
@@ -57,6 +58,7 @@ import './Comment.less';
     onLikeClick: () => {},
     onDislikeClick: () => {},
     onSendComment: () => {},
+    moderators: [],
   };
 
   constructor(props) {
@@ -139,6 +141,11 @@ import './Comment.less';
       'error',
     );
   };
+
+  isModerator = (u) => {
+    if (!this.props || !this.props.moderators) return false;
+    return R.find(R.propEq('account', u))(this.props.moderators);
+  }
 
   handleSubmitComment = (parentPost, commentValue, isUpdating, originalComment) => {
     this.setState({ showCommentFormLoading: true });
@@ -249,6 +256,15 @@ import './Comment.less';
                 })}
               >
                 <Tag color="#4f545c">OP</Tag>
+              </Tooltip>}
+              {this.isModerator(comment.author) &&
+              <Tooltip
+                title={intl.formatMessage({
+                  id: 'moderator',
+                  defaultMessage: 'Moderator',
+                })}
+              >
+                <Tag color="#4f545c">Mod</Tag>
               </Tooltip>}
           </Link>
           <span className="Comment__date">
