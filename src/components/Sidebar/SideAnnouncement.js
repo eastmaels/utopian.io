@@ -13,12 +13,14 @@ import { setTimeout } from 'timers';
 const SideAnnouncement = ({ user }) => {
   var SHOW_ANNOUNCEMENT_1 = 1;
   var SHOW_ANNOUNCEMENT_2 = 1;
-  var SHOW_ANNOUNCEMENT_3 = 1;
+  var SHOW_ANNOUNCEMENT_3 = 0;
   const NUMBER_OF_ANNOUNCEMENTS = () => {return (SHOW_ANNOUNCEMENT_1 + SHOW_ANNOUNCEMENT_2 + SHOW_ANNOUNCEMENT_3);}
+  var voting_for_witness = false;
   const witnessCheck = async () => {
     for (var i = 0; i < user.witness_votes.length; ++i) {
         if (user.witness_votes[i] === 'utopian-io') {
             SHOW_ANNOUNCEMENT_1 = 0;
+            voting_for_witness = true;
             return;
         }
     }

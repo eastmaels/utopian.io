@@ -130,12 +130,12 @@ export default class Buttons extends React.Component {
       upVotesDiff > 0 && (
         <p>
           <a style={{ color: '#FFF'}} role="presentation" onClick={this.handleShowReactions}>
-            <FormattedMessage id="and_more_amount" defaultMessage="and {amount} more" values={{ amount: upVotesDiff }} />
+              <center><ReactIcon.MdKeyboardArrowDown />&nbsp;&nbsp;<FormattedMessage id="and_more_amount" defaultMessage="and {amount} more" values={{ amount: upVotesDiff }} />&nbsp;&nbsp;<ReactIcon.MdKeyboardArrowDown /></center>
           </a>
         </p>
       );
 
-    const likeClass = classNames({ active: postState.isLiked, Buttons__link: true });
+    const likeClass = classNames({ active: postState.isLiked, Buttons__activeIcon: postState.isLiked, Buttons__link: true, Buttons__likeBtn: true, Buttons__reactIcon: true });
     const rebloggedClass = classNames({ active: postState.isReblogged, Buttons__link: true });
 
     const commentsLink =
@@ -174,7 +174,7 @@ export default class Buttons extends React.Component {
               <i
                 className={`iconfont icon-right`}
               />
-              : <ReactIcon.MdThumbUp className="Buttons__likeBtn"/>}
+              : <ReactIcon.MdThumbUp className={likeClass}/>}
               </span>
             )}
           </a>
@@ -203,7 +203,7 @@ export default class Buttons extends React.Component {
         </span>
         <Tooltip title={intl.formatMessage({ id: 'comment', defaultMessage: 'Comment' })}>
           <Link className="Buttons__link" to={commentsLink} onClick={this.handleCommentClick}>
-            <ReactIcon.MdInsertComment className="Buttons__commentBtn"/>
+            <ReactIcon.MdInsertComment className="Buttons__commentBtn Buttons__reactIcon"/>
           </Link>
         </Tooltip>
         <span className="Buttons__number">

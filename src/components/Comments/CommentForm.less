@@ -73,9 +73,14 @@
 
   &__button {
     color: @white-darker;
+    background-color: @superblue !important;
     margin-top: 4px;
     .btn;
     .btn-primary;
+
+    &:hover, &:active {
+      background-color: @lsuperblue;
+    }
 
     &__primary {
       .colorize-button(@purple, #2a3574);

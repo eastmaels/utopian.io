@@ -3,6 +3,7 @@
 .Buttons {
   color: @blue-botticelli;
   font-size: 14px;
+  font-family: @font-family-header !important;
   font-weight: bold;
 
   &__reactions-count {
@@ -19,7 +20,7 @@
 
   &__commentBtn {
     font-size: 20px;
-    margin-bottom: 7px;
+    margin-bottom: 11px;
     margin-right: 4px;
   }
 
@@ -50,14 +51,25 @@
     }
 
     &:hover {
-      color: @purple;
+      color: @superblue;
     }
 
     &:hover > .iconfont,
     &.active > .iconfont {
-      color: @purple;
+      color: @superblue;
     }
+
+    &:hover > .Buttons__reactIcon,
+    &.active > .Buttons__reactIcon {
+      color: @superblue;
+    }
+    
   }
+
+  &__activeIcon {
+    color: @superblue;
+  }
+
 
   &__number {
     vertical-align: 3px;
