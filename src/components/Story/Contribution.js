@@ -10,7 +10,7 @@ const categorySlug = type => {
     case 'ideas':
       return 'SUGGESTION';
     case 'sub-projects':
-      return 'PROJECT';
+      return 'SUB-PROJECT';
     case 'development':
       return 'DEVELOPMENT';
     case 'bug-hunting':
@@ -74,9 +74,8 @@ const Contribution = ({type, repository, platform, id, showVerified, showPending
     <span>
     
       <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}><CategoryIcon from="from-story" type={type}/></span> {categorySlug(type)} &nbsp; <b>&middot;</b> &nbsp;
-    <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
-      {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> {parsedRepoName(repository.owner.login, repository.name)}
-    </Link>
+    
+      {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>{parsedRepoName(repository.owner.login, repository.name)}</Link>
     </span>
 
     {showPending ? 

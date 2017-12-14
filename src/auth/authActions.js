@@ -28,7 +28,7 @@ export const login = () => (dispatch) => {
     payload: {
       promise: sc2.profile()
         .then((resp) => {
-          console.log("RESP", resp)
+          // console.log("RESP", resp)
 
           if (resp && resp.user) {
             dispatch(getFollowing(resp.user));

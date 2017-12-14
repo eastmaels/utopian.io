@@ -74,16 +74,29 @@
 }
 
 .ant-select-arrow {
-  color: #fff !important;
+  color: rgb(255, 255, 255) !important;
 }
 
 .PopoverMenu {
   background-color: @black !important;
 }
 
-.ant-popover-arrow {
+.TopRightPopover {
   // color: @white !important;
-  background-color: @black !important;
+  .ant-popover-arrow {
+    display: none !important;
+    color: transparent !important;
+    z-index: 1040 !important;
+  }
+}
+
+.ant-popover-arrow {
+  display: none !important;
+  color: transparent !important;
+}
+
+.ant-popover-content {
+  margin-top: -12px !important;
 }
 
 .ant-select-dropdown-menu {

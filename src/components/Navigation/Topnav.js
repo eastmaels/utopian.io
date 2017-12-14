@@ -231,7 +231,7 @@ class Topnav extends React.Component {
                 placement="bottom"
                 trigger="click"
                 content={
-                  <PopoverMenu onSelect={onMenuItemClick} className="TopPopover">
+                  <PopoverMenu onSelect={onMenuItemClick} className="TopPopover TopRightPopover">
                     <PopoverMenuItem key="new-contribution">
                       New Contribution
                     </PopoverMenuItem>

@@ -8,7 +8,7 @@ const GithubBtn = ({ disconnect }) => (
   <Action className="ConnectGithub"
     primary={true}
     compact={true}
-    text={<span><Icon type="github" /> {!disconnect ? 'Synch with Github' : 'Disconnect Github' }</span>}
+    text={<span><Icon type="github" /> {!disconnect ? 'Sync with Github' : 'Disconnect Github' }</span>}
     onClick={() => {
       if (!disconnect) {
         const GITHUB_AUTH_SCOPE = "public_repo%20read:org";
