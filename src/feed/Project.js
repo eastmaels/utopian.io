@@ -169,7 +169,7 @@ class Project extends React.Component {
     const { authenticated, match, createProjectSponsor, createProjectAccount, location, history, repo, user } = this.props;
     const { repo: projectName } = match.params;
     if (!this.state.loadedProject) this.loadGithubData();
-    if (!this.state.loadedRepo) // console.log("[c]", this.state.loadedProject);
+    // if (!this.state.loadedRepo) console.log("[c]", this.state.loadedProject);
     return (
       <div>
         <Helmet>
@@ -186,7 +186,7 @@ class Project extends React.Component {
             </Affix>
             <Affix className="rightContainer" stickPosition={77}>
               <div className="right">
-                <RightSidebar
+                <RightSidebar 
                   createProjectSponsor={createProjectSponsor}
                   createProjectAccount={createProjectAccount}
                   match={match}
