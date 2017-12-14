@@ -10,6 +10,7 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { Tag, Tooltip } from 'antd';
+import * as ReactIcon from 'react-icons/lib/md';
 import { formatter } from 'steem';
 import { MAXIMUM_UPLOAD_SIZE_HUMAN } from '../../helpers/image';
 import { sortComments } from '../../helpers/sortHelpers';
@@ -17,6 +18,9 @@ import CommentForm from './CommentForm';
 import EmbeddedCommentForm from './EmbeddedCommentForm';
 import Avatar from '../Avatar';
 import Body from '../Story/Body';
+import _ from 'lodash';
+import urlParse from 'url-parse';
+import * as R from 'ramda';
 import CommentFooter from '../CommentFooter/CommentFooter';
 import HiddenCommentMessage from './HiddenCommentMessage';
 import './Comment.less';
@@ -264,7 +268,7 @@ import './Comment.less';
                   defaultMessage: 'Moderator',
                 })}
               >
-                <Tag color="#4f545c">Mod</Tag>
+                <Tag color="blue"><ReactIcon.MdSecurity className="modSecurityTag"/>&nbsp; Mod</Tag>
               </Tooltip>}
           </Link>
           <span className="Comment__date">
