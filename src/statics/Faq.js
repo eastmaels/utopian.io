@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import './Faq.less';
 
 export default () =>
-  (<div className="main-panel">
+  (<div className="main-panel FAQ">
     <div className="mt-5 text-center">
       <h1>
         <center>Frequently Asked Questions</center>
