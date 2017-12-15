@@ -116,7 +116,7 @@ export default class RightSidebar extends React.Component {
   render() {
     const { user, project, isOwner, repo, createProjectAccount, createProjectSponsor, match } = this.props;
     //const project = this.state.project;
-    console.log(this.props);
+    // console.log(this.props);
 
     if (!this.props.authenticated) {
       return (
