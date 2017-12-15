@@ -182,6 +182,14 @@ class StoryFull extends React.Component {
   setModTemplate(event) {
     this.setModTemplateByName(event.target.value);
   }
+  tagString(tags) {
+    var ret = "";
+    for (var i = 0; i < tags.length; ++i) {
+      ret += tags[i];
+      if (i !== (tags.length - 1)) ret += ", ";
+    }
+    return ret;
+  }
 
   render() {
     const {
@@ -295,6 +303,7 @@ class StoryFull extends React.Component {
 
           {!alreadyChecked ? <h3>
             <Icon type="safety" /> {!isModerator ? 'Under Review' : 'Review Contribution'}
+            <br/>
           </h3> : null}
 
           {!isModerator ? <p>
@@ -308,10 +317,10 @@ class StoryFull extends React.Component {
           </p> : null}
 
           {isModerator && alreadyChecked ? <div>
-            <h3><Icon type="safety" /> Moderation Status</h3>
-            {post.reviewed && <p><b>ACCEPTED BY:</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
-            {post.flagged && <p><b>HIDDEN BY:</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
-            {post.pending && <p><b>PENDING REVIEW:</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            <h3><center><Icon type="safety" /> Moderation Control </center></h3>
+            {post.reviewed && <p><b>Status: &nbsp;</b> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {post.flagged && <p><b>Status: &nbsp;</b> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {post.pending && <p><b>Status: &nbsp;</b> <Icon type="sync"/>&nbsp; Pending <span className="smallBr"><br/></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
           </div> : null}
 
           {isModerator ? <div>
@@ -626,7 +635,13 @@ class StoryFull extends React.Component {
           />
         )}
         <div className="StoryFull__topics">
-          {tags && tags.map(tag => <Topic key={tag} name={tag} />)}
+          <Tooltip title={<span><b>Tags:</b> {this.tagString(tags)}</span>}>
+          {tags && tags.map(tag => 
+          <span>
+          <Topic key={tag} name={tag} />&nbsp;
+          </span>
+          )}
+          </Tooltip>
         </div>
         {metaData.pullRequests && metaData.pullRequests.length > 0 ?
           <div>

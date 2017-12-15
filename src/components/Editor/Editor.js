@@ -13,6 +13,7 @@ import EditorToolbar from './EditorToolbar';
 import Action from '../Button/Action';
 import Body, { remarkable } from '../Story/Body';
 import Autocomplete from 'react-autocomplete';
+import 'mdi/css/materialdesignicons.min.css';
 import './Editor.less';
 
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';

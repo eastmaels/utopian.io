@@ -320,7 +320,7 @@ class Story extends React.Component {
             </div>
           </div>
           <div className="Story__footer">
-            {reviewed && <StoryFooter
+            {reviewed ? <StoryFooter
               user={user}
               post={post}
               postState={postState}
@@ -331,7 +331,7 @@ class Story extends React.Component {
               defaultVotePercent={defaultVotePercent}
               onLikeClick={onLikeClick}
               onShareClick={onShareClick}
-            />}
+            /> : <br/>}
           </div>
         </div>
       </div>
