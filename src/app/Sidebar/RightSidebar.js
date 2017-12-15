@@ -36,6 +36,7 @@ export default class RightSidebar extends React.Component {
     authenticatedUser: PropTypes.shape().isRequired,
     followingList: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
+
   /*
   constructor(props) {
     super(props);
@@ -111,9 +112,11 @@ export default class RightSidebar extends React.Component {
     }
   }
 */
+
   render() {
     const { user, project, isOwner, repo, createProjectAccount, createProjectSponsor, match } = this.props;
     //const project = this.state.project;
+    console.log(this.props);
 
     if (!this.props.authenticated) {
       return (
@@ -151,7 +154,7 @@ export default class RightSidebar extends React.Component {
               createProjectAccount={createProjectAccount}
             /> : null
         }
-        <GithubConnection user={user} />
+        <GithubConnection user={(this.props.authenticatedUser || user)} />
       </span>
     );
   }
