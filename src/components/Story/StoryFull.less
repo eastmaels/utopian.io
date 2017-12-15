@@ -11,6 +11,9 @@
 
 .StoryFull {
   margin: 12px 0;
+  @media screen and (max-width: 736px) {
+    margin: 1px 0;
+  }
 
   &.Contribution{
     margin-bottom: 15px;
@@ -32,8 +35,13 @@
     margin-top: 10px;
   }
 
+  &__reviewP {
+    line-height: 15px !important;
+    
+  }
+
   &__review {
-    line-height: 8px !important;
+    line-height: 10px !important;
     background: @red;
     color: @white;
     padding: 7.5px;

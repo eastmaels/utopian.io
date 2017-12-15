@@ -42,12 +42,6 @@ if (process.env.STEEMJS_URL) {
   steem.api.setOptions({ url: process.env.STEEMJS_URL });
 }
 
-/*
-steem.api.lookupAccounts('elear', 100, function(err, result) {
-  console.log(err, result);
-});
-*/
-
 message.config({
   top: 62,
   duration: 3,

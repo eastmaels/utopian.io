@@ -296,6 +296,14 @@ class StoryFull extends React.Component {
     const repository = metaData.repository;
     const postType = post.json_metadata.type;
     const alreadyChecked = isModerator && (post.reviewed || post.pending || post.flagged);
+    const mobileView = (window.innerWidth <= 736);
+    const shortLong = (s, l) => {
+      if (mobileView) {
+        return s;
+      } else {
+        return l;
+      }
+    }
 
     return (
       <div className="StoryFull">
@@ -306,28 +314,43 @@ class StoryFull extends React.Component {
             <br/>
           </h3> : null}
 
-          {!isModerator ? <p>
+          {!isModerator ? <p className="StoryFull__reviewP">
             A moderator will review this contribution within 24-48 hours and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
                 {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
           </p> : null}
 
-          {isModerator && !alreadyChecked ? <p>
+          {isModerator && !alreadyChecked ? <p className="StoryFull__reviewP">
             Hello Moderator. How are you today? <br />
             Please make sure this contribution meets the{' '}<Link to="/rules">Utopian Quality Standards</Link>.<br />
           </p> : null}
 
-          {isModerator && alreadyChecked ? <div>
+          {isModerator && alreadyChecked ? 
+          <div>
+            {!mobileView ? 
+            <span>
             <h3><center><Icon type="safety" /> Moderation Control </center></h3>
             {post.reviewed && <p><b>Status: &nbsp;</b> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
             {post.flagged && <p><b>Status: &nbsp;</b> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
             {post.pending && <p><b>Status: &nbsp;</b> <Icon type="sync"/>&nbsp; Pending <span className="smallBr"><br/></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
-          </div> : null}
+            </span>
+            :
+            <span>
+            <h3><center><Icon type="safety" /> Moderation  </center></h3>
+            {post.reviewed && <p> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {post.flagged && <p> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {post.pending && <p> <Icon type="sync"/>&nbsp; Pending <span className="smallBr"><br/></span> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            </span>
+            }
+          </div> 
+          : null}
 
           {isModerator ? <div>
             {!post.flagged && <Action
               id="hide"
+              className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
-              text='Hide forever'
+              tiny={mobileView}
+              text={shortLong(<span><Icon type="exclamation-circle"/></span>, 'Hide Forever')}
               onClick={() => {
                 var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user has not been responding for over 48 hours to your requests.')
                 if (confirm) {
@@ -341,8 +364,10 @@ class StoryFull extends React.Component {
             />}
             {!post.pending && !post.reviewed && <Action
               id="pending"
+              className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
-              text='Pending Review'
+              tiny={mobileView}
+              text={shortLong(<span><Icon type="sync"/></span>, 'Pending Review')}
               onClick={() => {
                 moderatorAction(post.author, post.permlink, user.name, 'pending');
                 this.setModTemplateByName("pendingDefault");
@@ -352,8 +377,10 @@ class StoryFull extends React.Component {
 
             {!post.reviewed && <Action
               id="verified"
+              className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
-              text='Verified'
+              tiny={mobileView}
+              text={shortLong(<span><Icon type="check-circle"/></span>, 'Verify')}
               onClick={() => this.setState({ verifyModal: true })}
             />}
 

@@ -112,6 +112,14 @@ class Topnav extends React.Component {
     return longer;
   }
 
+  contributionWord() {
+    if (window.innerWidth <= 736) {
+      return <span>&nbsp;</span>;
+    } else {
+      return "Contribution";
+    }
+  }
+
   renderSearch () {
     const { history, location } = this.props;
 
@@ -122,7 +130,7 @@ class Topnav extends React.Component {
         <InputGroup className="SearchSelector" compact>
           <Select className="SearchSelector" defaultValue={this.searchSelected(location) || 'projects'} onChange={this.handleChangeSearchType}>
             <Option className="SearchSelector" value="projects"><Icon type="github" style={{color: "white"}} className="SearchSelectorGit iconfont icon-search" /> Projects</Option>
-            <Option value="ideas"><CategoryIcon from="from-topnav"  className="SearchSelector" type="ideas"/> Suggestions</Option>
+            <Option value="ideas"><CategoryIcon from="from-topnav"  className="SearchSelector" type="ideas"/> {this.shortLong("Ideas", "Suggestions")}</Option>
             <Option value="sub-projects"><CategoryIcon from="from-topnav"  className="SearchSelector" type="sub-projects"/> Sub-Projects</Option>
             <Option value="development"><CategoryIcon from="from-topnav"  className="SearchSelector" type="development"/> {this.shortLong("Code", "Development")}</Option>
             <Option value="bug-hunting"><CategoryIcon from="from-topnav"  className="SearchSelector" type="bug-hunting"/> {this.shortLong("Bugs", "Bug Reports")}</Option>
@@ -184,7 +192,7 @@ class Topnav extends React.Component {
               text={
               // <Tooltip placement="bottom" title={<span><a href="/write" style={{color: "white"}}>Write a new Contributor Report</a></span>}>
                 <Link to="/write" className="Topnav__newReport">
-                  <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">Contribution</span></span>
+                  <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">{this.contributionWord()}</span></span>
                 </Link>
               // </Tooltip>
               }
