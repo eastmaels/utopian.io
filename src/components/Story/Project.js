@@ -25,13 +25,10 @@ class Project extends React.Component {
       <div className="Story">
         <div className="Story__content">
           <div className="Story__header">
-            <a target="_blank" href={`https://github.com/${repo.owner.login}`}>
-              <Avatar username={repo.owner.avatar_url} size={30} />
-            </a>
             <div className="Story__header__text">
               <Link to={`/project/${repo.owner.login}/${repo.name}/github/${repo.id}/all`}>
                 <h4>
-                  {repo.owner.login}
+                <Avatar username={repo.owner.avatar_url} size={30} /> {repo.owner.login}
                 </h4>
               </Link>
             </div>
