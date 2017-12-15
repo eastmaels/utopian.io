@@ -1,8 +1,9 @@
 import React from 'react';
 import GithubBtn from '../../components/Button/Github';
 import Avatar from '../Avatar';
+import { FormattedRelative, } from 'react-intl';
 
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { Icon, Tooltip } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import { Link } from 'react-router-dom';
 import * as Actions from '../../../src/actions/constants'
 
@@ -26,6 +27,13 @@ const GithubRepos = ({ user }) => {
     }
     return ("github");
   }
+
+  const lastSynced = () => {
+    if (!user || !user.github || !user.github.lastSynced) return 'Never';
+    if ((user.github.lastSynced) == null) return 'Never';
+    return <FormattedRelative value={user.github.lastSynced}/>;
+  }
+
 
   return (
     <div className="GithubRepos">
@@ -64,7 +72,9 @@ const GithubRepos = ({ user }) => {
           </div> : null
         }
         </div>
-        <GithubBtn />
+        <GithubBtn 
+        tooltipTitle={<span><b>Last Synced:</b> {lastSynced()}</span>}
+        />
       </div>
     </div>
   )

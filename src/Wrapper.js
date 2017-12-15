@@ -98,6 +98,9 @@ export default class Wrapper extends React.PureComponent {
       case 'new-contribution':
         this.props.history.push('/write');
         break;
+      case 'review':
+        this.props.history.push('/all/review');
+        break;
       case 'new-blog-post':
         this.props.history.push('/write-blog');
         break;

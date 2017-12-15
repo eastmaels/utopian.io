@@ -2,8 +2,8 @@ export const GET_GITHUB_REPOS_REQUEST = '@projects/GET_GITHUB_REPOS_REQUEST';
 export const GET_GITHUB_REPOS_SUCCESS = '@projects/GET_GITHUB_REPOS_SUCCESS';
 export const GET_GITHUB_REPOS_FAILURE = '@projects/GET_GITHUB_REPOS_FAILURE';
 
-export const CURRENT_SCOPE_VERSION = 5;
-export const REQUIRED_SCOPE_VERSION = 5; // at least
+export const CURRENT_SCOPE_VERSION = 6;
+export const REQUIRED_SCOPE_VERSION = 6; // at least
 
 /* SCOPE VERSIONS
 1: original

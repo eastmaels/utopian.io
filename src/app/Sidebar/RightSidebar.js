@@ -6,6 +6,7 @@ import {
   getIsAuthenticated,
   getAuthenticatedUser,
   getFollowingList,
+  getUser,
 } from '../../reducers';
 
 import SignUp from '../../components/Sidebar/SignUp';
@@ -29,7 +30,7 @@ import * as R from 'ramda';
     authenticatedUser: getAuthenticatedUser(state),
     followingList: getFollowingList(state),
     repo: state.repo,
-  }), {})
+  }), { getUser })
 export default class RightSidebar extends React.Component {
   static propTypes = {
     authenticated: PropTypes.bool.isRequired,
@@ -116,7 +117,6 @@ export default class RightSidebar extends React.Component {
   render() {
     const { user, project, isOwner, repo, createProjectAccount, createProjectSponsor, match } = this.props;
     //const project = this.state.project;
-    // console.log(this.props);
 
     if (!this.props.authenticated) {
       return (

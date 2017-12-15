@@ -249,8 +249,8 @@ class Topnav extends React.Component {
                     <PopoverMenuItem key="activity">
                       Activity
                     </PopoverMenuItem>
-                    <PopoverMenuItem key="bookmarks">
-                      Bookmarks
+                    <PopoverMenuItem key="review">
+                      Review
                     </PopoverMenuItem>
                     <PopoverMenuItem key="drafts">
                       Drafts
