@@ -279,13 +279,13 @@ class StoryFull extends React.Component {
 
     popoverMenu = [
       ...popoverMenu,
-      <PopoverMenuItem key="save">
-        {pendingBookmark ? <Icon type="loading" /> : <i className="iconfont icon-collection" />}
-        <FormattedMessage
-          id={postState.isSaved ? 'unsave_post' : 'save_post'}
-          defaultMessage={postState.isSaved ? 'Unsave post' : 'Save post'}
-        />
-      </PopoverMenuItem>,
+      // <PopoverMenuItem key="save">
+      //   {pendingBookmark ? <Icon type="loading" /> : <i className="iconfont icon-collection" />}
+      //   <FormattedMessage
+      //     id={postState.isSaved ? 'unsave_post' : 'save_post'}
+      //     defaultMessage={postState.isSaved ? 'Unsave post' : 'Save post'}
+      //   />
+      // </PopoverMenuItem>,
       <PopoverMenuItem key="report">
         <i className="iconfont icon-flag" />
         <FormattedMessage id="report_post" defaultMessage="Report post" />

@@ -19,12 +19,6 @@ const SidenavUser = ({ username }) => (
       </a>
     </li>
     <li>
-      <NavLink to="/bookmarks" activeClassName="Sidenav__item--active">
-        <i className="iconfont icon-collection" />
-        <FormattedMessage id="bookmarks" defaultMessage="Bookmarks" />
-      </NavLink>
-    </li>
-    <li>
       <NavLink to="/drafts" activeClassName="Sidenav__item--active">
         <i className="iconfont icon-write" />
         <FormattedMessage id="drafts" defaultMessage="Drafts" />
