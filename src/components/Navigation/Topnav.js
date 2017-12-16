@@ -72,11 +72,25 @@ class Topnav extends React.Component {
     }
   }
 
+  handleChangeSearch(event) {
+    const { history } = this.props
+    const { searchSection } = this.state
+    
+    // Replace invalid URI characters with empty string
+    const query = event.target.value.replace(/[@#%*]/g, '')
+
+    // Search when hitting enter and not empty string
+    if (query && event.key === 'Enter') {
+      history.push(`/search/${searchSection}/${query}`);
+    }
+  }
+
   constructor (props) {
     super(props)
     this.renderItems = this.renderItems.bind(this);
     this.searchSelected = this.searchSelected.bind(this);
     this.handleChangeSearchType = this.handleChangeSearchType.bind(this);
+    this.handleChangeSearch = this.handleChangeSearch.bind(this);
     this.state = {
       searchSection: this.searchSelected(props.location) || 'projects',
     };
@@ -112,14 +126,7 @@ class Topnav extends React.Component {
           <Input
             ref={input => this.searchInput = input}
             placeholder="Search..."
-            onKeyPress={(event) => {
-              const q = event.target.value;
-              const searchSection = this.state.searchSection;
-
-              if (event.key === 'Enter') {
-                history.push(`/search/${searchSection}/${q}`);
-              }
-            }}
+            onKeyPress={this.handleChangeSearch}
           />
         </InputGroup>
 
@@ -161,37 +168,8 @@ class Topnav extends React.Component {
             <Menu.Item key="user" className="Topnav__item-user">
               <Link className="Topnav__user" to={`/@${username}`}>
                 <Avatar username={username} size={36}/>
-                {/*<span className="Topnav__user__username">
-                 {username}
-                 </span>*/}
               </Link>
             </Menu.Item>
-            {/*<Menu.Item
-             key="notifications"
-             className="Topnav__item--badge"
-             >
-             <Tooltip placement="bottom"
-             title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}>
-             <Popover
-             placement="bottomRight"
-             trigger="click"
-             content={
-             <Notifications
-             notifications={notifications}
-             onClick={onNotificationClick}
-             onSeeAllClick={onSeeAllClick}
-             />
-             }
-             title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}
-             >
-             <a className="Topnav__link Topnav__link--light">
-             <Badge count={notificationsCount}>
-             <i className="iconfont icon-remind"/>
-             </Badge>
-             </a>
-             </Popover>
-             </Tooltip>
-             </Menu.Item>*/}
             <Menu.Item key="more">
               <Popover
                 placement="bottom"
