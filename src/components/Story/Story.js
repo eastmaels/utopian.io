@@ -331,6 +331,7 @@ class Story extends React.Component {
               defaultVotePercent={defaultVotePercent}
               onLikeClick={onLikeClick}
               onShareClick={onShareClick}
+              fullMode={false}
             /> : <br/>}
           </div>
         </div>

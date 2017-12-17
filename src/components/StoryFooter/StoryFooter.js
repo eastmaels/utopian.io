@@ -38,6 +38,7 @@ class StoryFooter extends React.Component {
     onLikeClick: PropTypes.func,
     onShareClick: PropTypes.func,
     onEditClick: PropTypes.func,
+    fullMode: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -47,6 +48,7 @@ class StoryFooter extends React.Component {
     onLikeClick: () => {},
     onShareClick: () => {},
     onEditClick: () => {},
+    fullMode: false,
   };
 
   state = {
@@ -201,12 +203,12 @@ class StoryFooter extends React.Component {
   };
 
   render() {
-    const { post, postState, pendingLike, loading, ownPost, defaultVotePercent } = this.props;
+    const { post, postState, pendingLike, loading, ownPost, defaultVotePercent, fullMode } = this.props;
 
     return (
       <div className="StoryFooter">
         <div className="StoryFooter__actions">
-          <Payout post={post} />
+          <Payout post={post} fullMode={fullMode}/>
           {this.state.sliderVisible && (
             <Confirmation onConfirm={this.handleLikeConfirm} onCancel={this.handleSliderCancel} />
           )}

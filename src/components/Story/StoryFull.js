@@ -8,6 +8,11 @@ import { find } from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
+import {
+  ShareButtons,
+  ShareCounts,
+  generateShareIcon
+} from 'react-share';
 import { formatter } from 'steem';
 import {
   getComments,
@@ -17,6 +22,7 @@ import {
   getAuthenticatedUserName,
 } from '../../reducers';
 import Body from './Body';
+import * as ReactIcon from 'react-icons/lib/md';
 import StoryFooter from '../StoryFooter/StoryFooter';
 import Avatar from '../Avatar';
 import Topic from '../Button/Topic';
@@ -101,6 +107,7 @@ class StoryFull extends React.Component {
     this.state = {
       verifyModal: false,
       moderatorCommentModal: false,
+      shareModal: false,
       reviewsource: 0,
       commentDefaultFooter: '\n\nYou can contact us on [Discord](https://discord.gg/UCvqCsx).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
       commentFormText: '\n\nYou can contact us on [Discord](https://discord.gg/UCvqCsx).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
@@ -304,6 +311,39 @@ class StoryFull extends React.Component {
         return l;
       }
     }
+    const {
+      FacebookShareButton,
+      GooglePlusShareButton,
+      LinkedinShareButton,
+      TwitterShareButton,
+      TelegramShareButton,
+      WhatsappShareButton,
+      PinterestShareButton,
+      VKShareButton,
+      OKShareButton,
+      RedditShareButton,
+      TumblrShareButton,
+      LivejournalShareButton,
+      EmailShareButton,
+    } = ShareButtons;
+  
+    const FacebookIcon = generateShareIcon('facebook');
+    const TwitterIcon = generateShareIcon('twitter');
+    const GooglePlusIcon = generateShareIcon('google');
+    const LinkedinIcon = generateShareIcon('linkedin');
+    const PinterestIcon = generateShareIcon('pinterest');
+    const VKIcon = generateShareIcon('vk');
+    const OKIcon = generateShareIcon('ok');
+    const TelegramIcon = generateShareIcon('telegram');
+    const WhatsappIcon = generateShareIcon('whatsapp');
+    const RedditIcon = generateShareIcon('reddit');
+    const TumblrIcon = generateShareIcon('tumblr');
+    const MailruIcon = generateShareIcon('mailru');
+    const EmailIcon = generateShareIcon('email');
+    const LivejournalIcon = generateShareIcon('livejournal');
+  
+    const shareTitle = `${post.title} - Utopian.io`
+    const shareUrl = "https://utopian.io/" + post.url;
 
     return (
       <div className="StoryFull">
@@ -575,6 +615,8 @@ class StoryFull extends React.Component {
           <span className="StoryFull__shortlink" style={{color: "green"}} onClick={() => {window.prompt("Copy this contribution's short link below: ", getShortLink(post))}}>
           <Icon type="paper-clip" style={{color: "green"}}/> Copy Short Link
           </span>
+          &nbsp;&nbsp;-&nbsp;&nbsp;
+          <a href="#" onClick={() => {this.setState({shareModal: true})}}> <ReactIcon.MdShare /> Share</a>
         </h3>
         <div className="StoryFull__header">
           <Link to={`/@${post.author}`}>
@@ -669,7 +711,105 @@ class StoryFull extends React.Component {
           </span>
           )}
           </Tooltip>
+          <b>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</b> <a href="#" onClick={() => {this.setState({shareModal: true})}}><ReactIcon.MdShare /> Share</a>
         </div>
+        <Modal
+          visible={this.state.shareModal}
+          title={"Share this Contribution!"}
+          footer={false}
+          onCancel={() => {this.setState({shareModal: false})}}
+          >
+          Click a button below to share this contribution to your favorite social media site!<br/>
+          <div className="ShareButtons">
+            <span className="ShareButtons__Facebook">
+              <FacebookShareButton
+                url={shareUrl}
+                hashtag={"#IAmUtopian"}
+                className="ShareButtons__button ShareButtons__Facebook__btn">
+                <a href="#">
+                  <FacebookIcon
+                    size={32}
+                    round />  </a>
+              </FacebookShareButton>
+            </span><br /><br />
+            <span className="ShareButtons__Twitter">
+              <TwitterShareButton
+                url={shareUrl}
+                title={shareTitle}
+                via={"utopian_io"}
+                hashtags={["utopian-io", "IAmUtopian", "open-source"]}
+                className="ShareButtons__button ShareButtons__Twitter__btn">
+                <a href="#">
+                  <TwitterIcon
+                    size={32}
+                    round />
+                </a>
+              </TwitterShareButton>
+            </span><br /><br />
+            <span className="ShareButtons__LinkedIn">
+              <LinkedinShareButton
+                url={shareUrl}
+                title={shareTitle}
+                description={'View this open-source contribution on Utopian.io.'}
+                windowWidth={750}
+                windowHeight={600}
+                className="ShareButtons__button ShareButtons__LinkedIn__btn">
+                <a href="#">
+                  <LinkedinIcon
+                    size={32}
+                    round />
+                </a>
+              </LinkedinShareButton>
+            </span><br /><br />
+            <span className="ShareButtons__Whatsapp">
+              <WhatsappShareButton
+                url={shareUrl}
+                title={shareTitle}
+                separator=":: "
+                className="ShareButtons__button">
+                <a href="#"><WhatsappIcon size={32} round /></a>
+              </WhatsappShareButton>
+            </span><br/><br/>
+            <span className="ShareButtons__GooglePlus">
+              <GooglePlusShareButton
+                url={shareUrl}
+                className="ShareButtons__button">
+                <a href="#"><GooglePlusIcon
+                  size={32}
+                  round /></a>
+              </GooglePlusShareButton>
+            </span><br/><br/>
+            <span className="ShareButtons__Reddit">
+              <RedditShareButton
+                url={shareUrl}
+                title={shareTitle}
+                windowWidth={660}
+                windowHeight={460}
+                className="ShareButtons__button">
+                <a href="#">
+                  <RedditIcon
+                    size={32}
+                    round /></a>
+              </RedditShareButton>
+            </span><br /><br />
+            <span className="ShareButtons__Email">
+              <EmailShareButton
+                url={shareUrl}
+                subject={shareTitle}
+                body={`Here's a cool open-source contribution I found on Utopian.io! The link is ${shareUrl}`}
+                className="ShareButtons__button">
+                <a href="#"><EmailIcon
+                  size={32}
+                  round /></a>
+              </EmailShareButton>
+            </span><br /><br />
+          </div>
+          <br/>
+          You can also copy the link directly <a href="#" onClick={
+            () => {window.prompt("Copy this contribution's short link below: ", getShortLink(post))}
+          }>here.</a>
+        </Modal>
+
         {metaData.pullRequests && metaData.pullRequests.length > 0 ?
           <div>
             <h3><Icon type="github" /> Linked Pull Requests</h3>
@@ -692,6 +832,7 @@ class StoryFull extends React.Component {
           pendingLike={pendingLike}
           onLikeClick={onLikeClick}
           onShareClick={onShareClick}
+          fullMode={true}
         />}
       </div>
     );
