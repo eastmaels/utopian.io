@@ -29,17 +29,34 @@
         text-decoration: underline;
       }
     }
+    svg {
+      color: @white !important;
+    }
+    .from-story.md-react-icon.md-blog {
+      color: @white !important;
+      margin-bottom: 2px !important;
+      margin-right: 2px !important;
+    }
   }
+  
+  &__c-yes-full {
+    color: @white !important;
+  }
+  &.nofull {
+    color: @light-grey !important;
+    .from-story.md-react-icon.md-blog {
+      color: @bg-blog !important;
+      margin-bottom: 2px !important;
+      margin-right: 2px !important;
+    }
+  }
+
   &.whitefont {
     color: @white !important;
   }
 }
 
-.from-story.md-react-icon.md-blog {
-    color: @bg-blog !important;
-    margin-bottom: 2px !important;
-    margin-right: 2px !important;
-}
+
 
 .markPullRight {
   position: absolute;
