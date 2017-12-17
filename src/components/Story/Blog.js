@@ -13,7 +13,7 @@ const modeClass = fm => {
 const Blog = ({showPending, showFlagged, showInProgress, fullMode}) => (
   <div className={`Blog ${modeClass(fullMode)}`}>
   
-  <span className={`Blog__c-${(fullMode === false) ? type : "yes-full"}`}><CategoryIcon from="from-story" type={type} className={(fullMode) ? "whitefont" : ""}/></span> BLOG POST &nbsp; 
+  <span className={`Blog__c-${(fullMode === false) ? 'blog' : "yes-full"}`}><CategoryIcon from="from-story" type={'blog'} className={(fullMode) ? "whitefont" : ""}/></span> BLOG POST &nbsp; 
       {showPending ? 
       <span className="markPullRight">
       <Icon className="markIcon" type="sync"/>
