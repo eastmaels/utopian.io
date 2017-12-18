@@ -49,12 +49,10 @@ const GithubRepos = ({ user, repositories }) => {
             {user.github.avatar_url && <Avatar username={user.github.avatar_url} size={45} />}
             <span><a target="_blank" href={`https://github.com/${user.github.account}`}>{user.github.account}</a></span>
           </div> : <div>
-            <br/> <b>Get the best out of Utopian!</b> Connecting to Github lets you:
             <ul className="GithubRepos__bulleted">
               <li className="GithubRepos__bulletedLi"><span>Seamlessly sync your projects and contributions with the Github feed</span></li>
               <li className="GithubRepos__bulletedLi"><span>Create task requests for your repositories</span></li>
             </ul>
-            Click below to connect:
           </div>}
         <div className="GithubRepos__divider"></div>
         {(user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && (repos) && (repos).length) ? <div className="GithubRepos__repos">
