@@ -271,7 +271,6 @@ class SubFeed extends React.Component {
           </Tabs>
           : null }
 
-
         <Feed
           content={ contributions }
           isFetching={ isFetching }

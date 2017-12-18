@@ -78,7 +78,7 @@ const GithubRepos = ({ user, repositories }) => {
           </div> : null
         }</div> : null}
         {(user && user.github && (!(repos) || !(repos).length)) && <span id="GithubRepos__norepos">
-          <b>No repos found yet.</b> Try connecting again below if repos won't show within few seconds.
+          <span>Looking for repositories.. <Icon type="loading" /></span>
         </span>}
         <GithubBtn 
         tooltipTitle={<span><b>Last Synced:</b> {lastSynced()}</span>}

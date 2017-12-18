@@ -67,7 +67,7 @@ class SubFeed extends React.Component {
 
   loadResults (nextProps = false) {
 
-    const { match, getContributions, getGithubRepos, user } = nextProps || this.props;
+    const { match, getContributions, getGithubRepos, user, loading } = nextProps || this.props;
     const q = match.params.query;
     const searchSection = match.params.searchSection;
     const skip =  nextProps ? 0 : this.state.skip;
@@ -93,7 +93,7 @@ class SubFeed extends React.Component {
         sortBy: 'created',
         type: searchSection,
         bySimilarity: q,
-        reset: true,
+        reset: nextProps,
       }).then(res => {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
@@ -126,6 +126,9 @@ class SubFeed extends React.Component {
     const results = this.renderResults();
     const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST || loading === Actions.GET_GITHUB_REPOS_REQUEST;
     const hasMore = this.total > results.length;
+
+
+    console.log("LOADING", loading)
 
     return (
       <div>
