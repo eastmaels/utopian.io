@@ -3,7 +3,8 @@ import GithubBtn from '../../components/Button/Github';
 import Avatar from '../Avatar';
 import { FormattedRelative, } from 'react-intl';
 
-import { Icon, Tooltip } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { Icon, Tooltip } from 'antd';
+import * as ReactIcon from 'react-icons/lib/md';
 import { Link } from 'react-router-dom';
 import * as Actions from '../../../src/actions/constants'
 
@@ -56,7 +57,7 @@ const GithubRepos = ({ user, repositories }) => {
             Click below to connect:
           </div>}
         <div className="GithubRepos__divider"></div>
-        {(user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && (repos) && (repos).length) && <div className="GithubRepos__repos">
+        {(user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && (repos) && (repos).length) ? <div className="GithubRepos__repos">
         {(user && user.github && (user.github.scopeVersion >= RequiredScopeVersion) && (repos) && (repos).length) ? <div>
             <ul style={{listStyleType: "none"}}>
               {(repos).map(repo => (
@@ -75,10 +76,9 @@ const GithubRepos = ({ user, repositories }) => {
               ))}
             </ul>
           </div> : null
-        }</div> }
+        }</div> : null}
         {(user && user.github && (!(repos) || !(repos).length)) && <span id="GithubRepos__norepos">
-          <b>Something went wrong.</b> We couldn't find any projects on your Github account.
-          Try connecting again below.
+          <b>No repos found yet.</b> Try connecting again below if repos won't show within few seconds.
         </span>}
         <GithubBtn 
         tooltipTitle={<span><b>Last Synced:</b> {lastSynced()}</span>}

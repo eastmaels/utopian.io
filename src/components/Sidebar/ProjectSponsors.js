@@ -89,7 +89,7 @@ class ProjectSponsors extends React.Component {
             <Action
               id="projectSponsor"
               primary={true}
-              text="Become a Sponsor"
+              text={<span>Become a Sponsor</span>}
               onClick={() => {
                 this.setState({ sponsorModal: true })
               }}

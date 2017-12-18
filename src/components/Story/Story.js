@@ -271,9 +271,8 @@ class Story extends React.Component {
               <StoryPreview text={post.body} />
             </Link>
           </div>
-          <div className="Story__header">
           <div className="Story__postTags nomobile">
-              <Tooltip title={this.allTags(post.json_metadata.tags)}>
+            <Tooltip title={this.allTags(post.json_metadata.tags)}>
               {(post.json_metadata.tags.length > 1) && <span>
                 <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 0)}</Tag>
               </span>}
@@ -289,36 +288,34 @@ class Story extends React.Component {
               {false && <span>
                 <Tag className="Story__postTag">utopian-io</Tag>
               </span>}
-              </Tooltip>
-              {(post.json_metadata.tags.length >= 2) && <span><br/><br/></span>}
-           </div>
-            <div className="Story__header__text Story__firstLine">
-            
-              <Link to={`/@${post.author}`}>
-                <h4 className="Story__firstLine">
-                  <Avatar username={post.author} size={30} className="Story__avatar"/> <span className="Story__author">{post.author}</span>
-                  <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
-                    <Tag className="Story__reputationTag nomobile">{formatter.reputation(post.author_reputation)}</Tag>
-                  </Tooltip>
-                </h4>
-              </Link>
+            </Tooltip>
+            {(post.json_metadata.tags.length >= 2) && <span><br/><br/></span>}
+          </div>
+          <div className="Story__user Story__firstLine">
+            <Link to={`/@${post.author}`}>
+              <h4 className="Story__firstLine">
+                <Avatar username={post.author} size={30} className="Story__avatar"/> <span className="Story__author">{post.author}</span>
+                <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
+                  <Tag className="Story__reputationTag nomobile">{formatter.reputation(post.author_reputation)}</Tag>
+                </Tooltip>
+              </h4>
+            </Link>
 
-              <span className="yesmobile">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
-              <Tooltip
-                title={
-                  <span>
+            <span className="yesmobile">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+            <Tooltip
+              title={
+                <span>
                     <FormattedDate value={`${post.created}Z`} />{' '}
-                    <FormattedTime value={`${post.created}Z`} />
+                  <FormattedTime value={`${post.created}Z`} />
                   </span>
-                }
-              >
+              }
+            >
                 <span className="Story__date">
                   <FormattedRelative value={`${post.created}Z`} />
                 </span>
-              </Tooltip>
-              
-            </div>
+            </Tooltip>
           </div>
+
           <div className="Story__footer">
             {reviewed ? <StoryFooter
               user={user}

@@ -27,7 +27,9 @@
     background-color: #F2F2F2 !important;
   }
   &__postTags {
-    margin-bottom: 6px !important;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 15px;
   }
 
   &__reblog {
@@ -88,20 +90,23 @@
     padding-top: 4px;
     padding-bottom: 2px;
     // display: flex;
+  }
 
-    &__text {
+  &__user {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 15px;
 
-      // margin: 0 8px;
-      // display: inline-flex;
-      a > h4 {
-        font-weight: bold;
-        color: @primary-color;
+    // margin: 0 8px;
+    // display: inline-flex;
+    a > h4 {
+      font-weight: bold;
+      color: @primary-color;
 
-        .ant-tag {
-          margin-left: 6px;
-          font-size: 12px;
-          vertical-align: 1px;
-        }
+      .ant-tag {
+        margin-left: 6px;
+        font-size: 12px;
+        vertical-align: 1px;
       }
     }
   }
@@ -143,7 +148,9 @@
       & > h2 {
         font-weight: bold;
         font-size: 20px;
-        margin: 8px 16px 8px;
+        margin-top: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
 
         .ant-tag {
           vertical-align: 1px;
@@ -171,7 +178,9 @@
     }
 
     &__body {
-      padding: 4px 16px;
+      margin-top: 15px;
+      padding-left: 15px;
+      padding-right: 15px;
     }
 
     & &__img-container {
@@ -187,6 +196,8 @@
   }
 
   &__footer {
-    padding: 0 16px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 15px;
   }
 }

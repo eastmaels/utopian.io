@@ -19,6 +19,7 @@ import TopicSelector from '../components/TopicSelector';
 import Affix from '../components/Utils/Affix';
 import ScrollToTop from '../components/Utils/ScrollToTop';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
+import BodyShort from '../components/Story/BodyShort';
 
 import * as R from 'ramda';
 
@@ -111,17 +112,17 @@ class Project extends React.Component {
         this.setState({loadedRepo: true});
       });
     }
-/*
-    if (projectInState && (repo && repo.id !== id)) {
-      setGithubRepo(projectInState);
-    }
+    /*
+     if (projectInState && (repo && repo.id !== id)) {
+     setGithubRepo(projectInState);
+     }
 
 
-    if (user && user.name && match.params.repoId && nextProps.match.params.repoId && match.params.repoId !== nextProps.match.params.repoId) {
-      this.setState({loadingProject: true});
-      this.loadGithubData();
-    }
- */
+     if (user && user.name && match.params.repoId && nextProps.match.params.repoId && match.params.repoId !== nextProps.match.params.repoId) {
+     this.setState({loadingProject: true});
+     this.loadGithubData();
+     }
+     */
   }
 
   componentDidUpdate () {
@@ -187,7 +188,7 @@ class Project extends React.Component {
             </Affix>
             <Affix className="rightContainer" stickPosition={77}>
               <div className="right">
-                <RightSidebar 
+                <RightSidebar
                   createProjectSponsor={createProjectSponsor}
                   createProjectAccount={createProjectAccount}
                   match={match}
@@ -203,10 +204,13 @@ class Project extends React.Component {
                   <p>
                     <a href={ repo.html_url } target="_blank"> { repo.html_url } </a>
                   </p><br/>
-                  {repo.description && <span><b className="Github__t">Description: </b> <StoryPreview text={repo.description || ''} /></span>}
-              {repo.homepage &&<span>
-              <b className="Github__t">Project Website: </b> <code className="Github__c">{repo.homepage}</code>
-              <br/></span>}
+                  {repo.description && <span>
+                    <BodyShort body={repo.description || ''} />
+                  </span>
+                  }
+                  {repo.homepage && <span>
+                    <b>Project Website: </b> <code className="Github__c">{repo.homepage}</code>
+                  <br/></span>}
                   <hr />
                   {this.state.isOwner && <div>
                     <Link to={`/write-task/${repo.id}`}>
