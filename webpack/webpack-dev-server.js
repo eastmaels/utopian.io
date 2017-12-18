@@ -10,11 +10,18 @@ require('dotenv').config();
 
 const USE_SSL = process.env.SERVER_SSL_CERT && process.env.SERVER_SSL_KEY;
 let STEEMCONNECT_REDIRECT_URL = process.env.STEEMCONNECT_REDIRECT_URL;
+let UTOPIAN_API = process.env.UTOPIAN_API;
+let UTOPIAN_GITHUB_REDIRECT_URL = process.env.UTOPIAN_GITHUB_REDIRECT_URL;
+
 if (!STEEMCONNECT_REDIRECT_URL) {
   if (USE_SSL) {
     STEEMCONNECT_REDIRECT_URL = 'https://localhost:3000/callback';
+    UTOPIAN_API = 'https://localhost:4040/api/';
+    UTOPIAN_GITHUB_REDIRECT_URL = 'https://localhost:3000/github/callback';
   } else {
     STEEMCONNECT_REDIRECT_URL = 'http://localhost:3000/callback';
+    UTOPIAN_API = 'http://localhost:4040/api/';
+    UTOPIAN_GITHUB_REDIRECT_URL = 'http://localhost:3000/github/callback';
   }
 }
 
@@ -40,9 +47,9 @@ module.exports = {
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'test-category'),
         UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_LANDING_URL),
-        UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'http://localhost:4040/api/'),
+        UTOPIAN_API: JSON.stringify(UTOPIAN_API),
         UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '1ed58da028b638550c03'),
-        UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(process.env.UTOPIAN_GITHUB_REDIRECT_URL || 'http://localhost:3000/github/callback'),
+        UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(UTOPIAN_GITHUB_REDIRECT_URL),
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
         IS_BROWSER: JSON.stringify(true),
         PUSHPAD_PROJECT_ID: process.env.PUSHPAD_PROJECT_ID,
