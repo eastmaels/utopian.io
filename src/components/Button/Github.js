@@ -5,9 +5,7 @@ const state = Math.random().toString(36).substring(7);
 import './Github.less';
 
 const GithubBtn = ({ disconnect, tooltipTitle }) => (
-  <span>
-  
-  <Action className="ConnectGithub"
+  <span><Action className="ConnectGithub"
     primary={true}
     compact={true}
     tooltipData={

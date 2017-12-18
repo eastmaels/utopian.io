@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl} from 'react-intl';
 import { Link } from 'react-router-dom';
+import { Icon } from 'antd';
 import StoryPreview from './StoryPreview';
 import Avatar from '../Avatar';
 import './Story.less';
@@ -21,6 +22,8 @@ class Project extends React.Component {
       repo,
     } = this.props;
 
+    console.log(repo);
+
     return (
       <div className="Story">
         <div className="Story__content">
@@ -28,7 +31,7 @@ class Project extends React.Component {
             <div className="Story__header__text">
               <Link to={`/project/${repo.owner.login}/${repo.name}/github/${repo.id}/all`}>
                 <h4>
-                <Avatar username={repo.owner.avatar_url} size={30} /> {repo.owner.login}
+                <span><Icon type="github"/> {repo.owner.login}</span>
                 </h4>
               </Link>
             </div>
@@ -40,7 +43,11 @@ class Project extends React.Component {
               </h2>
             </Link>
             <Link to={`/project/${repo.owner.login}/${repo.name}/github/${repo.id}/all`} className="Story__content__preview">
-              <StoryPreview text={repo.description || ''} />
+              {repo.description && <span><b className="Github__t">Description: </b> <StoryPreview text={repo.description || ''} /></span>}
+              {repo.homepage &&<span>
+              <b className="Github__t">Website: </b> <code className="Github__c">{repo.homepage}</code>
+              <br/></span>}
+              {repo.language && <span><b className="Github__t">Primary Language: </b> <code className="Github__c">{repo.language}</code></span>}
             </Link>
           </div>
         </div>

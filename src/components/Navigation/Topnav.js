@@ -295,10 +295,10 @@ class Topnav extends React.Component {
     }
 
     const logoSource = () => {
-      const prefix = "https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets";
-      // should be prefix = ""; (this is just testing)
+      var prefix = "https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets";
+      if (process.env.NODE_ENV === 'production') prefix = "";
       if (window.innerWidth > 736) {
-        return `${prefix}/img/utopian-logo.png`;
+        return `${prefix}/img/utopian-sole.png`;
       } else {
         return `${prefix}/img/utopian-sole.png`;
       }
@@ -312,7 +312,7 @@ class Topnav extends React.Component {
               <Link className="Topnav__brand" to="/">
                 <img id="MainLogo" src={logoSource()}/>
               </Link>
-              <span className="Topnav__version"><Link to="/" className="Topnav__version">beta</Link></span>
+    <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}beta</Link></span>
             </div>
             <div className="center">
               <div className="Topnav__input-container nomobile">

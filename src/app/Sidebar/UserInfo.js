@@ -36,6 +36,18 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
 
   const isSameUser = authenticated && authenticatedUser.name === user.name;
 
+  const websiteFormat = () => {
+    const deft = `${hostWithoutWWW}${url.pathname.replace(/\/$/, '')}`;
+    if ((deft).length > 12) {
+        var    a      = document.createElement('a');
+               a.href = url;
+        const hn = `${a.hostname}/...`;
+        if ((hn).length < 15) return hn;
+        return "Website";
+    }
+    return deft;
+  }
+
   const currentUsername = () => {
     if (user && user.name) return (user.name);
     var atName = window.location.pathname.replace(/^\/([^\/]*).*$/, '$1');
@@ -53,7 +65,7 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
           {website && <div>
             <i className="iconfont icon-link text-icon" />
             <a target="_blank" rel="noopener noreferrer" href={website}>
-              {`${hostWithoutWWW}${url.pathname.replace(/\/$/, '')}`}
+              {websiteFormat()}
             </a>
           </div>}
           <div>

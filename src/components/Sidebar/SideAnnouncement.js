@@ -60,7 +60,7 @@ const SideAnnouncement = ({ user }) => {
                 <div id="announcement3" className="Announcement__single">
                 <b className="Announcement__subtitle">Charity</b>&nbsp;&nbsp; 
                     <span className="Announcement__content">
-                    Utopian is donating to charities! See <a target="_blank" href="https://steemit.com/utopian-io/@utopian-io/utopian-is-donating-computers-and-educational-programs-1k-steem-donated-every-10k-generated">here</a> for more info!
+                    Utopian is donating to charities! See <a target="_blank" href="https://steemit.com/utopian-io/@utopian-io/utopian-is-donating-computers-and-educational-programs-1k-steem-donated-every-10k-generated">here</a> for more info.
                     </span>
                 </div>
                 </span>

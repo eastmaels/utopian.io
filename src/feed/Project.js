@@ -14,6 +14,7 @@ import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import SubFeed from './SubFeed';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import RightSidebar from '../app/Sidebar/RightSidebar';
+import StoryPreview from '../components/Story/StoryPreview';
 import TopicSelector from '../components/TopicSelector';
 import Affix from '../components/Utils/Affix';
 import ScrollToTop from '../components/Utils/ScrollToTop';
@@ -201,7 +202,11 @@ class Project extends React.Component {
                   <h2><Icon type='github' /> { repo.full_name }</h2>
                   <p>
                     <a href={ repo.html_url } target="_blank"> { repo.html_url } </a>
-                  </p>
+                  </p><br/>
+                  {repo.description && <span><b className="Github__t">Description: </b> <StoryPreview text={repo.description || ''} /></span>}
+              {repo.homepage &&<span>
+              <b className="Github__t">Project Website: </b> <code className="Github__c">{repo.homepage}</code>
+              <br/></span>}
                   <hr />
                   {this.state.isOwner && <div>
                     <Link to={`/write-task/${repo.id}`}>

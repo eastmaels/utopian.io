@@ -242,7 +242,7 @@ class Sponsors extends React.PureComponent {
               }
             >
             There are multiple secure methods you can use to delegate:<br/>
-            <ul style={{listStyleType: 'disc'}}>
+            <ul style={{listStyleType: 'disc', listStylePosition: 'inside'}}>
             <li> <b>Vessel</b> Click the Green button to use Vessel's desktop app to delegate. You must have version 0.2.0 or higher. </li>
             <li> <b>SteemConnect</b> Click the Blue button to use Steemconnect, a website maintained by Steemit, to delegate.</li>
             </ul>
