@@ -69,7 +69,7 @@ module.exports = {
         loader: 'url-loader',
       },
       {
-        test: /\.css|.less$/,
+        test: /\.(css|less)$/,
         use: [
           'style-loader',
           'css-loader',

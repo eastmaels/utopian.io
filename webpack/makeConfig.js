@@ -117,7 +117,7 @@ function makeStyleLoaders(options) {
   if (options.isDevelopment) {
     return [
       {
-        test: /\.css|.less$/,
+        test: /\.(css|less)$/,
         use: [
           {
             loader: 'style-loader',
@@ -140,7 +140,7 @@ function makeStyleLoaders(options) {
 
   return [
     {
-      test: /\.css|.less$/,
+      test: /\.(css|less)$/,
       loader: ExtractTextPlugin.extract({
         //fallback: 'style-loader',
         use: [
