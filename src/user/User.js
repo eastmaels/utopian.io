@@ -204,7 +204,7 @@ export default class User extends React.Component {
                 }
 
                 if(!this.state.githubProjects.length && loading !== Actions.GET_USER_REPOS_GITHUB_REQUEST) {
-                  return <EmptyFeed type={'project'} /> />
+                  return <EmptyFeed type={'project'} />
                 }
               }}
               />
