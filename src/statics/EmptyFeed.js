@@ -35,6 +35,14 @@ const Text = ({ type }) => {
       </h3>
     </div>
   );
+  
+  if (type === 'project') return (
+    <div className="EmptyFeed">
+      <h3>
+        No projects found.
+      </h3>
+    </div>
+  );
 
   return (<div className="EmptyFeed">
     <h3>
