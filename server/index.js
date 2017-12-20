@@ -86,13 +86,15 @@ if (!module.parent) {
   server.listen(port);
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.SERVER_SSL_CERT && process.env.SERVER_SSL_KEY) {
   const options = {
-    cert: fs.readFileSync('/etc/letsencrypt/live/utopian.io/fullchain.pem'),
-    key: fs.readFileSync('/etc/letsencrypt/live/utopian.io/privkey.pem')
+    cert: fs.readFileSync(process.env.SERVER_SSL_CERT),
+    key: fs.readFileSync(process.env.SERVER_SSL_KEY)
   };
 
   https.createServer(options, app).listen(443);
+} else {
+  http.createServer(app).listen(80);
 }
 
 server.on('error', onError);

@@ -8,6 +8,8 @@ import Avatar from './Avatar';
 import FollowButton from '../widgets/FollowButton';
 import Action from './Button/Action';
 import PopoverMenu, { PopoverMenuItem } from './PopoverMenu/PopoverMenu';
+import getImage from '../helpers/getImage';
+import { getUserRankKey, getUserRank } from '../helpers/user';
 import './UserHeader.less';
 
 const UserHeader = ({
@@ -25,7 +27,7 @@ const UserHeader = ({
 }) =>
   (<div
     className={classNames('UserHeader', { 'UserHeader--cover': hasCover })}
-    style={{ backgroundImage: `url("${process.env.STEEMCONNECT_IMG_HOST}/@${handle}/cover")` }}
+    style={{ backgroundImage: `url("${getImage(`@${handle}/cover`)}")` }}
   >
     <div className="UserHeader__container">
       <Avatar username={handle} size={100} />
@@ -43,7 +45,7 @@ const UserHeader = ({
             {authenticated &&
               (isSameUser
                 ? <a target="_blank" rel="noopener noreferrer" href={`https://steemit.com/@${handle}/settings`}>
-                  <Action small text={intl.formatMessage({ id: 'edit_profile', defaultMessage: 'Edit profile' })} />
+                  <Action small text={<span>Edit profile</span>} />
                 </a>
                 : <FollowButton username={handle} />)
             }
@@ -57,13 +59,10 @@ const UserHeader = ({
               content={
                 <PopoverMenu onSelect={onSelect}>
                   <PopoverMenuItem key="transfer">
-                    <FormattedMessage id="support" defaultMessage="Transfer Funds" />
-                  </PopoverMenuItem>
-                  <PopoverMenuItem key="ban">
-                    <FormattedMessage id="ban_user" defaultMessage="Ban this user" />
+                    <FormattedMessage id="transfer" defaultMessage="Transfer" />
                   </PopoverMenuItem>
                   <PopoverMenuItem key="mute">
-                    <FormattedMessage id="block_user" defaultMessage="Mute this user" />
+                    <FormattedMessage id="block_user" defaultMessage="Block this user" />
                   </PopoverMenuItem>
                 </PopoverMenu>
               }

@@ -6,6 +6,7 @@ import { Modal } from 'antd';
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import _ from 'lodash';
 import urlParse from 'url-parse';
+import querystring from 'querystring';
 
 import {
   getUser,
@@ -16,7 +17,8 @@ import {
 
 import { openTransfer } from '../../wallet/walletActions';
 import Action from '../../components/Button/Action';
-import BanUser from '../../components/BanUser'
+import BanUser from '../../components/BanUser';
+import CreateModerator from '../../components/CreateModerator';
 
 const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) => {
   const location = user && _.get(user.json_metadata, 'profile.location');
@@ -33,6 +35,24 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
   }
 
   const isSameUser = authenticated && authenticatedUser.name === user.name;
+
+  const websiteFormat = () => {
+    const deft = `${hostWithoutWWW}${url.pathname.replace(/\/$/, '')}`;
+    if ((deft).length > 12) {
+        var    a      = document.createElement('a');
+               a.href = url;
+        const hn = `${a.hostname}/...`;
+        if ((hn).length < 15) return hn;
+        return "Website";
+    }
+    return deft;
+  }
+
+  const currentUsername = () => {
+    if (user && user.name) return (user.name);
+    var atName = window.location.pathname.replace(/^\/([^\/]*).*$/, '$1');
+    return atName.replace("@", "");
+  }
   return (<div>
     {user.name &&
       <div style={{ wordBreak: 'break-word' }}>
@@ -45,7 +65,7 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
           {website && <div>
             <i className="iconfont icon-link text-icon" />
             <a target="_blank" rel="noopener noreferrer" href={website}>
-              {`${hostWithoutWWW}${url.pathname.replace(/\/$/, '')}`}
+              {websiteFormat()}
             </a>
           </div>}
           <div>
@@ -72,7 +92,7 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
           </div>
         </div>
       </div>}
-    {(user && !isSameUser) && <span><Action
+    {(user && user.name && !isSameUser) && <span><Action
       primary
       style={{ margin: '5px 0' }}
       text={intl.formatMessage({
@@ -83,7 +103,11 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
     />
 
     <BanUser 
-    username={user.name}
+    username={currentUsername()}
+    intl={intl}
+    />
+    <CreateModerator 
+    username={currentUsername()}
     intl={intl}
     />
     </span> 

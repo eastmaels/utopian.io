@@ -17,3 +17,37 @@ export const getContributionsRequest = query => ({
 });
 
 export const getContributions = query => dispatch => dispatch(getContributionsRequest(query));
+
+export const getPostByIdRequest = (postId) => ({
+    [CALL_API]: {
+        types: [ Actions.GET_POSTBYID_REQUEST, Actions.GET_POSTBYID_SUCCESS, Actions.GET_POSTBYID_FAILURE ],
+        endpoint: `posts/byid/${postId}`,
+        schema: null,
+        method: 'GET',
+        payload: {
+            postId: postId,
+        },
+        additionalParams: {
+        },
+        absolute: false
+    }
+});
+
+export const getPostById = (postId) => dispatch => dispatch(getPostByIdRequest(postId));
+
+// export const addPostPrefixRequest = (postId, uprefix) => ({
+//     [CALL_API]: {
+//       types: [ Actions.ADD_PREFIX_REQUEST, Actions.ADD_PREFIX_SUCCESS, Actions.ADD_PREFIX_FAILURE ],
+//       endpoint: `posts/byid/${postId}`,
+//       schema: null,
+//       method: 'PUT',
+//       payload: {
+//         postId,
+//         uprefix,
+//       },
+//       additionalParams: {},
+//       absolute: false
+//     }
+//   });
+
+//   export const addPostPrefix = (postId, uprefix = null) => dispatch => dispatch(addPostPrefixRequest(postId, uprefix));

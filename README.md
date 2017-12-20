@@ -3,7 +3,7 @@ Forked from https://github.com/busyorg/busy, Utopian uses the [STEEM Blockchain]
 
 See the website in action [here:](https://utopian.io)
 
-<center><img src="https://steemitimages.com/DQmTdu5ndWC2s1NwdYftLzc4oYhqCrowWqMHE2Q92c93W9F/image.png"/></center>
+<center><img src="https://steemitimages.com/DQmYgMbYHNtiNmA6TbSL34tNwaMvxsQu2o5zrDvnbDks8bY/image.png"/></center>
   
 ## Contributing to this Project
 1. Get in touch on Discord: https://discord.gg/5qMzAJ
@@ -26,7 +26,7 @@ These commands may take a while to process, because it needs to download everyth
 
 Utopian is now running on your machine! 
 * To access the local website, use any browser and go to `localhost:3000/` (or whatever Terminal says next to "Project is running at".)
-* To make a code change, use any editor to change any file in the code locally. If you change a `.js` file, the `webpack` will probably _automatically_ update itself and reload any browser pages that are viewing your local snapshot.
+* To make a code change, use any editor to change any file in the code locally. If you change a `.js` file, the `webpack` will _automatically_ update itself and reload any browser pages that are viewing your local snapshot.
 * When submitting a pull request, make sure to uncheck/delete the original `webpack-dev-server.js` code change, as that's only used for running the project locally.
 
 #### API Server

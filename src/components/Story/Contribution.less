@@ -1,10 +1,17 @@
 @import (reference) "../../styles/modules/variables.less";
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/fonts.less";
+@bg-borderwidth: 10px;
+@bg-radius: 3px;
+@bgcolor: white;
+@light-grey: rgb(151, 151, 151);
 
 .Contribution {
-  margin-bottom: 15px;
-  padding: 10px;
+  font-size: 13px;
+  font-family: @font-family-header;
+  margin-bottom: 4px;
+  padding-top: 7px;
+  padding-left: 16px;
   color: @white;
   background: @blue;
   position: relative;
@@ -20,10 +27,10 @@
   }
 
   a {
-    color: @white;
+    color: @light-grey;
     &:hover {
-      color: @white;
-      text-decoration: underline;
+      color: @grey-mortar;
+      text-decoration: none;
     }
   }
 
@@ -35,57 +42,187 @@
     color: white !important;
   }
 
+  
+
   &.task-ideas,
   &.ideas {
-    background: @bg-ideas;
+    border-top: @bg-borderwidth solid @bg-ideas;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-ideas,
+  &__c-ideas {
+    color: @bg-ideas;
   }
   &.sub-projects {
-    background: @bg-sub-projects;
+    border-top: @bg-borderwidth solid @bg-sub-projects;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-sub-projects {
+    color: @bg-sub-projects;
   }
   &.task-development,
   &.development {
-    background: @bg-development;
+    border-top: @bg-borderwidth solid @bg-development;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-development,
+  &__c-development {
+    color: @bg-development;
   }
   &.task-bug-hunting,
   &.bug-hunting {
-    background: @bg-bug-hunting;
+    border-top: @bg-borderwidth solid @bg-bug-hunting;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-bug-hunting,
+  &__c-bug-hunting {
+    color: @bg-bug-hunting;
   }
   &.task-translations,
   &.translations {
-    background: @bg-translations;
+    border-top: @bg-borderwidth solid @bg-translations;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-translations,
+  &__c-translations {
+    color: @bg-translations;
   }
   &.task-analysis,
   &.analysis {
-    background: @bg-analysis;
+    border-top: @bg-borderwidth solid @bg-analysis;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-analysis,
+  &__c-analysis {
+    color: @bg-analysis;
   }
   &.task-graphics,
   &.graphics {
-    background: @bg-graphics;
+    border-top: @bg-borderwidth solid @bg-graphics;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-graphics,
+  &__c-graphics {
+    color: @bg-graphics;
   }
   &.task-social,
   &.social {
-    background: @bg-social;
+    border-top: @bg-borderwidth solid @bg-social;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-social,
+  &__c-social {
+    color: @bg-social;
   }
   &.task-documentation,
   &.documentation {
     color: @black;
-    background: @bg-documentation;
-    border: 1px solid #999;
+    border-top: @bg-borderwidth solid @bg-documentation;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-task-documentation,
+  &__c-documentation {
+    color: @bg-documentation;
+  }
+  &.tutorials {
+    border-top: @bg-borderwidth solid @bg-tutorials;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-tutorials {
+    color: @bg-tutorials;
+  }
+  &.video-tutorials {
+    border-top: @bg-borderwidth solid @bg-video-tutorials;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-video-tutorials {
+    color: @bg-video-tutorials;
+  }
+  &.copywriting {
+    border-top: @bg-borderwidth solid @bg-copywriting;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-copywriting {
+    color: @bg-copywriting;
+  }
+  &.yesfull {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    color: @white !important;
     a {
-      color: @black;
-      &:hover {
-        color: @black;
+      color: @white !important;
+      :hover {
+        color: @white !important;
         text-decoration: underline;
       }
     }
   }
-  &.tutorials {
+  &.yesfull.task-ideas,
+  &.yesfull.ideas {
+    background: @bg-ideas;
+  }
+  &.yesfull.sub-projects {
+    background: @bg-sub-projects;
+  }
+  &.yesfull.task-development,
+  &.yesfull.development {
+    background: @bg-development;
+  }
+  &.yesfull.task-bug-hunting,
+  &.yesfull.bug-hunting {
+    background: @bg-bug-hunting;
+  }
+  &.yesfull.task-translations,
+  &.yesfull.translations {
+    background: @bg-translations;
+  }
+  &.yesfull.task-analysis,
+  &.yesfull.analysis {
+    background: @bg-analysis;
+  }
+  &.yesfull.task-graphics,
+  &.yesfull.graphics {
+    background: @bg-graphics;
+  }
+  &.yesfull.task-social,
+  &.yesfull.social {
+    background: @bg-social;
+  }
+  &.yesfull.task-documentation,
+  &.yesfull.documentation {
+    background: @bg-documentation;
+  }
+  &.yesfull.tutorials {
     background: @bg-tutorials;
   }
-  &.video-tutorials {
+  &.yesfull.video-tutorials {
     background: @bg-video-tutorials;
   }
-  &.copywriting {
+  &.yesfull.copywriting {
     background: @bg-copywriting;
   }
 }

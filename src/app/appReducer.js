@@ -8,6 +8,7 @@ const initialState = {
   locale: 'auto',
   localeLoading: false,
   rate: 0,
+  rewardFund: {},
   trendingTopicsLoading: false,
   trendingTopics: [],
 };
@@ -44,6 +45,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         rate: action.rate,
+      };
+    case appTypes.GET_REWARD_FUND_SUCCESS:
+      return {
+        ...state,
+        rewardFund: {
+          ...state.rewardFund,
+          ...action.payload,
+        },
       };
     case postActions.GET_CONTENT_START:
       return {
@@ -82,6 +91,7 @@ export default (state = initialState, action) => {
 export const getLocale = state => state.locale;
 export const getIsLocaleLoading = state => state.localeLoading;
 export const getRate = state => state.rate;
+export const getRewardFund = state => state.rewardFund;
 export const getIsTrendingTopicsLoading = state => state.trendingTopicsLoading;
 export const getTrendingTopics = state => state.trendingTopics;
 export const getIsFetching = state => state.isFetching;

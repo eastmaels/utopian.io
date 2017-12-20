@@ -9,11 +9,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 require('dotenv').config();
 
-
 const DEFAULTS = {
   isDevelopment: process.env.NODE_ENV !== 'production',
   baseDir: path.resolve(__dirname, '..'),
 };
+
+let UTOPIAN_LANDING_URL = process.env.UTOPIAN_LANDING_URL;
+if (!DEFAULTS.isDevelopment && UTOPIAN_LANDING_URL === undefined) {
+  UTOPIAN_LANDING_URL = 'http://join.utopian.io';
+}
 
 const POSTCSS_LOADER = {
   loader: 'postcss-loader',
@@ -47,15 +51,15 @@ function makePlugins(options) {
         // This has effect on the react lib size
         NODE_ENV: isDevelopment ? JSON.stringify('development') : JSON.stringify('production'),
         ENABLE_LOGGER: JSON.stringify(process.env.ENABLE_LOGGER),
-        STEEMCONNECT_IMG_HOST: JSON.stringify(process.env.STEEMCONNECT_IMG_HOST || 'https://img.busy.org'),
+        IMG_HOST: JSON.stringify(process.env.IMG_HOST || 'https://img.busy.org'),
         SENTRY_PUBLIC_DSN: isDevelopment ? null : JSON.stringify(process.env.SENTRY_PUBLIC_DSN),
         STEEMCONNECT_HOST: JSON.stringify(process.env.STEEMCONNECT_HOST || 'https://v2.steemconnect.com'),
         STEEMCONNECT_REDIRECT_URL: JSON.stringify(process.env.STEEMCONNECT_REDIRECT_URL || 'https://utopian.io/callback'),
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
-        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'wss://steemd.privex.io'),
+        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'https://api.steemit.com'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
-        UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'http://join.utopian.io'),
+        UTOPIAN_LANDING_URL: JSON.stringify(UTOPIAN_LANDING_URL),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'https://api.utopian.io/api/'),
         UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '06b0ef5509fc7de00493'),
         UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(process.env.UTOPIAN_GITHUB_REDIRECT_URL || 'https://utopian.io/github/callback'),
@@ -113,7 +117,7 @@ function makeStyleLoaders(options) {
   if (options.isDevelopment) {
     return [
       {
-        test: /\.css|.less$/,
+        test: /\.(css|less)$/,
         use: [
           {
             loader: 'style-loader',
@@ -136,7 +140,7 @@ function makeStyleLoaders(options) {
 
   return [
     {
-      test: /\.css|.less$/,
+      test: /\.(css|less)$/,
       loader: ExtractTextPlugin.extract({
         //fallback: 'style-loader',
         use: [

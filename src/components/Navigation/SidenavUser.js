@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import './Sidenav.less';
 
 const SidenavUser = ({ username }) => (
@@ -13,16 +13,10 @@ const SidenavUser = ({ username }) => (
       </a>
     </li>
     <li>
-      <NavLink to="/replies" activeClassName="Sidenav__item--active">
+      <a href={`https://steemit.com/@${username}/recent-replies`} activeClassName="Sidenav__item--active">
         <i className="iconfont icon-message" />
         <FormattedMessage id="replies" defaultMessage="Replies" />
-      </NavLink>
-    </li>
-    <li>
-      <NavLink to="/bookmarks" activeClassName="Sidenav__item--active">
-        <i className="iconfont icon-collection" />
-        <FormattedMessage id="bookmarks" defaultMessage="Bookmarks" />
-      </NavLink>
+      </a>
     </li>
     <li>
       <NavLink to="/drafts" activeClassName="Sidenav__item--active">

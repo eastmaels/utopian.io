@@ -1,5 +1,5 @@
 import store from 'store';
-import SteemConnect from 'sc2-sdk';
+import sc2 from '../../sc2';
 import { createAction } from 'redux-actions';
 
 export const REBLOG_POST = '@reblog/REBLOG_POST';
@@ -24,7 +24,7 @@ export const reblog = postId => (dispatch, getState) => {
   dispatch({
     type: REBLOG_POST,
     payload: {
-      promise: SteemConnect.reblog(auth.user.name, post.author, post.permlink)
+      promise: sc2.reblog(auth.user.name, post.author, post.permlink)
         .then((result) => {
           const list = storePostId(postId);
           dispatch(getRebloggedListAction(list));

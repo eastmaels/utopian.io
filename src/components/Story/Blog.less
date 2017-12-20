@@ -1,14 +1,62 @@
 @import (reference) "../../styles/modules/variables.less";
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/fonts.less";
+@bg-borderwidth: 10px;
+@bg-radius: 3px;
+@bgcolor: white;
+@light-grey: rgb(151, 151, 151);
 
 .Blog {
-  margin-bottom: 15px;
-  padding: 10px;
-  color: @white;
+  font-size: 13px;
+  margin-bottom: 4px;
+  padding-top: 7px;
+  padding-left: 16px;
   background: @blue;
+  border-top: @bg-borderwidth solid @bg-blog;
+  border-radius: @bg-radius;
+  background: @bgcolor;
+  color: @light-grey;
   position: relative;
+  &.yesfull {
+    background: @bg-blog;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    color: @white !important;
+    a {
+      color: @white !important;
+      :hover {
+        color: @white !important;
+        text-decoration: underline;
+      }
+    }
+    svg {
+      color: @white !important;
+    }
+    .from-story.md-react-icon.md-blog {
+      color: @white !important;
+      margin-bottom: 2px !important;
+      margin-right: 2px !important;
+    }
+  }
+  
+  &__c-yes-full {
+    color: @white !important;
+  }
+  &.nofull {
+    color: @light-grey !important;
+    .from-story.md-react-icon.md-blog {
+      color: @bg-blog !important;
+      margin-bottom: 2px !important;
+      margin-right: 2px !important;
+    }
+  }
+
+  &.whitefont {
+    color: @white !important;
+  }
 }
+
+
 
 .markPullRight {
   position: absolute;

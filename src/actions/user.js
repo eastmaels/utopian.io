@@ -3,9 +3,9 @@ import * as Actions from '../actions/constants';
 
 export const currentGithubScopeVersion = Actions.CURRENT_SCOPE_VERSION;
 
-export const createGithubUserRequest = (account, code, state, scopeVersion = currentGithubScopeVersion) => ({
+export const createUserRequest = (account, code, state, scopeVersion = currentGithubScopeVersion) => ({
   [CALL_API]: {
-    types: [ Actions.CREATE_GITHUB_USER_REQUEST, Actions.CREATE_GITHUB_USER_SUCCESS, Actions.CREATE_GITHUB_USER_FAILURE ],
+    types: [ Actions.CREATE_USER_REQUEST, Actions.CREATE_USER_SUCCESS, Actions.CREATE_USER_FAILURE ],
     endpoint: `users`,
     schema: null,
     method: 'POST',
@@ -20,7 +20,7 @@ export const createGithubUserRequest = (account, code, state, scopeVersion = cur
   }
 });
 
-export const createGithubUser = (account, code, state) => dispatch => dispatch(createGithubUserRequest(account, code, state));
+export const createUser = (account, code = "-", state = "-") => dispatch => dispatch(createUserRequest(account, code, state));
 
 export const getUserRequest = (account) => ({
   [CALL_API]: {
@@ -36,7 +36,7 @@ export const getUserRequest = (account) => ({
 
 export const getUser = (account) => dispatch => dispatch(getUserRequest(account));
 
-export const banUserRequest = (account, banned, bannedBy) => ({
+export const banUserRequest = (account, banned, bannedBy, banReason, bannedUntil) => ({
   [CALL_API]: {
     types: [ Actions.BAN_USER_REQUEST, Actions.BAN_USER_SUCCESS, Actions.BAN_USER_FAILURE ],
     endpoint: `users/${account}/ban`,
@@ -45,11 +45,26 @@ export const banUserRequest = (account, banned, bannedBy) => ({
     payload: {
       account,
       banned,
-      bannedBy
+      bannedBy,
+      banReason,
+      bannedUntil,
     },
     additionalParams: {},
     absolute: false
   }
 });
 
-export const banUser = (account, banned = 1, bannedBy = "<anonymous-mod>") => dispatch => dispatch(banUserRequest(account, banned, bannedBy));
+export const getBanRequest = (account) => ({
+  [CALL_API]: {
+    types: [ Actions.GET_BAN_REQUEST, Actions.GET_BAN_SUCCESS, Actions.GET_BAN_FAILURE ],
+    endpoint: `users/${account}/ban`,
+    schema: null,
+    method: 'GET',
+    payload: {},
+    additionalParams: {},
+    absolute: false
+  }
+});
+
+export const banUser = (account = "undefined", banned = 1, bannedBy = "<anonymous-mod>", reason="Violation of Utopian Rules", bannedUntil = new Date(0)) => dispatch => dispatch(banUserRequest(account, banned, bannedBy, reason, bannedUntil));
+export const getBanUser = (account) => dispatch => dispatch(getBanRequest(account));

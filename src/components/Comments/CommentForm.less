@@ -25,7 +25,7 @@
     z-index: 1;
     border-radius: 4px;
     background: fade(@purple, 60%);
-    color: white;
+    color: @white;
 
     & > div {
       margin: auto;
@@ -72,17 +72,22 @@
   }
 
   &__button {
-    color: @white-darker;
+    color: @white-darker !important;
+    background-color: @superblue !important;
     margin-top: 4px;
     .btn;
     .btn-primary;
 
+    &:hover, &:active {
+      background-color: @lsuperblue;
+    }
+
     &__primary {
-      .colorize-button(@purple, #2a3574);
+      .colorize-button(@superblue, @dsuperblue);
     }
 
     &__disabled {
-      .colorize-button(@normal-grey, #5c5f63);
+      .colorize-button(@dsuperblue, @superblue);
     }
 
     & > .anticon {

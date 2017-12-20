@@ -4,6 +4,11 @@ import { setLocaleMetadata } from '../helpers/metadata';
 
 export const GET_LOCALE = '@app/GET_LOCALE';
 
+export const GET_REWARD_FUND = '@app/GET_REWARD_FUND';
+export const GET_REWARD_FUND_START = '@app/GET_REWARD_FUND_START';
+export const GET_REWARD_FUND_SUCCESS = '@app/GET_REWARD_FUND_SUCCESS';
+export const GET_REWARD_FUND_ERROR = '@app/GET_REWARD_FUND_ERROR';
+
 export const SET_LOCALE = '@app/SET_LOCALE';
 export const SET_LOCALE_START = '@app/SET_LOCALE_START';
 export const SET_LOCALE_SUCCESS = '@app/SET_LOCALE_SUCCESS';
@@ -30,16 +35,24 @@ export const setLocale = locale =>
 export const getRate = () =>
   (dispatch) => {
     dispatch({ type: RATE_REQUEST });
-    fetch('https://api.cryptonator.com/api/ticker/steem-usd')
+    fetch('https://api.coinmarketcap.com/v1/ticker/steem/')
       .then(res => res.json())
       .then((json) => {
-        const rate = json.ticker.price;
+        const rate = json[0].price_usd;
         dispatch({
           type: RATE_SUCCESS,
           rate,
         });
       });
   };
+
+export const getRewardFund = () => (dispatch, getSelection, { steemAPI }) => {
+  const getRewardFundAsync = Promise.promisify(steemAPI.getRewardFund, { context: steemAPI });
+  return dispatch({
+    type: GET_REWARD_FUND,
+    payload: { promise: getRewardFundAsync('post') },
+  });
+};
 
 export const getTrendingTopics = () => (dispatch, getState, { steemAPI }) => {
   const getTrendingTagsAsync = Promise.promisify(steemAPI.getTrendingTags, { context: steemAPI });

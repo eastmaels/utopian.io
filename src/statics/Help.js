@@ -1,5 +1,5 @@
 import React from 'react';
-import steemconnect from 'sc2-sdk';
+import sc2 from '../sc2';
 
 import './Help.less';
 
@@ -9,7 +9,7 @@ export default (props) =>
       {props.mustAuthenticate && <div
         className="MustLogin"
       >
-        You must login to access that page. <a href={steemconnect.getLoginURL(window.location.pathname.length > 1 ? window.location.pathname : '')}>Log in</a>
+        You must login to access that page. <a href={sc2.getLoginURL(window.location.pathname.length > 1 ? window.location.pathname : '')}>Log in</a>
         {' '}
         or <a target="_blank" rel="noopener noreferrer" href="https://steemit.com/pick_account">Sign up with Steemit</a>
       </div>

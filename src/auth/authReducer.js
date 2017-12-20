@@ -12,8 +12,8 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     // @UTOPIAN
-    case Actions.GET_GITHUB_PROJECTS_SUCCESS: {
-      const repos = action.response;
+    case Actions.GET_USER_REPOS_GITHUB_SUCCESS: {
+      const repos = action.response || [];
       const { loggedUser } = action.additionalParams;
 
       if (loggedUser) {
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
           ...state,
           user: {
             ...state.user,
-            projects: repos,
+            repos,
           }
         };
       }

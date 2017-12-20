@@ -1,11 +1,11 @@
 import Promise from 'bluebird';
-import steemConnect from 'sc2-sdk';
 import Cookie from 'js-cookie';
 import { getFollowing } from '../user/userActions';
 import { initPushpad } from '../helpers/pushpadHelper';
 import { getDrafts } from '../helpers/localStorageHelpers';
-
-Promise.promisifyAll(steemConnect);
+import getImage from '../helpers/getImage';
+import * as request from 'superagent';
+import sc2 from '../sc2';
 
 export const LOGIN = '@auth/LOGIN';
 export const LOGIN_START = '@auth/LOGIN_START';
@@ -26,22 +26,21 @@ export const login = () => (dispatch) => {
   dispatch({
     type: LOGIN,
     payload: {
-      promise: steemConnect.me()
+      promise: sc2.profile()
         .then((resp) => {
-          console.log("RESP", resp)
+          // console.log("RESP", resp)
 
           if (resp && resp.user) {
             dispatch(getFollowing(resp.user));
 
             setTimeout(function() {
               const script = document.createElement("script");
-              const userJsonData = resp.account && resp.account.json_metadata ? JSON.parse(resp.account.json_metadata) : {};
 
               console.log("ACCOUNT ID", resp.account.id);
 
               window.chat_name = resp.user;
               window.chat_id = resp.account.id;
-              window.chat_avatar = userJsonData && userJsonData.profile ? userJsonData.profile.profile_image : '';
+              window.chat_avatar = getImage(`@${resp.user}?s=${68}`);
               window.chat_link = `https://utopian.io/@${resp.user}`;
               window.chat_role = 'default';
 
@@ -55,11 +54,11 @@ export const login = () => (dispatch) => {
             window.ga('set', 'userId', resp.user);
           }
 
-          initPushpad(resp.user, Cookie.get('access_token'));
+          //initPushpad(resp.user, Cookie.get('access_token'));
           resp.drafts = getDrafts();
           return resp;
-        }),
-    },
+        })
+    }
   });
 };
 
@@ -67,21 +66,23 @@ export const reload = () => dispatch =>
   dispatch({
     type: RELOAD,
     payload: {
-      promise: steemConnect.me(),
-    },
+      promise: sc2.profile()
+    }
   });
 
 export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
     payload: {
-      promise: steemConnect.revokeToken()
+      promise: request
+        .get(process.env.UTOPIAN_API + 'logout')
+        .set({ session: Cookie.get('session') })
         .then(() => {
-          Cookie.remove('access_token');
+          Cookie.remove('session');
           if (process.env.NODE_ENV === 'production') {
             window.location.href = process.env.UTOPIAN_LANDING_URL;
           }
-        }),
-    },
+        })
+    }
   });
 };

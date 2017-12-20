@@ -5,12 +5,16 @@
   .btn;
   .btn-primary;
 
-  .colorize-button(@purple, #2a3574);
+  .colorize-button(@superblue, @dsuperblue);
 
   color: @white-darker;
 
   & > .anticon {
     margin-right: 12px;
+  }
+
+  &:hover, &:active {
+    background-color: @lsuperblue;
   }
 }
 

@@ -1,10 +1,20 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Icon, Tooltip } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import Action from '../Button/Action';
 const state = Math.random().toString(36).substring(7);
 import './Github.less';
 
-const GithubBtn = ({ disconnect }) => (
-  <button className="ConnectGithub"
+const GithubBtn = ({ disconnect, tooltipTitle }) => (
+  <span><Action className="ConnectGithub"
+    primary={true}
+    compact={true}
+    tooltipData={
+      {
+        title: tooltipTitle,
+        placement: 'bottom'
+      }
+    }
+    text={<span><Icon type="github" /> {!disconnect ? 'Sync with Github' : 'Disconnect Github' }</span>}
     onClick={() => {
       if (!disconnect) {
         const GITHUB_AUTH_SCOPE = "public_repo%20read:org";
@@ -13,9 +23,8 @@ const GithubBtn = ({ disconnect }) => (
         disconnect();
       }
     }}
-  >
-    <Icon type="github" /> {!disconnect ? 'Synch with Github' : 'Disconnect Github' }
-  </button>
+  />
+  </span>
 );
 
 export default GithubBtn

@@ -22,15 +22,16 @@ import { getUser } from '../../actions/user';
 import { notify } from '../../app/Notification/notificationActions';
 import EditorAnnouncement from '../../components/Editor/EditorAnnouncement';
 import Affix from '../../components/Utils/Affix';
+import BannedScreen from '../../statics/BannedScreen';
 
 
-import { getProject } from '../../actions/project';
+import { getGithubRepo } from '../../actions/project';
 
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
 import { getBeneficiaries } from '../../actions/beneficiaries';
-import { getGithubProjects} from '../../actions/projects';
+import { getReposByGithub} from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
@@ -42,7 +43,7 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
     loading: getIsEditorLoading(state),
     saving: getIsEditorSaving(state),
     submitting: state.loading,
-    project: state.project,
+    repo: state.repo,
   }),
   {
     createPost,
@@ -50,9 +51,9 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
     newPost,
     notify,
     getBeneficiaries,
-    getProject,
-    getUser, 
-    getGithubProjects,
+    getGithubRepo,
+    getUser,
+    getReposByGithub,
   },
 )
 class Write extends React.Component {
@@ -100,18 +101,18 @@ class Write extends React.Component {
       }
     });
     
-    const { match, getProject } = this.props;
-    const { projectId } = match.params;
+    const { match, getGithubRepo } = this.props;
+    const { repoId } = match.params;
 
-    getProject(projectId);
+    getGithubRepo(repoId);
 
   }
 
   loadGithubData() {
-    const {  user,getUser, getGithubProjects} = this.props;
+    const {  user,getUser, getReposByGithub} = this.props;
     getUser(user.name).then(res => {
       if (res.response && res.response.github) {
-        getGithubProjects(user.name, true);
+        getReposByGithub(user.name, true);
       }
     });
   }
@@ -159,51 +160,86 @@ class Write extends React.Component {
       data.draftId = id;
     };
 
+    const extensions = [[0, {
+      beneficiaries: [
+        {
+          account: 'utopian.pay',
+          weight: 2500
+        }
+      ]
+    }]];
 
-    getBeneficiaries(data.author).then(res => {
+    const contributionData = {
+      ...data,
+      extensions
+    };
+
+    console.log("CONTRIBUTION DATA", contributionData);
+
+    this.props.createPost(contributionData);
+
+    /* getBeneficiaries(data.author).then(res => {
       if (res.response && res.response.results) {
+        let utopianAssignedWeight = 0;
+        const beneficiariesArr = [];
         const allBeneficiaries = res.response.results;
-        const beneficiaries = [
-          ...allBeneficiaries.map(beneficiary => {
-            let assignedWeight = 0;
-            if (beneficiary.vesting_shares) { // this is a sponsor
-              const sponsorSharesPercent = beneficiary.percentage_total_vesting_shares;
-              // 20% of all the rewards dedicated to sponsors
-              const sponsorsDedicatedWeight = 2000;
-              assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
-            } else {
-              // this is a moderator
-              const moderatorSharesPercent = beneficiary.percentage_total_rewards_moderators;
-              // 5% all the rewards dedicated to moderators
-              // This does not sum up. The total ever taken from an author is 20%
-              const moderatorsDedicatedWeight = 500;
-              assignedWeight = Math.round((moderatorsDedicatedWeight * moderatorSharesPercent ) / 100);
-            }
 
-            return {
+        allBeneficiaries.forEach((beneficiary, index) => {
+          let assignedWeight = 0;
+          if (beneficiary.vesting_shares) { // this is a sponsor
+            const sponsorSharesPercent = beneficiary.percentage_total_vesting_shares;
+            // 20% of all the rewards dedicated to sponsors
+            const sponsorsDedicatedWeight = 2000;
+            assignedWeight = Math.round((sponsorsDedicatedWeight * sponsorSharesPercent ) / 100);
+
+            if (!beneficiary.opted_out && beneficiary.account !== 'utopian-io') {
+              beneficiariesArr.push({
+                account: beneficiary.account,
+                weight: assignedWeight || 1
+              });
+            } else {
+              utopianAssignedWeight = utopianAssignedWeight + assignedWeight;
+            }
+          } else {
+            // this is a moderator
+            const moderatorSharesPercent = beneficiary.percentage_total_rewards_moderators;
+            // 5% all the rewards dedicated to moderators
+            // This does not sum up. The total ever taken from an author is 20%
+            const moderatorsDedicatedWeight = 500;
+            assignedWeight = Math.round((moderatorsDedicatedWeight * moderatorSharesPercent ) / 100);
+
+            beneficiariesArr.push({
               account: beneficiary.account,
               weight: assignedWeight || 1
+            });
+          }
+
+          if (index + 1 === allBeneficiaries.length) {
+            if (utopianAssignedWeight > 0) {
+              beneficiariesArr.push({
+                account: 'utopian-io',
+                weight: utopianAssignedWeight || 1
+              })
             }
-          })
-        ];
 
-        const extensions = [[0, {
-          beneficiaries
-        }]];
+            const extensions = [[0, {
+              beneficiaries: beneficiariesArr
+            }]];
 
-        const contributionData = {
-          ...data,
-          extensions
-        };
+            const contributionData = {
+              ...data,
+              extensions
+            };
 
-        console.log("ANNOUNCEMENT DATA", contributionData);
+            console.log("CONTRIBUTION DATA", contributionData);
 
-        this.props.createPost(contributionData);
-
+            this.props.createPost(contributionData);
+          }
+        });
       } else {
-        alert("Something went wrong. Please try again!");
+        alert("Something went wrong. Please try again!")
       }
-    });
+    }); */
   };
 
   onSubmit = (form) => {
@@ -326,7 +362,7 @@ class Write extends React.Component {
   };
 
   saveDraft = debounce((form) => {
-    const projectId = this.props.match.params.projectId;
+    const repoId = this.props.match.params.repoId;
     const data = this.getNewPostData(form);
     const postBody = data.body;
     const { location: { search } } = this.props;
@@ -344,40 +380,25 @@ class Write extends React.Component {
       redirect = true;
     }
 
-    data.jsonMetadata.repository = this.props.project;
+    data.jsonMetadata.repository = this.props.repo;
 
-    this.props.saveDraft({ postData: data, id, projectId, type: 'task'}, redirect);
+    this.props.saveDraft({ postData: data, id, repoId, type: 'task'}, redirect);
   }, 400);
 
   render() {
     const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialReward } = this.state;
-    const { user, loading, saving, submitting, project, match } = this.props;
+    const { user, loading, saving, submitting, repo, match } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
     // this.loadGithubData();
-    if (!Object.keys(project).length || (project && project.id !== parseInt(match.params.projectId))) {
+    if (!Object.keys(repo).length || (repo && repo.id !== parseInt(match.params.repoId))) {
       return null;
     }
 
-    if (this.state.banned == true) {
-      return (
-        <div><center><br/><br/>
-          <Icon type="safety" style={{
-                  fontSize: '100px',
-                  color: 'red',
-                  display: 'block',
-                  clear: 'both',
-                  textAlign: 'center',
-                }}/>
-                <br/>
-                <b>You have been banned from posting on Utopian.</b><br/>
-                Please contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ" target="_blank"> on Discord here </a> for more information.
-        </center></div>
-      )
-    } else {
 
     return (
       <div className="shifted">
         <div className="post-layout container">
+        <BannedScreen redirector={true}/>
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
               <GithubConnection user={user} />
@@ -387,7 +408,7 @@ class Write extends React.Component {
             <EditorAnnouncement
               ref={this.setForm}
               saving={saving}
-              repository={initialRepository || project}
+              repository={initialRepository || repo}
               title={initialTitle}
               topics={initialTopics}
               reward={initialReward}
@@ -405,6 +426,5 @@ class Write extends React.Component {
     );
   }
   }
-}
 
 export default Write;
