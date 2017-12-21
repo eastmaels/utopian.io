@@ -153,13 +153,8 @@ class Sponsors extends React.PureComponent {
                       <p><b>Utopian Reward Shares</b></p>
                     </div>
                     <div className="statsTab">
-                      <h4>{!sponsor.opted_out ? '$' + Math.ceil((sponsor.should_receive_rewards || 0) * 100) / 100 : 'OPTED OUT FROM REWARDS'}</h4>
-                      <p><b>Should Receive More</b></p>
-                      <p style={{fontSize: '12px'}}><em>(Not including pending rewards. Will accumulate pending rewards once released)</em></p>
-                    </div>
-                    <div className="statsTab">
-                      <h4>{!sponsor.opted_out ? '$' + Math.ceil((sponsor.total_paid_rewards || 0) * 100) / 100 : 'OPTED OUT FROM REWARDS'}</h4>
-                      <p><b>Rewards Received</b></p>
+                      <h4>{!sponsor.opted_out ? '$' + Math.ceil((sponsor.total_paid_rewards_steem || 0) * 100) / 100 : 'OPTED OUT FROM REWARDS'}</h4>
+                      <p><b>STEEM Received</b></p>
                     </div>
                   </div>
                 )
