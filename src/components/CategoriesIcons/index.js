@@ -37,6 +37,8 @@ const CategoryIcon = ({type}) => {
       return <Icon type="video-camera" />;
     case 'copywriting':
       return <Icon type="edit" />;
+    case 'pending':
+      return <Icon type="safety" />;
   }
 };
 
