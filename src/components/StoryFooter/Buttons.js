@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import take from 'lodash/take';
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Icon, Tooltip, Modal } from 'antd';
+import { Icon, Tooltip, Modal } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import classNames from 'classnames';
 import ReactionsModal from '../Reactions/ReactionsModal';
 import USDDisplay from '../Utils/USDDisplay';
@@ -114,7 +114,7 @@ export default class Buttons extends React.Component {
     const ratio = totalPayout / voteRshares;
 
     const upVotesPreview = take(upVotes, 10).map(vote => (
-      <p key={vote.voter}>
+      <p key={vote.voter} className={`${(vote.voter == 'utopian-io') ? 'Buttons__makeBold' : ''}`}>
         <Link style={{ color: '#FFF'}} to={`/@${vote.voter}`}>{vote.voter}</Link>
 
         {vote.rshares * ratio > 0.01 && (
@@ -130,17 +130,18 @@ export default class Buttons extends React.Component {
       upVotesDiff > 0 && (
         <p>
           <a style={{ color: '#FFF'}} role="presentation" onClick={this.handleShowReactions}>
-            <FormattedMessage id="and_more_amount" defaultMessage="and {amount} more" values={{ amount: upVotesDiff }} />
+              <center><ReactIcon.MdKeyboardArrowDown />&nbsp;&nbsp;<FormattedMessage id="and_more_amount" defaultMessage="and {amount} more" values={{ amount: upVotesDiff }} />&nbsp;&nbsp;<ReactIcon.MdKeyboardArrowDown /></center>
           </a>
         </p>
       );
 
-    const likeClass = classNames({ active: postState.isLiked, Buttons__link: true });
+    const likeClass = classNames({ active: postState.isLiked, Buttons__activeIcon: postState.isLiked, Buttons__link: true, Buttons__likeBtn: true, Buttons__reactIcon: true });
     const rebloggedClass = classNames({ active: postState.isReblogged, Buttons__link: true });
 
     const commentsLink =
       post.url.indexOf('#') !== -1 ? post.url : { pathname: post.url, hash: '#comments' };
-    const showEditLink = ownPost && post.cashout_time !== '1969-12-31T23:59:59';
+      // console.log(post.cashout_time);
+    const showEditLink = ownPost && post.cashout_time !== '1969-12-31T23:59:59' && (new Date(post.cashout_time + "Z") < new Date(0));
     //const showReblogLink = !ownPost && post.parent_author === '';
     const showReblogLink = false; // @UTOPIAN forced no reblog
 
@@ -168,9 +169,13 @@ export default class Buttons extends React.Component {
             {pendingLike ? (
               <Icon type="loading" />
             ) : (
+              <span>
+              {this.state.sliderVisible ? 
               <i
-                className={`iconfont icon-${this.state.sliderVisible ? 'right' : 'praise_fill'}`}
+                className={`iconfont icon-right`}
               />
+              : <ReactIcon.MdThumbUp className={likeClass}/>}
+              </span>
             )}
           </a>
         </Tooltip>
@@ -198,7 +203,7 @@ export default class Buttons extends React.Component {
         </span>
         <Tooltip title={intl.formatMessage({ id: 'comment', defaultMessage: 'Comment' })}>
           <Link className="Buttons__link" to={commentsLink} onClick={this.handleCommentClick}>
-            <i className="iconfont icon-message_fill" />
+            <ReactIcon.MdInsertComment className="Buttons__commentBtn Buttons__reactIcon"/>
           </Link>
         </Tooltip>
         <span className="Buttons__number">

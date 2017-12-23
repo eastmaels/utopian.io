@@ -1,5 +1,6 @@
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/fonts.less";
 
 .Action {
   .btn;
@@ -7,11 +8,21 @@
 
   .colorize-button(#c2ccd3, #99aab5);
 
-  color: @white;
+  font-family: 'Roboto', sans-serif !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  letter-spacing: 1.2px;
+  color: @white !important;
   width: 100%;
 
+  a, a:hover, a:active, a:visited, a:focus {
+    text-decoration:none;
+  }
+
+
   &--primary {
-    .colorize-button(@purple, #2a3574);
+    .colorize-button(@superblue, rgb(56, 108, 254));
+    font-family: 'Roboto', sans-serif;
 
     color: @white-darker;
 
@@ -21,7 +32,33 @@
     &:active,
     &.active {
       color: @white-darker !important;
+      text-decoration: none !important;
     }
+  }
+
+  &--compact {
+    width: 80% !important;
+    height: 35px !important;
+    letter-spacing: 0.1px !important;
+    // padding-top: 0px !important;
+    // padding-right: 0px !important;
+    // padding-left: 0px !important;
+    // padding-bottom: 0px !important;
+  }
+
+  &--cozy {
+    height: 40px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    letter-spacing: 0.1px !important;
+    @media screen and (max-width: 736px) {
+      margin-left: 50% !important;
+      width: 42%;
+    }
+    // padding-top: 0px !important;
+    // padding-right: 0px !important;
+    // padding-left: 0px !important;
+    // padding-bottom: 0px !important;
   }
 
   &--negative {
@@ -71,7 +108,8 @@
     color: @white;
   }
 
-  & .anticon {
+  & .anticon { 
+
     vertical-align: -1px;
     margin-right: 8px;
   }

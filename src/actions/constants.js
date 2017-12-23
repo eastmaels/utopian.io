@@ -2,8 +2,8 @@ export const GET_GITHUB_REPOS_REQUEST = '@projects/GET_GITHUB_REPOS_REQUEST';
 export const GET_GITHUB_REPOS_SUCCESS = '@projects/GET_GITHUB_REPOS_SUCCESS';
 export const GET_GITHUB_REPOS_FAILURE = '@projects/GET_GITHUB_REPOS_FAILURE';
 
-export const CURRENT_SCOPE_VERSION = 5;
-export const REQUIRED_SCOPE_VERSION = 5; // at least
+export const CURRENT_SCOPE_VERSION = 6;
+export const REQUIRED_SCOPE_VERSION = 6; // at least
 
 /* SCOPE VERSIONS
 1: original
@@ -46,6 +46,14 @@ export const SET_GITHUB_REPOS = '@project/SET_GITHUB_REPOS';
 export const GET_CONTRIBUTIONS_REQUEST = '@contributions/GET_CONTRIBUTIONS_REQUEST';
 export const GET_CONTRIBUTIONS_SUCCESS = '@contributions/GET_CONTRIBUTIONS_SUCCESS';
 export const GET_CONTRIBUTIONS_FAILURE = '@contributions/GET_CONTRIBUTIONS_FAILURE';
+
+export const GET_POSTBYID_REQUEST = '@contributions/GET_POSTBYID_REQUEST';
+export const GET_POSTBYID_SUCCESS = '@contributions/GET_POSTBYID_SUCCESS';
+export const GET_POSTBYID_FAILURE = '@contributions/GET_POSTBYID_FAILURE';
+
+// export const ADD_PREFIX_REQUEST = '@contributions/ADD_PREFIX_REQUEST';
+// export const ADD_PREFIX_SUCCESS = '@contributions/ADD_PREFIX_SUCCESS';
+// export const ADD_PREFIX_FAILURE = '@contributions/ADD_PREFIX_FAILURE';
 
 export const SET_CONTRIBUTION = '@contribution/SET_CONTRIBUTION';
 

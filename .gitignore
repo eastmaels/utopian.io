@@ -17,6 +17,9 @@ pids
 *.pid
 *.seed
 
+# Private Certs
+*.pem
+
 # Environment data
 .env
 

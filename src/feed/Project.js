@@ -10,14 +10,16 @@ import { getGithubRepo, setGithubRepo } from '../actions/project';
 import { getReposByGithub } from '../actions/projects';
 import { getProject, createProjectAccount, createProjectSponsor } from '../actions/project';
 
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import SubFeed from './SubFeed';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import RightSidebar from '../app/Sidebar/RightSidebar';
+import StoryPreview from '../components/Story/StoryPreview';
 import TopicSelector from '../components/TopicSelector';
 import Affix from '../components/Utils/Affix';
 import ScrollToTop from '../components/Utils/ScrollToTop';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
+import BodyShort from '../components/Story/BodyShort';
 
 import * as R from 'ramda';
 
@@ -71,10 +73,9 @@ class Project extends React.Component {
       history.push(`${locationPath}/all`);
       return;
     }
-
     if(!projectInState) {
       getGithubRepo(id).then(() => {
-        this.setState({loadedRepo: true})
+        this.setState({loadedRepo: true});
       });
       return;
     }
@@ -105,21 +106,23 @@ class Project extends React.Component {
 
     if (match.params.repoId !== nextProps.match.params.repoId) {
       this.setState({loadedProject: false, loadedRepo: false});
+      // console.log("[c] repo loading")
       getGithubRepo(nextProps.match.params.repoId).then(() => {
-        this.setState({loadedRepo: true})
+        // console.log("[c] Repo loaded");
+        this.setState({loadedRepo: true});
       });
     }
-/*
-    if (projectInState && (repo && repo.id !== id)) {
-      setGithubRepo(projectInState);
-    }
+    /*
+     if (projectInState && (repo && repo.id !== id)) {
+     setGithubRepo(projectInState);
+     }
 
 
-    if (user && user.name && match.params.repoId && nextProps.match.params.repoId && match.params.repoId !== nextProps.match.params.repoId) {
-      this.setState({loadingProject: true});
-      this.loadGithubData();
-    }
- */
+     if (user && user.name && match.params.repoId && nextProps.match.params.repoId && match.params.repoId !== nextProps.match.params.repoId) {
+     this.setState({loadingProject: true});
+     this.loadGithubData();
+     }
+     */
   }
 
   componentDidUpdate () {
@@ -139,6 +142,7 @@ class Project extends React.Component {
       if (res.status !== 404 && res.response && res.response.name) {
         project = res.response;
       }
+      // console.log("[c] got project", res);
       this.setState({
         project,
         isOwner: isOwner ? true : false,
@@ -166,7 +170,8 @@ class Project extends React.Component {
   render() {
     const { authenticated, match, createProjectSponsor, createProjectAccount, location, history, repo, user } = this.props;
     const { repo: projectName } = match.params;
-
+    if (!this.state.loadedProject) this.loadGithubData();
+    // if (!this.state.loadedRepo) console.log("[c]", this.state.loadedProject);
     return (
       <div>
         <Helmet>
@@ -198,7 +203,14 @@ class Project extends React.Component {
                   <h2><Icon type='github' /> { repo.full_name }</h2>
                   <p>
                     <a href={ repo.html_url } target="_blank"> { repo.html_url } </a>
-                  </p>
+                  </p><br/>
+                  {repo.description && <span>
+                    <BodyShort body={repo.description || ''} />
+                  </span>
+                  }
+                  {repo.homepage && <span>
+                    <b>Project Website: </b> <code className="Github__c">{repo.homepage}</code>
+                  <br/></span>}
                   <hr />
                   {this.state.isOwner && <div>
                     <Link to={`/write-task/${repo.id}`}>
@@ -207,7 +219,7 @@ class Project extends React.Component {
                   </div>}
                 </div>
               </div>
-              {this.state.loadedProject && this.state.loadedRepo ? <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed}/> : null}
+              {true ? <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed}/> : null}
             </div>
           </div>
         </div>

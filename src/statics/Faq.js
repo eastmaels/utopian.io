@@ -1,9 +1,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import './WelcomeModerator.less';
+import './Faq.less';
 
 export default () =>
-  (<div className="main-panel">
+  (<div className="main-panel FAQ">
     <div className="mt-5 text-center">
       <h1>
         <center>Frequently Asked Questions</center>
@@ -49,13 +49,37 @@ export default () =>
                     STEEM has a metric called "Voting Power" deciding how effective your votes are, and this metric goes up and down depending on your voting.<br/>
                     Utopian Bot waits for the voting power to increase to 100%, then starts voting posts as much as possible. Then, it waits for the voting power to increase to 100% again, and starts all over.
                 </p>
+
+        <h2 id="errors">
+        Site Errors and Warnings
+        </h2>
+        {/* 
+        001 - Posting: Utopian could not connect to Steem 
+        */}
+            <h4 id="errors-001">Posting: Utopian could not connect to Steem</h4>
+            <p>
+                This error is found mostly while <b>posting</b> or <b>creating a new contribution</b> through Utopian.  The error can be caused by many issues, from a slow Internet connection to a downtime on SteemConnect's end.
+                <br/>
+            </p>
+                <b style={{marginLeft: "20px"}}>Fixes</b>
+            <p>
+                Before you attempt to do anything, make sure to <b>copy</b> or otherwise <b>save</b> the contents/body of your post. 
+                Utopian will attempt to save it as a draft, but at times certain issues can prevent that from happening.
+                <br/>
+                Possible fixes include <b>(a)</b> using a private/incognito window, <b>(b)</b> switching to a different web browser, <b>(c)</b> reloading the page,
+                or <b>(d)</b> simply waiting for the issue to resolve itself.
+                Additionally, it's remotely possible that the post actually did go through even though you got the error, so check <code>https://steemit.com/@<b>your-username</b></code> to see if this occurred.
+            </p>
                 
                 
                 
+            <p className="Welcome__bigbreak">
+            &nbsp;<br className="Welcome__bigbreak"/>
+            &nbsp;<br className="Welcome__bigbreak"/>
+            <br className="Welcome__bigbreak"/>
+            </p>
                 
-                
-                
-                <em>Document Last Modified December 1st, 2017</em><br/><br/>
+                <em><center>Document Last Modified <b>December 13th, 2017</b></center></em><br/><br/>
             
             <br className="Welcome__bigbreak"/>
             

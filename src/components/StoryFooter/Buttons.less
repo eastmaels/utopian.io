@@ -3,6 +3,7 @@
 .Buttons {
   color: @blue-botticelli;
   font-size: 14px;
+  font-family: @font-family-header !important;
   font-weight: bold;
 
   &__reactions-count {
@@ -10,6 +11,23 @@
     &:hover {
       color: @purple;
     }
+  }
+
+  &__makeBold {
+    font-weight: 700;
+    text-decoration: bold;
+  }
+
+  &__commentBtn {
+    font-size: 20px;
+    margin-bottom: 11px;
+    margin-right: 4px;
+  }
+
+  &__likeBtn {
+    font-size: 20px;
+    margin-bottom: 9px;
+    margin-right: 4px;
   }
 
   &__link {
@@ -33,14 +51,25 @@
     }
 
     &:hover {
-      color: @purple;
+      color: @superblue;
     }
 
     &:hover > .iconfont,
     &.active > .iconfont {
-      color: @purple;
+      color: @superblue;
     }
+
+    &:hover > .Buttons__reactIcon,
+    &.active > .Buttons__reactIcon {
+      color: @superblue;
+    }
+    
   }
+
+  &__activeIcon {
+    color: @superblue;
+  }
+
 
   &__number {
     vertical-align: 3px;

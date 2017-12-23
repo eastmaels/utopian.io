@@ -4,11 +4,24 @@ import classNames from 'classnames';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { MAXIMUM_UPLOAD_SIZE_HUMAN } from '../../helpers/image';
 import { sortComments } from '../../helpers/sortHelpers';
+import { connect } from 'react-redux';
+import { Modal, Icon } from 'antd';
+import * as ReactIcon from 'react-icons/lib/md';
 import Loading from '../Icon/Loading';
 import CommentForm from './CommentForm';
+import _ from 'lodash';
+import urlParse from 'url-parse';
+import * as R from 'ramda';
+import { getModerators } from '../../actions/moderators';
 import Comment from './Comment';
 import './Comments.less';
 
+@connect(
+  state => ({
+    moderators: state.moderators,
+  }),
+  {  getModerators,  },
+)
 @injectIntl
 class Comments extends React.Component {
   static propTypes = {
@@ -101,6 +114,11 @@ class Comments extends React.Component {
     );
   };
 
+  componentWillMount() {
+    const { getModerators } = this.props;
+    getModerators();
+  }
+
   submitComment = (parentPost, commentValue) => {
     this.setState({ showCommentFormLoading: true });
     this.props
@@ -192,6 +210,7 @@ class Comments extends React.Component {
               onLikeClick={onLikeClick}
               onDislikeClick={onDislikeClick}
               onSendComment={this.props.onSendComment}
+              moderators={this.props.moderators}
             />
           ))}
       </div>

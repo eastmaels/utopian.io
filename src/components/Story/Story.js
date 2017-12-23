@@ -8,7 +8,7 @@ import {
   FormattedTime,
 } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Tag, Icon, Popover, Tooltip } from 'antd';
+import { Tag, Icon, Popover, Tooltip } from 'antd';  import * as ReactIcon from 'react-icons/lib/md';
 import { formatter } from 'steem';
 import StoryPreview from './StoryPreview';
 import StoryFooter from '../StoryFooter/StoryFooter';
@@ -78,6 +78,38 @@ class Story extends React.Component {
     }
   };
 
+  postPreview(body) {
+    const MAX_LENGTH = 50;
+    var suffix = "...";
+    if (!body) return body;
+    if (body.length < MAX_LENGTH) return body;
+    if (body[MAX_LENGTH-1] === '.') suffix = "..";
+    return (body.substr(0, MAX_LENGTH) + suffix);
+  }
+
+  allTags(tagList) {
+    if (!tagList) return <em>No Tags Provided</em>;
+    var ret = "";
+    for (var i = 0; i < tagList.length; ++i) {
+        if (tagList[i] === 'utopian-io') continue;
+        ret += tagList[i];
+        if (i !== tagList.length - 1) ret += ", ";
+    }
+    return <span><b>Tags: &nbsp;&nbsp;</b>{ret}, <em>utopian-io</em></span>;
+  }
+
+  tagNumber(tagList, number) { 
+    if (!tagList) return <span></span>;
+    const indexOfUtopian = tagList.indexOf("utopian-io");
+    if (indexOfUtopian > -1) tagList.splice(indexOfUtopian, 1);
+    const indexOfNothing = tagList.indexOf("");
+    if (indexOfNothing > -1) tagList.splice(indexOfNothing, 1);
+    const indexOfSpace = tagList.indexOf(" ");
+    if (indexOfSpace > -1) tagList.splice(indexOfSpace, 1);
+    // console.log(tagList);
+    return <span>{tagList[number]}</span>;
+  }
+
   render() {
     const {
       intl,
@@ -93,7 +125,6 @@ class Story extends React.Component {
       sliderMode,
       defaultVotePercent,
       onLikeClick,
-      onEditClick,
       onShareClick,
     } = this.props;
 
@@ -214,6 +245,7 @@ class Story extends React.Component {
             showPending={ post.pending }
             showFlagged={ post.flagged }
             showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
+            fullMode={false}
           />}
 
           {postType === 'blog' && <Blog
@@ -221,35 +253,9 @@ class Story extends React.Component {
             showPending = {post.pending}
             showFlagged = {post.flagged}
             showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
+            fullMode={false}
           />}
 
-          <div className="Story__header">
-            <Link to={`/@${post.author}`}>
-              <Avatar username={post.author} size={30} />
-            </Link>
-            <div className="Story__header__text">
-              <Link to={`/@${post.author}`}>
-                <h4>
-                  {post.author}
-                  <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
-                    <Tag>{formatter.reputation(post.author_reputation)}</Tag>
-                  </Tooltip>
-                </h4>
-              </Link>
-              <Tooltip
-                title={
-                  <span>
-                    <FormattedDate value={`${post.created}Z`} />{' '}
-                    <FormattedTime value={`${post.created}Z`} />
-                  </span>
-                }
-              >
-                <span className="Story__date">
-                  <FormattedRelative value={`${post.created}Z`} />
-                </span>
-              </Tooltip>
-            </div>
-          </div>
           <div className="Story__content">
             <Link to={post.url} className="Story__content__title">
               <h2>
@@ -262,11 +268,56 @@ class Story extends React.Component {
               </h2>
             </Link>
             <Link to={post.url} className="Story__content__preview">
-              <StoryPreview post={post.body} />
+              <StoryPreview text={post.body} />
             </Link>
           </div>
+          <div className="Story__postTags nomobile">
+            <Tooltip title={this.allTags(post.json_metadata.tags)}>
+              {(post.json_metadata.tags.length > 1) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 0)}</Tag>
+              </span>}
+              {(post.json_metadata.tags.length >= 2) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 1)}</Tag>
+              </span>}
+              {(post.json_metadata.tags.length >= 3) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 2)}</Tag>
+              </span>}
+              {(post.json_metadata.tags.length >= 4) && <span>
+                <Tag className="Story__postTag">{this.tagNumber(post.json_metadata.tags, 3)}</Tag>
+              </span>}
+              {false && <span>
+                <Tag className="Story__postTag">utopian-io</Tag>
+              </span>}
+            </Tooltip>
+            {(post.json_metadata.tags.length >= 2) && <span><br/><br/></span>}
+          </div>
+          <div className="Story__user Story__firstLine">
+            <Link to={`/@${post.author}`}>
+              <h4 className="Story__firstLine">
+                <Avatar username={post.author} size={30} className="Story__avatar"/> <span className="Story__author">{post.author}</span>
+                <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
+                  <Tag className="Story__reputationTag nomobile">{formatter.reputation(post.author_reputation)}</Tag>
+                </Tooltip>
+              </h4>
+            </Link>
+
+            <span className="yesmobile">&nbsp;&nbsp;-&nbsp;&nbsp;</span>
+            <Tooltip
+              title={
+                <span>
+                    <FormattedDate value={`${post.created}Z`} />{' '}
+                  <FormattedTime value={`${post.created}Z`} />
+                  </span>
+              }
+            >
+                <span className="Story__date">
+                  <FormattedRelative value={`${post.created}Z`} />
+                </span>
+            </Tooltip>
+          </div>
+
           <div className="Story__footer">
-            {reviewed && <StoryFooter
+            {reviewed ? <StoryFooter
               user={user}
               post={post}
               postState={postState}
@@ -276,9 +327,9 @@ class Story extends React.Component {
               sliderMode={sliderMode}
               defaultVotePercent={defaultVotePercent}
               onLikeClick={onLikeClick}
-              onEditClick={onEditClick}
               onShareClick={onShareClick}
-            />}
+              fullMode={false}
+            /> : <br/>}
           </div>
         </div>
       </div>

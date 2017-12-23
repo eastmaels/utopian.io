@@ -216,7 +216,7 @@ class Buttons extends React.Component {
           <Tooltip title={<PayoutDetail post={comment} />}>
             <USDDisplay
               value={payout.cashoutInTime ? payout.potentialPayout : payout.pastPayouts}
-            />
+            /> 
             <span />
           </Tooltip>
         </span>

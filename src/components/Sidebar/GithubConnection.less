@@ -1,10 +1,12 @@
 @import (reference) "../../styles/custom.less";
+@import (reference) "../../styles/fonts.less";
 
 .GithubRepos {
   background: @white;
   border: 1px solid #e9e7e7;
   border-radius: @border-radius-base;
   margin-bottom: 15px;
+  list-style-type: none;
 
   button {
     display: block;
@@ -17,7 +19,13 @@
     margin-bottom: 5px;
 
     a {
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 90%;
       color: #444;
+      display: inline-block;
+      text-overflow: ellipsis;
       word-wrap: break-word;
     }
 
@@ -61,10 +69,16 @@
   padding: 8px 16px 16px 16px;
 }
 
+ul {
+  list-style-type: none;
+  padding-left: 0 !important;
+}
+
 .GithubRepos__bulleted {
-  list-style-type: disc;
+  list-style-type: disc !important;
   position: relative;
   left: 15px;
+  padding-left: 5px;
 }
 
 .GithubRepos__bulletedLi {
@@ -80,6 +94,7 @@
 
 .GithubRepos__title {
   color: #99aab5;
+  font-family: @font-family-header;
   font-size: 18px;
   font-weight: 500;
 

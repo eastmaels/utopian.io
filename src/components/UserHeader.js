@@ -45,7 +45,7 @@ const UserHeader = ({
             {authenticated &&
               (isSameUser
                 ? <a target="_blank" rel="noopener noreferrer" href={`https://steemit.com/@${handle}/settings`}>
-                  <Action small text={intl.formatMessage({ id: 'edit_profile', defaultMessage: 'Edit profile' })} />
+                  <Action small text={<span>Edit profile</span>} />
                 </a>
                 : <FollowButton username={handle} />)
             }

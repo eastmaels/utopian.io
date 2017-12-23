@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { injectIntl } from 'react-intl';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import './Follow.less';
 
 @injectIntl

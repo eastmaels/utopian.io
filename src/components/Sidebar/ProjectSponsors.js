@@ -1,7 +1,7 @@
 import React from 'react';
 import Avatar from '../Avatar';
 import { Modal } from 'antd';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import { Link } from 'react-router-dom';
 import Action from '../../components/Button/Action';
 import steem from 'steem';
@@ -89,7 +89,7 @@ class ProjectSponsors extends React.Component {
             <Action
               id="projectSponsor"
               primary={true}
-              text="Become a Sponsor"
+              text={<span>Become a Sponsor</span>}
               onClick={() => {
                 this.setState({ sponsorModal: true })
               }}

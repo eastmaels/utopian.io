@@ -7,7 +7,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { HotKeys } from 'react-hotkeys';
 import { throttle } from 'lodash';
 import isArray from 'lodash/isArray';
-import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd';
+import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd';  import * as ReactIcon from 'react-icons/lib/md';
 import Dropzone from 'react-dropzone';
 import EditorToolbar from './EditorToolbar';
 import Action from '../Button/Action';
@@ -472,7 +472,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-ideas':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="ideas"/> Conceptors/Thinkers</h2>
+              <h2><CategoryIcon from="from-rules"  type="ideas"/> Conceptors/Thinkers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>By submitting a task request in this category you are requesting contributors to provide concepts and ideas.</li>
@@ -486,7 +486,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-development':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="development"/> Developers</h2>
+              <h2><CategoryIcon from="from-rules"  type="development"/> Developers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>In this category you can only write if you are looking for developers joining your crew.</li>
@@ -500,7 +500,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-bug-hunting':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="bug-hunting"/> Bug Hunters</h2>
+              <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bug Hunters</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>In this category you can only post if you are looking to spot bugs in your system/software/website and similar.</li>
@@ -514,7 +514,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-translations':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="translations"/> Translators</h2>
+              <h2><CategoryIcon from="from-rules"  type="translations"/> Translators</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>You can only post in this category if you are looking for translators to translate your project.</li>
@@ -528,7 +528,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-graphics':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="graphics"/> Designers</h2>
+              <h2><CategoryIcon from="from-rules"  type="graphics"/> Designers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>You can only post in this category if you are looking for designers to join your Open Source project.</li>
@@ -542,7 +542,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-documentation':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="documentation"/> Tech Writers</h2>
+              <h2><CategoryIcon from="from-rules"  type="documentation"/> Tech Writers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>This category is meant only for requiring help in updating/creating the documentation of your Open Source project.</li>
@@ -556,7 +556,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-analysis':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="analysis"/> Data Analysts</h2>
+              <h2><CategoryIcon from="from-rules"  type="analysis"/> Data Analysts</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>This category is meant only for requesting data analysis for your Open Source project.</li>
@@ -570,7 +570,7 @@ class EditorAnnouncement extends React.Component {
         case 'task-social':
           return (
             <div className="Editor__rules">
-              <h2><CategoryIcon type="analysis"/> Influencers</h2>
+              <h2><CategoryIcon from="from-rules"  type="analysis"/> Influencers</h2>
               <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
               <ul>
                 <li>This category is meant only for requesting help of social influencers in spreading the word about your project.</li>

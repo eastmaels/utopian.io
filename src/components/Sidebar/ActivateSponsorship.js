@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import Action from '../../components/Button/Action';
 import steem from 'steem';
 import Cookie from 'js-cookie';

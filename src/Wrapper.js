@@ -80,9 +80,8 @@ export default class Wrapper extends React.PureComponent {
       this.setState({loadingRepos: true});
       getUser(user.name).then(res => {
         if (res.response && res.response.github) {
-          getReposByGithub(user.name, true).then( () => {
-            this.setState({loadedRepos: true, loadingRepos: false});
-          })
+          this.setState({loadedRepos: true, loadingRepos: false});
+          getReposByGithub(user.name, true);
         }else{
           this.setState({loadedRepos: true, loadingRepos: false});
         }
@@ -98,6 +97,9 @@ export default class Wrapper extends React.PureComponent {
       case 'new-contribution':
         this.props.history.push('/write');
         break;
+      case 'review':
+        this.props.history.push('/all/review');
+        break;
       case 'new-blog-post':
         this.props.history.push('/write-blog');
         break;
@@ -105,7 +107,7 @@ export default class Wrapper extends React.PureComponent {
         window.open(`https://steemd.com/@${this.props.user.name}`);
         break;
       case 'replies':
-        this.props.history.push('/replies');
+        window.open(`https://steemit.com/@${this.props.user.name}/recent-replies`);
         break;
       case 'bookmarks':
         this.props.history.push('/bookmarks');

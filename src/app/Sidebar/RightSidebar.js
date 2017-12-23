@@ -1,22 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
 
 import {
   getIsAuthenticated,
   getAuthenticatedUser,
   getFollowingList,
+  // getUser,
 } from '../../reducers';
 
 import SignUp from '../../components/Sidebar/SignUp';
 
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SideAnnouncement from '../../components/Sidebar/SideAnnouncement';
 import ProjectSponsors from '../../components/Sidebar/ProjectSponsors';
 import ActivateSponsorship from '../../components/Sidebar/ActivateSponsorship';
 
-//import { getUser } from '../../actions/user';
+import { getUser } from '../../actions/user';
+import { getReposByGithub} from '../../actions/projects';
 //import { getReposByGithub } from '../../actions/projects';
 //import { getProject, createProjectAccount, createProjectSponsor } from '../../actions/project';
 
@@ -29,13 +31,22 @@ import * as R from 'ramda';
     authenticatedUser: getAuthenticatedUser(state),
     followingList: getFollowingList(state),
     repo: state.repo,
-  }), {})
+  }), { getUser, getReposByGithub })
 export default class RightSidebar extends React.Component {
   static propTypes = {
     authenticated: PropTypes.bool.isRequired,
     authenticatedUser: PropTypes.shape().isRequired,
     followingList: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {},
+      authenticatedUser: {},
+    };
+  }
+
   /*
   constructor(props) {
     super(props);
@@ -111,6 +122,51 @@ export default class RightSidebar extends React.Component {
     }
   }
 */
+  fixUser() {
+    // console.log("AUTHUSER (RS.js:125):", [ this.props.authenticatedUser, this.props.authenticatedUser.github || false], "USER (RS:125):", [ this.props.user, this.props.user.github || false ]);
+    const { getUser, getReposByGithub, authenticatedUser, user } = this.props;
+    getUser((authenticatedUser.name || user.name))
+      .then((res) => {
+        if (!res || !res.response) return;
+        const realUser = res.response;
+        // console.log("REALUSER (RS:131): ", [realUser, realUser.github || false]);
+        if (!realUser.github) return;
+        if (authenticatedUser && authenticatedUser.repos && authenticatedUser.repos.length && (authenticatedUser.repos.length >= 1)) {
+          // console.log("auth repos exist", authenticatedUser.repos);
+          this.setState({user: {
+            ...user,
+            github: realUser.github,
+          }});
+          this.setState({authenticatedUser: {
+            ...authenticatedUser,
+            github: realUser.github,
+          }});
+          return;
+        } else {
+          getReposByGithub((authenticatedUser.name || user.name), true).then(res => {
+            // console.log("Repos (RS):", res.response);
+            this.setState({user: {
+              ...realUser,
+              github: realUser.github,
+              repos: res.response,
+            }});
+            this.setState({authenticatedUser: {
+              ...authenticatedUser,
+              github: realUser.github,
+              repos: res.response,
+            }});
+            this.setState({repositories: res.response});
+          });
+        }
+      });
+  }
+
+  componentWillMount() {
+    this.setState({authenticatedUser: this.props.authenticatedUser});
+    this.setState({user: this.props.user});
+    this.fixUser();
+  }
+
   render() {
     const { user, project, isOwner, repo, createProjectAccount, createProjectSponsor, match } = this.props;
     //const project = this.state.project;
@@ -120,6 +176,10 @@ export default class RightSidebar extends React.Component {
         <SignUp />
       )
     }
+
+    var gitUser = (this.props.authenticatedUser || user);
+    if (this.state && this.state.user && this.state.user.github) gitUser = this.state.user;
+    if (this.state && this.state.authenticatedUser && this.state.authenticatedUser.github) gitUser = this.state.authenticatedUser;
 
     return (
       <span>
@@ -151,7 +211,7 @@ export default class RightSidebar extends React.Component {
               createProjectAccount={createProjectAccount}
             /> : null
         }
-        <GithubConnection user={user} />
+        <GithubConnection user={gitUser} repositories={this.state.repositories || []}/>
       </span>
     );
   }

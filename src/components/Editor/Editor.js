@@ -7,12 +7,13 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { HotKeys } from 'react-hotkeys';
 import { throttle } from 'lodash';
 import isArray from 'lodash/isArray';
-import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd';
+import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import Dropzone from 'react-dropzone';
 import EditorToolbar from './EditorToolbar';
 import Action from '../Button/Action';
 import Body, { remarkable } from '../Story/Body';
 import Autocomplete from 'react-autocomplete';
+import 'mdi/css/materialdesignicons.min.css';
 import './Editor.less';
 
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
@@ -126,6 +127,35 @@ class Editor extends React.Component {
       if (selectInput) {
         selectInput.setAttribute('autocorrect', 'off');
         selectInput.setAttribute('autocapitalize', 'none');
+      }
+    }
+
+    const removeChat = () => {
+        if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
+          if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
+            if (!document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
+              document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.add("Component__block");
+              console.log("Blocking Chat");
+            }
+          }
+        }
+    }
+    removeChat();
+    setTimeout(removeChat, 2000);
+    setTimeout(removeChat, 2500);
+    setTimeout(removeChat, 4000);
+  }
+
+
+  
+
+  componentWillUnmount() {
+    if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
+      if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
+        if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
+          document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.remove("Component__block");
+          console.log("Unblocking Chat");
+        }
       }
     }
   }
@@ -697,7 +727,7 @@ class Editor extends React.Component {
                 </div>
               )}
               renderMenu={(items, value) => (
-                <div className="Topnav__search-menu">
+                <div className="Topnav__search-menu-reg">
                   <div>
                     {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
                     {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}

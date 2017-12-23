@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md'; 
 import CategoryIcon from '../CategoriesIcons';
 
 import './Contribution.less';
@@ -8,46 +8,46 @@ import './Contribution.less';
 const categorySlug = type => {
   switch (type) {
     case 'ideas':
-      return 'Suggestion for';
+      return 'SUGGESTION';
     case 'sub-projects':
-      return 'Project for';
+      return 'SUB-PROJECT';
     case 'development':
-      return 'Development of';
+      return 'DEVELOPMENT';
     case 'bug-hunting':
-      return 'Bug in';
+      return 'BUG';
     case 'translations':
-      return 'Translation for';
+      return 'TRANSLATION';
     case 'analysis':
-      return 'Analysis for';
+      return 'ANALYSIS';
     case 'graphics':
-      return 'Graphics for';
+      return 'GRAPHICS';
     case 'social':
-      return 'Visibility for';
+      return 'VISIBILITY';
     case 'documentation':
-      return 'Documentation for';
+      return 'DOCUMENTATION';
     case 'tutorials':
-      return 'Tutorial for';
+      return 'TUTORIAL';
     case 'video-tutorials':
-      return 'Video Tutorial for';
+      return 'VIDEO TUTORIAL';
     case 'copywriting':
-      return 'Copywriting for';
+      return 'COPYWRITING';
     case 'task-ideas':
-      return 'Thinkers for';
+      return 'THINKERS';
     case 'task-development':
-      return 'Developers for';
+      return 'DEVELOPERS';
     case 'task-bug-hunting':
-      return 'Bug Hunters for';
+      return 'BUG HUNTERS';
     case 'task-documentation':
-      return 'Tech Writers for';
+      return 'TECH WRITERS';
     case 'task-translations':
-      return 'Translators for';
+      return 'TRANSLATORS';
     case 'task-analysis':
-      return 'Data Analysts for';
+      return 'DATA ANALYSTS';
     case 'task-graphics':
-      return 'Designers for';
+      return 'DESIGNERS';
     case 'task-social':
     case 'social':
-      return 'Influencers for';
+      return 'INFLUENCERS';
   }
 };
 
@@ -64,30 +64,39 @@ const parsedRepoName = (author, name) => {
   return `${author}/${name}`;
 }
 
-const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress}) => (
-  <div className={`Contribution ${type}`}>
-    <b>
-      <CategoryIcon type={type} /> {categorySlug(type)} </b>&nbsp;
-    <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>
-      {' '} <Icon type='github' /> {parsedRepoName(repository.owner.login, repository.name)}
-    </Link>
+const modeClass = fm => {
+  if (fm === true) return "yesfull";
+  return "nofull";
+}
+
+const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress, fullMode}) => (
+  <div className={`Contribution ${type} ${modeClass(fullMode)}`}>
+    <span>
+    
+      <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}><CategoryIcon from="from-story" type={type}/></span> {categorySlug(type)} &nbsp; <b>&middot;</b> &nbsp;
+    
+      {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>{parsedRepoName(repository.owner.login, repository.name)}</Link>
+    </span>
+
     {showPending ? 
       <span className="markPullRight">
-      <Icon className="markIcon" type="sync"/>
+      <Icon type="sync" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
+      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
       : null}
     {showFlagged ? 
       <span className="markPullRight">
-      <Icon className="markIcon" type="exclamation-circle-o"/>
+      <Icon type="markIcon" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
+      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
       : null}
     {showInProgress ? 
       <span className="markPullRight">
-      <Icon className="markIcon" type="safety"/>
+      <Icon type="safety" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
+      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
     : null}
-    {type.indexOf('task') > -1 && <Icon type="notification" className={`task ${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/> }
-    
+    {(!showPending && !showFlagged && !showInProgress && (type.indexOf('task') > -1)) && <span className="markPullRight"><b><Icon type="notification" className=""/></b></span> }
   </div>
 );
 

@@ -187,6 +187,8 @@ class PostContent extends React.Component {
     const url = `${busyHost}${content.url}`;
     const metaTitle = `${title} - Utopian`;
 
+    console.log("USER", user)
+
     return (
       <div>
         <Helmet>

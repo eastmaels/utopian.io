@@ -9,9 +9,16 @@
 @yellow: #ffd500;
 @green:  #54d2a0;
 @blue:   #0275d8;
+@lllsuperblue: #95abe5;
+@llsuperblue: #7294f3;
+@lsuperblue: #5480fc;
+@superblue: #386cfe;
+@dsuperblue: #1f5bff;
+@ddsuperblue: #0b44d6;
+@dddsuperblue: #042e99;
 @teal:   #5bc0de;
 @pink:   #ff5b77;
-@purple: #4757b2;
+@purple: #5c19c7;
 @normal-grey: #4f545c;
 @blue-botticelli: #99aab5;
 @blue-linkWater: #c2ccd3;
@@ -21,7 +28,7 @@
 @grey-mortar: #595959;
 @grey-nightRider: #303030;
 
-
+@bg-blog: @blue;
 @bg-ideas: @green;
 @bg-sub-projects: #a0db8e;
 @bg-development: @black;
@@ -30,30 +37,32 @@
 @bg-graphics: @orange;
 @bg-analysis: #164265;
 @bg-social: @blue-4;
-@bg-documentation: @white;
+@bg-documentation: rgb(177, 177, 177);
 @bg-tutorials: #782C51;
 @bg-video-tutorials: #EC3324;
 @bg-copywriting: #008080;
 
-@icon-ideas: '\e649';
-@icon-sub-projects: '\E648';
-@icon-development: '\e636';
-@icon-bug-hunting: '\E688';
-@icon-translations: '\E655';
-@icon-graphics: '\e656';
-@icon-analysis: '\E6BD';
-@icon-social: '\e671';
-@icon-documentation: '\E637';
-@icon-tutorials: '\E6AF';
-@icon-video-tutorials: '\E66B';
-@icon-copywriting: '\E692';
+@icon-ideas: "\F336";
+@icon-blog: "\F332";
+@icon-sub-projects: "\F431";
+@icon-development: "\F174";
+@icon-bug-hunting: "\F0E4";
+@icon-translations: "\F5CA";
+@icon-graphics: "\F614";
+@icon-analysis: "\F420";
+@icon-social: "\F497";
+@icon-documentation: "\F14E";
+@icon-tutorials: "\F816";
+@icon-video-tutorials: "\F448";
+@icon-copywriting: "\F366";
 
-@primary-color: @purple;
+@primary-color: @dddsuperblue;
 
-@font-family-sans-serif: Whitney,'Source Sans Pro',"Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+@font-family-sans-serif: 'Lato', Whitney,'Source Sans Pro',"Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 @font-family-monospace:  "WhitneyBold",'Source Sans Pro',"Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 @font-family-base:       @font-family-sans-serif;
 
+@font-family-header: 'Noto Sans', 'Lato', Whitney, 'Helvetica Neue', Helvetica, Arial, "Lucida Grande", sans-serif;
 @font-family: @font-family-base;
 @code-family: @font-family-monospace;
 
@@ -67,9 +76,10 @@
 @btn-height-lg: 46px;
 @btn-height-sm: 25px;
 
+
 // Tooltip
-@tooltip-bg: @purple;
-@tooltip-arrow-color: @purple;
+@tooltip-bg: rgb(46, 97, 236);
+@tooltip-arrow-color: rgb(46, 97, 236);
 
 // Layout
 @layout-body-background      : transparent;
@@ -88,3 +98,14 @@
 @comment-text-offset-default: @comment-avatar-size-default + @comment-text-left-margin;
 @comment-avatar-size-small: 32px;
 @comment-text-offset-small: @comment-avatar-size-small + @comment-text-left-margin;
+
+@media screen and (max-width: 736px) {
+    .nomobile {
+        display: none;
+    }
+}
+@media screen and (min-width: 737px) {
+    .yesmobile {
+        display: none;
+    }
+}
