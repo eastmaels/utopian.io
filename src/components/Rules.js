@@ -56,6 +56,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Only merged Pull Requests will be accepted or Open Source projects you maintain never posted on Utopian before, forks included as long as the fork is not just a mirror of the original one. Proof of work required.</li>
+            <li>The contribution will be rejected if the Pull Request wasn't merged within the last 30 days.</li>
             <li>In this category you can only write if you have developed or contributed to the development.</li>
             <li>You must provide the links to the branches/forks/gists/pull requests.</li>
             <li>If your username on Github does not correspond to the Utopian username you must provide proof you are the owner by providing a screenshot of the logged in session in Github.</li>
