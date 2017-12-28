@@ -134,8 +134,9 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You must provide samples of your creations directly on this post and include public links to the full design.</li>
             <li>This category is meant only for graphics/videos/motion graphics you have realised for an Open Source project.</li>
             <li>You must include every possible detail to verify the work done.</li>
-            <li>You must provide the editable files, as PSD and similar source files.</li>
+            <li>You must provide the editable files, as PSD and similar source files. Flatten and rasterized layers are not editable.</li>
             <li>If you are providing a logo, you should also provide the different logo variations in terms of sizes and colors and also compare the new logo with the previous one, when applicable.</li>
+            <li>Logo designs must be in a vector format unless the project owner specifies a different format.</li>
             <li>T-shirts and merchandising in general are not welcome unless explicitly requested by the project owner.</li>
             <li>Never post about graphics you have already shared before.</li>
           </ul>
