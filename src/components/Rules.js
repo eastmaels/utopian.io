@@ -117,6 +117,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You must be the author of the translation and provide a way to verify your work.</li>
             <li>If your username on CrowdIn or similar translation platforms does not correspond to the Utopian username you must provide proof you are the owner by providing a screenshot of the logged in session in the translation platform.</li>
             <li>Same translations from different authors will be accepted if the moderator can recognise the newest translation has better quality.</li>
+            <li>If the provided translation is obviously machine-translated, the contribution will be rejected.</li>
             <li>Proof-reading is not acceptable in Utopian at the moment. This is temporary. Soon proof-reading will be accepted as a valid contribution.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
