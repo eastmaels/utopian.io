@@ -40,8 +40,6 @@ const CategoryIcon = ({from, type}) => {
       return <ReactIcon.MdOndemandVideo className={`md-react-icon md-video-tutorials ${from || "from-unspecified"}`} />;
     case 'copywriting':
       return <ReactIcon.MdTextsms className={`md-react-icon md-copywriting ${from || "from-unspecified"}`} />;
-    case 'pending':
-      return <ReactIcon.MdRecentActors className={`md-react-icon md-pending ${from || "from-unspecified"}`} />;
     default:
       return <ReactIcon.MdLocalAirport className={`md-react-icon ${from || "from-unspecified"}`} />;
   }
