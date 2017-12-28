@@ -169,6 +169,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>This category is meant only for providing results of <b>online social engagement</b>, adv and similar for an Open Source project.</li>
             <li>You must include links and proofs of the visibility effort you made and write down the results.</li>
             <li>If your effort brought 0 or very little new users/contributors to the Open Source project you are invited to not write about it.</li>
+            <li>Moderator may reject the contribution if they believe that there are not enough results for the contribution to be rewarded.</li>
             <li>You must proof of your effort. If your Utopian username does not correspond to the username used in the platforms for advertising the project, you must provide screenshots of the logged in session in these platforms. </li>
             <li>Never write about visibility efforts you have already shared before.</li>
           </ul>
