@@ -113,7 +113,7 @@ export default (props) =>
       <h2>Moderators</h2>
       <p>For moderators, check <em><a href="https://utopian.io/welcome-moderator">Welcome Moderator</a></em> for guidelines on how to effectively moderate on Utopian.</p><br/>
       <p>A moderator should always give at least one opportunity to fix/edit a post, and never reject and hide it on the first sight.</p>
-      <p>For contributors, remember that Utopian Moderators reserve the right to a) verify acceptable posts, b) deliberate and review pending posts, and c) flag/hide posts that do not follow the rules.
+      <p>For contributors, remember that Utopian Moderators reserve the right to a) verify acceptable posts, b) deliberate and review pending posts, and c) flag/hide posts that do not follow the rules or posts that are of very low quality.
         Additionally, moderators reserve the right to apply temporal or permanent bans who have shown a history of consistently disobeying the rules. <br/>
         </p>
       <h2>Categories Specific Rules</h2>
