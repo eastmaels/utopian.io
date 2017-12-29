@@ -73,7 +73,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="blog"/> Blog Post Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>You must provide an original format/s. You can't post about news found in the web or general thoughts, unless you have a unique and consistent format. <a href="https://utopian.io/utopian-io/@utopian-io/2xqdoa-utopian-weekly-1-the-weekly-open-source-newsletter">Example of a good format</a>.</li>
+            <li>You must provide an original and a unique editorial content of very high quality that is strongly related to the promotion and development of open-source related projects. Blogs must have a unique and consistent format. <a href="https://utopian.io/utopian-io/@utopian-io/2xqdoa-utopian-weekly-1-the-weekly-open-source-newsletter">Example of a good format</a>.</li>
             <li>You may only write blog posts that are related to the promotion, development and functions of open-source projects.</li>
             <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
             <li>Images, screenshots, links and examples are not necessary but preferred.</li>
