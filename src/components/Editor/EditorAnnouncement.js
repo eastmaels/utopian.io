@@ -535,7 +535,7 @@ class EditorAnnouncement extends React.Component {
                 <li>You must provide exactly what you are looking and how would you like it to be in great details.</li>
                 <li>Whether you are looking for a logo, layout, banner or similar, your request has to be very specific.</li>
               </ul>
-              <p>Not respecting the rules will either give you lower votes or your announcemnt won't be accepted.</p>
+              <p>Not respecting the rules will either give you lower votes or your announcement won't be accepted.</p>
               <AcceptRules />
             </div>
           )
