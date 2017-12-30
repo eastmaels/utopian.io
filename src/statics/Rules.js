@@ -117,6 +117,8 @@ export default (props) =>
         Additionally, moderators reserve the right to apply temporal or permanent bans who have shown a history of consistently disobeying the rules. <br/>
         </p>
       <p>Every moderator works on a specified set of categories and is assigned to one supervisor. You can see the spreadsheet with the moderators teams <a href="https://docs.google.com/spreadsheets/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I">here</a></p>
+      <h2>Utopian bot</h2>
+      <p>Utopian can unvote the contribution if it is found out that the contribution did not meet the rules and had been upvoted by mistake. This decision considers cases such as attempts of plagiarism, copying work and ideas of others or other violation of the rules which would be obvious to see that the contribution does not deserve the reward.</p>
       <h2>Categories Specific Rules</h2>
       <br />
       <Rules inEditor={false} type="ideas" />
