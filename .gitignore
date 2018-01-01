@@ -1,9 +1,12 @@
 public/**
-.idea
 .save
 *.css.map
 *.css
 .DS_Store
+
+# Intellij IDEA
+.idea
+*.iml
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
