@@ -1,11 +1,11 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 
 import './EmptyFeed.less';
 
 
-const Text = ({ type }) => {
+const Text = ({ type, text }) => {
   if (type === 'tasks') return (
     <div className="EmptyFeed">
       <h3>
@@ -36,6 +36,14 @@ const Text = ({ type }) => {
     </div>
   );
 
+  if (text) return (
+    <div className="EmptyFeed">
+      <h3>
+        {text}.
+      </h3>
+    </div>
+  );
+
   return (<div className="EmptyFeed">
     <h3>
       No contributions found. {' '}
@@ -45,9 +53,9 @@ const Text = ({ type }) => {
       .
     </h3>
   </div>)
-}
+};
 
-const EmptyFeed = ({ type }) =>
-  (<Text type={type} />);
+const EmptyFeed = ({ type, text }) =>
+  (<Text type={type} text={text} />);
 
 export default EmptyFeed;
