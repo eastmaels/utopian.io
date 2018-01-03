@@ -31,10 +31,10 @@ import Action from '../../components/Button/Action';
 import CommentForm from '../Comments/CommentForm';
 import Comments from "../Comments/Comments";
 import BanUser from '../../components/BanUser';
-// import { addPostPrefix } from '../../actions/contributions';
 import * as commentsActions from '../../comments/commentsActions';
 import { Modal } from 'antd';
 import { notify } from '../../app/Notification/notificationActions';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import Blog from './Blog';
 import Contribution from './Contribution';
@@ -125,6 +125,17 @@ class StoryFull extends React.Component {
 
   componentWillUnmount() {
     document.body.classList.remove('white-bg');
+  }
+
+  // Show that the text was copied and dismiss warning after 2 seconds
+  handlePostCopy = () => {
+    this.setState({ postCopied: true })
+    setTimeout(() => this.setState({ postCopied: false }), 2000)
+  }
+
+  handleModalCopy = () => {
+    this.setState({ modalCopied: true })
+    setTimeout(() => this.setState({ modalCopied: false }), 2000)
   }
 
   handleClick = (key) => {
@@ -614,12 +625,13 @@ class StoryFull extends React.Component {
             />
           </a>
           &nbsp;&nbsp;-&nbsp;&nbsp;
-          <span className="StoryFull__shortlink" style={{color: "green"}} onClick={() => {window.prompt("Copy this contribution's short link below: ", getShortLink(post))}}>
-          <Icon type="paper-clip" style={{color: "green"}}/> Copy Short Link
-          </span>
+          <CopyToClipboard text={getShortLink(post)} onCopy={this.handlePostCopy}>
+            <span><Icon type="paper-clip" style={{color: "green"}}/> Copy Short Link</span>
+          </CopyToClipboard>
           &nbsp;&nbsp;-&nbsp;&nbsp;
           <a href="#" onClick={() => {this.setState({shareModal: true})}}> <ReactIcon.MdShare /> Share</a>
         </h3>
+        { this.state.postCopied && <span>&nbsp;&nbsp;&nbsp;&nbsp;Copied</span> }
         <div className="StoryFull__header">
           <Link to={`/@${post.author}`}>
             <Avatar username={post.author} size={60} />
@@ -807,9 +819,13 @@ class StoryFull extends React.Component {
             </span><br /><br />
           </div>
           <br/>
-          You can also copy the link directly <a href="#" onClick={
-            () => {window.prompt("Copy this contribution's short link below: ", getShortLink(post))}
-          }>here.</a>
+          You can also copy the link directly
+          <CopyToClipboard text={getShortLink(post)}
+            onCopy={this.handleModalCopy}>
+            <a href="#">&nbsp;here.</a>
+          </CopyToClipboard>
+          <br/>
+          { this.state.modalCopied && <span>&nbsp;&nbsp;&nbsp;&nbsp;Copied</span> }
         </Modal>
 
         {metaData.pullRequests && metaData.pullRequests.length > 0 ?
