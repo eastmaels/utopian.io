@@ -109,7 +109,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="translations"/> Translations Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li><b>Minimum 500 words per translation contribution. Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum. Strings that are repeated in the project and the translation is the same for more than one string can be counted only once since they are supposed to have the same translation.</b></li>
+            <li><b>Minimum 500 words per translation contribution. Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum.</b></li>
             <li>You could translate less than 500 words if the project itself has less than 500 words to be translated in total.</li>
             <li>Only translations on CrowdIn or Github are accepted. You should not translate the words and provide them in your Utopian post directly.</li>
             <li>This category is meant only for translations you have updated or created for an Open Source project.</li>
