@@ -76,7 +76,7 @@ export default (props) =>
       <h2>Contributions should be in English</h2>
       Contributions should be in plain English and fully understandable. The only accepted exceptions are:
       <ul>
-        <li>Contributions under the Tutorials and Video Tutorials Category.</li>
+        <li>Contributions under the Tutorials and Video Tutorials Category, and Blog posts.</li>
         <li>Open Source projects that are meant to be for specific languages only.</li>
       </ul>
       <br />
@@ -113,9 +113,12 @@ export default (props) =>
       <h2>Moderators</h2>
       <p>For moderators, check <em><a href="https://utopian.io/welcome-moderator">Welcome Moderator</a></em> for guidelines on how to effectively moderate on Utopian.</p><br/>
       <p>A moderator should always give at least one opportunity to fix/edit a post, and never reject and hide it on the first sight.</p>
-      <p>For contributors, remember that Utopian Moderators reserve the right to a) verify acceptable posts, b) deliberate and review pending posts, and c) flag/hide posts that do not follow the rules.
+      <p>For contributors, remember that Utopian Moderators reserve the right to a) verify acceptable posts, b) deliberate and review pending posts, and c) flag/hide posts that do not follow the rules or posts that are of very low quality.
         Additionally, moderators reserve the right to apply temporal or permanent bans who have shown a history of consistently disobeying the rules. <br/>
         </p>
+      <p>Every moderator works on a specified set of categories and is assigned to one supervisor. You can see the spreadsheet with the moderators teams <a href="https://docs.google.com/spreadsheets/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I">here</a></p>
+      <h2>Utopian bot</h2>
+      <p>Utopian can unvote the contribution if it is found out that the contribution did not meet the rules and had been upvoted by mistake. This decision considers cases such as attempts of plagiarism, copying work and ideas of others or other violation of the rules which would be obvious to see that the contribution does not deserve the reward.</p>
       <h2>Categories Specific Rules</h2>
       <br />
       <Rules inEditor={false} type="ideas" />

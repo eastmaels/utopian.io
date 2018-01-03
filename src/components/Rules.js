@@ -56,7 +56,9 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Only merged Pull Requests will be accepted or Open Source projects you maintain never posted on Utopian before, forks included as long as the fork is not just a mirror of the original one. Proof of work required.</li>
-            <li>In this category you can only write if you have developed or contributed to the development.</li>
+            <li>Projects must have a README file for installation and usage.</li>
+            <li>The contribution will be rejected if the Pull Request wasn't merged within the last 30 days.</li>
+            <li>In this category you can only write if you have developed or contributed to the development. Simple and common code snippets can't be submitted in the development category.</li>
             <li>You must provide the links to the branches/forks/gists/pull requests.</li>
             <li>If your username on Github does not correspond to the Utopian username you must provide proof you are the owner by providing a screenshot of the logged in session in Github.</li>
             <li>Images, screenshots, links and examples are not necessary but preferred.</li>
@@ -72,7 +74,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="blog"/> Blog Post Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>You must provide an original format/s. You can't post about news found in the web or general thoughts, unless you have a unique and consistent format. <a href="https://utopian.io/utopian-io/@utopian-io/2xqdoa-utopian-weekly-1-the-weekly-open-source-newsletter">Example of a good format</a>.</li>
+            <li>You must provide an original and a unique editorial content of very high quality that is strongly related to the promotion and development of open-source related projects. Blogs must have a unique and consistent format. <a href="https://utopian.io/utopian-io/@utopian-io/2xqdoa-utopian-weekly-1-the-weekly-open-source-newsletter">Example of a good format</a>.</li>
             <li>You may only write blog posts that are related to the promotion, development and functions of open-source projects.</li>
             <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
             <li>Images, screenshots, links and examples are not necessary but preferred.</li>
@@ -107,7 +109,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="translations"/> Translations Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li><b>Minimum 500 words per translation contribution.</b></li>
+            <li><b>Minimum 500 words per translation contribution. Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum.</b></li>
             <li>You could translate less than 500 words if the project itself has less than 500 words to be translated in total.</li>
             <li>Only translations on CrowdIn or Github are accepted. You should not translate the words and provide them in your Utopian post directly.</li>
             <li>This category is meant only for translations you have updated or created for an Open Source project.</li>
@@ -116,6 +118,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You must be the author of the translation and provide a way to verify your work.</li>
             <li>If your username on CrowdIn or similar translation platforms does not correspond to the Utopian username you must provide proof you are the owner by providing a screenshot of the logged in session in the translation platform.</li>
             <li>Same translations from different authors will be accepted if the moderator can recognise the newest translation has better quality.</li>
+            <li>If the provided translation is obviously machine-translated, the contribution will be rejected.</li>
             <li>Proof-reading is not acceptable in Utopian at the moment. This is temporary. Soon proof-reading will be accepted as a valid contribution.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
@@ -132,8 +135,9 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You must provide samples of your creations directly on this post and include public links to the full design.</li>
             <li>This category is meant only for graphics/videos/motion graphics you have realised for an Open Source project.</li>
             <li>You must include every possible detail to verify the work done.</li>
-            <li>You must provide the editable files, as PSD and similar source files.</li>
+            <li>You must provide the editable files, as PSD and similar source files. Flatten and rasterized layers are not editable.</li>
             <li>If you are providing a logo, you should also provide the different logo variations in terms of sizes and colors and also compare the new logo with the previous one, when applicable.</li>
+            <li>Logo designs must be in a vector format unless the project owner specifies a different format.</li>
             <li>T-shirts and merchandising in general are not welcome unless explicitly requested by the project owner.</li>
             <li>Never post about graphics you have already shared before.</li>
           </ul>
@@ -167,6 +171,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>This category is meant only for providing results of <b>online social engagement</b>, adv and similar for an Open Source project.</li>
             <li>You must include links and proofs of the visibility effort you made and write down the results.</li>
             <li>If your effort brought 0 or very little new users/contributors to the Open Source project you are invited to not write about it.</li>
+            <li>Moderator may reject the contribution if they believe that there are not enough results for the contribution to be rewarded.</li>
             <li>You must proof of your effort. If your Utopian username does not correspond to the username used in the platforms for advertising the project, you must provide screenshots of the logged in session in these platforms. </li>
             <li>Never write about visibility efforts you have already shared before.</li>
           </ul>
