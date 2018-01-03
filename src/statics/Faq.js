@@ -18,7 +18,7 @@ export default () =>
             <h4> Why do I see a sudden drop in earnings 7 days after I post?
                 </h4>
                 <p>
-                This is due to how the STEEM Blockchain operates, and is not the fault of Utopian. 
+                This is due to how the STEEM Blockchain operates, and is not the fault of Utopian.
                 Every post <b>pays out</b> 7 days after the posting date. When that happens, the dollar value shown before has to be
                 exchanged for other currencies like STEEM and SBD. This is why these rates can differ.
                     </p>
@@ -27,7 +27,7 @@ export default () =>
                 Due to the fact that the STEEM Blockchain pays out by exchanging these cryptocurrencies, there is lots of approximation.
                 Your payout may not be <em>exactly</em> 50/50 but it should be quite close, if you chose that option.</p>
         <h2 id="bot-vote">
-        Utopian Bot Vote 
+        Utopian Bot Vote
         </h2>
             <h4>What can I do to increase my vote?</h4>
             <p>
@@ -39,7 +39,7 @@ export default () =>
             </p>
             <h4>My post was rewarded with a very low vote. What can I do?</h4>
             <p>
-                Post a message in the <code>#human-curators</code> channel on <a href="https://discord.gg/8Wx7STU">Discord.</a>
+                Post a message in the <code>#human-curators</code> channel on <a href="https://discord.gg/Cscp8et">Discord.</a>
                 </p>
             <h4>
                 When does the bot vote come?
@@ -53,8 +53,8 @@ export default () =>
         <h2 id="errors">
         Site Errors and Warnings
         </h2>
-        {/* 
-        001 - Posting: Utopian could not connect to Steem 
+        {/*
+        001 - Posting: Utopian could not connect to Steem
         */}
             <h4 id="errors-001">Posting: Utopian could not connect to Steem</h4>
             <p>
@@ -63,27 +63,27 @@ export default () =>
             </p>
                 <b style={{marginLeft: "20px"}}>Fixes</b>
             <p>
-                Before you attempt to do anything, make sure to <b>copy</b> or otherwise <b>save</b> the contents/body of your post. 
+                Before you attempt to do anything, make sure to <b>copy</b> or otherwise <b>save</b> the contents/body of your post.
                 Utopian will attempt to save it as a draft, but at times certain issues can prevent that from happening.
                 <br/>
                 Possible fixes include <b>(a)</b> using a private/incognito window, <b>(b)</b> switching to a different web browser, <b>(c)</b> reloading the page,
                 or <b>(d)</b> simply waiting for the issue to resolve itself.
                 Additionally, it's remotely possible that the post actually did go through even though you got the error, so check <code>https://steemit.com/@<b>your-username</b></code> to see if this occurred.
             </p>
-                
-                
-                
+
+
+
             <p className="Welcome__bigbreak">
             &nbsp;<br className="Welcome__bigbreak"/>
             &nbsp;<br className="Welcome__bigbreak"/>
             <br className="Welcome__bigbreak"/>
             </p>
-                
+
                 <em><center>Document Last Modified <b>December 13th, 2017</b></center></em><br/><br/>
-            
+
             <br className="Welcome__bigbreak"/>
-            
+
       </p>
-      
+
     </div>
   </div>);
