@@ -11,6 +11,7 @@ export default class CommentFooter extends React.Component {
     user: PropTypes.shape().isRequired,
     comment: PropTypes.shape().isRequired,
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     editable: PropTypes.bool,
@@ -88,11 +89,12 @@ export default class CommentFooter extends React.Component {
   handleSliderCancel = () => this.setState({ sliderVisible: false });
 
   handleSliderChange = (value) => {
-    const { user, rewardFund } = this.props;
+    const { user, rewardFund, currentMedianHistoryPrice } = this.props;
     const voteWorth = getVoteValue(
       user,
       rewardFund.recent_claims,
       rewardFund.reward_balance,
+      currentMedianHistoryPrice,
       value * 100,
     );
     this.setState({ sliderValue: value, voteWorth });

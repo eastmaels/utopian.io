@@ -11,6 +11,7 @@ const initialState = {
   rewardFund: {},
   trendingTopicsLoading: false,
   trendingTopics: [],
+  currentMedianHistoryPrice: {},
 };
 
 export default (state = initialState, action) => {
@@ -83,6 +84,15 @@ export default (state = initialState, action) => {
         trendingTopicsLoading: false,
         trendingTopics: [],
       };
+    case appTypes.GET_CURRENT_MEDIAN_HISTORY_PRICE_SUCCESS:
+      console.log(state);
+      return {
+        ...state,
+        currentMedianHistoryPrice: {
+          ...state.currentMedianHistoryPrice,
+          ...action.payload,
+        },
+      };
     default:
       return state;
   }
@@ -95,3 +105,4 @@ export const getRewardFund = state => state.rewardFund;
 export const getIsTrendingTopicsLoading = state => state.trendingTopicsLoading;
 export const getTrendingTopics = state => state.trendingTopics;
 export const getIsFetching = state => state.isFetching;
+export const getCurrentMedianHistoryPrice = state => state.currentMedianHistoryPrice;

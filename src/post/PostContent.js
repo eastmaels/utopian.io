@@ -18,6 +18,7 @@ import {
   getIsEditorSaving,
   getVotingPower,
   getRewardFund,
+  getCurrentMedianHistoryPrice,
   getVotePercent,
 } from '../reducers';
 import { editPost } from './Write/editorActions';
@@ -45,6 +46,7 @@ import { moderatorAction } from '../actions/contribution';
     moderators: state.moderators,
     sliderMode: getVotingPower(state),
     rewardFund: getRewardFund(state),
+    currentMedianHistoryPrice: getCurrentMedianHistoryPrice(state),
     defaultVotePercent: getVotePercent(state),
   }),
   {
@@ -70,6 +72,7 @@ class PostContent extends React.Component {
     pendingBookmarks: PropTypes.arrayOf(PropTypes.number).isRequired,
     saving: PropTypes.bool.isRequired,
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     bookmarks: PropTypes.shape(),
     sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
@@ -153,6 +156,7 @@ class PostContent extends React.Component {
       saving,
       sliderMode,
       rewardFund,
+      currentMedianHistoryPrice,
       defaultVotePercent,
       moderatorAction,
       moderators,
@@ -227,6 +231,7 @@ class PostContent extends React.Component {
           pendingBookmark={pendingBookmarks.includes(content.id)}
           saving={saving}
           rewardFund={rewardFund}
+          currentMedianHistoryPrice={currentMedianHistoryPrice}
           sliderMode={sliderMode}
           defaultVotePercent={defaultVotePercent}
           ownPost={author === user.name}

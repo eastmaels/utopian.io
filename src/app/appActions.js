@@ -19,6 +19,11 @@ export const GET_TRENDING_TOPICS_START = '@app/GET_TRENDING_TOPICS_START';
 export const GET_TRENDING_TOPICS_SUCCESS = '@app/GET_TRENDING_TOPICS_SUCCESS';
 export const GET_TRENDING_TOPICS_ERROR = '@app/GET_TRENDING_TOPICS_ERROR';
 
+export const GET_CURRENT_MEDIAN_HISTORY_PRICE = '@app/GET_CURRENT_MEDIAN_HISTORY_PRICE';
+export const GET_CURRENT_MEDIAN_HISTORY_PRICE_START = '@app/GET_CURRENT_MEDIAN_HISTORY_PRICE_START';
+export const GET_CURRENT_MEDIAN_HISTORY_PRICE_SUCCESS = '@app/GET_CURRENT_MEDIAN_HISTORY_PRICE_SUCCESS';
+export const GET_CURRENT_MEDIAN_HISTORY_PRICE_ERROR = '@app/GET_CURRENT_MEDIAN_HISTORY_PRICE_ERROR';
+
 export const RATE_REQUEST = '@app/RATE_REQUEST';
 export const RATE_SUCCESS = '@app/RATE_SUCCESS';
 
@@ -51,6 +56,14 @@ export const getRewardFund = () => (dispatch, getSelection, { steemAPI }) => {
   return dispatch({
     type: GET_REWARD_FUND,
     payload: { promise: getRewardFundAsync('post') },
+  });
+};
+
+export const getCurrentMedianHistoryPrice = () => (dispatch, getState, { steemAPI }) => {
+  const getCurrentMedianHistoryPriceAsync = Promise.promisify(steemAPI.getCurrentMedianHistoryPrice, { context: steemAPI });
+  return dispatch({
+    type: GET_CURRENT_MEDIAN_HISTORY_PRICE,
+    payload: { promise: getCurrentMedianHistoryPriceAsync() },
   });
 };
 

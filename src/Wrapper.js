@@ -12,7 +12,7 @@ import { getReposByGithub } from './actions/projects';
 import { getUser } from './actions/user';
 
 import { login, logout } from './auth/authActions';
-import { getRate, getRewardFund, getTrendingTopics } from './app/appActions';
+import { getRate, getRewardFund, getTrendingTopics, getCurrentMedianHistoryPrice } from './app/appActions';
 import Topnav from './components/Navigation/Topnav';
 import Transfer from './wallet/Transfer';
 import * as reblogActions from './app/Reblog/reblogActions';
@@ -30,6 +30,7 @@ import getTranslations, { getAvailableLocale } from './translations';
     getRate,
     getRewardFund,
     getTrendingTopics,
+    getCurrentMedianHistoryPrice,
     getRebloggedList: reblogActions.getRebloggedList,
     getReposByGithub,
     getUser,
@@ -47,6 +48,7 @@ export default class Wrapper extends React.PureComponent {
     getRate: PropTypes.func,
     getRewardFund: PropTypes.func,
     getTrendingTopics: PropTypes.func,
+    getCurrentMedianHistoryPrice: PropTypes.func,
   };
 
   static defaultProps = {
@@ -56,6 +58,7 @@ export default class Wrapper extends React.PureComponent {
     getRate: () => {},
     getRewardFund: () => {},
     getTrendingTopics: () => {},
+    getCurrentMedianHistoryPrice: () => {},
   };
 
   state = {
@@ -71,6 +74,7 @@ export default class Wrapper extends React.PureComponent {
     this.props.getRebloggedList();
     this.props.getRate();
     this.props.getTrendingTopics();
+    this.props.getCurrentMedianHistoryPrice();
   }
 
   componentDidUpdate () {

@@ -13,6 +13,7 @@ import {
   getAuthenticatedUserName,
   getVotingPower,
   getRewardFund,
+  getCurrentMedianHistoryPrice,
   getVotePercent,
 } from '../reducers';
 import CommentsList from '../components/Comments/Comments';
@@ -30,6 +31,7 @@ import './Comments.less';
     username: getAuthenticatedUserName(state),
     sliderMode: getVotingPower(state),
     rewardFund: getRewardFund(state),
+    currentMedianHistoryPrice: getCurrentMedianHistoryPrice(state),
     defaultVotePercent: getVotePercent(state),
   }),
   dispatch =>
@@ -49,6 +51,7 @@ export default class Comments extends React.Component {
     authenticated: PropTypes.bool.isRequired,
     user: PropTypes.shape().isRequired,
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     username: PropTypes.string,
@@ -147,6 +150,7 @@ export default class Comments extends React.Component {
       show,
       sliderMode,
       rewardFund,
+      currentMedianHistoryPrice,
       defaultVotePercent,
     } = this.props;
     const postId = post.id;
@@ -178,6 +182,7 @@ export default class Comments extends React.Component {
           show={show}
           notify={this.props.notify}
           rewardFund={rewardFund}
+          currentMedianHistoryPrice={currentMedianHistoryPrice}
           sliderMode={sliderMode}
           defaultVotePercent={defaultVotePercent}
           onLikeClick={this.handleLikeClick}
