@@ -183,7 +183,7 @@ class StoryFooter extends React.Component {
   handleSliderCancel = () => this.setState({ sliderVisible: false });
 
   handleSliderChange = (value) => {
-    const { post, user, rewardFund, currentMedianHistoryPrice } = this.props;
+    const { user, rewardFund, currentMedianHistoryPrice } = this.props;
     const { sponsorsAccount } = this.state;
 
     if (!this.state.voteWithSponsors) {
