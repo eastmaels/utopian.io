@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === 'production') {
       return next();
     }
   });
-  app.use(express.static(path.join(rootDir, 'public'), { maxAge: OneWeek }));
+  app.use(express.static(path.join(rootDir, 'public')));
 } else {
   app.use(express.static(path.join(rootDir, 'assets')));
 }

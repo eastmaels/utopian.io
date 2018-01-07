@@ -46,7 +46,7 @@ class SimilarPosts extends React.Component {
         contributions: res.response.results
       })
     })
-  }, 1000);
+  }, 10000);
 
   render() {
     if (!this.state.contributions.length) return null;
