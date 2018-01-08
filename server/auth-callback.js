@@ -3,28 +3,34 @@ const request = require('superagent');
 const API = process.env.UTOPIAN_API || "https://api.utopian.io/api/";
 const LOGIN_ENDPOINT = API.endsWith('/') ? API : API + '/';
 
-function authCallback(req, res) {
-  const code = req.query.code;
-  const state = req.query.state;
-  const next = state && state[0] === '/' ? state : '/';
-  if (code) {
+function authCallback(opts = {}) {
+  return function(req, res) {
+    const code = req.query.code;
+    const state = req.query.state;
+    const next = state && state[0] === '/' ? state : '/';
+    if (!code) {
+      return res.status(401).send({ error: 'missing oauth code' });
+    }
     request.post(LOGIN_ENDPOINT + 'login/steemconnect').send({
       code
     }).then(loginRes => {
       if (loginRes.status !== 200) {
         throw new Error('HTTP ' + loginRes.status + '\n' + loginRes.body);
       }
-      res.cookie('session', loginRes.body.session, {
-        maxAge: loginRes.body.expiry - Date.now(),
-        sameSite: true
-      });
+      if (opts.sendCookie === true) {
+        res.cookie('session', loginRes.body.session, {
+          maxAge: loginRes.body.expiry - Date.now(),
+          sameSite: true
+        });
+      }
       res.redirect(next);
     }).catch(err => {
       console.error('Failed to login to API server', err);
+      if (err.status === 400) {
+        return res.status(400).send({ error: err.response.body.message });
+      }
       res.status(500).send({ error: 'Failed to create session' });
     });
-  } else {
-    res.status(401).send({ error: 'code Missing' });
   }
 }
 

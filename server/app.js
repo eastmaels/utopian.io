@@ -150,7 +150,8 @@ function serverSideResponse(req, res) {
     .catch(error => res.end(error.message));
 }
 
-app.get('/callback', authCallback);
+app.get('/callback', authCallback({ sendCookie: true }));
+app.get('/connect', authCallback({ sendCookie: false }));
 
 app.get('/trending(/:category)', serverSideResponse);
 app.get('/hot(/:category)', serverSideResponse);
