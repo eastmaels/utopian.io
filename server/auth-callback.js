@@ -7,7 +7,6 @@ function authCallback(opts = {}) {
   return function(req, res) {
     const code = req.query.code;
     const state = req.query.state;
-    const next = state && state[0] === '/' ? state : '/';
     if (!code) {
       return res.status(401).send({ error: 'missing oauth code' });
     }
@@ -23,7 +22,11 @@ function authCallback(opts = {}) {
           sameSite: true
         });
       }
-      res.redirect(next);
+      if (opts.allowAnyRedirect === true) {
+        res.redirect(state ? state : '/');
+      } else {
+        res.redirect(state && state[0] === '/' ? state : '/');
+      }
     }).catch(err => {
       console.error('Failed to login to API server', err);
       if (err.status === 400) {
