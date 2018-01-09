@@ -570,7 +570,7 @@ class Editor extends React.Component {
                   </div>
                 </label>
                 <label>
-                  <Radio value="translations" name="type" disabled={isReviewed}/>
+                  <Radio value="translations" name="type" disabled="true"/>
                   <div className={`translations box`}>
                     <span>Translation</span>
                   </div>
