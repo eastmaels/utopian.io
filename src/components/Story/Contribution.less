@@ -169,6 +169,15 @@
   &__c-copywriting {
     color: @bg-copywriting;
   }
+  &.blog {
+    border-top: @bg-borderwidth solid @bg-blog;
+    border-radius: @bg-radius;
+    background: @bgcolor;
+    color: @light-grey;
+  }
+  &__c-blog {
+    color: @bg-blog;
+  }
   &.yesfull {
     padding-top: 0px;
     padding-bottom: 10px;
@@ -224,5 +233,8 @@
   }
   &.yesfull.copywriting {
     background: @bg-copywriting;
+  }
+  &.yesfull.blog {
+    background: @bg-blog;
   }
 }

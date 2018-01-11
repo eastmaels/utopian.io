@@ -32,7 +32,6 @@ import { getStats } from '../../actions/stats';
 import { getUser } from '../../actions/user';
 import { getReposByGithub} from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
-import SimilarPosts from '../../components/Editor/SimilarPosts';
 
 @injectIntl
 @withRouter
@@ -450,8 +449,8 @@ class Write extends React.Component {
               onSubmit={this.onSubmit}
               onImageInserted={this.handleImageInserted}
               user={user}
+              parsedPostData={parsedPostData}
             />
-            <SimilarPosts data={parsedPostData} />
             <Modal
               visible={this.state.warningModal}
               title='Hey. Your Contribution may be better!'

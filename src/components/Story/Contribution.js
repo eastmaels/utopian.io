@@ -31,6 +31,8 @@ const categorySlug = type => {
       return 'VIDEO TUTORIAL';
     case 'copywriting':
       return 'COPYWRITING';
+    case 'blog':
+      return 'BLOG POST';
     case 'task-ideas':
       return 'THINKERS';
     case 'task-development':
@@ -46,7 +48,6 @@ const categorySlug = type => {
     case 'task-graphics':
       return 'DESIGNERS';
     case 'task-social':
-    case 'social':
       return 'INFLUENCERS';
   }
 };

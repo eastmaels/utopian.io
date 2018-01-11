@@ -248,13 +248,13 @@ class Story extends React.Component {
             fullMode={false}
           />}
 
-          {postType === 'blog' && <Blog
+         {/*postType === 'blog' && <Blog
             showVerified = {post.reviewed}
             showPending = {post.pending}
             showFlagged = {post.flagged}
             showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
             fullMode={false}
-          />}
+          />*/}
 
           <div className="Story__content">
             <Link to={post.url} className="Story__content__title">

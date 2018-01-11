@@ -7,15 +7,15 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { HotKeys } from 'react-hotkeys';
 import { throttle } from 'lodash';
 import isArray from 'lodash/isArray';
-import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd';  import * as ReactIcon from 'react-icons/lib/md';
+import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd';
 import Dropzone from 'react-dropzone';
 import EditorToolbar from './EditorToolbar';
+import * as EditorTemplates from './templates';
 import Action from '../Button/Action';
 import Body, { remarkable } from '../Story/Body';
-import Autocomplete from 'react-autocomplete';
 import './Editor.less';
 
-import CategoryIcon from '../CategoriesIcons';
+import { RulesTask } from '../RulesTask';
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 const RadioGroup = Radio.Group;
 
@@ -26,7 +26,7 @@ const RadioGroup = Radio.Group;
   { getGithubRepos, setGithubRepos },
 )
 @injectIntl
-class EditorAnnouncement extends React.Component {
+class EditorTask extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     form: PropTypes.shape().isRequired,
@@ -157,6 +157,16 @@ class EditorAnnouncement extends React.Component {
     }
   };
 
+  handleChangeCategory = (e) => {
+    const { isUpdating } = this.props;
+    if (!isUpdating) {
+      const values = this.getValues(e);
+      this.input.value = this.setDefaultTemplate(values.type);
+      this.renderMarkdown(this.input.value)
+      this.resizeTextarea();
+    }
+  }
+
   setInput = (input) => {
     if (input && input.refs && input.refs.input) {
       this.originalInput = input.refs.input;
@@ -164,6 +174,10 @@ class EditorAnnouncement extends React.Component {
       this.input = ReactDOM.findDOMNode(input.refs.input);
     }
   };
+
+  setDefaultTemplate = () => {
+    return EditorTemplates['task']();
+  }
 
   setValues = (post) => {
     this.props.form.setFieldsValue({
@@ -173,7 +187,7 @@ class EditorAnnouncement extends React.Component {
       reward: post.reward,
       type: post.type || 'task-ideas',
     });
-    if (this.input) {
+    if (this.input && post.body !== '') {
       this.input.value = post.body;
       this.renderMarkdown(this.input.value);
       this.resizeTextarea();
@@ -455,135 +469,6 @@ class EditorAnnouncement extends React.Component {
 
     const chosenType = this.state.currentType || type || 'task-ideas';
 
-    const AcceptRules = () => (
-      <Action
-        className="accept-rules-btn"
-        primary
-        text='I understand. Proceed'
-        onClick={e => {
-          e.preventDefault();
-          this.setState({rulesAccepted: true});
-        }}
-      />
-    );
-
-    const Rules = () => {
-      switch(chosenType) {
-        case 'task-ideas':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="ideas"/> Conceptors/Thinkers</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>By submitting a task request in this category you are requesting contributors to provide concepts and ideas.</li>
-                <li>You must provide great details about what you are looking for and the problems you want to solve with a concept.</li>
-                <li>Images, screenshots, links and examples are always welcome in this category.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-        case 'task-development':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="development"/> Developers</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>In this category you can only write if you are looking for developers joining your crew.</li>
-                <li>You must provide all the details for the developers to contribute to your project.</li>
-                <li>Documentation, Repositories, Communities (e.g. Slack, Discord) and specific details are necessary.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-        case 'task-bug-hunting':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bug Hunters</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>In this category you can only post if you are looking to spot bugs in your system/software/website and similar.</li>
-                <li>You must provide every possible detail for the bug hunters to be able to start the hunting.</li>
-                <li>You must include for example browsers, devices, operating systems and similar info where you want bugs to be spotted.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-        case 'task-translations':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="translations"/> Translators</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>You can only post in this category if you are looking for translators to translate your project.</li>
-                <li>You must provide any necessary information for the translators to start their work.</li>
-                <li>Location of the files to be translated, tools to use, languages you are looking for and similar info are necessary.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-        case 'task-graphics':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="graphics"/> Designers</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>You can only post in this category if you are looking for designers to join your Open Source project.</li>
-                <li>You must provide exactly what you are looking and how would you like it to be in great details.</li>
-                <li>Whether you are looking for a logo, layout, banner or similar, your request has to be very specific.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower votes or your announcement won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-        case 'task-documentation':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="documentation"/> Tech Writers</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>This category is meant only for requiring help in updating/creating the documentation of your Open Source project.</li>
-                <li>You must be very specific about which part of the documentation you wish to update/create.</li>
-                <li>It is important to provide the tools you wish to use and necessary info for the documentation to be actually written.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-        case 'task-analysis':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="analysis"/> Data Analysts</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>This category is meant only for requesting data analysis for your Open Source project.</li>
-                <li>Your request must be very specific about the numbers you wish to extract.</li>
-                <li>You must provide the tools and all the information necessary for the analyses to be actually completed.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-        case 'task-social':
-          return (
-            <div className="Editor__rules">
-              <h2><CategoryIcon from="from-rules"  type="analysis"/> Influencers</h2>
-              <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p>
-              <ul>
-                <li>This category is meant only for requesting help of social influencers in spreading the word about your project.</li>
-                <li>You must provide any possible detail for the influencers to effectively share your Open Source project.</li>
-                <li>You must also provide any graphic, video and similar digital goods the influencers are supposed to share.</li>
-              </ul>
-              <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
-              <AcceptRules />
-            </div>
-          )
-      }
-    };
-
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
         <Form.Item
@@ -595,7 +480,10 @@ class EditorAnnouncement extends React.Component {
         >
           <div className="Editor__category">
             {getFieldDecorator('type')(
-              <RadioGroup onChange={this.onUpdate}>
+              <RadioGroup onChange={(e) => {
+                this.onUpdate(e);
+                this.handleChangeCategory(e);
+              }}>
                 <label>
                   <Radio value="task-ideas" name="type" />
                   <div className={`ideas box`}>
@@ -649,7 +537,11 @@ class EditorAnnouncement extends React.Component {
           </div>
         </Form.Item>
 
-        {!this.state.rulesAccepted && !isUpdating  ? <Rules /> : null}
+        {!this.state.rulesAccepted && !isUpdating  ? <RulesTask
+            inEditor={true}
+            type={chosenType}
+            acceptRules={() => this.setState({rulesAccepted: true})} />
+          : null}
 
         <div className={this.state.rulesAccepted || isUpdating ? 'rulesAccepted' : 'rulesNotAccepted'}>
           <Form.Item
@@ -716,7 +608,7 @@ class EditorAnnouncement extends React.Component {
                     </div>
                   </div>
                 )}
-                <HotKeys keyMap={EditorAnnouncement.hotkeys} handlers={this.handlers}>
+                <HotKeys keyMap={EditorTask.hotkeys} handlers={this.handlers}>
                   <Input
                     autosize={{ minRows: 6, maxRows: 12 }}
                     onChange={this.onUpdate}
@@ -726,6 +618,7 @@ class EditorAnnouncement extends React.Component {
                       id: 'story_placeholder',
                       defaultMessage: 'Write your story...',
                     })}
+                    defaultValue={this.setDefaultTemplate()}
                   />
                 </HotKeys>
               </Dropzone>
@@ -855,4 +748,4 @@ class EditorAnnouncement extends React.Component {
   }
 }
 
-export default Form.create()(EditorAnnouncement);
+export default Form.create()(EditorTask);

@@ -45,12 +45,12 @@ const Sidenav = ({ username }) =>
             Blog Posts
           </NavLink>
         </li>
-        <li>
+        {/*<li>
           <NavLink to="/write-blog" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/write-blog', match, location)}>
             <Icon type="plus" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
             New Blog Post
           </NavLink>
-        </li>
+        </li>*/}
         <br/><hr />
         <li>
           <NavLink to="/all/review" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/all/review', match, location)}>

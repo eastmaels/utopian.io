@@ -243,9 +243,9 @@ class Topnav extends React.Component {
                     <PopoverMenuItem key="new-contribution">
                       New Contribution
                     </PopoverMenuItem>
-                    <PopoverMenuItem key="new-blog-post">
+                    {/*<PopoverMenuItem key="new-blog-post">
                       New Blog Post
-                    </PopoverMenuItem>
+                    </PopoverMenuItem>*/}
                     <PopoverMenuItem key="activity">
                       Activity
                     </PopoverMenuItem>

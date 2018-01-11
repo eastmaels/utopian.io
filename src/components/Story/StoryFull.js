@@ -106,6 +106,7 @@ class StoryFull extends React.Component {
     super(props);
     this.state = {
       verifyModal: false,
+      submitting: false,
       moderatorCommentModal: false,
       shareModal: false,
       reviewsource: 0,
@@ -238,7 +239,9 @@ class StoryFull extends React.Component {
     const video = post.json_metadata.video;
     const isLogged = Object.keys(user).length;
     const isAuthor = isLogged && user.name === post.author;
-    const isModerator = isLogged && R.find(R.propEq('account', user.name))(moderators) && !isAuthor;
+    const inModeratorsObj = R.find(R.propEq('account', user.name))(moderators);
+    const isModerator = isLogged && inModeratorsObj && !isAuthor ? inModeratorsObj : false;
+
     const reviewed = post.reviewed || false;
 
     const getShortLink = (post) => {
@@ -398,14 +401,14 @@ class StoryFull extends React.Component {
           : null}
 
           {isModerator ? <div>
-            {!post.flagged && <Action
+            {!post.flagged && !post.reviewed || (post.reviewed && isModerator.supermoderator === true) ? <Action
               id="hide"
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
               tiny={mobileView}
               text={shortLong(<span><Icon type="exclamation-circle"/></span>, 'Hide Forever')}
               onClick={() => {
-                var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the user has not been responding for over 48 hours to your requests.')
+                var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the contribution is against the Utopian Rules.')
                 if (confirm) {
                   moderatorAction(post.author, post.permlink, user.name, 'flagged').then(() => {
                     this.setState({ reviewsource: 1 })
@@ -414,8 +417,9 @@ class StoryFull extends React.Component {
                   });
                 }
               }}
-            />}
-            {!post.pending && !post.reviewed && <Action
+            /> : null}
+
+            {/*!post.pending && !post.reviewed && <Action
               id="pending"
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
@@ -426,16 +430,16 @@ class StoryFull extends React.Component {
                 this.setModTemplateByName("pendingDefault");
                 this.setState({ moderatorCommentModal: true })
               }}
-            />}
+            />*/}
 
-            {!post.reviewed && <Action
+            {!post.reviewed && !post.flagged || (post.flagged && isModerator.supermoderator === true) ? <Action
               id="verified"
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
               tiny={mobileView}
               text={shortLong(<span><Icon type="check-circle"/></span>, 'Verify')}
               onClick={() => this.setState({ verifyModal: true })}
-            />}
+            /> : null}
 
             {!post.reviewed && <span className="floatRight"><BanUser intl={intl} user={post.author}/>&nbsp;&nbsp;</span>}
           </div> : null
@@ -455,18 +459,18 @@ class StoryFull extends React.Component {
           fullMode={true}
         />}
 
-        {postType === 'blog' && <Blog 
+        {/*postType === 'blog' && <Blog
         showVerified = {post.reviewed}
         showPending = {post.pending}
         showFlagged = {post.flagged}
         showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
         fullMode={true}
-        />}
+        />*/}
 
         <Modal
           visible={this.state.verifyModal}
           title='Does this contribution meet the Utopian Standards?'
-          okText='Yes, Verify'
+          okText={this.state.submitting ? 'Submitting...' : 'Yes, Verify'}
           cancelText='Not yet'
           onCancel={() => {
             var confirm = window.confirm("Would you like to set this post as Pending Review instead?")
@@ -479,8 +483,10 @@ class StoryFull extends React.Component {
             this.setState({ verifyModal: false })
           }}
           onOk={() => {
+            this.setState({ submitting: true });
             moderatorAction(post.author, post.permlink, user.name, 'reviewed').then(() => {
-              this.setState({ verifyModal: false })
+              this.setState({ verifyModal: false });
+              this.setState({ submitting: false });
               this.setState({ commentFormText: 'Thank you for the contribution. It has been approved.' + this.state.commentDefaultFooter })
               this.setState({ moderatorCommentModal: true })
             });

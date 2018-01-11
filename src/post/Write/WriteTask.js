@@ -7,6 +7,7 @@ import debounce from 'lodash/debounce';
 import isArray from 'lodash/isArray';
 import 'url-search-params-polyfill';
 import { injectIntl } from 'react-intl';
+import GetBoost from '../../components/Sidebar/GetBoost';
 
 import {
   getAuthenticatedUser,
@@ -17,17 +18,20 @@ import {
 
 import * as Actions from '../../actions/constants';
 import { createPost, saveDraft, newPost } from './editorActions';
-import { notify } from '../../app/Notification/notificationActions';
 import { getUser } from '../../actions/user';
-import EditorBlog from '../../components/Editor/EditorBlog';
+import { notify } from '../../app/Notification/notificationActions';
+import EditorTask from '../../components/Editor/EditorTask';
 import Affix from '../../components/Utils/Affix';
 import BannedScreen from '../../statics/BannedScreen';
+
+
+import { getGithubRepo } from '../../actions/project';
 
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
 import { getBeneficiaries } from '../../actions/beneficiaries';
-import { getReposByGithub } from '../../actions/projects';
+import { getReposByGithub} from '../../actions/projects';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 
 @injectIntl
@@ -47,11 +51,12 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
     newPost,
     notify,
     getBeneficiaries,
+    getGithubRepo,
+    getUser,
     getReposByGithub,
-    getUser, 
   },
 )
-class WriteBlog extends React.Component {
+class Write extends React.Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     user: PropTypes.shape().isRequired,
@@ -81,10 +86,26 @@ class WriteBlog extends React.Component {
       initialReward: '50',
       initialType: '',
       initialBody: '',
+      initialRepository: null,
       isUpdating: false,
       parsedPostData: null,
       banned: false,
     };
+  }
+
+  componentWillMount () {
+    const { getUser, user } = this.props;
+    getUser(user.name).then(res => {
+      if (user.banned === 1) {
+        this.setState({banned: true});
+      }
+    });
+    
+    const { match, getGithubRepo } = this.props;
+    const { repoId } = match.params;
+
+    getGithubRepo(repoId);
+
   }
 
   loadGithubData() {
@@ -96,22 +117,11 @@ class WriteBlog extends React.Component {
     });
   }
 
-  componentWillMount() {
-    const { getUser, user } = this.props;
-    getUser(user.name).then(res => {
-      if (user.banned === 1) {
-        this.setState({banned: true});
-      }
-    });
-  }
-
   componentDidMount() {
     this.props.newPost();
-    const { draftPosts, location: { search }, getReposByGithub,  } = this.props;
+    const { draftPosts, location: { search }} = this.props;
     const draftId = new URLSearchParams(search).get('draft');
     const draftPost = draftPosts[draftId];
-
-    this.loadGithubData();
 
     if (draftPost) {
       const { jsonMetadata, isUpdating } = draftPost;
@@ -133,11 +143,13 @@ class WriteBlog extends React.Component {
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
         initialReward: draftPost.reward || '50',
-        initialType: 'blog',
+        initialType: jsonMetadata.type || 'ideas',
         initialBody: draftPost.body || '',
         isUpdating: isUpdating || false,
+        initialRepository: jsonMetadata.repository,
       });
     }
+    this.loadGithubData();
   }
 
   proceedSubmit = (data) => {
@@ -245,7 +257,6 @@ class WriteBlog extends React.Component {
     const data = {
       body: form.body,
       title: form.title,
-      reward: form.reward,
     };
 
     data.parentAuthor = '';
@@ -296,7 +307,9 @@ class WriteBlog extends React.Component {
       community: 'utopian',
       app: `utopian/${version}`,
       format: 'markdown',
-      type: 'blog',
+      repository: form.repository,
+      platform: 'github', // @TODO @UTOPIAN hardcoded
+      type: form.type,
     };
 
     if (tags.length) {
@@ -367,14 +380,20 @@ class WriteBlog extends React.Component {
       redirect = true;
     }
 
-    this.props.saveDraft({ postData: data, id, repoId, type: 'blog'}, redirect);
+    data.jsonMetadata.repository = this.props.repo;
+
+    this.props.saveDraft({ postData: data, id, repoId, type: 'task'}, redirect);
   }, 400);
 
   render() {
-    const { initialTitle, initialTopics, initialType, initialBody, initialReward } = this.state;
-    const { user, loading, saving, submitting } = this.props;
-    // this.loadGithubData();
+    const { initialTitle, initialTopics, initialType, initialBody, initialRepository, initialReward } = this.state;
+    const { user, loading, saving, submitting, repo, match } = this.props;
     const isSubmitting = submitting === Actions.CREATE_CONTRIBUTION_REQUEST || loading;
+    // this.loadGithubData();
+    if (!Object.keys(repo).length || (repo && repo.id !== parseInt(match.params.repoId))) {
+      return null;
+    }
+
 
     return (
       <div className="shifted">
@@ -386,9 +405,10 @@ class WriteBlog extends React.Component {
             </div>
           </Affix>
           <div className="center">
-            <EditorBlog
+            <EditorTask
               ref={this.setForm}
               saving={saving}
+              repository={initialRepository || repo}
               title={initialTitle}
               topics={initialTopics}
               reward={initialReward}
@@ -407,4 +427,4 @@ class WriteBlog extends React.Component {
   }
   }
 
-export default WriteBlog;
+export default Write;

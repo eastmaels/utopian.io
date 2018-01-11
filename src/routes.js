@@ -28,8 +28,8 @@ import Faq from './statics/Faq';
 import BannedScreen from './statics/BannedScreen';
 import Team from './statics/Team';
 import Write from './post/Write/Write';
-import WriteAnnouncement from './post/Write/WriteAnnouncement';
-import WriteBlog from './post/Write/WriteBlog';
+import WriteTask from './post/Write/WriteTask';
+//import WriteBlog from './post/Write/WriteBlog';
 
 import Drafts from './post/Write/Drafts';
 import RequireLogin from './auth/RequireLogin';
@@ -81,11 +81,11 @@ export default (
         path="/write-task/:repoId"
         render={(props) => (
           <RequireLogin>
-            <WriteAnnouncement {...props} />
+            <WriteTask {...props} />
           </RequireLogin>
         )}
       />
-      <Route
+      {/*<Route
         exact
         path="/write-blog"
         render={(props) => (
@@ -93,7 +93,7 @@ export default (
             <WriteBlog {...props} />
           </RequireLogin>
         )}
-      />
+      />*/}
       <Route
         exact
         path="/drafts"
