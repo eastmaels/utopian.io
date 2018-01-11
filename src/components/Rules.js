@@ -55,8 +55,8 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
             <li>Only merged Pull Requests will be accepted.</li>
-            <li>Only merged Pull Requests on the official repository will be accepted or on a fork as long as long as the fork is not just a mirror of the original one.</li>
-            <li>The contribution will be rejected if the Pull Request wasn't merged <b>within the last 7 days</b> since the submitted contribution.</li>
+            <li>Only merged Pull Requests on the official repository will be accepted or on a fork as long as the fork is not just a mirror of the original one.</li>
+            <li>The contribution will be rejected if the merged Pull Request is <b>older than 7 days</b> since the submitted contribution.</li>
             <li>Simple and common code snippets that can be easily found or reproduced can't be submitted in the development category.</li>
             <li>You must always link the merged pull requests with the given functionality in the editor.</li>
             <li>If your username on Github does not correspond to the Utopian username you must use the "Name" field in the Github settings and enter there your Utopian/Steem username to verify you are the author.</li>
@@ -91,7 +91,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li><b>Minimum 1000 words per translation contribution.</b> Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
             <li>Proofread or merged translations are always preferred. Submitting translations that are not proofread will lead to a lower vote.</li>
             <li>You could translate less than the minimum amount of words if the project itself has less to be translated in total. May lead to a lower vote.</li>
-            <li>The contribution will be rejected if the translation wasn't done <b>within the last 7 days</b> since the submitted contribution.</li>
+            <li>The contribution will be rejected if the submitted translation is <b>older than 7 days</b> since the submitted contribution.</li>
             <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
             <li>Only translations on CrowdIn or Github are accepted. You should not translate the words and provide them in your Utopian post directly.</li>
             <li>Your Github Account or Crowdin Account must match your Steem/Utopian account. If it does not you must use the field "Full Name" in Crowdin to show you are the author.</li>
@@ -166,7 +166,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="documentation"/> Documentation Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Only merged Pull Requests on the official repository will be accepted or on a fork as long as long as the fork is not just a mirror of the original one.</li>
+            <li>Only merged Pull Requests on the official repository will be accepted or on a fork as long as the fork is not just a mirror of the original one.</li>
             <li>This category is meant only when working on the Official documentation of an Open Source project.</li>
             <li>If your username on Github does not correspond to the Utopian username you must use the "Name" field in the Github settings and enter there your Utopian/Steem username to verify you are the author.</li>
             <li>Documentation category is meant only for the official project documentation. Use the Tutorials category if this is not the case.</li>
@@ -188,7 +188,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
             <li>Tutorials must be highly technical and always have coding implications.</li>
             <li>Gameplay is not acceptable as a valid tutorial.</li>
-            <li>How-tos about graphic software are not acceptable as valid contributions.</li>
+            <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
             <li>Tutorials can be in any language.</li>
             <li>If your tutorial also contains a video you should use the Video Tutorials category.</li>
             <li>You must write the entire tutorial on the Utopian Post</li>
@@ -210,7 +210,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Video Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
             <li>Video Tutorials must be highly technical and always have coding implications.</li>
             <li>Gameplay is not acceptable as a valid tutorial</li>
-            <li>How-tos about graphic software are not acceptable as valid contributions.</li>
+            <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
             <li>Video Tutorials can be in any language. </li>
             <li>You must embed the video directly in this post. Youtube or Dtube videos are accepted.</li>
             <li>Video Tutorials should made up a course curriculum, while not mandatory this is highly suggested.</li>

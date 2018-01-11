@@ -20,7 +20,7 @@ export default (props) =>
           Temporary / Lifetime Bans - Utopian Downvote
         </h2>
         <p>
-          Utopian may ban your account temporarly or for the lifetime and may also proceed for a downvote in any of the following cases.
+          Utopian may ban your account temporarily or for the lifetime and may also proceed for a downvote in any of the following cases.
         </p>
         <li>
           Any user found harassing a member of the Utopian Moderators or in general any member of the Utopian teams.
@@ -123,7 +123,6 @@ export default (props) =>
         <p>
           The contribution should not contain any clear attempt to profit solely from a commercial perspective, and should not be written in a way that suggests the contributor is looking to maximise the returns.
         </p>
-        <li>Sentences like <em>resteem, follow, upvote</em> will lead to immediate rejection.</li>
         <li>The author may provide links to his social profiles in a way that does not disturb the reader.</li>
         <li>Links to commercial products are forbidden.</li>
         <li>Misusing the mentions by mentioning other Steem/Utopian users without an obvious reason will lead to rejection.</li>
