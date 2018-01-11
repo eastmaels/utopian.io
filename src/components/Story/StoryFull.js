@@ -109,8 +109,8 @@ class StoryFull extends React.Component {
       moderatorCommentModal: false,
       shareModal: false,
       reviewsource: 0,
-      commentDefaultFooter: '\n\nYou can contact us on [Discord](https://discord.gg/UCvqCsx).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
-      commentFormText: '\n\nYou can contact us on [Discord](https://discord.gg/UCvqCsx).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
+      commentDefaultFooter: '\n\nYou can contact us on [Discord](https://discord.gg/uTyJkNm).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
+      commentFormText: '\n\nYou can contact us on [Discord](https://discord.gg/uTyJkNm).\n**[[utopian-moderator]](https://utopian.io/moderators)**',
       modTemplate: '',
       lightbox: {
         open: false,
