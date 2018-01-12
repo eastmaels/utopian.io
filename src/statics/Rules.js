@@ -222,6 +222,11 @@ export default (props) =>
       </div>
 
       <div>
+        <h1>Report a Moderation Issue</h1>
+        <p>Get in touch with the Supervisor assigned to the moderator that reviewed your contribution. <a href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">Find them on this document.</a></p>
+      </div>
+
+      <div>
         <h1>Moderation</h1>
         <ul>
           <li>Utopian Moderators/Supervisors have full rights to reject or accept a contribution.</li>
@@ -245,28 +250,25 @@ export default (props) =>
             <p>A moderator may only apply for one category or more as long as they have related know-how</p>
             <ul>
               <li>
-                Suggestions
+                Suggestions - Visibility - Tasks for Thinkers - Tasks for Influencers
               </li>
               <li>
-                Translations
+                Translations - Tasks for Translators
               </li>
               <li>
-                Graphics
+                Graphics - Tasks for Designers
               </li>
               <li>
-                Development - Bug Hunting
+                Development - Bug Hunting - Documentation - Tasks for Developers, Bug Hunters and Tech Writers
               </li>
               <li>
-                Analysis
-              </li>
-              <li>
-                Documentation
+                Analysis - Tasks for Data Analysts
               </li>
               <li>
                 Tutorials - Video Tutorials
               </li>
               <li>
-                Copywriting
+                Copywriting - Blog Posts
               </li>
             </ul>
           </div>

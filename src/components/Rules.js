@@ -186,7 +186,8 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>This category is meant only for providing tutorials about an Open Source project.</li>
             <li>Machine translated tutorials will be rejected.</li>
             <li>Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
-            <li>Tutorials must be highly technical and always have coding implications.</li>
+            <li>End-user focused tutorials must address a minimum of three substantial concepts that are unique to the Open Source project and essential learning requirements for end-users. Preference is given to tutorials that are part of a curriculum (series) of tutorials all of which are sequential and built on previously learned skills and knowledge. Ubiquitous functions, such as Save, Open, and Print are unacceptable as substantial concepts.</li>
+            <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
             <li>Gameplay is not acceptable as a valid tutorial.</li>
             <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
             <li>Tutorials can be in any language.</li>
@@ -208,7 +209,8 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>The video and audio recording should be in HD (720 the min).</li>
             <li>Video Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
-            <li>Video Tutorials must be highly technical and always have coding implications.</li>
+            <li>End-user focused tutorials must address a minimum of three substantial concepts that are unique to the Open Source project and essential learning requirements for end-users. Preference is given to tutorials that are part of a curriculum (series) of tutorials all of which are sequential and built on previously learned skills and knowledge. Ubiquitous functions, such as Save, Open, and Print are unacceptable as substantial concepts.</li>
+            <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
             <li>Gameplay is not acceptable as a valid tutorial</li>
             <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
             <li>Video Tutorials can be in any language. </li>
