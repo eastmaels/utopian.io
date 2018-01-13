@@ -22,7 +22,7 @@ export default (props) =>
         <p>Rules are implicitly marked as Hard rules. Soft rules are marked with the label <b>[SOFT]</b>.</p>
         <ul>
           <li>All the rules not marked as <b>[SOFT]</b> lead to immediate rejection.</li>
-          <li>All the rules marked as <b>[SOFT]</b> may lead to rejection is you have been notified about the same mistake multiple times. In any other case the Moderator will ask for a change but accept your contribution anyways.</li>
+          <li>All the rules marked as <b>[SOFT]</b> may lead to rejection if you have been notified about the same mistake multiple times. In any other case the <b>Moderator will ask for a change but accept your contribution anyways</b>.</li>
         </ul>
       </div>
 
