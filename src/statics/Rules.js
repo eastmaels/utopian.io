@@ -28,6 +28,18 @@ export default (props) =>
 
       <div>
         <h2>
+          Editor Templates
+        </h2>
+        <p>When submitting a contribution you will find a standard template that you should follow when writing the details of your contribution.</p>
+        <ul>
+          <li>Templates are editable, as long as your contribution has a clear format. </li>
+          <li>Templates can be extended.</li>
+          <li>Templates can be translated in a different language than english as long as the category allows that. Check the specific rules for each category.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>
           Temporary / Lifetime Bans - Utopian Downvote
         </h2>
         <p>
