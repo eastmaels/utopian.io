@@ -43,8 +43,6 @@ export const saveDraft = (post, redirect) => dispatch =>
           if (redirect) {
             if (post.repoId && post.type === 'task') {
               dispatch(push(`/write-task/${post.repoId}/?draft=${post.id}`));
-            } else if (post.type === 'blog') {
-              dispatch(push(`/write-blog?draft=${post.id}`));
             } else {
               dispatch(push(`/write?draft=${post.id}`));
             }
@@ -78,8 +76,6 @@ export const editPost = post => (dispatch) => {
     .then(() => {
       if (jsonMetadata.type.indexOf('task') > -1) {
         dispatch(push(`/write-task/${jsonMetadata.repository.id}?draft=${post.id}`));
-      } else if (jsonMetadata.type === 'blog') {
-        dispatch(push(`/write-blog?draft=${post.id}`));
       } else {
         dispatch(push(`/write?draft=${post.id}`));
       }

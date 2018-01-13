@@ -28,7 +28,7 @@ const Text = ({ type, text }) => {
     <div className="EmptyFeed">
       <h3>
         No blog posts found. {' '}
-        <Link to="/write-blog">
+        <Link to="/write">
           Add Blog Post
         </Link>
         .

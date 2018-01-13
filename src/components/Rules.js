@@ -91,7 +91,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li><b>Minimum 1000 words per translation contribution.</b> Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
             <li>Proofread or merged translations are always preferred. Submitting translations that are not proofread will lead to a lower vote.</li>
             <li>You could translate less than the minimum amount of words if the project itself has less to be translated in total. May lead to a lower vote.</li>
-            <li>The contribution will be rejected if the submitted translation is <b>older than 7 days</b> since the submitted contribution.</li>
+            <li>The contribution will be rejected if the submitted translation is <b>older than 7 days</b> since the submitted contribution. This rule does not apply for proofread translations.</li>
             <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
             <li>Only translations on CrowdIn or Github are accepted. You should not translate the words and provide them in your Utopian post directly.</li>
             <li>Your Github Account or Crowdin Account must match your Steem/Utopian account. If it does not you must use the field "Full Name" in Crowdin to show you are the author.</li>
@@ -118,7 +118,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You must provide samples of your creations directly on this post and include public links to the full design.</li>
             <li>You must include every possible detail to verify the work done.</li>
             <li>If you are spontaneously contributing by enhancing an existing design, you must provide all the details to compare your work with the existing one and the reasons/benefits why your work should be accepted.</li>
-            <li>You must provide the editable files, as PSD and similar source files. Flatten and rasterized layers are not editable.</li>
+            <li>You must provide the editable files, as .Svg .Eps .Pdf ( .Ai .Psd .Cdr. ) . Flatten and rasterized layers are not editable.</li>
             <li>You should also provide the different variations in terms of sizes, colors and applications of your graphic design.</li>
             <li>Designs are preferred to be in a vector format unless the project owner specifies a different format.</li>
           </ul>
@@ -151,7 +151,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>This category is meant only for providing results of <b>online social engagement</b>, ads and similar for an Open Source project.</li>
             <li>Promotions done on chats (e.g. Whatsapp, Telegram and similar) won't be accepted as valid contributions.</li>
-            <li>Only ads on Search engines, Social media platforms, Thunderclap campaigns, posts on social media accounts with at least 10000 followers will be accepted as valid contributions.</li>
+            <li>Only ads on Search engines, Social media platforms, Thunderclap campaigns, posts on social media accounts with at least 10000 followers / potential audience will be accepted as valid contributions.</li>
             <li>You must have reached at least an audience of 1000 people.</li>
             <li>You must include links and proofs of the visibility effort you made and write down the results.</li>
             <li>You must provide a clear way to recognise you are the author of the social effort, by matching your Steem/Utopian account with the one on the social platforms or by using any other field to immediately verify that.</li>

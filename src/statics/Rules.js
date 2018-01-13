@@ -17,6 +17,17 @@ export default (props) =>
 
       <div>
         <h2>
+          Hard VS Soft Rules
+        </h2>
+        <p>Rules are implicitly marked as Hard rules. Soft rules are marked with the label <b>[SOFT]</b>.</p>
+        <ul>
+          <li>All the rules not marked as <b>[SOFT]</b> lead to immediate rejection.</li>
+          <li>All the rules marked as <b>[SOFT]</b> may lead to rejection is you have been notified about the same mistake multiple times. In any other case the Moderator will ask for a change but accept your contribution anyways.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>
           Temporary / Lifetime Bans - Utopian Downvote
         </h2>
         <p>
@@ -38,7 +49,7 @@ export default (props) =>
           Using Licensed or commercial materials or Creative Commons without citing the source even after being notified.
         </li>
         <li>
-          Tag spamming.
+          Tag spamming. <b>[SOFT]</b>
         </li>
       </div>
 
@@ -62,7 +73,7 @@ export default (props) =>
         <p>A moderator may reject a contribution if it is not written in a formal and professional style.</p>
         <ul>
           <li>
-            The contributor should follow the templates provided in the editor for each category.
+            The contributor should follow the templates provided in the editor for each category. <b>[SOFT]</b>
           </li>
           <li>
             The writing style should be formal never informal.
@@ -71,14 +82,14 @@ export default (props) =>
             The writing style should be professional.
           </li>
           <li>
-            Sentences like: <em>Hello Utopians</em>, <em>Hello Steemians</em>, <em>Dear friends</em> and similar informal sentences will lead to rejection.
+            Sentences like: <em>Hello Utopians</em>, <em>Hello Steemians</em>, <em>Dear friends</em> and similar informal sentences may lead to rejection. <b>[SOFT]</b>
           </li>
-          <li>Sentences like <em>resteem, follow, upvote</em> will lead to immediate rejection.</li>
+          <li>Sentences like <em>resteem, follow, upvote</em> may lead to immediate rejection. <b>[SOFT]</b></li>
           <li>
-            Quality of the images and videos used in the contribution should be high. Low res images and videos will be rejected.
+            Quality of the images and videos used in the contribution should be high. Low res images and videos will be rejected. <b>[SOFT]</b>
           </li>
           <li>
-            A contribution with bad grammar will be rejected if the contents may be really hard to understand.
+            A contribution with bad grammar will be rejected if the contents may be really hard to understand. <b>[SOFT]</b>
           </li>
         </ul>
       </div>
@@ -125,7 +136,7 @@ export default (props) =>
         </p>
         <li>The author may provide links to his social profiles in a way that does not disturb the reader.</li>
         <li>Links to commercial products are forbidden.</li>
-        <li>Misusing the mentions by mentioning other Steem/Utopian users without an obvious reason will lead to rejection.</li>
+        <li>Misusing the mentions by mentioning other Steem/Utopian users without an obvious reason will lead to rejection. <b>[SOFT]</b></li>
       </div>
 
       <div>
@@ -135,20 +146,19 @@ export default (props) =>
         </p>
       </div>
 
-
       <div>
         <h2>Contributions Should Not Solicit for Unrelated Activities</h2>
         <li>
-          Contributors should not ask for Steem/Steemit related activities in their posts, such as upvotes, resteems and follows.
+          Contributors should not ask for Steem/Steemit related activities in their posts, such as upvotes, resteems and follows.  <b>[SOFT]</b>
         </li>
         <li>
-          Contributors should not ask for Utopian related activities in their posts, such as upvotes and follows.
+          Contributors should not ask for Utopian related activities in their posts, such as upvotes and follows.  <b>[SOFT]</b>
         </li>
         <li>
           Contributors should not solicit for any activity in general that it is not strictly accepted by the Utopian Rules.
         </li>
         <li>
-          Contributors should not ask for witness votes in their Utopian posts.
+          Contributors should not ask for witness votes in their Utopian posts. <b>[SOFT]</b>
         </li>
       </div>
 
@@ -163,10 +173,10 @@ export default (props) =>
         <h2>
           Github Repository
         </h2>
-        <p>
-          The linked Github repository must always contain code, a README and a license.
-        </p>
         <ul>
+          <li>
+            The linked Github repository must always contain code, a README and a license. <b>[SOFT]</b>
+          </li>
           <li>
             Contributions for un-official repositories will only be accepted if present in <a href="https://docs.google.com/spreadsheets/d/1RMQyfqKRmgeIWPM80h31hS1NdLxqLJ6qy3I5ucNGuuc/edit?usp=sharing">Utopian un-official repos whitelist</a>
           </li>
@@ -205,9 +215,8 @@ export default (props) =>
         <li>Task requests are meant to be made by the project owner when looking for contributions.</li>
         <li>A task must be explained in great detail and provide all the necessary details for it to actually be completed. In one task request, there should not be more than one task; and if more, they must be related to the category where the task request is being submitted.</li>
         <li>Generic task requests, like "We are looking for contributors" won't be accepted.</li>
-        <li>Moderators may ask that you change a task request, if it does not meet the rules.</li>
         <li>You should always provide contact details for the contributor to get in touch with you.</li>
-        <li>You should always define a deadline.</li>
+        <li>You should always define a deadline. <b>[SOFT]</b> </li>
 
         <div>
           <div><RulesTask inEditor={false} type="task-ideas" /></div>
@@ -223,7 +232,7 @@ export default (props) =>
 
       <div>
         <h1>Report a Moderation Issue</h1>
-        <p>Get in touch with the Supervisor assigned to the moderator that reviewed your contribution. <a href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">Find them on this document.</a></p>
+        <p>Get in touch with the Supervisor assigned to the moderator that reviewed your contribution. <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">Find them on this document.</a></p>
       </div>
 
       <div>
@@ -240,7 +249,7 @@ export default (props) =>
               You must write a public Steemit post proposing his intentions, one category or more related categories he would like to moderate, his field of expertise and should nominate one existing Supervisor.
             </li>
             <li>
-              The public Steemit post must be pasted in the channel <a href="https://discord.gg/Ddj8SJf" target="_blank">#mod-applicant on Discord</a>
+              The public Steemit post must be pasted in the channel <a href="https://discord.gg/Ddj8SJf" target="_blank">#mod-applicant on Discord</a>. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
             </li>
           </ul>
           <div>

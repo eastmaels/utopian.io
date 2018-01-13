@@ -449,17 +449,17 @@ class StoryFull extends React.Component {
 
         </div> : null}
 
-        {repository && <Contribution
+        <Contribution
           type={postType}
-          repository={repository}
-          platform={metaData.platform}
-          id={repository.id}
+          repository={repository || null}
+          platform={metaData.platform || null}
+          id={repository && repository.id ? repository.id : null}
           showVerified={ post.reviewed }
           showPending={ post.pending }
           showFlagged={ post.flagged }
           showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
           fullMode={true}
-        />}
+        />
 
         {/*postType === 'blog' && <Blog
         showVerified = {post.reviewed}

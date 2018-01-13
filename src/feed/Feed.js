@@ -23,6 +23,7 @@ import {
   getFollowingList,
   getPendingFollows,
   getIsEditorSaving,
+  getCurrentMedianHistoryPrice,
 } from '../reducers';
 
 import Story from '../components/Story/Story';
@@ -39,6 +40,7 @@ import './Feed.less';
     pendingReblogs: getPendingReblogs(state),
     sliderMode: getVotingPower(state),
     rewardFund: getRewardFund(state),
+    currentMedianHistoryPrice: getCurrentMedianHistoryPrice(state),
     defaultVotePercent: getVotePercent(state),
     followingList: getFollowingList(state),
     pendingFollows: getPendingFollows(state),
@@ -66,6 +68,7 @@ export default class Feed extends React.Component {
     reblogList: PropTypes.arrayOf(PropTypes.number).isRequired,
     saving: PropTypes.bool.isRequired,
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     isFetching: PropTypes.bool,
@@ -144,6 +147,7 @@ export default class Feed extends React.Component {
       saving,
       sliderMode,
       rewardFund,
+      currentMedianHistoryPrice,
       defaultVotePercent,
     } = this.props;
 
@@ -186,6 +190,7 @@ export default class Feed extends React.Component {
                 onEditClick={this.handleEditClick}
                 sliderMode={sliderMode}
                 rewardFund={rewardFund}
+                currentMedianHistoryPrice={currentMedianHistoryPrice}
                 defaultVotePercent={defaultVotePercent}
                 onLikeClick={this.handleLikeClick}
                 onReportClick={this.handleReportClick}
@@ -212,6 +217,7 @@ export default class Feed extends React.Component {
                   onEditClick={this.handleEditClick}
                   sliderMode={sliderMode}
                   rewardFund={rewardFund}
+                  currentMedianHistoryPrice={currentMedianHistoryPrice}
                   defaultVotePercent={defaultVotePercent}
                   onLikeClick={this.handleLikeClick}
                   onReportClick={this.handleReportClick}
@@ -238,6 +244,7 @@ export default class Feed extends React.Component {
                   onEditClick={this.handleEditClick}
                   sliderMode={sliderMode}
                   rewardFund={rewardFund}
+                  currentMedianHistoryPrice={currentMedianHistoryPrice}
                   defaultVotePercent={defaultVotePercent}
                   onLikeClick={this.handleLikeClick}
                   onReportClick={this.handleReportClick}

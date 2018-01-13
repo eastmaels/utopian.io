@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md'; 
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import CategoryIcon from '../CategoriesIcons';
 
 import './Contribution.less';
@@ -74,29 +74,31 @@ const Contribution = ({type, repository, platform, id, showVerified, showPending
   <div className={`Contribution ${type} ${modeClass(fullMode)}`}>
     <span>
     
-      <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}><CategoryIcon from="from-story" type={type}/></span> {categorySlug(type)} &nbsp; <b>&middot;</b> &nbsp;
-    
-      {' '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>{parsedRepoName(repository.owner.login, repository.name)}</Link>
+      <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}><CategoryIcon from="from-story" type={type}/></span> {categorySlug(type)}
+
+      {repository && platform && id ? <span>
+        {' '} <b>&middot;</b> {'  '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>{parsedRepoName(repository.owner.login, repository.name)}</Link>
+      </span> : null}
     </span>
 
-    {showPending ? 
+    {showPending ?
       <span className="markPullRight">
       <Icon type="sync" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
-      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
+        {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
       : null}
-    {showFlagged ? 
+    {showFlagged ?
       <span className="markPullRight">
       <Icon type="markIcon" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
-      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
+        {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
       : null}
-    {showInProgress ? 
+    {showInProgress ?
       <span className="markPullRight">
       <Icon type="safety" className={`${showPending || showFlagged || showInProgress ? 'withStatus' : '' }`}/>
-      {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
+        {type.indexOf('task') > -1 && <span>&nbsp;&nbsp;<b><Icon type="notification" className=""/></b></span> }
       </span>
-    : null}
+      : null}
     {(!showPending && !showFlagged && !showInProgress && (type.indexOf('task') > -1)) && <span className="markPullRight"><b><Icon type="notification" className=""/></b></span> }
   </div>
 );
