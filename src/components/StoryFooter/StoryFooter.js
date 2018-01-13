@@ -31,6 +31,7 @@ class StoryFooter extends React.Component {
     post: PropTypes.shape().isRequired,
     postState: PropTypes.shape().isRequired,
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     ownPost: PropTypes.bool,
     sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
@@ -68,7 +69,7 @@ class StoryFooter extends React.Component {
   }
 
   loadSponsorship() {
-    const { user, post, getProject, defaultVotePercent, rewardFund } = this.props;
+    const { user, post, getProject, defaultVotePercent, rewardFund, currentMedianHistoryPrice } = this.props;
     const postData = post.json_metadata;
     const repository = postData.repository;
     const repoId = repository.id;
@@ -93,6 +94,7 @@ class StoryFooter extends React.Component {
                       sponsorsAccount,
                       rewardFund.recent_claims,
                       rewardFund.reward_balance,
+                      currentMedianHistoryPrice,
                       sponsorsVote.percent / 100 * 100,
                     )
                   });
@@ -105,6 +107,7 @@ class StoryFooter extends React.Component {
                       sponsorsAccount,
                       rewardFund.recent_claims,
                       rewardFund.reward_balance,
+                      currentMedianHistoryPrice,
                       defaultVotePercent / 100 * 100,
                     )
                   });
@@ -180,7 +183,7 @@ class StoryFooter extends React.Component {
   handleSliderCancel = () => this.setState({ sliderVisible: false });
 
   handleSliderChange = (value) => {
-    const { user, rewardFund } = this.props;
+    const { user, rewardFund, currentMedianHistoryPrice } = this.props;
     const { sponsorsAccount } = this.state;
 
     if (!this.state.voteWithSponsors) {
@@ -188,6 +191,7 @@ class StoryFooter extends React.Component {
         user,
         rewardFund.recent_claims,
         rewardFund.reward_balance,
+        currentMedianHistoryPrice,
         value * 100,
       );
       this.setState({ sliderValue: value, voteWorth });
@@ -196,6 +200,7 @@ class StoryFooter extends React.Component {
         sponsorsAccount,
         rewardFund.recent_claims,
         rewardFund.reward_balance,
+        currentMedianHistoryPrice,
         value * 100,
       );
       this.setState({ sliderSponsorsValue: value, sponsorsVoteWorth });

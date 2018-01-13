@@ -39,6 +39,7 @@ class Comments extends React.Component {
       }),
     ),
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     loading: PropTypes.bool,
@@ -148,6 +149,7 @@ class Comments extends React.Component {
       username,
       sliderMode,
       rewardFund,
+      currentMedianHistoryPrice,
       defaultVotePercent,
     } = this.props;
     const { sort } = this.state;
@@ -205,6 +207,7 @@ class Comments extends React.Component {
               pendingVotes={pendingVotes}
               notify={this.props.notify}
               rewardFund={rewardFund}
+              currentMedianHistoryPrice={currentMedianHistoryPrice}
               sliderMode={sliderMode}
               defaultVotePercent={defaultVotePercent}
               onLikeClick={onLikeClick}

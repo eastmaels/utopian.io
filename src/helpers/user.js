@@ -35,11 +35,12 @@ parseFloat(user.received_vesting_shares) +
 
 export const getHasDefaultSlider = user => true;
 
-export const getVoteValue = (user, recentClaims, rewardBalance, weight = 10000) =>
+export const getVoteValue = (user, recentClaims, rewardBalance, currentMedianHistoryPrice, weight = 10000) =>
   calculateVoteValue(
     getTotalShares(user),
     parseFloat(recentClaims),
     parseFloat(rewardBalance),
+    currentMedianHistoryPrice,
     user.voting_power,
     weight,
   );

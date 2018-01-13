@@ -62,6 +62,7 @@ class StoryFull extends React.Component {
     post: PropTypes.shape().isRequired,
     postState: PropTypes.shape().isRequired,
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     pendingLike: PropTypes.bool,
     pendingFollow: PropTypes.bool,
@@ -223,6 +224,7 @@ class StoryFull extends React.Component {
       commentCount,
       saving,
       rewardFund,
+      currentMedianHistoryPrice,
       ownPost,
       sliderMode,
       defaultVotePercent,
@@ -849,6 +851,7 @@ class StoryFull extends React.Component {
           user={user}
           ownPost={ownPost}
           rewardFund={rewardFund}
+          currentMedianHistoryPrice={currentMedianHistoryPrice}
           sliderMode={sliderMode}
           defaultVotePercent={defaultVotePercent}
           post={post}

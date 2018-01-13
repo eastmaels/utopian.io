@@ -33,6 +33,7 @@ import './Comment.less';
     parent: PropTypes.shape().isRequired,
     sort: PropTypes.oneOf(['BEST', 'NEWEST', 'OLDEST']),
     rewardFund: PropTypes.shape().isRequired,
+    currentMedianHistoryPrice: PropTypes.shape().isRequired,
     defaultVotePercent: PropTypes.number.isRequired,
     sliderMode: PropTypes.oneOf(['on', 'off', 'auto']),
     rootPostAuthor: PropTypes.string,
@@ -197,6 +198,7 @@ import './Comment.less';
       depth,
       sliderMode,
       rewardFund,
+      currentMedianHistoryPrice,
       defaultVotePercent,
     } = this.props;
     const { showHiddenComment } = this.state;
@@ -298,6 +300,7 @@ import './Comment.less';
             comment={comment}
             pendingVotes={pendingVotes}
             rewardFund={rewardFund}
+            currentMedianHistoryPrice={currentMedianHistoryPrice}
             sliderMode={sliderMode}
             defaultVotePercent={defaultVotePercent}
             onLikeClick={this.props.onLikeClick}
@@ -339,6 +342,7 @@ import './Comment.less';
                   commentsChildren={commentsChildren}
                   notify={this.props.notify}
                   rewardFund={rewardFund}
+                  currentMedianHistoryPrice={currentMedianHistoryPrice}
                   sliderMode={sliderMode}
                   defaultVotePercent={defaultVotePercent}
                   onLikeClick={this.props.onLikeClick}
