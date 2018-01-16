@@ -95,7 +95,7 @@ module.exports = {
         IMG_HOST: JSON.stringify(process.env.IMG_HOST || 'https://img.busy.org'),
         STEEMCONNECT_HOST: JSON.stringify(process.env.STEEMCONNECT_HOST || 'https://v2.steemconnect.com'),
         STEEMCONNECT_REDIRECT_URL: JSON.stringify(process.env.STEEMCONNECT_REDIRECT_URL || 'https://utopian.io/callback'),
-        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'https://api.steemit.com'),
+        STEEM_NODE: JSON.stringify(process.env.STEEM_NODE || 'wss://steemd.privex.io'),
         SERVER_SSL_CERT: JSON.stringify(process.env.SERVER_SSL_CERT || '/etc/letsencrypt/live/utopian.io/fullchain.pem'),
         SERVER_SSL_KEY: JSON.stringify(process.env.SERVER_SSL_KEY || '/etc/letsencrypt/live/utopian.io/privkey.pem'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
