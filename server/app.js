@@ -9,6 +9,7 @@ import { StaticRouter } from 'react-router';
 
 import getStore from '../src/store';
 import router, { UserRoutes } from '../src/routes';
+import authCallback from './auth-callback';
 
 const fs = require('fs');
 const express = require('express');
@@ -61,7 +62,7 @@ if (process.env.NODE_ENV === 'production') {
       return next();
     }
   });
-  app.use(express.static(path.join(rootDir, 'public'), { maxAge: OneWeek }));
+  app.use(express.static(path.join(rootDir, 'public')));
 } else {
   app.use(express.static(path.join(rootDir, 'assets')));
 }
@@ -149,18 +150,8 @@ function serverSideResponse(req, res) {
     .catch(error => res.end(error.message));
 }
 
-app.get('/callback', (req, res) => {
-  const accessToken = req.query.access_token;
-  const expiresIn = req.query.expires_in;
-  const state = req.query.state;
-  const next = state && state[0] === '/' ? state : '/';
-  if (accessToken && expiresIn) {
-    res.cookie('access_token', accessToken, { maxAge: expiresIn * 1000 });
-    res.redirect(next);
-  } else {
-    res.status(401).send({ error: 'access_token or expires_in Missing' });
-  }
-});
+app.get('/callback', authCallback({ sendCookie: true }));
+app.get('/connect', authCallback({ allowAnyRedirect: true }));
 
 app.get('/trending(/:category)', serverSideResponse);
 app.get('/hot(/:category)', serverSideResponse);

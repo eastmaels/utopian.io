@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Button, Tooltip, Menu, Dropdown, Icon } from 'antd';
+import { Button, Tooltip, Menu, Dropdown, Icon } from 'antd';  import * as ReactIcon from 'react-icons/lib/md';
 import './EditorToolbar.less';
 
 const tooltip = (description, shortcut) =>

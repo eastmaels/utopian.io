@@ -5,11 +5,14 @@ import { IntlProvider } from 'react-intl';
 import { withRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 import Cookie from 'js-cookie';
+import Loading from './components/Icon/Loading';
 
 import { getAuthenticatedUser, getLocale } from './reducers';
+import { getReposByGithub } from './actions/projects';
+import { getUser } from './actions/user';
 
 import { login, logout } from './auth/authActions';
-import { getRate, getTrendingTopics } from './app/appActions';
+import { getRate, getRewardFund, getTrendingTopics, getCurrentMedianHistoryPrice } from './app/appActions';
 import Topnav from './components/Navigation/Topnav';
 import Transfer from './wallet/Transfer';
 import * as reblogActions from './app/Reblog/reblogActions';
@@ -25,8 +28,12 @@ import getTranslations, { getAvailableLocale } from './translations';
     login,
     logout,
     getRate,
+    getRewardFund,
     getTrendingTopics,
+    getCurrentMedianHistoryPrice,
     getRebloggedList: reblogActions.getRebloggedList,
+    getReposByGithub,
+    getUser,
   },
 )
 export default class Wrapper extends React.PureComponent {
@@ -39,7 +46,9 @@ export default class Wrapper extends React.PureComponent {
     logout: PropTypes.func,
     getRebloggedList: PropTypes.func,
     getRate: PropTypes.func,
+    getRewardFund: PropTypes.func,
     getTrendingTopics: PropTypes.func,
+    getCurrentMedianHistoryPrice: PropTypes.func,
   };
 
   static defaultProps = {
@@ -47,16 +56,41 @@ export default class Wrapper extends React.PureComponent {
     logout: () => {},
     getRebloggedList: () => {},
     getRate: () => {},
+    getRewardFund: () => {},
     getTrendingTopics: () => {},
+    getCurrentMedianHistoryPrice: () => {},
+  };
+
+  state = {
+    loadedRepos: false,
+    loadingRepos: false,
   };
 
   componentWillMount() {
-    if (Cookie.get('access_token')) {
+    if (Cookie.get('session')) {
       this.props.login();
     }
+    this.props.getRewardFund();
     this.props.getRebloggedList();
     this.props.getRate();
     this.props.getTrendingTopics();
+    this.props.getCurrentMedianHistoryPrice();
+  }
+
+  componentDidUpdate () {
+    const { user, getUser, getReposByGithub } = this.props;
+
+    if (user && user.name && !this.state.loadedRepos && !this.state.loadingRepos) {
+      this.setState({loadingRepos: true});
+      getUser(user.name).then(res => {
+        if (res.response && res.response.github) {
+          this.setState({loadedRepos: true, loadingRepos: false});
+          getReposByGithub(user.name, true);
+        }else{
+          this.setState({loadedRepos: true, loadingRepos: false});
+        }
+      });
+    }
   }
 
   handleMenuItemClick = (key) => {
@@ -67,14 +101,17 @@ export default class Wrapper extends React.PureComponent {
       case 'new-contribution':
         this.props.history.push('/write');
         break;
+      case 'review':
+        this.props.history.push('/all/review');
+        break;
       case 'new-blog-post':
-        this.props.history.push('/write-blog');
+        this.props.history.push('/write');
         break;
       case 'activity':
         window.open(`https://steemd.com/@${this.props.user.name}`);
         break;
       case 'replies':
-        this.props.history.push('/replies');
+        window.open(`https://steemit.com/@${this.props.user.name}/recent-replies`);
         break;
       case 'bookmarks':
         this.props.history.push('/bookmarks');
@@ -92,7 +129,6 @@ export default class Wrapper extends React.PureComponent {
 
   render() {
     const { locale: appLocale, user, location } = this.props;
-
     const locale = getAvailableLocale(appLocale);
     const translations = getTranslations(appLocale);
 
@@ -103,7 +139,7 @@ export default class Wrapper extends React.PureComponent {
             <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} history={this.props.history} location={location} />
           </Layout.Header>
           <div className="content">
-            {this.props.children}
+            {this.state.loadedRepos ? this.props.children : <Loading />}
             <Transfer />
           </div>
         </Layout>

@@ -49,10 +49,10 @@ export default class Feed extends React.Component {
         elementIsScrollable={false}
         threshold={200}
       >
-        {content.map((project) => {
+        {content.map((repo) => {
 
           return (
-            <Project key={project.id} project={project} />
+            <Project key={repo.id} repo={repo} />
           );
         })}
       </ReduxInfiniteScroll>

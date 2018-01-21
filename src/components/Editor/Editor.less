@@ -58,13 +58,6 @@
         background-color: @bg-social;
       }
       + .box.documentation{
-        span {
-          color: @black;
-          &:before {
-            color: @black;
-          }
-        }
-        border: 1px solid #999;
         background-color: @bg-documentation;
       }
       + .box.tutorials{
@@ -75,6 +68,9 @@
       }
       + .box.copywriting{
         background-color: @bg-copywriting;
+      }
+      + .box.blog{
+        background-color: @bg-blog;
       }
       + .box {
         position: relative;
@@ -119,7 +115,7 @@
         color: #CCC;
         &:before {
           font-size: 1.5em;
-          font-family: 'anticon';
+          font-family: "Material Design Icons";
           display: block;
           transform: translateY(-10px);
           opacity: 10;
@@ -213,6 +209,13 @@
         }
       }
     }
+    .blog {
+      span {
+        &:before {
+          content: @icon-blog;
+        }
+      }
+    }
   }
 
   &__rules {
@@ -223,6 +226,7 @@
       padding-left: 30px;
       padding-bottom: 15px;
       list-style: disc;
+      list-style-position: inside;
       li {
         margin-top: 15px;
       }

@@ -7,7 +7,8 @@ import * as Actions from '../actions/constants';
 import { Link } from 'react-router-dom';
 
 import steem from 'steem';
-import { Modal, Icon } from 'antd';
+import Action from '../components/Button/Action';
+import { Modal, Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import './Sponsors.less';
 
 @connect(
@@ -22,8 +23,12 @@ class Sponsors extends React.PureComponent {
 
     this.state = {
       sponsorModal: false,
+      delegationTypeModal: false,
+      delegationSP: 1500,
+      delegationAccount: "",
       total_vesting_shares: 0,
       total_vesting_fund_steem: 0,
+      vestsPerSteem: 1.00,
     };
   }
 
@@ -41,11 +46,54 @@ class Sponsors extends React.PureComponent {
         });
       }
     })
+    const vestsPerSteem = (1.000) / (steem.formatter.vestToSteem(1, this.state.total_vesting_shares, this.state.total_vesting_fund_steem));
+  }
+
+   openURI(url, inNewTab) {
+        var a = document.createElement("a");
+        if (inNewTab === true) a.target = "_blank";
+        a.href = url;
+        a.click();
+    }
+
+  generateSteemURI(from, amount) {
+    from = from.replace("@", "");
+    console.log("Generating for amount ", amount, " vesting_fund_steem: ", this.state.total_vesting_fund_steem, " vesting_shares var:", this.state.total_vesting_shares);
+    const amt =  ((parseFloat(amount) / parseFloat(this.state.total_vesting_fund_steem))) * parseFloat(this.state.total_vesting_shares);
+    const amtVests = `${amt.toFixed(6)} VESTS`;
+    console.log("DELEGATING ", amtVests);
+    const preSuffix = [
+      [
+        "delegate_vesting_shares",
+        {
+          "delegator": from,
+          "delegatee": "utopian-io",
+          "vesting_shares": (amtVests).toString(),
+        }
+      ]
+    ];
+    const suffix = window.btoa(JSON.stringify(preSuffix));
+    console.log("DELEGATION JSON: ", preSuffix);
+    return `steem://sign/tx/${suffix}#e30=`;
   }
 
   render () {
-    const { createSponsor, loading, sponsors, stats } = this.props;
+    const { createSponsor, loading, sponsors, stats, match, location } = this.props;
     const isLoading = loading === Actions.CREATE_SPONSOR_SUCCESS;
+    const steemconnectHost = process.env.STEEMCONNECT_HOST || "https://v2.steemconnect.com";
+
+    if (location.search.indexOf('plain') > -1) {
+      return (
+        <div>
+          {sponsors.map(sponsor => {
+            const voteWitness = () => ('(<a href="' + process.env.STEEMCONNECT_HOST + '/sign/account-witness-vote?witness='+sponsor.account+'&approve=1">Vote for Witness</a>)');
+            return (
+              <div key={sponsor.account}>@{sponsor.account} {sponsor.is_witness ? voteWitness() : null}</div>
+            )
+          })}
+        </div>
+      )
+    }
 
     return (
       <div className="main-panel help-section">
@@ -98,35 +146,30 @@ class Sponsors extends React.PureComponent {
                     </div>
                     <div className="statsTab">
                       <h4>{Math.round(delegatedSP)} SP</h4>
-                      <p><b>Delegated</b></p>
+                      <p><b>Delegated Steem Power</b></p>
                     </div>
                     <div className="statsTab">
-                      <h4>{Math.ceil((sponsor.percentage_total_vesting_shares || 0) * 100) / 100}%</h4>
-                      <p><b>Utopian Shares</b></p>
+                      <h4>{!sponsor.opted_out ? Math.ceil((sponsor.percentage_total_vesting_shares || 0) * 100) / 100 + '%' : 'OPTED OUT FROM REWARDS'}</h4>
+                      <p><b>Utopian Reward Shares</b></p>
                     </div>
                     <div className="statsTab">
-                      <h4>${Math.ceil((sponsor.should_receive_rewards || 0) * 100) / 100}</h4>
-                      <p><b>Will Receive</b></p>
-                      <p style={{fontSize: '12px'}}><em>(Not including pending rewards. Will accumulate pending rewards once released)</em></p>
-                    </div>
-                    <div className="statsTab">
-                      <h4>${Math.ceil((sponsor.total_paid_rewards || 0) * 100) / 100}</h4>
-                      <p><b>Rewards Received</b></p>
+                      <h4>{!sponsor.opted_out ? Math.ceil((sponsor.total_paid_rewards_steem || 0) * 100) / 100 : 'OPTED OUT FROM REWARDS'}</h4>
+                      <p><b>STEEM Received</b></p>
                     </div>
                   </div>
                 )
               })}
             </div>
-
             <Modal
               visible={this.state.sponsorModal}
               title='Become an Utopian Sponsor!'
-              okText={isLoading ? <Icon type="loading"/> : 'Proceed to SteemConnect'}
+              okText={isLoading ? <Icon type="loading"/> : 'Delegate!'}
               cancelText='Later'
               onCancel={() => this.setState({sponsorModal: false})}
               onOk={ () => {
                 const account = this.account.value;
                 const sp = this.sp.value;
+
 
                 if (!account) {
                   alert("Please enter your Steem account. E.g. @youraccount");
@@ -143,7 +186,9 @@ class Sponsors extends React.PureComponent {
                   if (res.status === 500 || res.status === 404) {
                     alert(res.message);
                   } else {
-                    window.location.href=`https://v2.steemconnect.com/sign/delegate-vesting-shares?delegator=${account}&delegatee=utopian-io&vesting_shares=${sp}%20SP`;
+                    this.setState({delegationAccount: account});
+                    this.setState({delegationSP: sp});
+                    this.setState({delegationTypeModal: true});
                     this.setState({sponsorModal: false});
                   }
                 });
@@ -151,15 +196,13 @@ class Sponsors extends React.PureComponent {
             >
               <p>
                 You can become an <b>Utopian Sponsor</b> by delegating your <b>Steem Power</b>.
-                Delegating means that you are lending your Steem Power to Utopian for as long as you wish and have it back at any time.
+                Delegating means that you are securely lending your Steem Power to Utopian for as long as you wish and have it back at any time.
                 <br /><br />
-                <b>20% of the total author rewards generated on Utopian are dedicated to the Sponsors and shared based on the delegated amount.</b>
+                <b>20% of the total author rewards generated on Utopian are dedicated to the Sponsors and shared proportionally based on the delegated amount.</b>
                 <br /><br />
                 In addition Utopian will give you credit on <b>every promotional activity, official news and on the dedicated sponsor sections</b>.
                 <br /><br />
                 <b>Utopian uses the delegated Steem Power to upvote the best contributions on the platform</b>. You are actually contributing to the <b>Whole Open Source World</b>.
-                <br /><br />
-                Delegation happens through <b>SteemConnect</b>, a tool maintained by Steemit itself, where <b>your credentials are safe</b>. <a href="https://v2.steemconnect.com" target="_blank">Learn more</a>
                 <br /><br />
               </p>
               <form className="Sponsors__form">
@@ -170,6 +213,36 @@ class Sponsors extends React.PureComponent {
               </form>
               <p style={{'fontSize': '13px'}}>You can un-delegate anytime. Enter 0 in the field above. By un-delegating you stop receiving shares immediately.</p>
             </Modal>
+
+
+            <Modal
+              visible={this.state.delegationTypeModal}
+              title='Complete your Delegation!'
+              onCancel={() => {this.setState({delegationTypeModal: false}); this.setState({sponsorModal: true});}}
+              footer={
+                <span>
+                <Action
+                  positive={true}
+                  style={{color: "white"}}
+                  text={<span>Use Vessel App</span>}
+                  onClick={() => {this.setState({delegationTypeModal: false}); this.openURI(this.generateSteemURI(this.state.delegationAccount, this.state.delegationSP), false);}}
+                  /><br/>
+                  <Action
+                  primary={true}
+                  style={{color: "white"}}
+                  text={<span>Use SteemConnect.com</span>}
+                  onClick={() => {this.setState({delegationTypeModal: false}); this.openURI(`${steemconnectHost}/sign/delegate-vesting-shares?delegator=${this.state.delegationAccount}&delegatee=utopian-io&vesting_shares=${this.state.delegationSP}%20SP&redirect_uri=${window.location.href}`, true);}}
+                  />
+                  </span>
+              }
+            >
+            There are multiple secure methods you can use to delegate:<br/>
+            <ul style={{listStyleType: 'disc', listStylePosition: 'inside'}}>
+            <li> <b>Vessel</b> Click the Green button to use Vessel's desktop app to delegate. You must have version 0.2.0 or higher. </li>
+            <li> <b>SteemConnect</b> Click the Blue button to use Steemconnect, a website maintained by Steemit, to delegate.</li>
+            </ul>
+            </Modal>
+
           </div>
         </div>
       </div>

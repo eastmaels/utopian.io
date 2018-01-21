@@ -3,7 +3,8 @@
 .Sidenav {
   min-width: 150px;
   & > li {
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     & > a {
       color: #99aab5;
       font-weight: 500;
@@ -21,9 +22,20 @@
   }
 }
 
+.from-sidenav.md-react-icon {
+  margin-right: 15px !important;
+}
+
 .Sidenav__item--active {
-  color: @purple !important;
+  color: @ddsuperblue !important;
   & > i {
-    color: @purple;
+    color: @ddsuperblue;
   }
+}
+
+br {
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 10%;
 }

@@ -7,30 +7,32 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { HotKeys } from 'react-hotkeys';
 import { throttle } from 'lodash';
 import isArray from 'lodash/isArray';
-import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd';
+import { Icon, Checkbox, Form, Input, Select, Radio } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import Dropzone from 'react-dropzone';
 import EditorToolbar from './EditorToolbar';
+import * as EditorTemplates from './templates';
 import Action from '../Button/Action';
 import Body, { remarkable } from '../Story/Body';
 import Autocomplete from 'react-autocomplete';
+import SimilarPosts from './SimilarPosts';
+import 'mdi/css/materialdesignicons.min.css';
 import './Editor.less';
 
-import { getProjects, setProjects } from '../../actions/projects';
+import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 
 // @UTOPIAN
-import SimilarPosts from './SimilarPosts';
 import { Rules } from '../Rules';
 import { getPullRequests } from '../../actions/pullRequests';
 
 
 @connect(
   state => ({
-    projects: state.projects,
+    repos: state.repos,
   }),
-  { getProjects,
-    setProjects,
+  { getGithubRepos,
+    setGithubRepos,
     getPullRequests,
   },
 )
@@ -128,6 +130,35 @@ class Editor extends React.Component {
         selectInput.setAttribute('autocapitalize', 'none');
       }
     }
+
+    const removeChat = () => {
+        if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
+          if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
+            if (!document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
+              document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.add("Component__block");
+              console.log("Blocking Chat");
+            }
+          }
+        }
+    }
+    removeChat();
+    setTimeout(removeChat, 2000);
+    setTimeout(removeChat, 2500);
+    setTimeout(removeChat, 4000);
+  }
+
+
+  
+
+  componentWillUnmount() {
+    if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
+      if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
+        if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
+          document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.remove("Component__block");
+          console.log("Unblocking Chat");
+        }
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -196,6 +227,16 @@ class Editor extends React.Component {
     }
   };
 
+  handleChangeCategory = (e) => {
+    const { isUpdating } = this.props;
+    if (!isUpdating) {
+      const values = this.getValues(e);
+      this.input.value = this.setDefaultTemplate(values.type);
+      this.renderMarkdown(this.input.value)
+      this.resizeTextarea();
+    }
+  }
+
   setInput = (input) => {
     if (input && input.refs && input.refs.input) {
       this.originalInput = input.refs.input;
@@ -203,6 +244,11 @@ class Editor extends React.Component {
       this.input = ReactDOM.findDOMNode(input.refs.input);
     }
   };
+
+  setDefaultTemplate = (type) => {
+    const sanitisedType = type.replace('-', '');
+    return EditorTemplates[sanitisedType]();
+  }
 
   setValues = (post) => {
     this.props.form.setFieldsValue({
@@ -212,7 +258,7 @@ class Editor extends React.Component {
       reward: post.reward,
       type: post.type || 'ideas',
     });
-    if (this.input) {
+    if (this.input && post.body !== '') {
       this.input.value = post.body;
       this.renderMarkdown(this.input.value);
       this.resizeTextarea();
@@ -499,7 +545,7 @@ class Editor extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { intl, loading, isUpdating, isReviewed, type, saving, getProjects, projects, setProjects, user, getPullRequests, pullRequests } = this.props;
+    const { intl, loading, isUpdating, isReviewed, type, saving, getGithubRepos, repos, setGithubRepos, user, getPullRequests, pullRequests, parsedPostData } = this.props;
 
     const chosenType = this.state.currentType || type || 'ideas';
 
@@ -514,17 +560,14 @@ class Editor extends React.Component {
         >
           <div className="Editor__category">
             {getFieldDecorator('type')(
-              <RadioGroup onChange={this.onUpdate}>
+              <RadioGroup onChange={(e) => {
+                this.onUpdate(e);
+                this.handleChangeCategory(e);
+              }}>
                 <label>
                   <Radio value="ideas" name="type" disabled={isReviewed}/>
                   <div className={`ideas box`}>
                     <span>Suggestion</span>
-                  </div>
-                </label>
-                <label>
-                  <Radio value="sub-projects" name="type" disabled={isReviewed}/>
-                  <div className={`sub-projects box`}>
-                    <span>Sub-Project</span>
                   </div>
                 </label>
                 <label>
@@ -587,6 +630,12 @@ class Editor extends React.Component {
                     <span>Copywriting</span>
                   </div>
                 </label>
+                <label>
+                  <Radio value="blog" name="type" disabled={isReviewed}/>
+                  <div className={`blog box`}>
+                    <span>Blog Post</span>
+                  </div>
+                </label>
               </RadioGroup>
             )}
           </div>
@@ -599,7 +648,6 @@ class Editor extends React.Component {
           : null}
 
         <div className={this.state.rulesAccepted || isUpdating ? 'rulesAccepted' : 'rulesNotAccepted'}>
-
           <Form.Item
             validateStatus={this.state.noRepository ? 'error' : ''}
             help={this.state.noRepository && "Please enter an existing Github repository"}
@@ -630,7 +678,7 @@ class Editor extends React.Component {
                     this.setState({loading: true, loaded: false});
                     this.search.refs.input.click();
 
-                    getProjects({
+                    getGithubRepos({
                       q,
                     }).then(() => {
                       this.setState({loaded: true, loading: false});
@@ -648,26 +696,26 @@ class Editor extends React.Component {
 
                     this.search.refs.input.click();
 
-                    getProjects(q).then(() => {
+                    getGithubRepos(q).then(() => {
                       this.setState({loaded: true, loading: false});
                       this.search.refs.input.click();
                     });
                   }
                 },
               }}
-              items={ projects }
-              getItemValue={project => project.full_name}
-              onSelect={(value, project) => {
+              items={ repos }
+              getItemValue={repo => repo.full_name}
+              onSelect={(value, repo) => {
                 const update = () => {
                   this.setState({
-                    value: project.full_name,
-                    repository: project,
+                    value: repo.full_name,
+                    repository: repo,
                   });
-                  this.onUpdate(project, 'repository');
+                  this.onUpdate(repo, 'repository');
                 };
 
                 if (user.github && !isReviewed && (chosenType === 'development' || chosenType === 'documentation' || chosenType === 'copywriting')) {
-                  getPullRequests(project.full_name).then(res => {
+                  getPullRequests(repo.full_name).then(res => {
                     if (res.response && res.response.length > 0) {
                       const prs = res.response.filter(pr => pr.user.login === user.github.account);
                       this.setState({
@@ -682,22 +730,22 @@ class Editor extends React.Component {
                 this.setState({value});
 
                 if (value === '') {
-                  setProjects([]);
+                  setGithubRepos([]);
                   this.setState({loaded: false, repository: null});
                 }
 
               }}
-              renderItem={(project, isHighlighted) => (
+              renderItem={(repo, isHighlighted) => (
                 <div
                   className='Topnav__search-item'
-                  key={project.full_name}
+                  key={repo.full_name}
                 >
-                  <span><Icon type='github' /> <b>{project.full_name}</b></span>
-                  <span>{project.html_url}</span>
+                  <span><Icon type='github' /> <b>{repo.full_name}</b></span>
+                  <span>{repo.html_url}</span>
                 </div>
               )}
               renderMenu={(items, value) => (
-                <div className="Topnav__search-menu">
+                <div className="Topnav__search-menu-reg">
                   <div>
                     {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
                     {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
@@ -740,7 +788,7 @@ class Editor extends React.Component {
           <Form.Item
             label={
               <span className="Editor__label">
-              Contribution title
+            Contribution title
             </span>
             }
           >
@@ -800,6 +848,7 @@ class Editor extends React.Component {
                       id: 'story_placeholder',
                       defaultMessage: 'Write your story...',
                     })}
+                    defaultValue={this.setDefaultTemplate('ideas')}
                   />
                 </HotKeys>
               </Dropzone>
@@ -884,6 +933,9 @@ class Editor extends React.Component {
               </Select>,
             )}
           </Form.Item>
+
+          <SimilarPosts data={parsedPostData} />
+
           <div className="Editor__bottom">
               <span className="Editor__bottom__info">
               <i className="iconfont icon-markdown" />{' '}

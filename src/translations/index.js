@@ -54,6 +54,7 @@ export const getBrowserLocale = () => {
 };
 
 export const getAvailableLocale = (appLocale) => {
+  /*
   let locale = appLocale || 'auto';
 
   if (appLocale === 'auto') {
@@ -63,7 +64,8 @@ export const getAvailableLocale = (appLocale) => {
   if (translations[locale]) {
     return locale;
   }
-
+  */
+ // @UTOPIAN forced english
   return 'en';
 };
 

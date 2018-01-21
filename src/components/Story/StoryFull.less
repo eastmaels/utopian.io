@@ -2,20 +2,89 @@
 @import (reference) "../../styles/custom.less";
 @import (reference) "../../styles/fonts.less";
 
+.floatRight {
+  float: right !important;
+  position: relative;
+  margin-right: 5px;
+  margin-bottom: 1px;
+}
+
+#ShareButtons {
+  line-height: 20px !important;
+}
+
+.ShareButtons {
+  display: flex !important;
+  line-height: 20px !important;
+  &__button {
+    margin-right: 20% !important;
+  }
+  &__Facebook {
+    display: flex;
+    &__btn {
+
+    }
+  }
+  &__Twitter {
+    display: flex;
+
+    &__btn { 
+
+    }
+  }
+  &__LinkedIn {
+    display: flex;
+    &__btn {
+
+    }
+  }
+}
+
 .StoryFull {
   margin: 12px 0;
+  @media screen and (max-width: 736px) {
+    margin: 1px 0;
+  }
 
   &.Contribution{
     margin-bottom: 15px;
   }
+  &__reputationTag {
+    background-color: #4786FF !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    vertical-align: 10% !important;
+  }
+  &__postTag {
+    border: 1px solid rgba(0, 110, 255, 0.905) !important;
+    color: rgba(0, 110, 255, 0.905) !important;
+    background-color: transparent !important;
+  }
+
+  &__unreviewedPadding {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  &__reviewP {
+    line-height: 15px !important;
+    
+  }
 
   &__review {
+    line-height: 10px !important;
     background: @red;
     color: @white;
     padding: 7.5px;
     overflow: hidden;
     margin-bottom: 15px;
-    h3 {color: @white}
+    border: 2px crimson dotted;
+    border-radius: 7px;
+    h3 {
+      color: @white;
+      text-align: center;
+      margin-bottom: 5px;
+    }
     button#hide {
       background: @black !important;
       &:hover {
@@ -33,7 +102,7 @@
     button#verified {
       background: @green-6 !important;
       &:hover {
-        background: @blue !important;
+        background: green !important;
         border: 1px solid @white !important;
       }
     }
@@ -81,6 +150,11 @@
     font-weight: 500;
     margin-top: 8px;
     cursor: pointer;
+  }
+
+  &__modlink {
+    text-decoration: none !important;
+    color: white;
   }
 
   &__topics {

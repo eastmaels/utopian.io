@@ -1,6 +1,5 @@
 import Promise from 'bluebird';
 import assert from 'assert';
-import SteemConnect from 'sc2-sdk';
 import { push } from 'react-router-redux';
 import { createAction } from 'redux-actions';
 import { addDraftLocaleStorage, deleteDraftLocaleStorage } from '../../helpers/localStorageHelpers';
@@ -9,6 +8,7 @@ import { createPermlink, getBodyPatchIfSmaller } from '../../vendor/steemitHelpe
 
 // @UTOPIAN
 import { createContribution, updateContribution } from '../../actions/contribution';
+import sc2 from '../../sc2';
 
 export const CREATE_POST = '@editor/CREATE_POST';
 export const CREATE_POST_START = '@editor/CREATE_POST_START';
@@ -41,10 +41,8 @@ export const saveDraft = (post, redirect) => dispatch =>
       promise: addDraftLocaleStorage(post)
         .then((resp) => {
           if (redirect) {
-            if (post.projectId && post.type === 'task') {
-              dispatch(push(`/write-task/${post.projectId}/?draft=${post.id}`));
-            } else if (post.type === 'blog') {
-              dispatch(push(`/write-blog?draft=${post.id}`));
+            if (post.repoId && post.type === 'task') {
+              dispatch(push(`/write-task/${post.repoId}/?draft=${post.id}`));
             } else {
               dispatch(push(`/write?draft=${post.id}`));
             }
@@ -78,8 +76,6 @@ export const editPost = post => (dispatch) => {
     .then(() => {
       if (jsonMetadata.type.indexOf('task') > -1) {
         dispatch(push(`/write-task/${jsonMetadata.repository.id}?draft=${post.id}`));
-      } else if (jsonMetadata.type === 'blog') {
-        dispatch(push(`/write-blog?draft=${post.id}`));
       } else {
         dispatch(push(`/write?draft=${post.id}`));
       }
@@ -132,7 +128,7 @@ export const broadcastComment = (
     if (reward === '100') {
       commentOptionsConfig.percent_steem_dollars = 0;
     } else {
-      commentOptionsConfig.percent_steem_dollars = 50;
+      commentOptionsConfig.percent_steem_dollars = 10000;
     }
 
     commentOptionsConfig.max_accepted_payout = '1000000.000 SBD';
@@ -142,9 +138,10 @@ export const broadcastComment = (
 
   console.log("OPERATIONS", operations)
 
-  return SteemConnect.broadcast(operations).catch(e => {
+  return sc2.broadcast(operations).catch(e => {
     console.log(e);
-    alert("Utopian could not communicate with Steem. Please try again later. Your post is saved in the drafts. https://utopian.io/drafts");
+    if (commentOp) console.log("ORIGINAL COMMENT OBJECT: ", commentOp);
+    alert("Utopian could not connect to Steem. Please see https://utopian.io/faq#errors for more details, or try using a different browser. \n \n Your post may have been saved in Drafts: https://utopian.io/drafts");
   });
 };
 
@@ -189,36 +186,40 @@ export function createPost(postData) {
               permlink,
               !isUpdating && reward,
               !isUpdating && extensions,
-            ).then((result) => {
+            ).then(result => {
 
-              if (draftId) {
-                dispatch(deleteDraft(draftId));
-                dispatch(addEditedPost(permlink));
-              }
+              if (result) {
 
-              // @UTOPIAN
-              if (!isUpdating) {
-                const createOnAPI = contributionData => dispatch(
-                  createContribution(contributionData.author, contributionData.permlink)
-                );
-                createOnAPI({ author, permlink })
-                  .then(() => dispatch(
+                if (draftId) {
+                  dispatch(deleteDraft(draftId));
+                  dispatch(addEditedPost(permlink));
+                }
+
+                // @UTOPIAN
+                if (!isUpdating) {
+                  const createOnAPI = contributionData => dispatch(
+                    createContribution(contributionData.author, contributionData.permlink)
+                  );
+
+                  createOnAPI({ author, permlink }).then(() => {
+                    dispatch(push(`/${parentPermlink}/@${author}/${permlink}`));
+                  })
+
+                } else {
+                  const updateOnAPI = contributionData => dispatch(
+                    updateContribution(contributionData.author, contributionData.permlink)
+                  );
+                  updateOnAPI({ author, permlink }).then(() => dispatch(
                     push(`/${parentPermlink}/@${author}/${permlink}`)
                   ));
-              } else {
-                const updateOnAPI = contributionData => dispatch(
-                  updateContribution(contributionData.author, contributionData.permlink)
-                );
-                updateOnAPI({ author, permlink }).then(() => dispatch(
-                  push(`/${parentPermlink}/@${author}/${permlink}`)
-                ));
-              }
+                }
 
-              if (window.ga) {
-                window.ga('send', 'event', 'post', 'submit', '', 10);
-              }
+                if (window.ga) {
+                  window.ga('send', 'event', 'post', 'submit', '', 10);
+                }
 
-              return result;
+                return result;
+              }
             })
           }
         ),

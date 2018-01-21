@@ -52,7 +52,7 @@
   "add_to_favorites": "Afegir a faborits",
   "remove_from_favorites": "Eliminar de favorits",
   "like": "M'agrada",
-  "like_slider_info": "Your vote will be worth {amount}.",
+  "like_slider_info": "El teu vot val la pena {amount}.",
   "dislike": "Em desagrada",
   "and_more_amount": "i {amount} mes",
   "post_reply_title": "Això es una resposta a: {title}",

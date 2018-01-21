@@ -16,10 +16,11 @@ import editorReducer, * as fromEditor from './post/Write/editorReducer';
 import walletReducer, * as fromWallet from './wallet/walletReducer';
 import reblogReducers, * as fromReblog from './app/Reblog/reblogReducers';
 import { responsiveReducer } from './vendor/responsive';
+import settingsReducer, * as fromSettings from './settings/settingsReducer';
 
 // @UTOPIAN
-import projectsReducer from './reducers/projects';
-import projectReducer from './reducers/project';
+import reposReducer from './reducers/repos';
+import repoReducer from './reducers/repo';
 import contributionsReducer from './reducers/contributions';
 import sponsorsReducer from './reducers/sponsors';
 import moderatorsReducer from './reducers/moderators';
@@ -35,8 +36,8 @@ const reducers = combineReducers({
   posts: postsReducer,
   contributions: contributionsReducer, // @UTOPIAN
   contribution: contributionReducer, // @UTOPIAN
-  projects: projectsReducer, // @UTOPIAN
-  project: projectReducer, // @UTOPIAN
+  repos: reposReducer, // @UTOPIAN
+  repo: repoReducer, // @UTOPIAN
   loading: loadingReducer, // @UTOPIAN
   sponsors: sponsorsReducer, // @UTOPIAN
   moderators: moderatorsReducer, // @UTOPIAN
@@ -51,6 +52,7 @@ const reducers = combineReducers({
   reblog: reblogReducers,
   router: routerReducer,
   wallet: walletReducer,
+  settings: settingsReducer,
 });
 
 export default reducers;
@@ -74,12 +76,14 @@ export const getPendingDrafts = state => fromEditor.getPendingDrafts(state.edito
 export const getIsPostEdited = (state, permlink) =>
   fromEditor.getIsPostEdited(state.editor, permlink);
 
-export const getLocale = state => fromApp.getLocale(state.app);
 export const getIsLocaleLoading = state => fromApp.getIsLocaleLoading(state.app);
 export const getRate = state => fromApp.getRate(state.app);
 export const getIsTrendingTopicsLoading = state => fromApp.getIsTrendingTopicsLoading(state.app);
 export const getTrendingTopics = state => fromApp.getTrendingTopics(state.app);
+export const getRewardFund = state => fromApp.getRewardFund(state.app);
+export const getCurrentMedianHistoryPrice = state => fromApp.getCurrentMedianHistoryPrice(state.app);
 export const getIsFetching = state => fromApp.getIsFetching(state.app);
+
 
 export const getFeed = state => fromFeed.getFeed(state.feed);
 
@@ -103,3 +107,8 @@ export const getFavoriteCategories = state => fromFavorites.getFavoriteCategorie
 
 export const getIsTransferVisible = state => fromWallet.getIsTransferVisible(state.wallet);
 export const getTransferTo = state => fromWallet.getTransferTo(state.wallet);
+
+export const getIsSettingsLoading = state => fromSettings.getIsLoading(state.settings);
+export const getLocale = state => fromSettings.getLocale(state.settings);
+export const getVotingPower = state => fromSettings.getVotingPower(state.settings);
+export const getVotePercent = state => fromSettings.getVotePercent(state.settings);

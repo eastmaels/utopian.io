@@ -2,13 +2,26 @@
 @import (reference) "../../styles/custom.less";
 
 @keyframes focus {
-  0%, 75% {
-    box-shadow: 4px 0 0px 0px #4757b2;
+  0%,
+  75% {
+    box-shadow: 4px 0 0px 0px @purple;
   }
 
   100% {
     box-shadow: 4px 0 0px 0px transparent;
   }
+}
+
+.modSecurityTag {
+  margin-bottom: 2px !important;
+}
+
+.Comments > .Comment {
+    overflow: hidden;
+}
+
+.Comments > .Comment > .Comment__text {
+    width: calc(~'100% - @{comment-text-offset-default}');
 }
 
 .Comment {
@@ -35,7 +48,7 @@
     z-index: 1;
 
     & > i {
-      color: #99aab5;
+      color: @blue-botticelli;
       font-size: 20px !important;
     }
   }
@@ -49,9 +62,9 @@
 
   &__text {
     position: relative;
-    top: -4px;
-    width: 100%;
-    margin-left: 12px;
+    width: calc(~'100% - @{comment-text-offset-small}');
+    margin-left: @comment-text-left-margin;
+    overflow: unset;
 
     & > a {
       font-weight: bold;
@@ -74,7 +87,7 @@
   &__date {
     margin-left: 8px;
     font-size: 14px;
-    color: #99aab5;
+    color: @blue-botticelli;
   }
 
   &__content {
@@ -90,77 +103,30 @@
 
     &__collapsed {
       font-weight: bold;
-      text-align: center;
-      color: #99aab5;
-    }
-  }
-
-  &__footer {
-    padding: 8px 0;
-    color: #99aab5;
-    line-height: 14px;
-
-    &__payout {
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    &__bullet:after {
-      content: '\2022';
-      font-size: 14px;
-      margin: 0 8px;
-    }
-
-    &__link {
-      color: #99aab5;
-      font-weight: bold;
-      font-size: 14px;
-
-      & > .iconfont {
-        margin-right: 4px;
-        font-size: 18px !important;
-        color: #c2ccd3;
-        vertical-align: -1px;
-      }
-
-      & > .anticon {
-        margin-right: 8px !important;
-      }
-
-      &:hover, &--active {
-        color: @purple;
-        & > .iconfont {
-          color: @purple;
-        }
-      }
-    }
-
-    &__count {
-      margin-right: 8px;
-      color: #99aab5;
-      font-weight: bold;
-      font-size: 14px;
-
-      &--clickable {
-        cursor: pointer;
-
-        &:hover {
-          color: @purple;
-        }
-      }
+      color: @blue-botticelli;
+      margin: 4px 0;
     }
   }
 
   &__replies--no-indent {
-    margin-left: -44px;
+    margin-left: -@comment-text-offset-small;
 
     @media @small {
       margin-left: 0;
     }
   }
 
+  &__replies--never-indent {
+    margin-left: -@comment-text-offset-small !important;
+  }
+
   &__icon_dislike:before {
     display: inline-block;
     transform: rotate(180deg);
+  }
+
+  &__hidden__message {
+    color: @blue-botticelli;
+    font-weight: bold;
   }
 }

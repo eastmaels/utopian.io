@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { Input, Icon } from 'antd';
+import { Input, Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import Dropzone from 'react-dropzone';
+import Scroll from 'react-scroll';
+import { isValidImage, MAXIMUM_UPLOAD_SIZE } from '../../helpers/image';
 import Body, { remarkable } from '../Story/Body';
 import Avatar from '../Avatar';
 import './CommentForm.less';
+
+const Element = Scroll.Element;
 
 @injectIntl
 class CommentForm extends React.Component {
@@ -16,8 +20,10 @@ class CommentForm extends React.Component {
     username: PropTypes.string.isRequired,
     isSmall: PropTypes.bool,
     isLoading: PropTypes.bool,
+    submitted: PropTypes.bool,
     inputValue: PropTypes.string.isRequired,
     onImageInserted: PropTypes.func,
+    onImageInvalid: PropTypes.func,
     onSubmit: PropTypes.func,
   };
 
@@ -25,8 +31,10 @@ class CommentForm extends React.Component {
     username: undefined,
     isSmall: false,
     isLoading: false,
+    submitted: false,
     inputValue: '',
     onImageInserted: () => {},
+    onImageInvalid: () => {},
     onSubmit: () => {},
   };
 
@@ -48,8 +56,8 @@ class CommentForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.isLoading) {
-      this.setState({ inputValue: nextProps.inputValue || '' });
+    if ((!nextProps.isLoading && nextProps.inputValue !== '') || nextProps.submitted) {
+      this.setState({ inputValue: nextProps.inputValue });
     }
   }
 
@@ -64,7 +72,14 @@ class CommentForm extends React.Component {
     if (this.input && this.input.setSelectionRange) {
       this.input.setSelectionRange(pos, pos);
     }
-  }
+  };
+
+  disableAndInsertImage = (image, imageName = 'image') => {
+    this.setState({
+      imageUploading: false,
+    });
+    this.insertImage(image, imageName);
+  };
 
   insertImage = (image, imageName = 'image') => {
     if (!this.input) return;
@@ -91,12 +106,18 @@ class CommentForm extends React.Component {
         if (item.kind === 'file') {
           e.preventDefault();
 
+          const blob = item.getAsFile();
+
+          if (!isValidImage(blob)) {
+            this.props.onImageInvalid();
+            return;
+          }
+
           this.setState({
             imageUploading: true,
           });
 
-          const blob = item.getAsFile();
-          this.props.onImageInserted(blob, this.insertImage, () =>
+          this.props.onImageInserted(blob, this.disableAndInsertImage, () =>
             this.setState({
               imageUploading: false,
             }),
@@ -108,10 +129,15 @@ class CommentForm extends React.Component {
 
   handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
+      if (!isValidImage(e.target.files[0])) {
+        this.props.onImageInvalid();
+        return;
+      }
+
       this.setState({
         imageUploading: true,
       });
-      this.props.onImageInserted(e.target.files[0], this.insertImage, () =>
+      this.props.onImageInserted(e.target.files[0], this.disableAndInsertImage, () =>
         this.setState({
           imageUploading: false,
         }),
@@ -181,6 +207,8 @@ class CommentForm extends React.Component {
               disableClick
               style={{}}
               accept="image/*"
+              maxSize={MAXIMUM_UPLOAD_SIZE}
+              onDropRejected={this.props.onImageInvalid}
               onDrop={this.handleDrop}
               onDragEnter={this.handleDragEnter}
               onDragLeave={this.handleDragLeave}
@@ -193,24 +221,27 @@ class CommentForm extends React.Component {
                   </div>
                 </div>
               )}
-              <Input
-                id="commentFormInput"
-                ref={ref => this.setInput(ref)}
-                value={this.state.inputValue}
-                autosize={{ minRows: 2, maxRows: 6 }}
-                onChange={this.handleCommentTextChange}
-                placeholder={intl.formatMessage({
-                  id: 'comment_placeholder',
-                  defaultMessage: 'Write a comment',
-                })}
-                type="textarea"
-                disabled={isLoading}
-              />
+              <Element name="commentFormInputScrollerElement">
+                <Input
+                  id="commentFormInput"
+                  ref={ref => this.setInput(ref)}
+                  value={this.state.inputValue}
+                  autosize={{ minRows: 2, maxRows: 6 }}
+                  onChange={this.handleCommentTextChange}
+                  placeholder={intl.formatMessage({
+                    id: 'comment_placeholder',
+                    defaultMessage: 'Write a comment',
+                  })}
+                  type="textarea"
+                  disabled={isLoading}
+                />
+              </Element>
             </Dropzone>
           </div>
           <p className="CommentForm__imagebox">
             <input
               type="file"
+              accept="image/*"
               id={`inputfile${this.props.parentPost.id}`}
               onChange={this.handleImageChange}
             />

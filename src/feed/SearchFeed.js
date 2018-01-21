@@ -12,7 +12,7 @@ import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
 
 // @UTOPIAN
 import { getContributions } from '../actions/contributions';
-import { getProjects } from '../actions/projects';
+import { getGithubRepos } from '../actions/projects';
 import { getModerators } from '../actions/moderators';
 import { Tabs, Icon } from 'antd';
 
@@ -23,13 +23,13 @@ import * as R from 'ramda';
     authenticated: getIsAuthenticated(state),
     user: getAuthenticatedUser(state),
     contributions: state.contributions,
-    projects: state.projects,
+    repos: state.repos,
     loading: state.loading,
     moderators: state.moderators,
   }),
   {
     getContributions,
-    getProjects,
+    getGithubRepos,
     getModerators
   },
 )
@@ -49,6 +49,7 @@ class SubFeed extends React.Component {
     super(props);
     this.loadResults = this.loadResults.bind(this);
     this.total = 0;
+    this.toRenderContributions = [];
   }
 
   componentWillMount() {
@@ -66,15 +67,21 @@ class SubFeed extends React.Component {
   }
 
   loadResults (nextProps = false) {
-    const { match, getContributions, getProjects, user } = nextProps || this.props;
+
+    const { match, getContributions, getGithubRepos, user, loading, contributions } = nextProps || this.props;
     const q = match.params.query;
     const searchSection = match.params.searchSection;
     const skip =  nextProps ? 0 : this.state.skip;
     const limit = 20;
     this.total = nextProps ? 0 : this.total;
+    this.toRenderContributions = nextProps ? [] : this.toRenderContributions;
+    
+    if(this.total !== 0 && this.total <= this.state.skip){
+      return;
+    }
 
     if (searchSection === 'projects') {
-      getProjects({
+      getGithubRepos({
         q,
         sort: 'stars',
         order: 'desc',
@@ -88,19 +95,21 @@ class SubFeed extends React.Component {
         sortBy: 'created',
         type: searchSection,
         bySimilarity: q,
-        reset: true,
+        reset: nextProps,
       }).then(res => {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
+        this.toRenderContributions = [...this.toRenderContributions, ...res.response.results];
       });
     }
   }
 
   renderResults () {
-    const { projects, contributions, match, user } = this.props;
+    const { repos, match, user } = this.props;
+    const contributions = this.toRenderContributions;
     const { searchSection } = match.params;
 
-    if (searchSection === 'projects') return projects;
+    if (searchSection === 'projects') return repos;
     return contributions;
   }
 
@@ -110,15 +119,17 @@ class SubFeed extends React.Component {
 
     if (location.pathname !== nextProps.location.pathname) {
       this.total = 0; // @TODO @UTOPIAN antipattern - requires better implementation
+      this.toRenderContributions = [];
       this.loadResults(nextProps);
     }
   }
+
 
   render() {
     const { loading, history, match, location, isModerator } = this.props;
     const { searchSection } = match.params;
     const results = this.renderResults();
-    const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST || loading === Actions.GET_PROJECTS_REQUEST;
+    const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST || loading === Actions.GET_GITHUB_REPOS_REQUEST;
     const hasMore = this.total > results.length;
 
     return (
@@ -130,6 +141,7 @@ class SubFeed extends React.Component {
             isFetching={ isFetching }
             hasMore={ hasMore }
             loadMoreContent={ this.loadResults }
+            showBlogs={((searchSection === 'blog') || (searchSection === 'blogs'))}
           /> :
           <ProjectsFeed
             content={ results }

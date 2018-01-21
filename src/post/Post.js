@@ -107,7 +107,7 @@ export default class Post extends React.Component {
   };
 
   render() {
-    const { contribution, loading, content, fetching, edited, history } = this.props;
+    const { contribution, loading, content, fetching, edited, history, match } = this.props;
     const isLoading = !Object.keys(contribution).length || loading === Actions.GET_CONTRIBUTION_REQUEST;
 
     return (
@@ -117,7 +117,7 @@ export default class Post extends React.Component {
           <div className="post-layout container">
             <Affix className="rightContainer" stickPosition={77}>
               <div className="right">
-                <RightSidebar />
+                <RightSidebar match={match}/>
               </div>
             </Affix>
             <div className="center" style={{ paddingBottom: '24px' }}>

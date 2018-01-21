@@ -46,7 +46,7 @@ class SimilarPosts extends React.Component {
         contributions: res.response.results
       })
     })
-  }, 1000);
+  }, 10000);
 
   render() {
     if (!this.state.contributions.length) return null;
@@ -59,7 +59,7 @@ class SimilarPosts extends React.Component {
             {this.state.contributions.map(contrib => {
               return (
                 <li key={contrib.permlink}>
-                  <a href={contrib.url} target="_blank">{contrib.title}</a>
+                  <a href={contrib.url} target="_blank">{contrib.title} - <span className="SimilarPosts__author">@{contrib.author}</span></a>
                   <div className="SimilarPosts__divider"></div>
                 </li>
               )

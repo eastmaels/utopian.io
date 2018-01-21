@@ -1,32 +1,62 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import getImage from '../helpers/getImage';
 import './Avatar.less';
 
-const avatarUrl = (username, size) => {
-  const avatar = `${process.env.STEEMCONNECT_IMG_HOST}/@${username || 'steemconnect'}?s=${size}`;
+const defaultImage =
+  'https://res.cloudinary.com/hpiynhbhq/image/upload/v1506948447/p72avlprkfariyti7q2l.png';
 
-  if(username.indexOf('https') !== -1)
-    return username;
+class Avatar extends Component {
+  static propTypes = {
+    username: PropTypes.string,
+    size: PropTypes.number,
+  };
 
-  return avatar;
-};
+  static defaultProps = {
+    username: undefined,
+    size: 34,
+  };
 
-const Avatar = ({ username, size }) =>
-  (<img
-    className="Avatar"
-    style={{ minWidth: `${size}px`, width: `${size}px`, height: `${size}px`, borderRadius: `100%` }}
-    alt={username}
-    src={avatarUrl(username, size)}
-  />);
+  state = {
+    imageUrl: defaultImage,
+  };
 
-Avatar.propTypes = {
-  username: PropTypes.string,
-  size: PropTypes.number,
-};
+  componentWillMount() {
+    const { username, size } = this.props;
 
-Avatar.defaultProps = {
-  username: undefined,
-  size: 34,
-};
+
+    this.setState({
+      imageUrl: username.indexOf('https') !== -1 ? username : getImage(`@${username}?s=${size}`),
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.username !== nextProps.username) {
+      this.setState({
+        imageUrl: nextProps.username.indexOf('https') !== -1 ? username : getImage(`@${nextProps.username}?s=${nextProps.size}`),
+      });
+    }
+  }
+
+  onError = () =>
+    this.setState({
+      imageUrl: defaultImage,
+    });
+
+  render() {
+    const { username, size } = this.props;
+    const { imageUrl } = this.state;
+
+    return (
+      <img
+        className="Avatar"
+        style={{ minWidth: `${size}px`, width: `${size}px`, height: `${size}px` }}
+        onError={this.onError}
+        alt={username}
+        src={imageUrl}
+      />
+    );
+  }
+}
 
 export default Avatar;

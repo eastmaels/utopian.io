@@ -14,6 +14,24 @@
     position: relative;
   }
 
+  &__reputationTag {
+    background-color: #4786FF !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    margin-top: 3px !important;
+  }
+  &__postTag {
+    font-size: 12px !important;
+    border: 1px solid rgb(236, 236, 236) !important;
+    color: #424242 !important;
+    background-color: #F2F2F2 !important;
+  }
+  &__postTags {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 15px;
+  }
+
   &__reblog {
     margin: 8px 0 -8px 16px;
     font-size: 14px;
@@ -52,30 +70,49 @@
     }
   }
 
-  &__header {
-    padding: 16px;
+  &__author {
+    color: rgba(36,41,46,1) !important;
+    padding-left: 7px;
+    margin-top: 1px;
+    vertical-align: middle;
+  }
+
+  &__avatar {
+    display: block;
+  }
+
+  &__firstLine {
     display: flex;
+  }
 
-    &__text {
-      margin: 0 12px;
-      display: inline-flex;
+  &__header {
+    padding-left: 16px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+    // display: flex;
+  }
 
-      a > h4 {
-        font-weight: bold;
-        color: @primary-color;
+  &__user {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 15px;
 
-        .ant-tag {
-          margin-left: 6px;
-          font-size: 12px;
-          vertical-align: 1px;
-        }
+    // margin: 0 8px;
+    // display: inline-flex;
+    a > h4 {
+      font-weight: bold;
+      color: @primary-color;
+
+      .ant-tag {
+        margin-left: 6px;
+        font-size: 12px;
+        vertical-align: 1px;
       }
     }
   }
 
   &__date {
-    position: relative;
-    top: 0px;
+    margin-top: 2px;
     font-size: 14px;
     color: #99aab5;
   }
@@ -87,7 +124,12 @@
   &__content {
     word-wrap: break-word;
 
+    &__body {
+      color: rgba(62,62,101,1) !important;
+    }
+
     &__title {
+      padding-top: 20px;
       color: #353535;
 
       &:hover,
@@ -106,7 +148,9 @@
       & > h2 {
         font-weight: bold;
         font-size: 20px;
-        margin: 0 16px 8px;
+        margin-top: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
 
         .ant-tag {
           vertical-align: 1px;
@@ -115,7 +159,9 @@
     }
 
     &__preview {
-      color: #353535;
+      font-family: @font-family;
+      font-weight: normal;
+      color: rgba(62,62,101,1) !important;
 
       &:hover,
       &:focus,
@@ -132,7 +178,9 @@
     }
 
     &__body {
-      padding: 4px 16px;
+      margin-top: 15px;
+      padding-left: 15px;
+      padding-right: 15px;
     }
 
     & &__img-container {
@@ -148,6 +196,8 @@
   }
 
   &__footer {
-    padding: 0 16px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 15px;
   }
 }

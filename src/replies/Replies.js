@@ -46,7 +46,7 @@ export class IReplies extends React.Component {
   }
 
   render() {
-    const { authenticated, username, feed, posts } = this.props;
+    const { authenticated, username, feed, posts, match } = this.props;
 
     if (!authenticated) return <Loading />;
 
@@ -64,7 +64,7 @@ export class IReplies extends React.Component {
           </Affix>
           <Affix className="rightContainer" stickPosition={77}>
             <div className="right">
-              <RightSidebar />
+              <RightSidebar match={match}/>
             </div>
           </Affix>
           <div className="center">
@@ -73,6 +73,7 @@ export class IReplies extends React.Component {
               isFetching={fetching}
               hasMore={hasMore}
               loadMoreContent={this.props.getMoreReplies}
+              showBlogs={false}
             />
           </div>
         </div>

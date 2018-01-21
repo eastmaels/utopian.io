@@ -5,16 +5,21 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
-import { getProject, setProject } from '../actions/project';
+import { getUser } from '../actions/user';
+import { getGithubRepo, setGithubRepo } from '../actions/project';
+import { getReposByGithub } from '../actions/projects';
+import { getProject, createProjectAccount, createProjectSponsor } from '../actions/project';
 
-import { Icon } from 'antd';
+import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import SubFeed from './SubFeed';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import RightSidebar from '../app/Sidebar/RightSidebar';
+import StoryPreview from '../components/Story/StoryPreview';
 import TopicSelector from '../components/TopicSelector';
 import Affix from '../components/Utils/Affix';
 import ScrollToTop from '../components/Utils/ScrollToTop';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
+import BodyShort from '../components/Story/BodyShort';
 
 import * as R from 'ramda';
 
@@ -23,11 +28,18 @@ import './Project.less';
 @connect(
   state => ({
     authenticated: getIsAuthenticated(state),
-    projects: state.projects,
-    project: state.project,
+    repos: state.repos,
+    repo: state.repo,
     user: getAuthenticatedUser(state),
   }),
-  { getProject, setProject }
+  { getGithubRepo,
+    setGithubRepo,
+    getProject,
+    createProjectAccount,
+    createProjectSponsor,
+    getReposByGithub,
+    getUser,
+  }
 )
 class Project extends React.Component {
   static propTypes = {
@@ -37,11 +49,22 @@ class Project extends React.Component {
     match: PropTypes.shape().isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      loadedRepo: false,
+      loadedProject: false,
+      loadingProject: false,
+      isOwner: false,
+      project: null,
+    };
+  }
+
   componentWillMount () {
-    const { projects, project, match, getProject, setProject, history, location } = this.props;
-    const { projectId } = match.params;
-    const id = parseInt(projectId);
-    const projectInState = R.find(R.propEq('id', id))(projects);
+    const { repos, repo, match, getGithubRepo, setGithubRepo, history, location } = this.props;
+    const { repoId } = match.params;
+    const id = parseInt(repoId);
+    const projectInState = R.find(R.propEq('id', id))(repos);
 
     // @UTOPIAN supporting old version where type was not mandatory
     if (!match.params.type) {
@@ -50,37 +73,105 @@ class Project extends React.Component {
       history.push(`${locationPath}/all`);
       return;
     }
-
     if(!projectInState) {
-      getProject(id);
+      getGithubRepo(id).then(() => {
+        this.setState({loadedRepo: true});
+      });
       return;
     }
 
-    if (projectInState && (project && project.id !== id)) {
-      setProject(projectInState);
+    if (projectInState && (repo && repo.id !== id)) {
+      setGithubRepo(projectInState);
     }
   }
+  /*
+   componentDidMount() {
+   this.loadGithubData();
+   }
+
+   componentDidUpdate() {
+   const { user } = this.props;
+
+   if (user && user.name && !this.state.loadedProjects) {
+   this.loadGithubData();
+   }
+   }
+   */
 
   componentWillReceiveProps (nextProps) {
-    const { projects, project, match, setProject } = this.props;
-    const { projectId } = nextProps.match.params;
-    const id = parseInt(projectId);
-    const projectInState = R.find(R.propEq('id', id))(projects);
+    const { user, repos, repo, match, getGithubRepo, setGithubRepo } = this.props;
+    const { repoId } = nextProps.match.params;
+    const id = parseInt(repoId);
+    const projectInState = R.find(R.propEq('id', id))(repos);
 
-    if (projectInState && (project && project.id !== id)) {
-      setProject(projectInState);
+    if (match.params.repoId !== nextProps.match.params.repoId) {
+      this.setState({loadedProject: false, loadedRepo: false});
+      // console.log("[c] repo loading")
+      getGithubRepo(nextProps.match.params.repoId).then(() => {
+        // console.log("[c] Repo loaded");
+        this.setState({loadedRepo: true});
+      });
+    }
+    /*
+     if (projectInState && (repo && repo.id !== id)) {
+     setGithubRepo(projectInState);
+     }
+
+
+     if (user && user.name && match.params.repoId && nextProps.match.params.repoId && match.params.repoId !== nextProps.match.params.repoId) {
+     this.setState({loadingProject: true});
+     this.loadGithubData();
+     }
+     */
+  }
+
+  componentDidUpdate () {
+    const { user } = this.props;
+
+    if (user && user.name && this.state.loadedRepo && !this.state.loadedProject && !this.state.loadingProject) {
+      this.setState({loadingProject: true});
+      this.loadGithubData();
     }
   }
 
-  constructor(props) {
-    super(props);
+  loadSponsorship(isOwner) {
+    const { getProject, match } = this.props;
+    const repoId = parseInt(match.params.repoId);
+    getProject(match.params.platform, repoId).then(res => {
+      let project = null;
+      if (res.status !== 404 && res.response && res.response.name) {
+        project = res.response;
+      }
+      // console.log("[c] got project", res);
+      this.setState({
+        project,
+        isOwner: isOwner ? true : false,
+        loadedProject: true,
+        loadingProject: false,
+      });
+    })
+  }
+
+  loadGithubData() {
+    const { user, repo, match} = this.props;
+    const repoId = parseInt(match.params.repoId);
+    const isOwner = R.find(R.propEq('id', repoId))(user.repos || []);
+    if(repo.fork !== true) {
+      this.loadSponsorship(isOwner);
+    } else {
+      this.setState({
+        isOwner: isOwner ? true : false,
+        loadedProject: true,
+        loadingProject: false,
+      });
+    }
   }
 
   render() {
-    const { authenticated, match, location, project, user } = this.props;
-    const { project: projectName } = match.params;
-    const isOwner = R.find(R.propEq('id', project.id))(user.projects || []);
-
+    const { authenticated, match, createProjectSponsor, createProjectAccount, location, history, repo, user } = this.props;
+    const { repo: projectName } = match.params;
+    if (!this.state.loadedProject) this.loadGithubData();
+    // if (!this.state.loadedRepo) console.log("[c]", this.state.loadedProject);
     return (
       <div>
         <Helmet>
@@ -97,25 +188,38 @@ class Project extends React.Component {
             </Affix>
             <Affix className="rightContainer" stickPosition={77}>
               <div className="right">
-                <RightSidebar />
+                <RightSidebar
+                  createProjectSponsor={createProjectSponsor}
+                  createProjectAccount={createProjectAccount}
+                  match={match}
+                  isOwner={this.state.isOwner}
+                  project={this.state.project}
+                />
               </div>
             </Affix>
             <div className="center">
               <div className="Project">
                 <div className="Project__details">
-                <h2><Icon type='github' /> { project.full_name }</h2>
-                <p>
-                    <a href={ project.html_url } target="_blank"> { project.html_url } </a>
-                  </p>
+                  <h2><Icon type='github' /> { repo.full_name }</h2>
+                  <p>
+                    <a href={ repo.html_url } target="_blank"> { repo.html_url } </a>
+                  </p><br/>
+                  {repo.description && <span>
+                    <BodyShort body={repo.description || ''} />
+                  </span>
+                  }
+                  {repo.homepage && <span>
+                    <b>Project Website: </b> <code className="Github__c">{repo.homepage}</code>
+                  <br/></span>}
                   <hr />
-                  {isOwner && <div>
-                    <Link to={`/write-task/${project.id}`}>
+                  {this.state.isOwner && <div>
+                    <Link to={`/write-task/${repo.id}`}>
                       <Icon type="notification"/> Add task request
                     </Link>
                   </div>}
                 </div>
               </div>
-              <Route path={`/project/:author/:project/:platform/:projectId/:type?`} component={SubFeed} />
+              {true ? <Route path={`/project/:author/:repo/:platform/:repoId/:type?`} component={SubFeed}/> : null}
             </div>
           </div>
         </div>
