@@ -27,13 +27,12 @@ class UserMenu extends React.Component {
     };
   }
 
-  componentDidUpdate (prevProps) {
-    if (prevProps.match.params.name !== this.props.match.params.name) {
-      this.setState({
-        current: 'discussions',
-      })
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      current: nextProps.defaultKey ? nextProps.defaultKey : 'discussions',
+    });
   }
+
 
   getItemClasses = key => classNames('UserMenu__item', { 'UserMenu__item--active': this.state.current === key });
 
@@ -69,6 +68,14 @@ class UserMenu extends React.Component {
                 <span className="UserMenu__badge">
                   <FormattedNumber value={this.props.following} />
                 </span>
+              </li>
+              <li
+                className={this.getItemClasses('transfers')}
+                onClick={this.handleClick}
+                role="presentation"
+                data-key="transfers"
+              >
+                <FormattedMessage id="wallet" defaultMessage="Wallet" />
               </li>
             </ul>
           </Scrollbars>
