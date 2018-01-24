@@ -22,3 +22,13 @@ export const getGlobalProperties = () => dispatch =>
       promise: getDynamicGlobalProperties(),
     },
   });
+export const getUserEstAccountValue = user => dispatch =>
+  dispatch({
+    type: GET_USER_EST_ACCOUNT_VALUE.ACTION,
+    payload: {
+      promise: formatter.estimateAccountValue(user).then(value => ({
+        username: user.name,
+        value,
+      })),
+    },
+  });
