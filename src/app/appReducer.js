@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as appTypes from './appActions';
 import * as authActions from '../auth/authActions';
 import * as postActions from '../post/postActions';
@@ -20,6 +21,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         locale: action.payload.user_metadata.locale || initialState.locale,
+      };
+    case appTypes.RATE_REQUEST.SUCCESS:
+      return {
+        ...state,
+        rate: action.payload,
       };
     case appTypes.GET_LOCALE:
       return {

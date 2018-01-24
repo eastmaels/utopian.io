@@ -112,3 +112,11 @@ export const getIsSettingsLoading = state => fromSettings.getIsLoading(state.set
 export const getLocale = state => fromSettings.getLocale(state.settings);
 export const getVotingPower = state => fromSettings.getVotingPower(state.settings);
 export const getVotePercent = state => fromSettings.getVotePercent(state.settings);
+export const getTotalVestingShares = state => fromWallet.getTotalVestingShares(state.wallet);
+export const getTotalVestingFundSteem = state => fromWallet.getTotalVestingFundSteem(state.wallet);
+export const getUsersEstAccountsValues = state =>
+  fromWallet.getUsersEstAccountsValues(state.wallet);
+export const getLoadingEstAccountValue = state =>
+  fromWallet.getLoadingEstAccountValue(state.wallet);
+export const getLoadingGlobalProperties = state =>
+  fromWallet.getLoadingGlobalProperties(state.wallet);

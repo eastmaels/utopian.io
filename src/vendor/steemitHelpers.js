@@ -3,6 +3,7 @@ import steem from 'steem';
 import getSlug from 'speakingurl';
 import secureRandom from 'secure-random';
 import diff_match_patch from 'diff-match-patch';
+import formatter from '../helpers/steemitFormatter';
 
 const dmp = new diff_match_patch();
 /**
@@ -163,7 +164,6 @@ export function getBodyPatchIfSmaller(originalBody, body) {
   return body;
 }
 
-
 /**
  * https://github.com/aaroncox/chainbb/blob/fcb09bee716e907c789a6494975093361482fb4f/services/frontend/src/components/elements/post/button/vote/options.js#L69
  */
@@ -197,3 +197,21 @@ export const calculateVotingPower = (user) => {
   const secondsago = (new Date().getTime() - new Date(user.last_vote_time + "Z").getTime()) / 1000;
   return Math.min(10000, (user.voting_power + (10000 * secondsago / 432000))) / 10000;
 };
+
+export const calculateEstAccountValue = (
+  user,
+  totalVestingShares,
+  totalVestingFundSteem,
+  steemRate,
+) => {
+  const steemPower = formatter.vestToSteem(
+    user.vesting_shares,
+    totalVestingShares,
+    totalVestingFundSteem,
+  );
+  return (
+    parseFloat(steemRate) * (parseFloat(user.balance) + parseFloat(steemPower)) +
+    parseFloat(user.sbd_balance)
+  );
+};
+

@@ -8,6 +8,7 @@ import Settings from './settings/Settings';
 import ProfileSettings from './app/ProfileSettings';
 import Activity from './activity/Activity';
 import Wallet from './wallet/Wallet';
+import UserWallet from './user/UserWallet';
 
 import Page from './feed/Page';
 import Project from './feed/Project';
@@ -143,9 +144,7 @@ export default (
       <Route
         path="/wallet"
         render={() => (
-          <RequireLogin>
             <Wallet />
-          </RequireLogin>
         )}
       />
       <Route path="/@:name" component={User} />
