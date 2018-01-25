@@ -144,4 +144,4 @@ export const mapToId = (content) => {
 
 export const mapAPIContentToId = apiRes => mapToId(apiRes.content);
 export const getDynamicGlobalProperties = () =>
-  SteemAPI.sendAsync('get_dynamic_global_properties', []);
+  SteemAPI2.sendAsync('get_dynamic_global_properties', []);

@@ -48,6 +48,7 @@ export default (state = initialState, action) => {
         user: {},
       };
     case types.LOGIN_SUCCESS:
+      if (action.meta && action.meta.refresh) return state;
       return {
         ...state,
         isFetching: false,

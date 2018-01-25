@@ -9,9 +9,9 @@ const initialState = {
   locale: 'auto',
   localeLoading: false,
   rate: 0,
-  rewardFund: {},
   trendingTopicsLoading: false,
   trendingTopics: [],
+  rewardFund: {},
   currentMedianHistoryPrice: {},
 };
 
