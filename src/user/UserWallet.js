@@ -31,7 +31,7 @@ import { getAccount } from './usersActions';
     totalVestingShares: getTotalVestingShares(state),
     totalVestingFundSteem: getTotalVestingFundSteem(state),
     loadingGlobalProperties: getLoadingGlobalProperties(state),
-    steemRate: getSteemRate(state),
+    steemRate: parseFloat(getSteemRate(state).base),
   }),
   {
     getGlobalProperties,
@@ -39,7 +39,7 @@ import { getAccount } from './usersActions';
     getCurrentMedianHistoryPrice,
   },
 )
-class Wallet extends Component {
+class UserWallet extends Component {
   static propTypes = {
     location: PropTypes.shape().isRequired,
     totalVestingShares: PropTypes.string.isRequired,
@@ -101,11 +101,11 @@ class Wallet extends Component {
           totalVestingShares={totalVestingShares}
           totalVestingFundSteem={totalVestingFundSteem}
           loadingGlobalProperties={loadingGlobalProperties}
-          steemRate={steemRate.base}
+          steemRate={steemRate}
         />
       </div>
     );
   }
 }
 
-export default Wallet;
+export default UserWallet;
