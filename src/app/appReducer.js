@@ -22,11 +22,6 @@ export default (state = initialState, action) => {
         ...state,
         locale: action.payload.user_metadata.locale || initialState.locale,
       };
-    case appTypes.RATE_REQUEST.SUCCESS:
-      return {
-        ...state,
-        rate: action.payload,
-      };
     case appTypes.GET_LOCALE:
       return {
         ...state,

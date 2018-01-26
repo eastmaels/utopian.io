@@ -10,7 +10,8 @@ export const GET_REWARD_FUND_START = '@app/GET_REWARD_FUND_START';
 export const GET_REWARD_FUND_SUCCESS = '@app/GET_REWARD_FUND_SUCCESS';
 export const GET_REWARD_FUND_ERROR = '@app/GET_REWARD_FUND_ERROR';
 
-export const RATE_REQUEST = createAsyncActionType('@app/RATE_REQUEST');
+export const RATE_REQUEST = '@app/RATE_REQUEST';
+export const RATE_SUCCESS = '@app/RATE_SUCCESS';
 
 export const SET_LOCALE = '@app/SET_LOCALE';
 export const SET_LOCALE_START = '@app/SET_LOCALE_START';
@@ -38,16 +39,20 @@ export const setLocale = locale =>
     });
   };
 
-export const getRate = () => (dispatch, getState, { steemAPI }) => {
-  dispatch({
-    type: RATE_REQUEST.ACTION,
-    payload: {
-      promise: steemAPI
-        .sendAsync('get_current_median_history_price', [])
-        .then(resp => parseFloat(resp.base)),
-    },
-  });
-};
+export const getRate = () =>
+   (dispatch) => {
+     dispatch({ type: RATE_REQUEST });
+     fetch('https://api.coinmarketcap.com/v1/ticker/steem/')
+       .then(res => res.json())
+       .then((json) => {
+         const rate = json[0].price_usd;
+         dispatch({
+           type: RATE_SUCCESS,
+           rate,
+         });
+       });
+   };
+
 
 export const getRewardFund = () => (dispatch, getSelection, { steemAPI }) => {
   const getRewardFundAsync = Promise.promisify(steemAPI.getRewardFund, { context: steemAPI });

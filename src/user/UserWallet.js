@@ -12,12 +12,12 @@ import {
   getTotalVestingShares,
   getTotalVestingFundSteem,
   getLoadingGlobalProperties,
-  getRate as getSteemRate,
+  getCurrentMedianHistoryPrice as getSteemRate,
 } from '../reducers';
 import {
   getGlobalProperties,
 } from '../wallet/walletActions';
-import { getRate } from '../app/appActions';
+import { getCurrentMedianHistoryPrice } from '../app/appActions';
 import { getAccount } from './usersActions';
 
 @withRouter
@@ -36,7 +36,7 @@ import { getAccount } from './usersActions';
   {
     getGlobalProperties,
     getAccount,
-    getRate,
+    getCurrentMedianHistoryPrice,
   },
 )
 class Wallet extends Component {
@@ -47,7 +47,7 @@ class Wallet extends Component {
     user: PropTypes.shape().isRequired,
     getGlobalProperties: PropTypes.func.isRequired,
     getAccount: PropTypes.func.isRequired,
-    getRate: PropTypes.func.isRequired,
+    getCurrentMedianHistoryPrice: PropTypes.func.isRequired,
     loadingGlobalProperties: PropTypes.bool.isRequired,
     steemRate: PropTypes.number.isRequired,
     isCurrentUser: PropTypes.bool,
@@ -79,9 +79,8 @@ class Wallet extends Component {
       this.props.getAccount(username);
     }
 
-    console.log(steemRate);
     if (steemRate === 0) {
-      this.props.getRate();
+      this.props.getCurrentMedianHistoryPrice();
     }
   }
 
@@ -102,7 +101,7 @@ class Wallet extends Component {
           totalVestingShares={totalVestingShares}
           totalVestingFundSteem={totalVestingFundSteem}
           loadingGlobalProperties={loadingGlobalProperties}
-          steemRate={steemRate}
+          steemRate={steemRate.base}
         />
       </div>
     );
