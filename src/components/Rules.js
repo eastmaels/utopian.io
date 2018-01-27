@@ -54,13 +54,16 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="development"/> Development Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Only merged Pull Requests will be accepted.</li>
-            <li>Only merged Pull Requests on the official repository will be accepted or on a fork as long as the fork is not just a mirror of the original one.</li>
-            <li>The contribution will be rejected if the merged Pull Request is <b>older than 7 days</b> since the submitted contribution.</li>
-            <li>Simple and common code snippets that can be easily found or reproduced can't be submitted in the development category.</li>
-            <li>You must always link the merged pull requests with the given functionality in the editor.</li>
-            <li>If your username on Github does not correspond to the Utopian username you must use the "Name" field in the Github settings and enter there your Utopian/Steem username to verify you are the author.</li>
-            <li>Images, screenshots, links and examples are not necessary but preferred.</li>
+            <li>In the development category you can submit <b>Bug Fixes</b>, <b>New Features</b> and your <b>Own Projects</b>.</li>
+            <li>Contributions must have a comprehensible commit history. Larger projects or updates submitted in a single commit will not be accepted.</li>
+            <li>Outdated or low quality code can lead to rejection.</li>
+            <li>Generated code or other results of automated processes will not be accepted.</li>
+            <li>Submitted projects must have a unique value. Redundant projects will not be accepted.</li>
+            <li>Trivial code snippets, example code or simple templates will not be accepted.</li>
+            <li><b>Bug Fixes</b> and <b>New Features</b> must be submitted via Pull Requests. The Pull Request must have been <b>merged within the past 14 days</b>.</li>
+            <li>Updates on <b>Own Projects</b> can be committed directly, without a Pull Request. <b>Commits must not be older than 14 days.</b></li>
+            <li><b>Bug Fixes</b> for your <b>Own Projects</b> will not be accepted, unless they are caused by third party dependencies.</li>
+            <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
