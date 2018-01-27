@@ -12,7 +12,7 @@ class FAQ extends React.Component {
   }
 
 componentDidMount(){
-  fetch('https://api.utopian.io/api/faq')
+  fetch(process.env.UTOPIAN_API + 'faq')
   .then(results=>{
     return results.json();
   })
