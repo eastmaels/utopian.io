@@ -72,12 +72,17 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bug Hunting Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>In this category you can only report bugs you have found in an Open Source project.</li>
-            <li>You must provide every possible detail to reproduce the bug.</li>
-            <li>You should show a video or an animated GIF if the bug can be recorded on screen.</li>
-            <li>You must include: browsers, devices, operating systems used and similar info to reproduce the bug.</li>
+            <li>In this category you can submit <b>Bug Reports</b> for actively maintained Open Source projects on GitHub.</li>
+            <li>The repository on GitHub must accept <a href="https://help.github.com/articles/about-issues/">issues</a>.</li>
+            <li><b>Bug Reports</b> for projects in <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle">pre-alpha stage</a> will not be accepted.</li>
+            <li>Cosmetic issues, that do not affect the functionality of the software, will not be accepted.</li>
+            <li>You must provide sufficiant detail to reproduce the bug.</li>
+            <li>Add screenshots, video recordings or animated GIFs, if they can help to understand the bug. [SOFT]</li>
+            <li>Include information about your technical environment, like your browser, your device and operating system, if those factors can not definitely be ruled out.</li>
+            <li>If you or someone else submitted the issue on GitHub first, the <b>Bug Report</b> will not be accepted. Approved <b>Bug Reports</b> will automatically be published on GitHub.</li>
+            <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+          <p>Not respecting the rules will either give you lower votes or your contribution will not be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
         </div>
       )
