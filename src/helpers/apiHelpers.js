@@ -1,5 +1,6 @@
 import Promise from 'bluebird';
 import SteemAPI from '../steemAPI';
+import SteemAPI2 from '../steemAPI2';
 import { jsonParse } from '../helpers/formatter';
 
 /** *
@@ -66,7 +67,7 @@ export const getDiscussionsFromAPI = function getDiscussionsFromAPI(sortBy, orig
 };
 
 export const getAccount = username =>
-  SteemAPI.getAccountsAsync([username]).then((result) => {
+  SteemAPI2.sendAsync('get_accounts', [[username]]).then(result => {
     if (result.length) {
       const userAccount = result[0];
       userAccount.json_metadata = jsonParse(result[0].json_metadata);
@@ -142,3 +143,5 @@ export const mapToId = (content) => {
 };
 
 export const mapAPIContentToId = apiRes => mapToId(apiRes.content);
+export const getDynamicGlobalProperties = () =>
+  SteemAPI2.sendAsync('get_dynamic_global_properties', []);
