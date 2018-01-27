@@ -102,6 +102,12 @@ export const getFollowingList = state => fromUser.getFollowingList(state.user);
 export const getPendingFollows = state => fromUser.getPendingFollows(state.user);
 
 export const getUser = (state, username) => fromUsers.getUser(state.users, username);
+export const getIsUserFetching = (state, username) =>
+  fromUsers.getIsUserFetching(state.users, username);
+export const getIsUserLoaded = (state, username) =>
+  fromUsers.getIsUserLoaded(state.users, username);
+export const getIsUserFailed = (state, username) =>
+  fromUsers.getIsUserFailed(state.users, username);
 
 export const getFavoriteCategories = state => fromFavorites.getFavoriteCategories(state.favorites);
 
@@ -112,3 +118,11 @@ export const getIsSettingsLoading = state => fromSettings.getIsLoading(state.set
 export const getLocale = state => fromSettings.getLocale(state.settings);
 export const getVotingPower = state => fromSettings.getVotingPower(state.settings);
 export const getVotePercent = state => fromSettings.getVotePercent(state.settings);
+export const getTotalVestingShares = state => fromWallet.getTotalVestingShares(state.wallet);
+export const getTotalVestingFundSteem = state => fromWallet.getTotalVestingFundSteem(state.wallet);
+export const getUsersEstAccountsValues = state =>
+  fromWallet.getUsersEstAccountsValues(state.wallet);
+export const getLoadingEstAccountValue = state =>
+  fromWallet.getLoadingEstAccountValue(state.wallet);
+export const getLoadingGlobalProperties = state =>
+  fromWallet.getLoadingGlobalProperties(state.wallet);

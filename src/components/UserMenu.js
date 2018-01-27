@@ -27,13 +27,12 @@ class UserMenu extends React.Component {
     };
   }
 
-  componentDidUpdate (prevProps) {
-    if (prevProps.match.params.name !== this.props.match.params.name) {
-      this.setState({
-        current: 'discussions',
-      })
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      current: nextProps.defaultKey ? nextProps.defaultKey : 'discussions',
+    });
   }
+
 
   getItemClasses = key => classNames('UserMenu__item', { 'UserMenu__item--active': this.state.current === key });
 
