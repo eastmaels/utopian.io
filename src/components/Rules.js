@@ -82,6 +82,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You must provide sufficiant detail to reproduce the bug.</li>
             <li>Add screenshots, video recordings or animated GIFs, if they can help to understand the bug. [SOFT]</li>
             <li>Include information about your technical environment such as Device, Operating System, Browser and Application versions.</li>
+            <li>Bugs must be found on the latest released version of the application.</li>
             <li>If you or someone else submitted the issue on GitHub first, the <b>Bug Report</b> will not be accepted. Approved <b>Bug Reports</b> will automatically be published on GitHub.</li>
             <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
