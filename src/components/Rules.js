@@ -251,13 +251,13 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="blog"/> Blog Post Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>You must provide an original and a unique editorial content of very high quality that is strongly related to the promotion and development of open-source related projects. Blogs must have a unique and consistent format.</li>
-            <li>Blog posts must be part of a series. You must use the provided template and link other blog posts of your series</li>
-            <li>If this is the first blog post of a series you are going to write, there must be clear explanations and expectations about the series you are going to propose.</li>
-            <li>You may only write blog posts that are related to the promotion, development and functions of open-source projects.</li>
-            <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
-            <li>Blog posts can be in any language. </li>
-            <li>Images, screenshots, links and examples are not necessary but preferred.</li>
+        <li>You must provide an original and unique editorial content of very high quality, not only news found on the web or general thoughts.</li>
+        <li>Blogs must be strongly related to the promotion and development of an open-source project.</li>
+        <li>Blogs must have a unique and consistent format. Posts must be part of a series and contain links to previous parts.</li>
+        <li>The first blog post of a series, must contain clear explanations and expectations about the series.</li>
+        <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
+        <li>Blog posts can be in any language.</li>
+        <li>Images, screenshots, links and examples are not necessary but preferred.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.
           </p>
