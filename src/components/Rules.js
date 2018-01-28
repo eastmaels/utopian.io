@@ -119,15 +119,18 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="graphics"/> Graphics Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for graphics/videos/motion graphics you have realised for an Open Source project.</li>
-            <li>Use of templates is prohibited, the contribution must be direct result of your own work.</li>
-            <li>T-shirts and merchandising in general are not valid contributions in Utopian.</li>
-            <li>You must provide a link or credit to all assets you have used in your contribution and make sure you have permission to use them for commercial use. including: images, videos, fonts, 3D models, etc.</li>
-            <li>You must provide samples of your creations directly on this post and include public links to the full design.</li>
-            <li>You must include every possible detail to verify the work done.</li>
-            <li>If you are spontaneously contributing by enhancing an existing design, you must provide all the details to compare your work with the existing one and the reasons/benefits why your work should be accepted.</li>
-            <li>You must provide the editable files, as .Svg .Eps .Pdf ( .Ai .Psd .Cdr. ) . Flatten and rasterized layers are not editable.</li>
-            <li>You should also provide the different variations in terms of sizes, colors and applications of your graphic design.</li>
+            <li>This category is meant only for graphics/videos/motion graphics that you have realised for an open source project.</li>
+            <li>The contribution must be a direct result of your own work. It is strictly prohibited to modify other people’s work/assets or use a template and claim it as yours.</li>
+            <li>T-shirts and merchandising are generally not valid contributions in Utopian.</li>
+            <li>You must include every possible detail in your contributions to verify the work is done by you.</li>
+            <li>A contribution must contain the final file of your work, sample of the work, applications of your work, comparison to the existing product, and benefits of your work to the project owner.</li>
+            <li>Graphics contributions can be delivered in .psd, .ai, .cdr or any other universally accepted file format except logo designs. Those must be delivered in a vector file (e.g. .eps/.svg/.pdf) for flexibility and scalability, and .png file format.</li>
+            <li>Logo design contributions must contain the actual logo (logomark/logotype), the logo in a form of an icon, logo variations in terms of size and colour (monochrome and full-colour versions). You can see some examples of good contributions <a href="https://utopian.io/utopian-io/@andrejcibik/logo-for-chatsecure-open-source-private-chat-ios-app">here</a>, <a href="https://utopian.io/utopian-io/@oups/utopian-io-logo-re-design">here</a>, and <a href="https://utopian.io/utopian-io/@andrejcibik/steemgigs-2-logos-proposal">here</a>.</li>
+            <li>Any text or fonts must be converted into shapes or “outlined”.</li>
+            <li>You must provide credit to all third-party images/assets you have used in your contribution and make sure that you have permission to use them for commercial use. (images, videos, fonts, 3D models etc.)</li>
+            <li>Intro videos are acceptable only if the project has already had an intro video before and your contributed video is of a better quality.</li>
+            <li>It is highly recommended that you promote your work to the project owner.</li>
+            <li>Banners, header images and other assets for use on social media platforms are not valid contributions at the moment.</li>
             <li>Designs are preferred to be in a vector format unless the project owner specifies a different format.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
