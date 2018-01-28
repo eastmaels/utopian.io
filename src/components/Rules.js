@@ -81,7 +81,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Cosmetic issues, that do not affect the functionality of the software, will not be accepted.</li>
             <li>You must provide sufficiant detail to reproduce the bug.</li>
             <li>Add screenshots, video recordings or animated GIFs, if they can help to understand the bug. [SOFT]</li>
-            <li>Include information about your technical environment, like your browser, your device and operating system, if those factors can not definitely be ruled out.</li>
+            <li>Include information about your technical environment such as Device, Operating System, Browser and Application versions.</li>
             <li>If you or someone else submitted the issue on GitHub first, the <b>Bug Report</b> will not be accepted. Approved <b>Bug Reports</b> will automatically be published on GitHub.</li>
             <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
