@@ -62,7 +62,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Trivial code snippets, example code or simple templates will not be accepted.</li>
             <li><b>Bug Fixes</b> and <b>New Features</b> must be submitted via Pull Requests. The Pull Request must have been <b>merged within the past 14 days</b>.</li>
             <li>Updates on <b>Own Projects</b> can be committed directly, without a Pull Request. <b>Commits must not be older than 14 days.</b></li>
-            <li><b>Bug Fixes</b> for your <b>Own Projects</b> will not be accepted, unless they are caused by third party dependencies.</li>
+            <li><b>Bug Fixes</b> for your <b>Own Projects</b> will not be accepted, unless the Bugs were caused by third party dependencies.</li>
             <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
