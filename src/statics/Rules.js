@@ -257,6 +257,7 @@ export default (props) =>
         <div>
           <h2>Application as an Utopian Moderator</h2>
           <ul>
+            <li>You must be at least 18 years old.</li>
             <li>
               You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor.
             </li>
