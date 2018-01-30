@@ -96,18 +96,18 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="translations"/> Translations Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for translations you have updated or created for an Open Source project.</li>
-            <li><b>Minimum 1000 words per translation contribution.</b> Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
-            <li>Proofread or merged translations are always preferred. Submitting translations that are not proofread will lead to a lower vote.</li>
+            <li>This category is meant only for translations you have created or updated for an Open Source project.</li>
+            <li>You must translate a minimum of 1000 words per translation contribution.</li>
+            <li>Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
             <li>You could translate less than the minimum amount of words if the project itself has less to be translated in total. May lead to a lower vote.</li>
-            <li>The contribution will be rejected if the submitted translation is <b>older than 7 days</b> since the submitted contribution. This rule does not apply for proofread translations.</li>
-            <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
-            <li>Only translations on CrowdIn or Github are accepted. You should not translate the words and provide them in your Utopian post directly.</li>
-            <li>Your Github Account or Crowdin Account must match your Steem/Utopian account. If it does not you must use the field "Full Name" in Crowdin to show you are the author.</li>
-            <li>You must include every possible detail to check the translations and the tools you have used to translate.</li>
             <li>Entire translations are always preferred. If you are writing about a partial translation we reserve the right to evaluate the actual work.</li>
+            <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
+            <li>Translations must be provided as a <a href="https://help.github.com/articles/about-pull-requests/">Pull Requst</a> on the GitHub repository.
+            <li>The Pull Request must have been merged within the past <b>7 days</b>.</li>
+            <li>Your GitHub username must match that on Utopian. If it does not, you must add your Utopian username in <a href="https://github.com/settings/profile">your GitHub profile.</a></li>
+            <li>You must include every possible detail to check your translation and the tools you have used to translate.</li>
             <li>Same translations from different authors will be accepted if the moderator can recognise the newest translation has better quality.</li>
-            <li>If the provided translation is obviously machine-translated for more than its 20% or has low quality will be rejected.</li>
+            <li>If the provided translation is obviously machine-translated for more than 20% or has low quality, it will be rejected.</li>
             <li>Proof-reading is not acceptable in Utopian as a valid contribution.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
