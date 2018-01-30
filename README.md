@@ -35,6 +35,6 @@ npm run dev-server
 Our sister project [utopian-io/api.utopian.io](https://github.com/utopian-io/api.utopian.io) provides the back-end APIs for Utopian. If you want to run Utopian locally, you **do need**  to run that project, though you may want to check it out!
 
 ## License
-GNU Public License v3.0
-Original source code licensed under MIT License. Copyright Busy
-Utopian.io licensed under GNU Public License v3.0. Copyright Utopian.io
+GNU Public License v3.0. Copyright Utopian.io
+
+Original source code licensed under MIT License. Copyright Busy 
