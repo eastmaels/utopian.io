@@ -8,12 +8,13 @@ import request from 'superagent';
 function getLoginUrl(state) {
   const host = process.env.STEEMCONNECT_HOST;
   const auth = `${host}/oauth2/authorize`;
+  const app = process.env.UTOPIAN_APP;
 
   const url = encodeURIComponent(process.env.STEEMCONNECT_REDIRECT_URL);
   const redirect = `redirect_uri=${url}`;
 
   const response = 'response_type=code';
-  const clientId = `client_id=${encodeURIComponent('utopian.app')}`;
+  const clientId = `client_id=${encodeURIComponent(app)}`;
   state = `state=${state ? encodeURIComponent(state) : ''}`;
   const scopes = [
     'vote',
