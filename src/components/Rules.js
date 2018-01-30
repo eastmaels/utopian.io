@@ -195,7 +195,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="tutorials"/> Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project..</li>
+            <li>Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions and ubiquitous functions (Save, Open, Print, etc.) will not be accepted.</li>
             <li>Tutorials must be unique. If a similar, publicly available tutorial already provides the same or a better learning experience, your tutorial will not be accepted.</li>
             <li>Tutorials can be in any language.</li>
@@ -217,7 +217,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions and ubiquitous functions (Save, Open, Print, etc.) will not be accepted.</li>
             <li>Video Tutorials must be unique. If a similar, publicly available tutorial already provides the same or a better learning experience, your tutorial will not be accepted.</li>
             <li>You must mention your Utopian username at the beginning of the video.</li>
-            <li>Video Tutorials can be in any language.</li>
             <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>The video and audio recording must be in HD (min. 720p).</li>
             <li>You must host the video on YouTube or DTube and embed it in your post.</li>
@@ -255,7 +254,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
         <li>Blogs must have a unique and consistent format. Posts must be part of a series and contain links to previous parts.</li>
         <li>The first blog post of a series, must contain clear explanations and expectations about the series.</li>
         <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
-        <li>Blog posts can be in any language.</li>
         <li>Images, screenshots, links and examples are not necessary but preferred.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.
