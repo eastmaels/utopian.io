@@ -195,17 +195,13 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="tutorials"/> Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for providing tutorials about an Open Source project.</li>
-            <li>Machine translated tutorials will be rejected.</li>
-            <li>Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
-            <li>End-user focused tutorials must address a minimum of three substantial concepts that are unique to the Open Source project and essential learning requirements for end-users. Preference is given to tutorials that are part of a curriculum (series) of tutorials all of which are sequential and built on previously learned skills and knowledge. Ubiquitous functions, such as Save, Open, and Print are unacceptable as substantial concepts.</li>
-            <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
-            <li>Gameplay is not acceptable as a valid tutorial.</li>
-            <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
+            <li>Tutorials must be techical instructions that teach non-trivial aspects of an Open Source project..</li>
+            <li>Design or video editing related tutorials, gameplay, simple on-screen instructions and ubiquitous functions (Save, Open, Print, etc.) will not be accepted.</li>
+            <li>Tutorials must be unique. If a similar, publicly available tutorial already provides the same or a better learning experience, your tutorial will not be accepted.</li>
             <li>Tutorials can be in any language.</li>
-            <li>If your tutorial also contains a video you should use the Video Tutorials category.</li>
-            <li>You must write the entire tutorial on the Utopian Post</li>
-            <li>Tutorials should made up a course curriculum, while not mandatory this is highly suggested.</li>
+            <li>Machine translated tutorials will be rejected.</li>
+            <li>You must include the entire tutorial in the Utopian post.</li>
+            <li>If you include a video covering the full tutorial, use the Video Tutorial category. You can not share the same tutorial in both categories.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
@@ -217,17 +213,16 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="video-tutorials"/> Video Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for providing video tutorials about an Open Source project.</li>
+            <li>Video Tutorials must be techical instructions that teach non-trivial aspects of an Open Source project.</li>
+            <li>Design or video editing related tutorials, gameplay, simple on-screen instructions and ubiquitous functions (Save, Open, Print, etc.) will not be accepted.</li>
+            <li>Video Tutorials must be unique. If a similar, publicly available tutorial already provides the same or a better learning experience, your tutorial will not be accepted.</li>
+            <li>You must mention your Utopian username at the beginning of the video.</li>
+            <li>Video Tutorials can be in any language.</li>
             <li>Video Tutorials using a machine voice will be rejected.</li>
-            <li>The video and audio recording should be in HD (720 the min).</li>
-            <li>Video Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
-            <li>End-user focused tutorials must address a minimum of three substantial concepts that are unique to the Open Source project and essential learning requirements for end-users. Preference is given to tutorials that are part of a curriculum (series) of tutorials all of which are sequential and built on previously learned skills and knowledge. Ubiquitous functions, such as Save, Open, and Print are unacceptable as substantial concepts.</li>
-            <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
-            <li>Gameplay is not acceptable as a valid tutorial</li>
-            <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
-            <li>Video Tutorials can be in any language. </li>
-            <li>You must embed the video directly in this post. Youtube or Dtube videos are accepted.</li>
-            <li>Video Tutorials should made up a course curriculum, while not mandatory this is highly suggested.</li>
+            <li>The video and audio recording must be in HD (min. 720p).</li>
+            <li>You must host the video on YouTube or DTube and embed it your post.</li>
+            <li>The Video must have been uploaded within the past 7 days.</li>
+            <li>If you provide a text version of your tutorial, you need to include it or a link to it in your post. You can not submit a separate contribution in the Tutorial category.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
