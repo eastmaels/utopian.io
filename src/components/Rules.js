@@ -201,6 +201,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Machine translated tutorials will be rejected.</li>
             <li>You must include the entire tutorial in the Utopian post.</li>
             <li>If you include a video covering the full tutorial, use the Video Tutorial category. You can not share the same tutorial in both categories.</li>
+            <li>If you create a GitHub repository with additional material (like code samples), make sure to choose the repository of the project your tutorial is about and not your own repository. You can provide links to your repository in your post.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
@@ -221,6 +222,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You must host the video on YouTube or DTube and embed it in your post.</li>
             <li>The video can not be older than 14 days.</li>
             <li>If you provide a text version of your tutorial, you need to include it or a link to it in your post. You can not submit a separate contribution in the Tutorial category.</li>
+            <li>If you create a GitHub repository with additional material (like code samples), make sure to choose the repository of the project your tutorial is about and not your own repository. You can provide links to your repository in your post.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
