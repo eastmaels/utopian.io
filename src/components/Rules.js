@@ -103,7 +103,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Entire translations are always preferred. If you are writing about a partial translation we reserve the right to evaluate the actual work.</li>
             <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
             <li>Translations must be provided as a <a href="https://help.github.com/articles/about-pull-requests/">Pull Requst</a> on the GitHub repository.
-            <li>The Pull Request must have been merged within the past <b>7 days</b>.</li>
+            <li>The Pull Request must have been merged within the past <b>14 days</b>.</li>
             <li>Your GitHub username must match that on Utopian. If it does not, you must add your Utopian username in <a href="https://github.com/settings/profile">your GitHub profile.</a></li>
             <li>You must include every possible detail to check your translation and the tools you have used to translate.</li>
             <li>Same translations from different authors will be accepted if the moderator can recognise the newest translation has better quality.</li>
