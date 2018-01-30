@@ -198,7 +198,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions and ubiquitous functions (Save, Open, Print, etc.) will not be accepted.</li>
             <li>Tutorials must be unique. If a similar, publicly available tutorial already provides the same or a better learning experience, your tutorial will not be accepted.</li>
-            <li>Tutorials can be in any language.</li>
             <li>Machine translated tutorials will be rejected.</li>
             <li>You must include the entire tutorial in the Utopian post.</li>
             <li>If you include a video covering the full tutorial, use the Video Tutorial category. You can not share the same tutorial in both categories.</li>
@@ -235,7 +234,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>This category is meant only for showing copywriting work you have completed for an Open Source project.</li>
             <li>Linking pull requests from Github is encouraged, but not required if not applicable. </li>
-            <li>Contents of your copywriting can be in any language.</li>
             <li>You must be the author of the copywriting work and provide a clear way to verify that.</li>
             <li><a href="https://en.wikipedia.org/wiki/Copywriting">Read the official Wikipedia explanation for what acceptable Copywriting work is.</a></li>
           </ul>
