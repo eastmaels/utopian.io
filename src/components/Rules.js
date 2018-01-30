@@ -195,7 +195,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="tutorials"/> Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Tutorials must be techical instructions that teach non-trivial aspects of an Open Source project..</li>
+            <li>Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project..</li>
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions and ubiquitous functions (Save, Open, Print, etc.) will not be accepted.</li>
             <li>Tutorials must be unique. If a similar, publicly available tutorial already provides the same or a better learning experience, your tutorial will not be accepted.</li>
             <li>Tutorials can be in any language.</li>
@@ -213,7 +213,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="video-tutorials"/> Video Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Video Tutorials must be techical instructions that teach non-trivial aspects of an Open Source project.</li>
+            <li>Video Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions and ubiquitous functions (Save, Open, Print, etc.) will not be accepted.</li>
             <li>Video Tutorials must be unique. If a similar, publicly available tutorial already provides the same or a better learning experience, your tutorial will not be accepted.</li>
             <li>You must mention your Utopian username at the beginning of the video.</li>
