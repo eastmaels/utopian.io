@@ -54,13 +54,16 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="development"/> Development Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>Only merged Pull Requests will be accepted.</li>
-            <li>Only merged Pull Requests on the official repository will be accepted or on a fork as long as the fork is not just a mirror of the original one.</li>
-            <li>The contribution will be rejected if the merged Pull Request is <b>older than 7 days</b> since the submitted contribution.</li>
-            <li>Simple and common code snippets that can be easily found or reproduced can't be submitted in the development category.</li>
-            <li>You must always link the merged pull requests with the given functionality in the editor.</li>
-            <li>If your username on Github does not correspond to the Utopian username you must use the "Name" field in the Github settings and enter there your Utopian/Steem username to verify you are the author.</li>
-            <li>Images, screenshots, links and examples are not necessary but preferred.</li>
+            <li>In the development category you can submit <b>Bug Fixes</b>, <b>New Features</b> and your <b>Own Projects</b>.</li>
+            <li>Contributions must have a comprehensible commit history. Larger projects or updates submitted in a single commit will not be accepted.</li>
+            <li>Outdated or low quality code can lead to rejection.</li>
+            <li>Generated code or other results of automated processes will not be accepted.</li>
+            <li>Submitted projects must have a unique value. Redundant projects will not be accepted.</li>
+            <li>Trivial code snippets, example code or simple templates will not be accepted.</li>
+            <li><b>Bug Fixes</b> and <b>New Features</b> must be submitted via Pull Requests. The Pull Request must have been <b>merged within the past 14 days</b>.</li>
+            <li>Updates on <b>Own Projects</b> can be committed directly, without a Pull Request. <b>Commits must not be older than 14 days.</b></li>
+            <li><b>Bug Fixes</b> for your <b>Own Projects</b> will not be accepted, unless the Bugs were caused by third party dependencies.</li>
+            <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
@@ -72,12 +75,18 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bug Hunting Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>In this category you can only report bugs you have found in an Open Source project.</li>
-            <li>You must provide every possible detail to reproduce the bug.</li>
-            <li>You should show a video or an animated GIF if the bug can be recorded on screen.</li>
-            <li>You must include: browsers, devices, operating systems used and similar info to reproduce the bug.</li>
+            <li>In this category you can submit <b>Bug Reports</b> for actively maintained Open Source projects on GitHub.</li>
+            <li>The repository on GitHub must accept <a href="https://help.github.com/articles/about-issues/">issues</a>.</li>
+            <li><b>Bug Reports</b> for projects in <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle">pre-alpha stage</a> will not be accepted.</li>
+            <li>Cosmetic issues, that do not affect the functionality of the software, will not be accepted.</li>
+            <li>You must provide sufficiant detail to reproduce the bug.</li>
+            <li>Add screenshots, video recordings or animated GIFs, if they can help to understand the bug. [SOFT]</li>
+            <li>Include information about your technical environment such as Device, Operating System, Browser and Application versions.</li>
+            <li>Bugs must be found on the latest released version of the application.</li>
+            <li>If you or someone else submitted the issue on GitHub first, the <b>Bug Report</b> will not be accepted. Approved <b>Bug Reports</b> will automatically be published on GitHub.</li>
+            <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
+          <p>Not respecting the rules will either give you lower votes or your contribution will not be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
         </div>
       )
@@ -111,15 +120,18 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="graphics"/> Graphics Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for graphics/videos/motion graphics you have realised for an Open Source project.</li>
-            <li>Use of templates is prohibited, the contribution must be direct result of your own work.</li>
-            <li>T-shirts and merchandising in general are not valid contributions in Utopian.</li>
-            <li>You must provide a link or credit to all assets you have used in your contribution and make sure you have permission to use them for commercial use. including: images, videos, fonts, 3D models, etc.</li>
-            <li>You must provide samples of your creations directly on this post and include public links to the full design.</li>
-            <li>You must include every possible detail to verify the work done.</li>
-            <li>If you are spontaneously contributing by enhancing an existing design, you must provide all the details to compare your work with the existing one and the reasons/benefits why your work should be accepted.</li>
-            <li>You must provide the editable files, as .Svg .Eps .Pdf ( .Ai .Psd .Cdr. ) . Flatten and rasterized layers are not editable.</li>
-            <li>You should also provide the different variations in terms of sizes, colors and applications of your graphic design.</li>
+            <li>This category is meant only for graphics/videos/motion graphics that you have realised for an open source project.</li>
+            <li>The contribution must be a direct result of your own work. It is strictly prohibited to modify other people’s work/assets or use a template and claim it as yours.</li>
+            <li>T-shirts and merchandising are generally not valid contributions in Utopian.</li>
+            <li>You must include every possible detail in your contributions to verify the work is done by you.</li>
+            <li>A contribution must contain the final file of your work, sample of the work, applications of your work, comparison to the existing product, and benefits of your work to the project owner.</li>
+            <li>Graphics contributions can be delivered in .psd, .ai, .cdr or any other universally accepted file format except logo designs. Those must be delivered in a vector file (e.g. .eps/.svg/.pdf) for flexibility and scalability, and .png file format.</li>
+            <li>Logo design contributions must contain the actual logo (logomark/logotype), the logo in a form of an icon, logo variations in terms of size and colour (monochrome and full-colour versions). You can see some examples of good contributions <a href="https://utopian.io/utopian-io/@andrejcibik/logo-for-chatsecure-open-source-private-chat-ios-app">here</a>, <a href="https://utopian.io/utopian-io/@oups/utopian-io-logo-re-design">here</a>, and <a href="https://utopian.io/utopian-io/@andrejcibik/steemgigs-2-logos-proposal">here</a>.</li>
+            <li>Any text or fonts must be converted into shapes or “outlined”.</li>
+            <li>You must provide credit to all third-party images/assets you have used in your contribution and make sure that you have permission to use them for commercial use. (images, videos, fonts, 3D models etc.)</li>
+            <li>Intro videos are acceptable only if the project has already had an intro video before and your contributed video is of a better quality.</li>
+            <li>It is highly recommended that you promote your work to the project owner.</li>
+            <li>Banners, header images and other assets for use on social media platforms are not valid contributions at the moment.</li>
             <li>Designs are preferred to be in a vector format unless the project owner specifies a different format.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
@@ -243,13 +255,13 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="blog"/> Blog Post Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>You must provide an original and a unique editorial content of very high quality that is strongly related to the promotion and development of open-source related projects. Blogs must have a unique and consistent format.</li>
-            <li>Blog posts must be part of a series. You must use the provided template and link other blog posts of your series</li>
-            <li>If this is the first blog post of a series you are going to write, there must be clear explanations and expectations about the series you are going to propose.</li>
-            <li>You may only write blog posts that are related to the promotion, development and functions of open-source projects.</li>
-            <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
-            <li>Blog posts can be in any language. </li>
-            <li>Images, screenshots, links and examples are not necessary but preferred.</li>
+        <li>You must provide an original and unique editorial content of very high quality, not only news found on the web or general thoughts.</li>
+        <li>Blogs must be strongly related to the promotion and development of an open-source project.</li>
+        <li>Blogs must have a unique and consistent format. Posts must be part of a series and contain links to previous parts.</li>
+        <li>The first blog post of a series, must contain clear explanations and expectations about the series.</li>
+        <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
+        <li>Blog posts can be in any language.</li>
+        <li>Images, screenshots, links and examples are not necessary but preferred.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.
           </p>

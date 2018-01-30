@@ -257,8 +257,9 @@ export default (props) =>
         <div>
           <h2>Application as an Utopian Moderator</h2>
           <ul>
+            <li>You must be at least 18 years old.</li>
             <li>
-              You must write a public Steemit post proposing his intentions, one category or more related categories he would like to moderate, his field of expertise and should nominate one existing Supervisor.
+              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor.
             </li>
             <li>
               The public Steemit post must be pasted in the channel <a href="https://discord.gg/Ddj8SJf" target="_blank">#mod-applicant on Discord</a>. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
