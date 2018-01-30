@@ -1,3 +1,6 @@
+Original source code licensed under MIT License. Copyright Busy
+Utopian.io licensed under GNU Public License v3.0. Copyright Utopian.io
+
 [Utopian.io](https://utopian.io) wants to reward Open Source contributors for their hard work. 
 Forked from https://github.com/busyorg/busy, Utopian uses the [STEEM Blockchain](https://steem.io) to reward contributors in cryptocurrency.
 
