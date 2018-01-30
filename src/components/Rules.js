@@ -202,7 +202,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
             <li>Gameplay is not acceptable as a valid tutorial.</li>
             <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
-            <li>Tutorials can be in any language.</li>
             <li>If your tutorial also contains a video you should use the Video Tutorials category.</li>
             <li>You must write the entire tutorial on the Utopian Post</li>
             <li>Tutorials should made up a course curriculum, while not mandatory this is highly suggested.</li>
@@ -225,7 +224,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
             <li>Gameplay is not acceptable as a valid tutorial</li>
             <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
-            <li>Video Tutorials can be in any language. </li>
             <li>You must embed the video directly in this post. Youtube or Dtube videos are accepted.</li>
             <li>Video Tutorials should made up a course curriculum, while not mandatory this is highly suggested.</li>
           </ul>
