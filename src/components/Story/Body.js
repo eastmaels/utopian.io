@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import sanitizeHtml from 'sanitize-html';
 import Remarkable from 'remarkable';
 import embedjs from 'embedjs';
+import hljs from 'highlight.js';
 import { jsonParse } from '../../helpers/formatter';
 import sanitizeConfig from '../../vendor/SanitizeConfig';
 import { imageRegex } from '../../helpers/regexHelpers';
 import htmlReady from '../../vendor/steemitHtmlReady';
 import PostFeedEmbed from './PostFeedEmbed';
-import hljs from 'highlight.js';
 
 import './Body.less';
 
@@ -46,14 +46,10 @@ export function getHtml(body, jsonMetadata = {}, returnType = 'Object') {
       parsedJsonMetadata.image.push(img);
     }
   });
-  console.log(parsedBody);
   const htmlReadyOptions = { mutate: true, resolveIframe: returnType === 'text' };
   parsedBody = remarkable.render(parsedBody);
-  console.log(parsedBody);
   parsedBody = htmlReady(parsedBody, htmlReadyOptions).html;
-  console.log(parsedBody);
   parsedBody = sanitizeHtml(parsedBody, sanitizeConfig({}));
-  console.log(parsedBody);
   if (returnType === 'text') {
     return parsedBody;
   }
