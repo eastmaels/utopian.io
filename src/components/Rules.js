@@ -220,7 +220,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Video Tutorials can be in any language.</li>
             <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>The video and audio recording must be in HD (min. 720p).</li>
-            <li>You must host the video on YouTube or DTube and embed it your post.</li>
+            <li>You must host the video on YouTube or DTube and embed it in your post.</li>
             <li>The Video must have been uploaded within the past 7 days.</li>
             <li>If you provide a text version of your tutorial, you need to include it or a link to it in your post. You can not submit a separate contribution in the Tutorial category.</li>
           </ul>
