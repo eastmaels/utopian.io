@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import UserWalletSummary from '../wallet/UserWalletSummary';
+import UserWalletTransactions from '../wallet/UserWalletTransactions';
 import Loading from '../components/Icon/Loading';
 import {
   getUser,
@@ -11,11 +12,18 @@ import {
   getAuthenticatedUserName,
   getTotalVestingShares,
   getTotalVestingFundSteem,
+  getUsersTransactions,
+  getUsersAccountHistory,
+  getUsersAccountHistoryLoading,
   getLoadingGlobalProperties,
+  getLoadingMoreUsersAccountHistory,
+  getUserHasMoreAccountHistory,
   getCurrentMedianHistoryPrice as getSteemRate,
 } from '../reducers';
 import {
   getGlobalProperties,
+  getUserAccountHistory,
+  getMoreUserAccountHistory,
 } from '../wallet/walletActions';
 import { getCurrentMedianHistoryPrice } from '../app/appActions';
 import { getAccount } from './usersActions';
@@ -30,11 +38,23 @@ import { getAccount } from './usersActions';
     authenticatedUserName: getAuthenticatedUserName(state),
     totalVestingShares: getTotalVestingShares(state),
     totalVestingFundSteem: getTotalVestingFundSteem(state),
+    usersTransactions: getUsersTransactions(state),
+    usersAccountHistory: getUsersAccountHistory(state),
+    usersAccountHistoryLoading: getUsersAccountHistoryLoading(state),
     loadingGlobalProperties: getLoadingGlobalProperties(state),
+    loadingMoreUsersAccountHistory: getLoadingMoreUsersAccountHistory(state),
+    userHasMoreActions: getUserHasMoreAccountHistory(
+      state,
+      ownProps.isCurrentUser
+        ? getAuthenticatedUserName(state)
+        : getUser(state, ownProps.match.params.name).name,
+    ),
     steemRate: parseFloat(getSteemRate(state).base),
   }),
   {
     getGlobalProperties,
+    getUserAccountHistory,
+    getMoreUserAccountHistory,
     getAccount,
     getCurrentMedianHistoryPrice,
   },
@@ -46,9 +66,16 @@ class UserWallet extends Component {
     totalVestingFundSteem: PropTypes.string.isRequired,
     user: PropTypes.shape().isRequired,
     getGlobalProperties: PropTypes.func.isRequired,
+    getUserAccountHistory: PropTypes.func.isRequired,
+    getMoreUserAccountHistory: PropTypes.func.isRequired,
     getAccount: PropTypes.func.isRequired,
     getCurrentMedianHistoryPrice: PropTypes.func.isRequired,
+    usersTransactions: PropTypes.shape().isRequired,
+    usersAccountHistory: PropTypes.shape().isRequired,
+    usersAccountHistoryLoading: PropTypes.bool.isRequired,
     loadingGlobalProperties: PropTypes.bool.isRequired,
+    loadingMoreUsersAccountHistory: PropTypes.bool.isRequired,
+    userHasMoreActions: PropTypes.bool.isRequired,
     steemRate: PropTypes.number.isRequired,
     isCurrentUser: PropTypes.bool,
     authenticatedUserName: PropTypes.string,
@@ -63,6 +90,7 @@ class UserWallet extends Component {
     const {
       totalVestingShares,
       totalVestingFundSteem,
+      usersTransactions,
       user,
       isCurrentUser,
       authenticatedUserName,
@@ -75,6 +103,11 @@ class UserWallet extends Component {
     if (_.isEmpty(totalVestingFundSteem) || _.isEmpty(totalVestingShares)) {
       this.props.getGlobalProperties();
     }
+
+    if (_.isEmpty(usersTransactions[username])) {
+      this.props.getUserAccountHistory(username);
+    }
+
     if (_.isEmpty(user)) {
       this.props.getAccount(username);
     }
@@ -90,8 +123,16 @@ class UserWallet extends Component {
       totalVestingShares,
       totalVestingFundSteem,
       loadingGlobalProperties,
+      usersTransactions,
+      usersAccountHistoryLoading,
+      loadingMoreUsersAccountHistory,
+      userHasMoreActions,
+      usersAccountHistory,
       steemRate,
     } = this.props;
+
+    const transactions = usersTransactions[user.name] || [];
+    const actions = usersAccountHistory[user.name] || [];
 
     return (
       <div>
@@ -103,6 +144,20 @@ class UserWallet extends Component {
           loadingGlobalProperties={loadingGlobalProperties}
           steemRate={steemRate}
         />
+        {transactions.length === 0 && usersAccountHistoryLoading ? (
+          <Loading style={{ marginTop: '20px' }} />
+        ) : (
+          <UserWalletTransactions
+            transactions={transactions}
+            actions={actions}
+            currentUsername={user.name}
+            totalVestingShares={totalVestingShares}
+            totalVestingFundSteem={totalVestingFundSteem}
+            getMoreUserAccountHistory={this.props.getMoreUserAccountHistory}
+            loadingMoreUsersAccountHistory={loadingMoreUsersAccountHistory}
+            userHasMoreActions={userHasMoreActions}
+          />
+        )}
       </div>
     );
   }
