@@ -260,7 +260,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
         <li>Blogs must have a unique and consistent format. Posts must be part of a series and contain links to previous parts.</li>
         <li>The first blog post of a series, must contain clear explanations and expectations about the series.</li>
         <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
-        <li>Blog posts can be in any language.</li>
         <li>Images, screenshots, links and examples are not necessary but preferred.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.
