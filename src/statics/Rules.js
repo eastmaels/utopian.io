@@ -117,7 +117,7 @@ export default (props) =>
         <h2>Contributions must be in English</h2>
         Contents of the contributions (post content) must be in plain English and fully understandable. The only accepted exceptions are:
         <ul>
-          <li>Contributions under the Tutorials, Video Tutorials Category and Blog posts.</li>
+          <li>Contributions under the Tutorials and Video Tutorials Category.</li>
         </ul>
       </div>
 
