@@ -5,19 +5,32 @@ import classNames from 'classnames';
 import sanitizeHtml from 'sanitize-html';
 import Remarkable from 'remarkable';
 import embedjs from 'embedjs';
+import hljs from 'highlight.js';
 import { jsonParse } from '../../helpers/formatter';
 import sanitizeConfig from '../../vendor/SanitizeConfig';
 import { imageRegex } from '../../helpers/regexHelpers';
 import htmlReady from '../../vendor/steemitHtmlReady';
 import PostFeedEmbed from './PostFeedEmbed';
+
 import './Body.less';
 
 export const remarkable = new Remarkable({
   html: true, // remarkable renders first then sanitize runs...
-  breaks: true,
+  breaks: false,
   linkify: false, // linkify is done locally
   typographer: false, // https://github.com/jonschlinkert/remarkable/issues/142#issuecomment-221546793
   quotes: '“”‘’',
+  highlight: (str, lang) => {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(lang, str).value;
+      } catch (err) { return ''; }
+    }
+
+    try {
+      return hljs.highlightAuto(str).value;
+    } catch (err) { return ''; }
+  },
 });
 
 // Should return text(html) if returnType is text
@@ -33,7 +46,6 @@ export function getHtml(body, jsonMetadata = {}, returnType = 'Object') {
       parsedJsonMetadata.image.push(img);
     }
   });
-
   const htmlReadyOptions = { mutate: true, resolveIframe: returnType === 'text' };
   parsedBody = remarkable.render(parsedBody);
   parsedBody = htmlReady(parsedBody, htmlReadyOptions).html;

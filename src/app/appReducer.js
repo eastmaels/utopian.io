@@ -86,7 +86,6 @@ export default (state = initialState, action) => {
         trendingTopics: [],
       };
     case appTypes.GET_CURRENT_MEDIAN_HISTORY_PRICE_SUCCESS:
-      console.log(state);
       return {
         ...state,
         currentMedianHistoryPrice: {

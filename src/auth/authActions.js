@@ -35,7 +35,7 @@ export const login = () => (dispatch) => {
           if (resp && resp.user) {
             dispatch(getFollowing(resp.user));
 
-            setTimeout(function() {
+            /*setTimeout(function() {
               const script = document.createElement("script");
 
               console.log("ACCOUNT ID", resp.account.id);
@@ -49,7 +49,7 @@ export const login = () => (dispatch) => {
               script.src = "https://fast.cometondemand.net/11410x_x1fa73.js";
 
               document.body.appendChild(script);
-            }, 3000);
+            }, 3000);*/
           }
 
           if (window.ga) {
