@@ -34,7 +34,6 @@ export default (props) =>
         <ul>
           <li>Templates are editable, as long as your contribution has a clear format. </li>
           <li>Templates can be extended.</li>
-          <li>Templates can be translated in a different language than english as long as the category allows that. Check the specific rules for each category.</li>
         </ul>
       </div>
 
@@ -115,10 +114,7 @@ export default (props) =>
 
       <div>
         <h2>Contributions must be in English</h2>
-        Contents of the contributions (post content) must be in plain English and fully understandable. The only accepted exceptions are:
-        <ul>
-          <li>Contributions under the Tutorials, Video Tutorials Category and Blog posts.</li>
-        </ul>
+        <p>Contents of the contributions (post content) must be in plain English and fully understandable.</p>
       </div>
 
       <div>
@@ -257,8 +253,9 @@ export default (props) =>
         <div>
           <h2>Application as an Utopian Moderator</h2>
           <ul>
+            <li>You must be at least 18 years old.</li>
             <li>
-              You must write a public Steemit post proposing his intentions, one category or more related categories he would like to moderate, his field of expertise and should nominate one existing Supervisor.
+              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor.
             </li>
             <li>
               The public Steemit post must be pasted in the channel <a href="https://discord.gg/Ddj8SJf" target="_blank">#mod-applicant on Discord</a>. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.

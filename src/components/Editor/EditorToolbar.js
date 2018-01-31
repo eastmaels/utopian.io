@@ -57,6 +57,11 @@ const EditorToolbar = ({ intl, onSelect }) => {
           <i className="iconfont icon-picture" />
         </Button>
       </Tooltip>
+      <Tooltip title={tooltip(intl.formatMessage({ id: 'code', defaultMessage: 'Insert Code' }), 'Ctrl+n')}>
+        <Button className="EditorToolbar__button" onClick={() => onSelect('code')}>
+          <i className="iconfont icon-code" />
+        </Button>
+      </Tooltip>
     </div>
   );
 };

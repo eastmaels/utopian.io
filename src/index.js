@@ -32,10 +32,10 @@ if (process.env.SENTRY_PUBLIC_DSN) {
   Raven.config(process.env.SENTRY_PUBLIC_DSN).install();
 }
 
-const session = Cookie.get('session');
+/*const session = Cookie.get('session');
 if (!session && process.env.UTOPIAN_LANDING_URL) {
   window.location.href = process.env.UTOPIAN_LANDING_URL;
-}
+}*/
 
 steem.api.setOptions({ transport: 'http' });
 if (process.env.STEEMJS_URL) {
