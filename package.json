@@ -11,7 +11,7 @@
   "scripts": {
     "dev-server": "run-p dev-server:auth-server dev-server:client",
     "dev-server:client": "webpack-dev-server --watch-poll --config ./webpack/webpack-dev-server.js",
-    "dev-server:auth-server": "node ./server/auth-server.js",
+    "dev-server:auth-server": "cross-env UTOPIAN_API=https://localhost:4040/api/ node ./server/auth-server.js",
     "start": "cross-env NODE_ENV=production npm run run:server",
     "dev": "cross-env NODE_ENV=development run-p build:server:dev run:server",
     "test": "cross-env STEEMCONNECT_IMG_HOST=https://img.busy.org jest",

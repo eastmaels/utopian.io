@@ -132,7 +132,7 @@ class Editor extends React.Component {
       }
     }
 
-    const removeChat = () => {
+   /* const removeChat = () => {
         if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
           if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
             if (!document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
@@ -145,13 +145,14 @@ class Editor extends React.Component {
     removeChat();
     setTimeout(removeChat, 2000);
     setTimeout(removeChat, 2500);
-    setTimeout(removeChat, 4000);
+    setTimeout(removeChat, 4000); */
   }
 
 
 
 
   componentWillUnmount() {
+    /*
     if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
       if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList) {
         if (document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0].classList.contains("Component__block")) {
@@ -159,7 +160,7 @@ class Editor extends React.Component {
           console.log("Unblocking Chat");
         }
       }
-    }
+    }*/
   }
 
   componentWillReceiveProps(nextProps) {
@@ -763,7 +764,7 @@ class Editor extends React.Component {
           </Form.Item>
 
 
-          {(chosenType === 'development' || chosenType === 'documentation' || chosenType === 'copywriting') &&
+          {(chosenType === 'development' || chosenType === 'documentation' || chosenType === 'copywriting' || chosenType === 'translations') &&
           user.github &&
           (this.state.availablePullRequests.length > 0 || pullRequests.length > 0) ?
             <Form.Item
