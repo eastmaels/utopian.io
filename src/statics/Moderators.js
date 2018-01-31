@@ -66,15 +66,12 @@ class Moderators extends React.PureComponent {
                       <Link to={`/@${username}`}>
                         <img className="picture" src={picture} />
                         <b className="account">{username}</b>
+                        <small>{' '}{moderator.supermoderator === true ? '[supervisor]' : null}</small>
                       </Link>
                     </div>
                     <div className="statsTab">
-                      <h4>{Math.ceil((moderator.percentage_total_rewards_moderators || 0) * 100) / 100}%</h4>
-                      <p><b>Moderator Reward Shares</b></p>
-                    </div>
-                    <div className="statsTab">
-                      <h4>{Math.ceil((moderator.total_paid_rewards_steem || 0) * 100) / 100}</h4>
-                      <p><b>STEEM Received</b></p>
+                      <h4>{moderator.total_moderated || 0}</h4>
+                      <p><b>Total Reviewed</b></p>
                     </div>
                   </div>
                 )

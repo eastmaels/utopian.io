@@ -76,6 +76,7 @@ class EditorTask extends React.Component {
     quote: 'ctrl+q',
     link: 'ctrl+k',
     image: 'ctrl+m',
+    code: 'ctrl+n',
   };
 
   state = {
@@ -431,6 +432,9 @@ class EditorTask extends React.Component {
       case 'image':
         this.insertAtCursor('![', '](url)', 2, 2);
         break;
+      case 'code':
+        this.insertAtCursor('``` language\n', '\n```', 4, 12);
+        break;
       default:
         break;
     }
@@ -455,11 +459,12 @@ class EditorTask extends React.Component {
       this.insertCode('link');
     },
     image: () => this.insertCode('image'),
+    code: () => this.insertCode('code'),
   };
 
   renderMarkdown = (value) => {
     this.setState({
-      contentHtml: remarkable.render(value),
+      contentHtml: value,
     });
   };
 

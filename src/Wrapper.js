@@ -139,7 +139,7 @@ export default class Wrapper extends React.PureComponent {
             <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} history={this.props.history} location={location} />
           </Layout.Header>
           <div className="content">
-            {this.state.loadedRepos ? this.props.children : <Loading />}
+            {this.props.children}
             <Transfer />
           </div>
         </Layout>
