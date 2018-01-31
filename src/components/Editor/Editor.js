@@ -87,6 +87,7 @@ class Editor extends React.Component {
     quote: 'ctrl+q',
     link: 'ctrl+k',
     image: 'ctrl+m',
+    code: 'ctrl+n',
   };
 
   state = {
@@ -148,7 +149,7 @@ class Editor extends React.Component {
   }
 
 
-  
+
 
   componentWillUnmount() {
     if (document.getElementsByClassName("cometchat_ccmobiletab_redirect") && document.getElementsByClassName("cometchat_ccmobiletab_redirect")[0]) {
@@ -511,6 +512,9 @@ class Editor extends React.Component {
       case 'image':
         this.insertAtCursor('![', '](url)', 2, 2);
         break;
+      case 'code':
+        this.insertAtCursor('``` language\n', '\n```', 4, 12);
+        break;
       default:
         break;
     }
@@ -535,11 +539,12 @@ class Editor extends React.Component {
       this.insertCode('link');
     },
     image: () => this.insertCode('image'),
+    code: () => this.insertCode('code'),
   };
 
   renderMarkdown = (value) => {
     this.setState({
-      contentHtml: remarkable.render(value),
+      contentHtml: value,
     });
   };
 
