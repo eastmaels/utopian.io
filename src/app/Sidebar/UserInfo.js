@@ -92,7 +92,9 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
           </div>
         </div>
       </div>}
-    {(user && user.name && !isSameUser) && <span><Action
+    {(user && user.name && !isSameUser) && <span>
+
+      {/*<Action
       primary
       style={{ margin: '5px 0' }}
       text={intl.formatMessage({
@@ -100,7 +102,7 @@ const UserInfo = ({ intl, authenticated, authenticatedUser, user, ...props }) =>
         defaultMessage: 'Transfer Funds',
       })}
       onClick={() => props.openTransfer(user.name)}
-    />
+    />*/}
 
     <BanUser 
     username={currentUsername()}

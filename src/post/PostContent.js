@@ -167,7 +167,7 @@ class PostContent extends React.Component {
     const busyHost = global.postOrigin || 'https://utopian.io';
     let canonicalHost = busyHost;
     if (postMetaData.app && postMetaData.app.indexOf('steemit') === 0) {
-      canonicalHost = 'https://utopian.io';
+      canonicalHost = 'https://steemit.com';
     }
 
     const userVote = find(content.active_votes, { voter: user.name }) || {};
