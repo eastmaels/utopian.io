@@ -6,7 +6,7 @@ See the website in action [here:](https://utopian.io)
 <center><img src="https://steemitimages.com/DQmYgMbYHNtiNmA6TbSL34tNwaMvxsQu2o5zrDvnbDks8bY/image.png"/></center>
   
 ## Contributing to this Project
-Get in touch on Discord: https://discord.gg/5qMzAJ
+Get in touch on Discord: https://discord.gg/Pc8HG9x
 
 ### Clone and Install
 git clone https://github.com/utopian-io/utopian.io utopian.io
