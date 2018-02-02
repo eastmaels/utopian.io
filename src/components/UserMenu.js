@@ -52,6 +52,9 @@ class UserMenu extends React.Component {
               <li className={this.getItemClasses('discussions')} onClick={this.handleClick} role="presentation" data-key="discussions">
                 <FormattedMessage id="contributions" defaultMessage="Contributions" />
               </li>
+              <li className={this.getItemClasses('moderations')} onClick={this.handleClick} role="presentation" data-key="moderations">
+                <FormattedMessage id="moderations" defaultMessage="Moderations" />
+              </li>
               {/*<li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
                 <FormattedMessage id="comments" defaultMessage="Comments" />
               </li>*/}

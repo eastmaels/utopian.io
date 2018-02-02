@@ -100,6 +100,17 @@ class SubFeed extends React.Component {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
       });
+    } else if(match.path === '/@:name/moderations') {
+      getContributions({
+        limit,
+        skip,
+        section: 'author',
+        sortBy: 'created',
+        author: match.params.name,
+      }).then(res => {
+        this.total = res.response.total;
+        this.setState({skip: skip + limit});
+      });
     } else if (match.params.filterBy === 'review') {
       getContributions({
         limit,

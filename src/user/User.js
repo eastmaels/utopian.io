@@ -190,6 +190,7 @@ export default class User extends React.Component {
             </Affix>
             <div className="center">
               <Route exact path={`${match.path}`} component={UserProfile} />
+              <Route exact path={`${match.path}/moderations`} component={UserProfile} />
               <Route path={`${match.path}/projects`} component={() => {
 
                 if(this.state.githubProjects.length) {
