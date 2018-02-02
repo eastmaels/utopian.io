@@ -29,7 +29,7 @@ You may need to authorise your browser in using a self-signed SSL certificate
 
 
 ### Set SC Utopian App
-Add the enviroment variable UTOPIAN_APP using the app name of your Steem Connect oauth application. You can create a SC app here https://v2.steemconnect.com/apps/create. The same app will have to be used and setup in the backend github.com/utopian-io/api.utopian.io.
+Add the enviroment variable UTOPIAN_APP using the app name of your Steem Connect oauth application. You can create a SC app here https://v2.steemconnect.com/apps/create. The same app will have to be used and setup in the backend https://github.com/utopian-io/api.utopian.io.
 
 ### Run The Frontend
 npm run dev-server
