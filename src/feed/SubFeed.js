@@ -70,7 +70,7 @@ class SubFeed extends React.Component {
   }
 
   loadContributions (nextProps = false) {
-    const { match, getContributions, user } = nextProps || this.props;
+    const { match, getContributions, user, contributions } = nextProps || this.props;
     const skip =  nextProps ? 0 : this.state.skip;
     // console.log('[c] m',match);
     const limit = 20;
@@ -100,13 +100,13 @@ class SubFeed extends React.Component {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
       });
-    } else if(match.path === '/@:name/moderations') {
+    } else if(match.path.split('/')[2] === 'moderations') {
+        console.log(match.params.name)
       getContributions({
         limit,
         skip,
-        section: 'author',
-        sortBy: 'created',
-        author: match.params.name,
+        status: match.params.status || 'any',
+        moderator: 'ruah',//match.params.name,
       }).then(res => {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
@@ -164,6 +164,8 @@ class SubFeed extends React.Component {
         // console.log("PATH /@:name ", contribution.author, match.params.name, contribution.reviewed, contribution.pending, contribution.flagged);
         return contribution.author === match.params.name &&
           !contribution.flagged;
+      } else if (match.path.split('/')[2] === 'moderations') {
+        return contribution[match.params.status || 'author'] && contribution.moderator === 'ruah' //match.params.name;
       } else if ((match.params.type && match.params.type === 'tasks') || (match.path === '/tasks') || (match.filterBy === 'review' && contribution.reviewed === false && contribution.flagged === false)) {
         // console.log("PATH2 /tasks ",contribution.json_metadata.type, contribution.reviewed);
         return (contribution.json_metadata.type.indexOf("task") > -1) &&
@@ -230,6 +232,10 @@ class SubFeed extends React.Component {
         return history.push(`/all/review/pending`);
       }
 
+      if (match.path.split('/')[2] === 'moderations') {
+        return history.push(`/@${match.params.name}/moderations/${type}`);
+      }
+
       if (match.params.filterBy) {
         return history.push(`/${type}/${match.params.filterBy}`);
       }
@@ -245,7 +251,12 @@ class SubFeed extends React.Component {
     return (
       <div>
         <ScrollToTop />
-        {((match.path !== "/@:name" && match.params.type !== 'blog') || (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') && ((match.path !== '/tasks' && !this.isTask()) || ((match.path == '/tasks' || (this.isTask())) && this.isModerator() && match.params.filterBy === 'review'))) && !((match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review'))) ?
+        {((match.path.split('/')[2] !== 'moderations') &&
+          (match.path !== '/@:name' && match.params.type !== 'blog') ||
+          (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') &&
+          ((match.path !== '/tasks' && !this.isTask()) ||
+          ((match.path == '/tasks' || (this.isTask())) && this.isModerator() && match.params.filterBy === 'review'))) &&
+          !((match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review'))) ?
           <Tabs activeKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {/*this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null*/}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
@@ -282,6 +293,15 @@ class SubFeed extends React.Component {
           </Tabs>
           : null }
 
+        {(match.path.split('/')[2] === 'moderations') ?
+          <Tabs activeKey={match.params.status || 'any'} onTabClick={type => goTo(`${type}`)}>
+            <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="any" />
+            <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
+            <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
+            <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
+
+          </Tabs> : null}
+        {console.log(contributions)}
         <Feed
           content={ contributions }
           isFetching={ isFetching }
