@@ -4,7 +4,7 @@ import Accordion from 'react-responsive-accordion';
 import './Faq.less';
 import FAQ from '../components/faq.js';
 
-
+ 
 
 export default () =>
   (<div className="main-panel FAQ">
