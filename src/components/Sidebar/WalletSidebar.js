@@ -5,7 +5,9 @@ import { withRouter } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { openTransfer } from '../../wallet/walletActions';
 import { getAuthenticatedUser } from '../../reducers';
+import { STEEM, SBD } from '../../../common/constants/cryptos';
 import Action from '../Button/Action';
+import CryptoTrendingCharts from './CryptoTrendingCharts';
 
 @withRouter
 @connect(
@@ -36,7 +38,7 @@ class WalletSidebar extends React.Component {
   };
 
   render() {
-    const { match, user, isCurrentUser } = this.props;
+    const cryptos = [STEEM.symbol, SBD.symbol];
 
     return (
       <div>
@@ -46,6 +48,7 @@ class WalletSidebar extends React.Component {
           text={<FormattedMessage id="transfer" defaultMessage="Transfer" />}
           onClick={this.handleOpenTransfer}
         />
+        <CryptoTrendingCharts cryptos={cryptos} />
       </div>
     );
   }

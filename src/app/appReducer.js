@@ -2,6 +2,7 @@ import _ from 'lodash';
 import * as appTypes from './appActions';
 import * as authActions from '../auth/authActions';
 import * as postActions from '../post/postActions';
+import { getCryptoPriceIncreaseDetails } from '../helpers/cryptosHelper';
 
 const initialState = {
   isFetching: false,
@@ -12,6 +13,7 @@ const initialState = {
   trendingTopicsLoading: false,
   trendingTopics: [],
   rewardFund: {},
+  cryptosPriceHistory: {},
   currentMedianHistoryPrice: {},
 };
 
@@ -93,6 +95,38 @@ export default (state = initialState, action) => {
           ...action.payload,
         },
       };
+    case appTypes.REFRESH_CRYPTO_PRICE_HISTORY:
+      return {
+        ...state,
+        cryptosPriceHistory: {
+          ...state.cryptosPriceHistory,
+          [action.payload]: null,
+        },
+      };
+    case appTypes.GET_CRYPTO_PRICE_HISTORY.SUCCESS: {
+      const { symbol, usdPriceHistory, btcPriceHistory } = action.payload;
+      const usdPriceHistoryByClose = _.map(usdPriceHistory.Data, data => data.close);
+      const btcPriceHistoryByClose = _.map(btcPriceHistory.Data, data => data.close);
+      const priceDetails = getCryptoPriceIncreaseDetails(
+        usdPriceHistoryByClose,
+        btcPriceHistoryByClose,
+      );
+      const btcAPIError = btcPriceHistory.Response === 'Error';
+      const usdAPIError = usdPriceHistory.Response === 'Error';
+
+      return {
+        ...state,
+        cryptosPriceHistory: {
+          ...state.cryptosPriceHistory,
+          [symbol]: {
+            usdPriceHistory: usdPriceHistoryByClose,
+            priceDetails,
+            btcAPIError,
+            usdAPIError,
+          },
+        },
+      };
+    }
     default:
       return state;
   }
@@ -105,4 +139,5 @@ export const getRewardFund = state => state.rewardFund;
 export const getIsTrendingTopicsLoading = state => state.trendingTopicsLoading;
 export const getTrendingTopics = state => state.trendingTopics;
 export const getIsFetching = state => state.isFetching;
+export const getCryptosPriceHistory = state => state.cryptosPriceHistory;
 export const getCurrentMedianHistoryPrice = state => state.currentMedianHistoryPrice;
