@@ -1,21 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
+import { withRouter } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
+import { openTransfer } from '../../wallet/walletActions';
 import { getAuthenticatedUser } from '../../reducers';
 import Action from '../Button/Action';
 
-@injectIntl
+@withRouter
 @connect(
   state => ({
     user: getAuthenticatedUser(state),
   }),
+  {
+    openTransfer,
+  },
 )
 class WalletSidebar extends React.Component {
   static propTypes = {
     user: PropTypes.shape(),
     isCurrentUser: PropTypes.bool,
-    intl: PropTypes.shape().isRequired,
+    match: PropTypes.shape().isRequired,
+    openTransfer: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -23,11 +29,23 @@ class WalletSidebar extends React.Component {
     isCurrentUser: false,
   };
 
+  handleOpenTransfer = () => {
+    const { match, user, isCurrentUser } = this.props;
+    const username = match.params.name === user.name || isCurrentUser ? '' : match.params.name;
+    this.props.openTransfer(username);
+  };
 
   render() {
+    const { match, user, isCurrentUser } = this.props;
 
     return (
       <div>
+        <Action
+          primary
+          style={{ marginBottom: '10px' }}
+          text={<FormattedMessage id="transfer" defaultMessage="Transfer" />}
+          onClick={this.handleOpenTransfer}
+        />
       </div>
     );
   }
