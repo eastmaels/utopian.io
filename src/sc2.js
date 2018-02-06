@@ -46,55 +46,30 @@ function updateMetadata(metadata) {
                 .then(res => res.body);
 }
 
-function broadcast(operations) {
+function broadcast(operations, cb) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/broadcast';
   const session = Cookie.get('session');
-  return request.post(endpoint)
-                .send({ operations })
-                .set('session', session)
-                .then(res => res.body);
+  
+  if (!cb) {
+    return request.post(endpoint)
+                  .send({ operations })
+                  .set('session', session)
+                  .then(res => res.body);
+  } else {
+    return request.post(endpoint)
+                  .send({ operations })
+                  .set('session', session)
+                  .then(function (ret) {
+                        if (ret.error) {
+                          cb(new SDKError('sc2-sdk error', ret), null);
+                        } else {
+                          cb(null, ret);
+                        }
+                      }, function (err) {
+                        return cb(new SDKError('sc2-sdk error', err), null);
+                      });
+  }
 }
-
-function send(route, method, body, cb) {
-  var url = process.env.UTOPIAN_API + route;
-  var retP = fetch(url, {
-    method: method,
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-      Session: Cookie.get('session')
-    },
-    body: JSON.stringify(body)
-  }).then(function (res) {
-    var result = res.json();
-    // If the status is something other than 200 we need
-    // to reject the result since the request is not considered as a fail
-    if (res.status !== 200) {
-      return Promise.resolve(result).then(function (result2) {
-        return Promise.reject(new SDKError('sc2-sdk error', result2));
-      });
-    } else if (result.error) {
-      return Promise.reject(new SDKError('sc2-sdk error', result));
-    }
-    return Promise.resolve(result);
-  });
-
-  if (!cb) return retP;
-
-  return retP.then(function (ret) {
-    if (ret.error) {
-      cb(new SDKError('sc2-sdk error', ret), null);
-    } else {
-      cb(null, ret);
-    }
-  }, function (err) {
-    return cb(new SDKError('sc2-sdk error', err), null);
-  });
-};
-
-function broadcast_with_cb(operations, cb) {
-  return send('broadcast', 'POST', { operations: operations }, cb);
-};
 
 function claimRewardBalance(account, rewardSteem, rewardSbd, rewardVests, cb) {
   var params = {
@@ -103,7 +78,7 @@ function claimRewardBalance(account, rewardSteem, rewardSbd, rewardVests, cb) {
     reward_sbd: rewardSbd,
     reward_vests: rewardVests
   };
-  return broadcast_with_cb([['claim_reward_balance', params]], cb);
+  return broadcast([['claim_reward_balance', params]], cb);
 };
 
 function vote(voter, author, permlink, weight) {
