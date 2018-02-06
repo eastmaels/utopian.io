@@ -7,6 +7,7 @@ import Remarkable from 'remarkable';
 const remarkable = new Remarkable({ html: true });
 
 function decodeEntities(body) {
+  
   return body.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 }
 

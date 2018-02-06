@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import * as appTypes from './appActions';
 import * as authActions from '../auth/authActions';
 import * as postActions from '../post/postActions';
@@ -8,9 +9,9 @@ const initialState = {
   locale: 'auto',
   localeLoading: false,
   rate: 0,
-  rewardFund: {},
   trendingTopicsLoading: false,
   trendingTopics: [],
+  rewardFund: {},
   currentMedianHistoryPrice: {},
 };
 
@@ -85,7 +86,6 @@ export default (state = initialState, action) => {
         trendingTopics: [],
       };
     case appTypes.GET_CURRENT_MEDIAN_HISTORY_PRICE_SUCCESS:
-      console.log(state);
       return {
         ...state,
         currentMedianHistoryPrice: {
