@@ -96,6 +96,7 @@
     "ramda": "^0.24.1",
     "raven-js": "^3.8.0",
     "react": "^15.6.2",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-addons-pure-render-mixin": "^15.6.2",
     "react-autocomplete": "^1.7.1",
     "react-collapsible": "^2.0.4",
