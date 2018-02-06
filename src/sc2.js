@@ -158,8 +158,6 @@ module.exports = {
   profile,
   updateMetadata,
   broadcast,
-  send,
-  broadcast_with_cb,
   claimRewardBalance,
   comment,
   vote,
