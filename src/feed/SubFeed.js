@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+
 import * as Actions from "../actions/constants";
 import Feed from "./Feed";
 import EmptyFeed from "../statics/EmptyFeed";
@@ -101,7 +105,6 @@ class SubFeed extends React.Component {
         this.setState({skip: skip + limit});
       });
     } else if(match.path.split('/')[2] === 'moderations') {
-        console.log(match.params.name)
       getContributions({
         limit,
         skip,
@@ -294,14 +297,23 @@ class SubFeed extends React.Component {
           : null }
 
         {(match.path.split('/')[2] === 'moderations') ?
-          <Tabs activeKey={match.params.status || 'any'} onTabClick={type => goTo(`${type}`)}>
-            <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="any" />
-            <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
-            <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
-            <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
-
-          </Tabs> : null}
-        {console.log(contributions)}
+          <div>
+            <Tabs activeKey={match.params.status || ''} onTabClick={type => goTo(`${type}`)}>
+              <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="" />
+              <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
+              <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
+              <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
+            </Tabs>
+            <DateRangePicker
+              startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+              startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+              endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+              endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+              onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+              focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+              onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+            />
+          </div> : null}
         <Feed
           content={ contributions }
           isFetching={ isFetching }
