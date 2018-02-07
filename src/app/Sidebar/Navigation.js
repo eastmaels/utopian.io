@@ -9,7 +9,7 @@ import Sidenav from '../../components/Navigation/Sidenav';
 const Navigation = ({ authenticatedUser, trendingTopicsLoading, trendingTopics }) => (
   <div>
     <Sidenav username={authenticatedUser.name} />
-    {!authenticatedUser ? <Topics loading={trendingTopicsLoading} topics={trendingTopics} /> : null }
+    <Topics loading={trendingTopicsLoading} topics={trendingTopics} />
   </div>
 );
 

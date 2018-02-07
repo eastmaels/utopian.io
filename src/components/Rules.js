@@ -96,18 +96,19 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="translations"/> Translations Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for translations you have updated or created for an Open Source project.</li>
-            <li><b>Minimum 1000 words per translation contribution.</b> Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
-            <li>Proofread or merged translations are always preferred. Submitting translations that are not proofread will lead to a lower vote.</li>
+            <li>This category is meant only for translations you have created or updated for an Open Source project.</li>
+            <li>You must translate a minimum of 1000 words per translation contribution.</li>
+            <li>Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
             <li>You could translate less than the minimum amount of words if the project itself has less to be translated in total. May lead to a lower vote.</li>
-            <li>The contribution will be rejected if the submitted translation is <b>older than 7 days</b> since the submitted contribution. This rule does not apply for proofread translations.</li>
-            <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
-            <li>Only translations on CrowdIn or Github are accepted. You should not translate the words and provide them in your Utopian post directly.</li>
-            <li>Your Github Account or Crowdin Account must match your Steem/Utopian account. If it does not you must use the field "Full Name" in Crowdin to show you are the author.</li>
-            <li>You must include every possible detail to check the translations and the tools you have used to translate.</li>
             <li>Entire translations are always preferred. If you are writing about a partial translation we reserve the right to evaluate the actual work.</li>
+            <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
+            <li>Translations must be provided as a <a href="https://help.github.com/articles/about-pull-requests/">Pull Requst</a> on the GitHub repository.</li>
+            <li>The Pull Request must have been merged within the past <b>14 days</b>.</li>
+            <li>Updates on <b>Own Projects</b> can be committed directly, without a Pull Request. <b>Commits must not be older than 14 days.</b></li>
+            <li>Your GitHub username must match that on Utopian. If it does not, you must add your Utopian username in <a href="https://github.com/settings/profile">your GitHub profile.</a></li>
+            <li>You must include every possible detail to check your translation and the tools you have used to translate.</li>
             <li>Same translations from different authors will be accepted if the moderator can recognise the newest translation has better quality.</li>
-            <li>If the provided translation is obviously machine-translated for more than its 20% or has low quality will be rejected.</li>
+            <li>If the provided translation is obviously machine-translated for more than 20% or has low quality, it will be rejected.</li>
             <li>Proof-reading is not acceptable in Utopian as a valid contribution.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
@@ -195,17 +196,13 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="tutorials"/> Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for providing tutorials about an Open Source project.</li>
+            <li>Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
+            <li>Design or video editing related tutorials, gameplay, simple on-screen instructions, ubiquitous functions (Save, Open, Print, etc.) or basic programming concepts (variables, operators, loops, etc.) will not be accepted.</li>
+            <li>Your contribution can be rejected if the moderator provides a link to another tutorial that covers the same topic better.</li>
             <li>Machine translated tutorials will be rejected.</li>
-            <li>Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
-            <li>End-user focused tutorials must address a minimum of three substantial concepts that are unique to the Open Source project and essential learning requirements for end-users. Preference is given to tutorials that are part of a curriculum (series) of tutorials all of which are sequential and built on previously learned skills and knowledge. Ubiquitous functions, such as Save, Open, and Print are unacceptable as substantial concepts.</li>
-            <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
-            <li>Gameplay is not acceptable as a valid tutorial.</li>
-            <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
-            <li>Tutorials can be in any language.</li>
-            <li>If your tutorial also contains a video you should use the Video Tutorials category.</li>
-            <li>You must write the entire tutorial on the Utopian Post</li>
-            <li>Tutorials should made up a course curriculum, while not mandatory this is highly suggested.</li>
+            <li>You must include the entire tutorial in the Utopian post.</li>
+            <li>If you include a video covering the full tutorial, use the Video Tutorial category. You can not share the same tutorial in both categories.</li>
+            <li>If you create a GitHub repository with additional material (like code samples), make sure to choose the repository of the project your tutorial is about and not your own repository. You can provide links to your repository in your post.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
@@ -217,17 +214,16 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <h2><CategoryIcon from="from-rules"  type="video-tutorials"/> Video Tutorial Rules</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
           <ul>
-            <li>This category is meant only for providing video tutorials about an Open Source project.</li>
+            <li>Video Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
+            <li>Design or video editing related tutorials, gameplay, simple on-screen instructions, ubiquitous functions (Save, Open, Print, etc.) or basic programming concepts (variables, operators, loops, etc.) will not be accepted.</li>
+            <li>Your contribution can be rejected if the moderator provides a link to another tutorial that covers the same topic better.</li>
+            <li>You must mention your Utopian username at the beginning of the video.</li>
             <li>Video Tutorials using a machine voice will be rejected.</li>
-            <li>The video and audio recording should be in HD (720 the min).</li>
-            <li>Video Tutorials may only be about the technical aspects of the project or how-tos for the final users.</li>
-            <li>End-user focused tutorials must address a minimum of three substantial concepts that are unique to the Open Source project and essential learning requirements for end-users. Preference is given to tutorials that are part of a curriculum (series) of tutorials all of which are sequential and built on previously learned skills and knowledge. Ubiquitous functions, such as Save, Open, and Print are unacceptable as substantial concepts.</li>
-            <li>Trivial on-screen installation processes are not acceptable as valid tutorials.</li>
-            <li>Gameplay is not acceptable as a valid tutorial</li>
-            <li>How-tos about graphic and design softwares are not acceptable as valid contributions.</li>
-            <li>Video Tutorials can be in any language. </li>
-            <li>You must embed the video directly in this post. Youtube or Dtube videos are accepted.</li>
-            <li>Video Tutorials should made up a course curriculum, while not mandatory this is highly suggested.</li>
+            <li>The video and audio recording must be in HD (min. 720p).</li>
+            <li>You must host the video on YouTube or DTube and embed it in your post.</li>
+            <li>The video can not be older than 14 days.</li>
+            <li>If you provide a text version of your tutorial, you need to include it or a link to it in your post. You can not submit a separate contribution in the Tutorial category.</li>
+            <li>If you create a GitHub repository with additional material (like code samples), make sure to choose the repository of the project your tutorial is about and not your own repository. You can provide links to your repository in your post.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
@@ -241,7 +237,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>This category is meant only for showing copywriting work you have completed for an Open Source project.</li>
             <li>Linking pull requests from Github is encouraged, but not required if not applicable. </li>
-            <li>Contents of your copywriting can be in any language.</li>
             <li>You must be the author of the copywriting work and provide a clear way to verify that.</li>
             <li><a href="https://en.wikipedia.org/wiki/Copywriting">Read the official Wikipedia explanation for what acceptable Copywriting work is.</a></li>
           </ul>
@@ -260,7 +255,6 @@ export const Rules = ({type, acceptRules, inEditor}) => {
         <li>Blogs must have a unique and consistent format. Posts must be part of a series and contain links to previous parts.</li>
         <li>The first blog post of a series, must contain clear explanations and expectations about the series.</li>
         <li>Blog posts must provide detailed content and overviews related to the open-source projects.</li>
-        <li>Blog posts can be in any language.</li>
         <li>Images, screenshots, links and examples are not necessary but preferred.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.
