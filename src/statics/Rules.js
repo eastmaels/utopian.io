@@ -240,7 +240,7 @@ export default (props) =>
 
       <div>
         <h1>Report a Moderation Issue</h1>
-        <p>If you disagree with a moderator's decision or experience other moderation related issues, you can get in touch with us on Discord. You can mention <b>@Moderators</b> or <b>@Supervisors</b> in the <a href="https://discord.gg/KXpest">#review-discussion</a> channel. Mention Supervisors only in urgent situations. Supervisors and Moderators are not required to and most likely will not respond to direct messages.</p>
+        <p>If you disagree with a moderator's decision or experience other moderation related issues, you can get in touch with us on Discord. You can mention <b>@Moderators</b> or <b>@Supervisors</b> in the <a href="https://discord.gg/KXpest">#review-discussion</a> channel. Mention Supervisors only in urgent situations. <b>Supervisors and Moderators are not required to and most likely will not respond to direct messages</b>.</p>
       </div>
 
       <div>
