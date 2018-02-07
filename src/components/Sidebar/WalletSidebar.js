@@ -8,6 +8,7 @@ import { getAuthenticatedUser } from '../../reducers';
 import { STEEM, SBD } from '../../../common/constants/cryptos';
 import Action from '../Button/Action';
 import CryptoTrendingCharts from './CryptoTrendingCharts';
+import ClaimRewardsBlock from '../../wallet/ClaimRewardsBlock';
 
 @withRouter
 @connect(
@@ -38,6 +39,8 @@ class WalletSidebar extends React.Component {
   };
 
   render() {
+    const { match, user, isCurrentUser } = this.props;
+    const displayClaimRewards = match.params.name === user.name || isCurrentUser;
     const cryptos = [STEEM.symbol, SBD.symbol];
 
     return (
@@ -49,6 +52,7 @@ class WalletSidebar extends React.Component {
           onClick={this.handleOpenTransfer}
         />
         <CryptoTrendingCharts cryptos={cryptos} />
+        {displayClaimRewards && <ClaimRewardsBlock />}
       </div>
     );
   }
