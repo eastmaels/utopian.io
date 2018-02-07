@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { openTransfer } from '../../wallet/walletActions';
 import { getAuthenticatedUser } from '../../reducers';
 import Action from '../Button/Action';
+import ClaimRewardsBlock from '../../wallet/ClaimRewardsBlock';
 
 @withRouter
 @connect(
@@ -37,6 +38,7 @@ class WalletSidebar extends React.Component {
 
   render() {
     const { match, user, isCurrentUser } = this.props;
+    const displayClaimRewards = match.params.name === user.name || isCurrentUser;
 
     return (
       <div>
@@ -46,6 +48,7 @@ class WalletSidebar extends React.Component {
           text={<FormattedMessage id="transfer" defaultMessage="Transfer" />}
           onClick={this.handleOpenTransfer}
         />
+        {displayClaimRewards && <ClaimRewardsBlock />}
       </div>
     );
   }
