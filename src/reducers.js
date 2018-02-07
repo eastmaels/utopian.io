@@ -84,6 +84,7 @@ export const getRewardFund = state => fromApp.getRewardFund(state.app);
 export const getCurrentMedianHistoryPrice = state => fromApp.getCurrentMedianHistoryPrice(state.app);
 export const getIsFetching = state => fromApp.getIsFetching(state.app);
 
+export const getCryptosPriceHistory = state => fromApp.getCryptosPriceHistory(state.app);
 
 export const getFeed = state => fromFeed.getFeed(state.feed);
 

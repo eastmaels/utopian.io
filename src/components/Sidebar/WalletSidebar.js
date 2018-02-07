@@ -5,7 +5,9 @@ import { withRouter } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { openTransfer } from '../../wallet/walletActions';
 import { getAuthenticatedUser } from '../../reducers';
+import { STEEM, SBD } from '../../../common/constants/cryptos';
 import Action from '../Button/Action';
+import CryptoTrendingCharts from './CryptoTrendingCharts';
 import ClaimRewardsBlock from '../../wallet/ClaimRewardsBlock';
 
 @withRouter
@@ -39,6 +41,7 @@ class WalletSidebar extends React.Component {
   render() {
     const { match, user, isCurrentUser } = this.props;
     const displayClaimRewards = match.params.name === user.name || isCurrentUser;
+    const cryptos = [STEEM.symbol, SBD.symbol];
 
     return (
       <div>
@@ -48,6 +51,7 @@ class WalletSidebar extends React.Component {
           text={<FormattedMessage id="transfer" defaultMessage="Transfer" />}
           onClick={this.handleOpenTransfer}
         />
+        <CryptoTrendingCharts cryptos={cryptos} />
         {displayClaimRewards && <ClaimRewardsBlock />}
       </div>
     );
