@@ -255,7 +255,7 @@ export default (props) =>
           <ul>
             <li>You must be at least 18 years old.</li>
             <li>
-              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
+              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise. Please use the <i><b>#utopian-mods</b></i> tag for that post. You should also nominate one existing Supervisor, according to the categories you want to moderate. You can pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
             </li>
             <li>
                 You must <a href="https://docs.google.com/forms/d/1YAkcRyjBRCIrdLOizgO7E8mATAU6_ZSPjL2WCZrPn_4">complete our application form and pass the integrated test</a>.

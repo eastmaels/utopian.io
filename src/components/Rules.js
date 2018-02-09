@@ -164,8 +164,8 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>This category is meant only for providing results of <b>online social engagement</b>, ads and similar for an Open Source project.</li>
             <li>Promotions done on chats (e.g. Whatsapp, Telegram and similar) won't be accepted as valid contributions.</li>
-            <li>Only ads on Search engines, Social media platforms, Thunderclap campaigns, posts on social media accounts with at least 10000 followers / potential audience will be accepted as valid contributions.</li>
-            <li>You must have reached at least an audience of 1000 people.</li>
+            Valid contributions to the visibility category are paid search engine and display ads placement; paid social media ads; Thunderclap campaigns and posts to social media accounts with over 10,000 unique followers.
+            <li>You must have reached at least an audience of 5000 people.</li>
             <li>You must include links and proofs of the visibility effort you made and write down the results.</li>
             <li>You must provide a clear way to recognise you are the author of the social effort, by matching your Steem/Utopian account with the one on the social platforms or by using any other field to immediately verify that.</li>
           </ul>
@@ -217,7 +217,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Video Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions, ubiquitous functions (Save, Open, Print, etc.) or basic programming concepts (variables, operators, loops, etc.) will not be accepted.</li>
             <li>Your contribution can be rejected if the moderator provides a link to another tutorial that covers the same topic better.</li>
-            <li>You must mention your Utopian username at the beginning of the video.</li>
+            <li>A personal introduction should be included in the video [SOFT]</li>
             <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>The video and audio recording must be in HD (min. 720p).</li>
             <li>You must host the video on YouTube or DTube and embed it in your post.</li>
