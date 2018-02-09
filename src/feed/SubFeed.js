@@ -220,6 +220,20 @@ class SubFeed extends React.Component {
     }
   }
 
+  renderDatePicker() {
+    return (
+      <DateRangePicker
+        startDate={this.state.startDate} // momentPropTypes.momentObj or null,
+        startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+        endDate={this.state.endDate} // momentPropTypes.momentObj or null,
+        endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+        onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
+        focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+        onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+      />
+    );
+  }
+
   render() {
     const { loading, history, match, loaded, location, isModerator, isOwner, project } = this.props;
 
@@ -303,16 +317,8 @@ class SubFeed extends React.Component {
               <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
               <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
               <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
+              <TabPane tab={renderDatePicker()} key="pending" />
             </Tabs>
-            <DateRangePicker
-              startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-              startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-              endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-              endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-              onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-              focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-              onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
-            />
           </div> : null}
         <Feed
           content={ contributions }
