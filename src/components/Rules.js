@@ -164,7 +164,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>This category is meant only for providing results of <b>online social engagement</b>, ads and similar for an Open Source project.</li>
             <li>Promotions done on chats (e.g. Whatsapp, Telegram and similar) won't be accepted as valid contributions.</li>
-            <li>Only ads on Search engines, Social media platforms, Thunderclap campaigns, posts on social media accounts with at least 10000 followers / potential audience will be accepted as valid contributions.</li>
+            Valid contributions to the visibility category are paid search engine and display ads placement; paid social media ads; Thunderclap campaigns and posts to social media accounts with over 10,000 unique followers.
             <li>You must have reached at least an audience of 5000 people.</li>
             <li>You must include links and proofs of the visibility effort you made and write down the results.</li>
             <li>You must provide a clear way to recognise you are the author of the social effort, by matching your Steem/Utopian account with the one on the social platforms or by using any other field to immediately verify that.</li>
