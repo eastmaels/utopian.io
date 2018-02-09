@@ -13,7 +13,7 @@ function getLoginUrl(state) {
   const redirect = `redirect_uri=${url}`;
 
   const response = 'response_type=code';
-  const clientId = `client_id=${encodeURIComponent('utopian.app')}`;
+  const clientId = `client_id=${encodeURIComponent(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian.app')}`;
   state = `state=${state ? encodeURIComponent(state) : ''}`;
   const scopes = [
     'vote',

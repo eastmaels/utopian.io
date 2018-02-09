@@ -317,9 +317,9 @@ class SubFeed extends React.Component {
               <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
               <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
               <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
-              <TabPane tab={renderDatePicker()} key="pending" />
             </Tabs>
           </div> : null}
+        {(match.path.split('/')[2] === 'moderations') ? this.renderDatePicker() : null}
         <Feed
           content={ contributions }
           isFetching={ isFetching }
