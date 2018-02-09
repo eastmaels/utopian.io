@@ -217,7 +217,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Video Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions, ubiquitous functions (Save, Open, Print, etc.) or basic programming concepts (variables, operators, loops, etc.) will not be accepted.</li>
             <li>Your contribution can be rejected if the moderator provides a link to another tutorial that covers the same topic better.</li>
-            <li>You must mention your Utopian username at the beginning of the video.</li>
+            <li>A personal introduction should be included in the video [SOFT]</li>
             <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>The video and audio recording must be in HD (min. 720p).</li>
             <li>You must host the video on YouTube or DTube and embed it in your post.</li>
