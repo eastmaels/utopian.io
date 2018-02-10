@@ -1,10 +1,10 @@
-import React from "react";
-import {Rules} from "../components/Rules";
-import {RulesTask} from "../components/RulesTask";
+import React from 'react';
+import { Rules } from '../components/Rules';
+import { RulesTask } from '../components/RulesTask';
 
-import "./Rules.less";
+import './Rules.less';
 
-export default (props) =>
+export default props =>
   (<div className="main-panel rules-section">
     <div className="container text-center my-5">
       <h1>General Rules</h1>
@@ -203,7 +203,7 @@ export default (props) =>
       <div>
         <h1>Categories Rules</h1>
         <div><Rules inEditor={false} type="ideas" /></div>
-        {/*<div><Rules inEditor={false} type="sub-projects" /></div>*/}
+        {/* <div><Rules inEditor={false} type="sub-projects" /></div>*/}
         <div><Rules inEditor={false} type="development" /></div>
         <div><Rules inEditor={false} type="bug-hunting" /></div>
         <div><Rules inEditor={false} type="translations" /></div>
@@ -240,7 +240,7 @@ export default (props) =>
 
       <div>
         <h1>Report a Moderation Issue</h1>
-        <p>If you disagree with a moderator's decision or experience other moderation related issues, you can get in touch with us on Discord. You can mention <b>@Moderators</b> or <b>@Supervisors</b> in the <a href="https://discord.gg/KXpest">#review-discussion</a> channel. Mention Supervisors only in urgent situations.<br><br><b>Supervisors and Moderators are not required to and most likely will not respond to direct messages</b>.</p>
+        <p>If you disagree with a moderator\'s decision or experience other moderation related issues, you can get in touch with us on Discord. You can mention <b>@Moderators</b> or <b>@Supervisors</b> in the <a href="https://discord.gg/KXpest">#review-discussion</a> channel. Mention Supervisors only in urgent situations.<br /><br /><b>Supervisors and Moderators are not required to and most likely will not respond to direct messages</b>.</p>
       </div>
 
       <div>
@@ -255,7 +255,7 @@ export default (props) =>
           <ul>
             <li>You must be at least 18 years old.</li>
             <li>
-              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise. Please use the <i><b>#utopian-mods</b></i> tag for that post. You should also nominate one existing Supervisor, according to the categories you want to moderate. You can pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
+              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
             </li>
             <li>
                 You must <a href="https://docs.google.com/forms/d/1YAkcRyjBRCIrdLOizgO7E8mATAU6_ZSPjL2WCZrPn_4">complete our application form and pass the integrated test</a>.

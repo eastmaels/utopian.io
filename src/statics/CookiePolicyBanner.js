@@ -43,12 +43,9 @@ export default class CookiePolicyBanner extends Component {
         <Button
           className="CookiePolicyBanner__ProceedButton"
           onClick={this.handleAcceptButtonClick}
-        > <Icon type="close" />
+        ><Icon type="close" />
         </Button>
       </div>
     );
   }
 }
-
-
-// export default () => <div className="CookiePolicyBanner">dupa</div>
