@@ -14,6 +14,7 @@ import { getUser } from './actions/user';
 import { login, logout } from './auth/authActions';
 import { getRate, getRewardFund, getTrendingTopics, getCurrentMedianHistoryPrice } from './app/appActions';
 import Topnav from './components/Navigation/Topnav';
+import CookiePolicyBanner from './statics/CookiePolicyBanner';
 import Transfer from './wallet/Transfer';
 import * as reblogActions from './app/Reblog/reblogActions';
 import getTranslations, { getAvailableLocale } from './translations';
@@ -136,12 +137,18 @@ export default class Wrapper extends React.PureComponent {
       <IntlProvider key={locale} locale={locale} messages={translations}>
         <Layout>
           <Layout.Header style={{ position: 'fixed', width: '100%', zIndex: 5 }}>
-            <Topnav username={user.name} onMenuItemClick={this.handleMenuItemClick} history={this.props.history} location={location} />
+            <Topnav
+              username={user.name}
+              onMenuItemClick={this.handleMenuItemClick}
+              history={this.props.history}
+              location={location}
+            />
           </Layout.Header>
           <div className="content">
             {this.props.children}
             <Transfer />
           </div>
+          <CookiePolicyBanner />
         </Layout>
       </IntlProvider>
     );
