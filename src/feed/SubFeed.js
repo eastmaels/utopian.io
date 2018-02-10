@@ -11,7 +11,7 @@ import EmptyFeed from "../statics/EmptyFeed";
 import ScrollToTop from "../components/Utils/ScrollToTop";
 import {getIsAuthenticated, getAuthenticatedUser} from "../reducers";
 // @UTOPIAN
-import {getContributions} from "../actions/contributions";
+import { getContributions, getModerations } from "../actions/contributions";
 import {getModerators} from "../actions/moderators";
 import CategoryIcon from '../components/CategoriesIcons';
 
@@ -31,6 +31,7 @@ const TabPane = Tabs.TabPane;
   }),
   {
     getContributions,
+    getModerations,
     getModerators
   },
 )
@@ -63,7 +64,7 @@ class SubFeed extends React.Component {
     const { getModerators, match, history } = this.props;
     getModerators();
 
-    if (match.params.status && !this.isModerator()) {
+    if (match.params.status && !this.isModerator() && match.path.split('/')[2] !== 'moderations') {
       history.push('/all/review');
     }
   }
@@ -74,7 +75,7 @@ class SubFeed extends React.Component {
   }
 
   loadContributions (nextProps = false) {
-    const { match, getContributions, user, contributions } = nextProps || this.props;
+    const { match, getContributions, getModerations, user, contributions } = nextProps || this.props;
     const skip =  nextProps ? 0 : this.state.skip;
     // console.log('[c] m',match);
     const limit = 20;
@@ -104,12 +105,15 @@ class SubFeed extends React.Component {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
       });
-    } else if(match.path.split('/')[2] === 'moderations') {
-      getContributions({
+    } else if (match.path.split('/')[2] === 'moderations') {
+      getModerations({
         limit,
         skip,
-        status: match.params.status || 'any',
-        moderator: 'ruah',//match.params.name,
+        post_status: match.params.status || 'any',
+        start_date: (!match.params.startDate || match.params.startDate === '') ? new Date(0).toISOString() : match.params.startDate,
+        end_date: (!match.params.endDate || match.params.endDate === '') ? new Date().toISOString() : match.params.endDate,
+        moderator: 'tykee',//match.params.name,
+        reset: skip > 0 ? false : true,
       }).then(res => {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
@@ -168,7 +172,7 @@ class SubFeed extends React.Component {
         return contribution.author === match.params.name &&
           !contribution.flagged;
       } else if (match.path.split('/')[2] === 'moderations') {
-        return contribution[match.params.status || 'author'] && contribution.moderator === 'ruah' //match.params.name;
+        return true;
       } else if ((match.params.type && match.params.type === 'tasks') || (match.path === '/tasks') || (match.filterBy === 'review' && contribution.reviewed === false && contribution.flagged === false)) {
         // console.log("PATH2 /tasks ",contribution.json_metadata.type, contribution.reviewed);
         return (contribution.json_metadata.type.indexOf("task") > -1) &&
