@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import 'react-dates/lib/css/_datepicker.css';
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
+import moment from 'moment';
 
 import * as Actions from "../actions/constants";
 import Feed from "./Feed";
@@ -106,17 +107,22 @@ class SubFeed extends React.Component {
         this.setState({skip: skip + limit});
       });
     } else if (match.path.split('/')[2] === 'moderations') {
+      if (match.params.status === '') {
+        match.params.status = 'any';
+      }
       getModerations({
         limit,
         skip,
-        post_status: match.params.status || 'any',
-        start_date: (!match.params.startDate || match.params.startDate === '') ? new Date(0).toISOString() : match.params.startDate,
-        end_date: (!match.params.endDate || match.params.endDate === '') ? new Date().toISOString() : match.params.endDate,
+        post_status: match.params.status,
+        start_date: (this.state.startDate) ? moment(this.state.startDate).format('YYYY-MM-DD') : new Date(0).toISOString(),
+        end_date: (this.state.endDate) ? moment(this.state.endDate).format('YYYY-MM-DD') : new Date().toISOString(),
         moderator: 'tykee',//match.params.name,
-        reset: skip > 0 ? false : true,
+        reset: (skip > 0 && !(this.state.startDate || this.state.endDate)) ? false : true,
       }).then(res => {
         this.total = res.response.total;
-        this.setState({skip: skip + limit});
+        this.setState({
+          skip: skip + limit
+        });
       });
     } else if (match.params.filterBy === 'review') {
       getContributions({
@@ -224,16 +230,22 @@ class SubFeed extends React.Component {
     }
   }
 
-  renderDatePicker() {
+  renderDatePicker(toggleDateFilter) {
     return (
       <DateRangePicker
-        startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-        startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-        endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-        endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-        onDatesChange={({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-        focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-        onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+        startDate={this.state.startDate}
+        startDateId="start_date_id"
+        endDate={this.state.endDate}
+        endDateId="end_date_id"
+        onDatesChange={({ startDate, endDate }) => {
+          this.setState({ startDate, endDate, skip: 0 }, function() {
+            this.loadContributions();
+          });
+        }}
+        focusedInput={this.state.focusedInput}
+        onFocusChange={focusedInput => this.setState({ focusedInput })}
+        showClearDates
+        isOutsideRange={() => false}
       />
     );
   }
@@ -244,7 +256,6 @@ class SubFeed extends React.Component {
     const contributions = this.renderContributions();
     const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
     const hasMore = this.total > contributions.length;
-
 
     const goTo = (type) => {
       const { history, location, match } = this.props;
@@ -266,7 +277,24 @@ class SubFeed extends React.Component {
       }
 
       history.push(`/${type}`);
+    }
 
+    const toggleDateFilter = (startDate, endDate) => {
+      const { history, location, match } = this.props;
+      const startDateString = startDate.format('YYYY-MM-DD');
+      const endDateString = endDate.format('YYYY-MM-DD');
+      let dateString = '';
+
+      if ((!startDateString || startDateString === '') && endDateString && endDateString !== '') {
+        dateString = dateString.concat(`${new Date(0).toISOString()}/${endDateString}`);
+      } else {
+        dateString = dateString.concat(`${startDateString}`);
+        if (endDateString && endDateString !== '') {
+          dateString = dateString.concat(`/${endDateString}`);
+        }
+      }
+
+      return history.push(`${dateString}`);
     }
 
     return (
@@ -315,15 +343,13 @@ class SubFeed extends React.Component {
           : null }
 
         {(match.path.split('/')[2] === 'moderations') ?
-          <div>
-            <Tabs activeKey={match.params.status || ''} onTabClick={type => goTo(`${type}`)}>
-              <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="" />
-              <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
-              <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
-              <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
-            </Tabs>
-          </div> : null}
-        {(match.path.split('/')[2] === 'moderations') ? this.renderDatePicker() : null}
+          <Tabs className="filter-tab" activeKey={match.params.status || ''} onTabClick={type => goTo(`${type}`)}>
+            <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="" />
+            <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
+            <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
+            <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
+          </Tabs>: null}
+        {(match.path.split('/')[2] === 'moderations') ? this.renderDatePicker(toggleDateFilter) : null}
         <Feed
           content={ contributions }
           isFetching={ isFetching }
