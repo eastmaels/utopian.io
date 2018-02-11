@@ -3,8 +3,24 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { connect } from 'react-redux';
+import * as R from 'ramda';
+
+import { getModerators } from '../actions/moderators';
+import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
+
 import './UserMenu.less';
 
+@connect(
+  state => ({
+    authenticated: getIsAuthenticated(state),
+    user: getAuthenticatedUser(state),
+    moderators: state.moderators,
+  }),
+  {
+    getModerators,
+  },
+)
 class UserMenu extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
@@ -33,8 +49,17 @@ class UserMenu extends React.Component {
     });
   }
 
+  componentWillMount() {
+    const { getModerators, moderators, user } = this.props;
+    getModerators();
+  }
 
   getItemClasses = key => classNames('UserMenu__item', { 'UserMenu__item--active': this.state.current === key });
+
+  isModerator() {
+    const { moderators, user } = this.props;
+    return R.find(R.propEq('account', user.name))(moderators);
+  }
 
   handleClick = (e) => {
     const key = e.currentTarget.dataset.key;
@@ -51,6 +76,10 @@ class UserMenu extends React.Component {
               <li className={this.getItemClasses('discussions')} onClick={this.handleClick} role="presentation" data-key="discussions">
                 <FormattedMessage id="contributions" defaultMessage="Contributions" />
               </li>
+              {this.isModerator() &&
+              <li className={this.getItemClasses('moderations')} onClick={this.handleClick} role="presentation" data-key="moderations">
+                <FormattedMessage id="moderations" defaultMessage="Moderations" /> 
+              </li>}
               {/*<li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
                 <FormattedMessage id="comments" defaultMessage="Comments" />
               </li>*/}

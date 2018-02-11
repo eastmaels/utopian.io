@@ -14,6 +14,7 @@ function getLoginUrl(state) {
   const redirect = `redirect_uri=${url}`;
 
   const response = 'response_type=code';
+
   const clientId = `client_id=${encodeURIComponent(app)}`;
   state = `state=${state ? encodeURIComponent(state) : ''}`;
   const scopes = [
