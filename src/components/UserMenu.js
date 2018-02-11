@@ -49,13 +49,10 @@ class UserMenu extends React.Component {
     });
   }
 
-<<<<<<< HEAD
   componentWillMount() {
     const { getModerators, moderators, user } = this.props;
     getModerators();
   }
-=======
->>>>>>> 3fdb9b6c527508fd5a28cc8ea413c82d1a46259e
 
   getItemClasses = key => classNames('UserMenu__item', { 'UserMenu__item--active': this.state.current === key });
 
