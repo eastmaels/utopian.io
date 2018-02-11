@@ -230,7 +230,7 @@ class SubFeed extends React.Component {
     }
   }
 
-  renderDatePicker(toggleDateFilter) {
+  renderDatePicker() {
     return (
       <DateRangePicker
         startDate={this.state.startDate}
@@ -277,24 +277,6 @@ class SubFeed extends React.Component {
       }
 
       history.push(`/${type}`);
-    }
-
-    const toggleDateFilter = (startDate, endDate) => {
-      const { history, location, match } = this.props;
-      const startDateString = startDate.format('YYYY-MM-DD');
-      const endDateString = endDate.format('YYYY-MM-DD');
-      let dateString = '';
-
-      if ((!startDateString || startDateString === '') && endDateString && endDateString !== '') {
-        dateString = dateString.concat(`${new Date(0).toISOString()}/${endDateString}`);
-      } else {
-        dateString = dateString.concat(`${startDateString}`);
-        if (endDateString && endDateString !== '') {
-          dateString = dateString.concat(`/${endDateString}`);
-        }
-      }
-
-      return history.push(`${dateString}`);
     }
 
     return (
@@ -349,7 +331,7 @@ class SubFeed extends React.Component {
             <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
             <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
           </Tabs>: null}
-        {(match.path.split('/')[2] === 'moderations') ? this.renderDatePicker(toggleDateFilter) : null}
+        {(match.path.split('/')[2] === 'moderations') ? this.renderDatePicker() : null}
         <Feed
           content={ contributions }
           isFetching={ isFetching }
