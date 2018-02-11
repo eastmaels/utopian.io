@@ -1,4 +1,4 @@
-  const postcssFlexbugs = require('postcss-flexbugs-fixes');
+const postcssFlexbugs = require('postcss-flexbugs-fixes');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const path = require('path');
