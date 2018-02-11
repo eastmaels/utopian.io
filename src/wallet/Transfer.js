@@ -6,18 +6,26 @@ import steem from 'steem';
 import sc2 from '../sc2';
 import { Form, Input, Radio, Modal } from 'antd';
 import { closeTransfer } from './walletActions';
-import { getIsAuthenticated, getAuthenticatedUser, getIsTransferVisible, getTransferTo } from '../reducers';
+import {
+  getIsAuthenticated,
+  getAuthenticatedUser,
+  getIsTransferVisible,
+  getTransferTo,
+} from '../reducers';
 import './Transfer.less';
 
 @injectIntl
-@connect(state => ({
-  visible: getIsTransferVisible(state),
-  to: getTransferTo(state),
-  authenticated: getIsAuthenticated(state),
-  user: getAuthenticatedUser(state),
-}), {
-  closeTransfer,
-})
+@connect(
+  state => ({
+    visible: getIsTransferVisible(state),
+    to: getTransferTo(state),
+    authenticated: getIsAuthenticated(state),
+    user: getAuthenticatedUser(state),
+  }),
+  {
+    closeTransfer,
+  },
+)
 @Form.create()
 export default class Transfer extends React.Component {
   static propTypes = {
@@ -37,6 +45,10 @@ export default class Transfer extends React.Component {
   };
 
   static amountRegex = /^[0-9]*\.?[0-9]{0,3}$/;
+
+  static minAccountLength = 3;
+  static maxAccountLength = 16;
+  static exchangeRegex = /^(bittrex|blocktrades|poloniex|changelly|openledge|shapeshiftio|deepcrypto8)$/;
 
   state = {
     currency: 'STEEM',
@@ -58,15 +70,17 @@ export default class Transfer extends React.Component {
     }
   }
 
-  handleBalanceClick = (event) => {
+  handleBalanceClick = event => {
     this.props.form.setFieldsValue({
       amount: parseFloat(event.currentTarget.innerText),
     });
-  }
+  };
 
-  handleCurrencyChange = (event) => {
+  handleCurrencyChange = event => {
     const { form } = this.props;
-    this.setState({ currency: event.target.value }, () => form.validateFields(['amount'], { force: true }));
+    this.setState({ currency: event.target.value }, () =>
+      form.validateFields(['amount'], { force: true }),
+    );
   };
 
   handleContinueClick = () => {
@@ -84,11 +98,11 @@ export default class Transfer extends React.Component {
         this.props.closeTransfer();
       }
     });
-  }
+  };
 
   handleCancelClick = () => this.props.closeTransfer();
 
-  handleAmountChange = (event) => {
+  handleAmountChange = event => {
     const { value } = event.target;
     const { oldAmount } = this.state;
 
@@ -99,28 +113,86 @@ export default class Transfer extends React.Component {
       amount: Transfer.amountRegex.test(value) ? value : oldAmount,
     });
     this.props.form.validateFields(['amount']);
-  }
+  };
+
+  validateMemo = (rule, value, callback) => {
+    const { intl } = this.props;
+    const recipientIsExchange = Transfer.exchangeRegex.test(this.props.form.getFieldValue('to'));
+    if (recipientIsExchange && (!value || value === '')) {
+      callback([
+        new Error(
+          intl.formatMessage({
+            id: 'memo_error_exchange',
+            defaultMessage: 'Memo is required when sending to an exchange.',
+          }),
+        ),
+      ]);
+    } else {
+      callback();
+    }
+  };
 
   validateUsername = (rule, value, callback) => {
     const { intl } = this.props;
+    this.props.form.validateFields(['memo'], { force: true });
 
     if (!value) {
       callback();
       return;
     }
 
+    if (value.length < Transfer.minAccountLength) {
+      callback([
+        new Error(
+          intl.formatMessage(
+            {
+              id: 'username_too_short',
+              defaultMessage: 'Username {username} is too short.',
+            },
+            {
+              username: value,
+            },
+          ),
+        ),
+      ]);
+      return;
+    }
+    if (value.length > Transfer.maxAccountLength) {
+      callback([
+        new Error(
+          intl.formatMessage(
+            {
+              id: 'username_too_long',
+              defaultMessage: 'Username {username} is too long.',
+            },
+            {
+              username: value,
+            },
+          ),
+        ),
+      ]);
+      return;
+    }
     steem.api.getAccounts([value], (err, result) => {
       if (result[0]) {
         callback();
       } else {
         callback([
-          new Error(intl.formatMessage({ id: 'to_error_not_found_username', defaultMessage: "Couldn't find user with name {username}." }, {
-            username: value,
-          })),
+          new Error(
+            intl.formatMessage(
+              {
+                id: 'to_error_not_found_username',
+                defaultMessage: "Couldn't find user with name {username}.",
+              },
+              {
+                username: value,
+              },
+            ),
+          ),
         ]);
       }
     });
-  }
+  };
 
   validateBalance = (rule, value, callback) => {
     const { intl, authenticated, user } = this.props;
@@ -129,7 +201,12 @@ export default class Transfer extends React.Component {
 
     if (value && currentValue <= 0) {
       callback([
-        new Error(intl.formatMessage({ id: 'amount_error_zero', defaultMessage: 'Amount has to be higher than 0.' })),
+        new Error(
+          intl.formatMessage({
+            id: 'amount_error_zero',
+            defaultMessage: 'Amount has to be higher than 0.',
+          }),
+        ),
       ]);
       return;
     }
@@ -138,12 +215,14 @@ export default class Transfer extends React.Component {
 
     if (authenticated && currentValue !== 0 && currentValue > parseFloat(selectedBalance)) {
       callback([
-        new Error(intl.formatMessage({ id: 'amount_error_funds', defaultMessage: 'Insufficient funds.' })),
+        new Error(
+          intl.formatMessage({ id: 'amount_error_funds', defaultMessage: 'Insufficient funds.' }),
+        ),
       ]);
     } else {
       callback();
     }
-  }
+  };
 
   render() {
     const { intl, visible, authenticated, user } = this.props;
@@ -173,50 +252,89 @@ export default class Transfer extends React.Component {
           <Form.Item label={<FormattedMessage id="to" defaultMessage="To" />}>
             {getFieldDecorator('to', {
               rules: [
-                { required: true, message: intl.formatMessage({ id: 'to_error_empty', defaultMessage: 'Recipient is required.' }) },
+                {
+                  required: true,
+                  message: intl.formatMessage({
+                    id: 'to_error_empty',
+                    defaultMessage: 'Recipient is required.',
+                  }),
+                },
                 { validator: this.validateUsername },
               ],
-            })(<Input
-              type="text"
-              placeholder={intl.formatMessage({ id: 'to_placeholder', defaultMessage: 'Payment recipient' })}
-            />)}
+            })(
+              <Input
+                type="text"
+                placeholder={intl.formatMessage({
+                  id: 'to_placeholder',
+                  defaultMessage: 'Payment recipient',
+                })}
+              />,
+            )}
           </Form.Item>
           <Form.Item label={<FormattedMessage id="amount" defaultMessage="Amount" />}>
             {getFieldDecorator('amount', {
               trigger: '',
               rules: [
-                { required: true, message: intl.formatMessage({ id: 'amount_error_empty', defaultMessage: 'Amount is required.' }) },
+                {
+                  required: true,
+                  message: intl.formatMessage({
+                    id: 'amount_error_empty',
+                    defaultMessage: 'Amount is required.',
+                  }),
+                },
                 {
                   pattern: Transfer.amountRegex,
                   message: intl.formatMessage({
                     id: 'amount_error_format',
-                    defaultMessage: 'Incorrect format. Use comma or dot as decimal separator. Use at most 3 decimal places.',
+                    defaultMessage:
+                      'Incorrect format. Use comma or dot as decimal separator. Use at most 3 decimal places.',
                   }),
                 },
                 { validator: this.validateBalance },
               ],
-            })(<Input
-              addonAfter={currencyPrefix}
-              onChange={this.handleAmountChange}
-              placeholder={intl.formatMessage({ id: 'amount_placeholder', defaultMessage: 'How much do you want to send' })}
-              style={{ width: '100%' }}
-            />)}
-            {authenticated && <FormattedMessage
-              id="balance_amount"
-              defaultMessage="Your balance: {amount}"
-              values={{
-                amount: <span role="presentation" onClick={this.handleBalanceClick} className="balance">{balance}</span>,
-              }}
-            />}
+            })(
+              <Input
+                addonAfter={currencyPrefix}
+                onChange={this.handleAmountChange}
+                placeholder={intl.formatMessage({
+                  id: 'amount_placeholder',
+                  defaultMessage: 'How much do you want to send',
+                })}
+                style={{ width: '100%' }}
+              />,
+            )}
+            {authenticated && (
+              <FormattedMessage
+                id="balance_amount"
+                defaultMessage="Your balance: {amount}"
+                values={{
+                  amount: (
+                    <span role="presentation" onClick={this.handleBalanceClick} className="balance">
+                      {balance}
+                    </span>
+                  ),
+                }}
+              />
+            )}
           </Form.Item>
           <Form.Item label={<FormattedMessage id="memo" defaultMessage="Memo" />}>
-            {getFieldDecorator('memo')(<Input.TextArea
-              autosize={{ minRows: 2, maxRows: 6 }}
-              placeholder={intl.formatMessage({ id: 'memo_placeholder', defaultMessage: 'Additional message to include in this payment (optional)' })}
-            />)}
+            {getFieldDecorator('memo', {
+              rules: [{ validator: this.validateMemo }],
+            })(
+              <Input.TextArea
+                autosize={{ minRows: 2, maxRows: 6 }}
+                placeholder={intl.formatMessage({
+                  id: 'memo_placeholder',
+                  defaultMessage: 'Additional message to include in this payment (optional)',
+                })}
+              />,
+            )}
           </Form.Item>
         </Form>
-        <FormattedMessage id="transfer_modal_info" defaultMessage="Click the button below to be redirected to SteemConnect to complete your transaction." />
+        <FormattedMessage
+          id="transfer_modal_info"
+          defaultMessage="Click the button below to be redirected to SteemConnect to complete your transaction."
+        />
       </Modal>
     );
   }
