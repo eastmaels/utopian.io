@@ -116,7 +116,7 @@ class SubFeed extends React.Component {
         post_status: match.params.status,
         start_date: (this.state.startDate) ? moment(this.state.startDate).format('YYYY-MM-DD') : new Date(0).toISOString(),
         end_date: (this.state.endDate) ? moment(this.state.endDate).format('YYYY-MM-DD') : new Date().toISOString(),
-        moderator: 'tykee',//match.params.name,
+        moderator: match.params.name,
         reset: (skip > 0 && !(this.state.startDate || this.state.endDate)) ? false : true,
       }).then(res => {
         this.total = res.response.total;
