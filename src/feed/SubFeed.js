@@ -1,13 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize';
+import { DateRangePicker } from 'react-dates';
+import moment from 'moment';
+
 import * as Actions from "../actions/constants";
 import Feed from "./Feed";
 import EmptyFeed from "../statics/EmptyFeed";
 import ScrollToTop from "../components/Utils/ScrollToTop";
 import {getIsAuthenticated, getAuthenticatedUser} from "../reducers";
 // @UTOPIAN
-import {getContributions} from "../actions/contributions";
+import { getContributions, getModerations } from "../actions/contributions";
 import {getModerators} from "../actions/moderators";
 import CategoryIcon from '../components/CategoriesIcons';
 
@@ -27,6 +32,7 @@ const TabPane = Tabs.TabPane;
   }),
   {
     getContributions,
+    getModerations,
     getModerators
   },
 )
@@ -59,7 +65,7 @@ class SubFeed extends React.Component {
     const { getModerators, match, history } = this.props;
     getModerators();
 
-    if (match.params.status && !this.isModerator()) {
+    if (match.params.status && !this.isModerator() && match.path.split('/')[2] !== 'moderations') {
       history.push('/all/review');
     }
   }
@@ -70,7 +76,7 @@ class SubFeed extends React.Component {
   }
 
   loadContributions (nextProps = false) {
-    const { match, getContributions, user } = nextProps || this.props;
+    const { match, getContributions, getModerations, user, contributions } = nextProps || this.props;
     const skip =  nextProps ? 0 : this.state.skip;
     // console.log('[c] m',match);
     const limit = 20;
@@ -99,6 +105,24 @@ class SubFeed extends React.Component {
       }).then(res => {
         this.total = res.response.total;
         this.setState({skip: skip + limit});
+      });
+    } else if (match.path.split('/')[2] === 'moderations') {
+      if (match.params.status === '') {
+        match.params.status = 'any';
+      }
+      getModerations({
+        limit,
+        skip,
+        post_status: match.params.status,
+        start_date: (this.state.startDate) ? moment(this.state.startDate).format('YYYY-MM-DD') : new Date(0).toISOString(),
+        end_date: (this.state.endDate) ? moment(this.state.endDate).format('YYYY-MM-DD') : new Date().toISOString(),
+        moderator: match.params.name,
+        reset: (skip > 0 && !(this.state.startDate || this.state.endDate)) ? false : true,
+      }).then(res => {
+        this.total = res.response.total;
+        this.setState({
+          skip: skip + limit
+        });
       });
     } else if (match.params.filterBy === 'review') {
       getContributions({
@@ -153,6 +177,8 @@ class SubFeed extends React.Component {
         // console.log("PATH /@:name ", contribution.author, match.params.name, contribution.reviewed, contribution.pending, contribution.flagged);
         return contribution.author === match.params.name &&
           !contribution.flagged;
+      } else if (match.path.split('/')[2] === 'moderations') {
+        return true;
       } else if ((match.params.type && match.params.type === 'tasks') || (match.path === '/tasks') || (match.filterBy === 'review' && contribution.reviewed === false && contribution.flagged === false)) {
         // console.log("PATH2 /tasks ",contribution.json_metadata.type, contribution.reviewed);
         return (contribution.json_metadata.type.indexOf("task") > -1) &&
@@ -204,6 +230,26 @@ class SubFeed extends React.Component {
     }
   }
 
+  renderDatePicker() {
+    return (
+      <DateRangePicker
+        startDate={this.state.startDate}
+        startDateId="start_date_id"
+        endDate={this.state.endDate}
+        endDateId="end_date_id"
+        onDatesChange={({ startDate, endDate }) => {
+          this.setState({ startDate, endDate, skip: 0 }, function() {
+            this.loadContributions();
+          });
+        }}
+        focusedInput={this.state.focusedInput}
+        onFocusChange={focusedInput => this.setState({ focusedInput })}
+        showClearDates
+        isOutsideRange={() => false}
+      />
+    );
+  }
+
   render() {
     const { loading, history, match, loaded, location, isModerator, isOwner, project } = this.props;
 
@@ -211,12 +257,15 @@ class SubFeed extends React.Component {
     const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
     const hasMore = this.total > contributions.length;
 
-
     const goTo = (type) => {
       const { history, location, match } = this.props;
 
       if (match.params.filterBy && type === 'pending') {
         return history.push(`/all/review/pending`);
+      }
+
+      if (match.path.split('/')[2] === 'moderations') {
+        return history.push(`/@${match.params.name}/moderations/${type}`);
       }
 
       if (match.params.filterBy) {
@@ -228,13 +277,17 @@ class SubFeed extends React.Component {
       }
 
       history.push(`/${type}`);
-
     }
 
     return (
       <div>
         <ScrollToTop />
-        {((match.path !== "/@:name" && match.params.type !== 'blog') || (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') && ((match.path !== '/tasks' && !this.isTask()) || ((match.path == '/tasks' || (this.isTask())) && this.isModerator() && match.params.filterBy === 'review'))) && !((match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review'))) ?
+        {((match.path.split('/')[2] !== 'moderations') &&
+          (match.path !== '/@:name' && match.params.type !== 'blog') ||
+          (match.params.type === 'blog' && this.isModerator() && match.params.filterBy === 'review') &&
+          ((match.path !== '/tasks' && !this.isTask()) ||
+          ((match.path == '/tasks' || (this.isTask())) && this.isModerator() && match.params.filterBy === 'review'))) &&
+          !((match.path === '/tasks' || (this.isTask() && match.params.filterBy !== 'review'))) ?
           <Tabs activeKey={match.params.type || 'all'} onTabClick={type => goTo(`${type}`)}>
             {/*this.isModerator() && match.params.filterBy === 'review' ? <TabPane tab={<span><Icon type="safety" />Pending Review</span>} key="pending" /> : null*/}
             <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="all" />
@@ -271,6 +324,14 @@ class SubFeed extends React.Component {
           </Tabs>
           : null }
 
+        {(match.path.split('/')[2] === 'moderations') ?
+          <Tabs className="filter-tab" activeKey={match.params.status || ''} onTabClick={type => goTo(`${type}`)}>
+            <TabPane tab={<span><Icon type="appstore-o" />All</span>} key="" />
+            <TabPane tab={<span className="md-subfeed-icons">Reviewed</span>} key="reviewed" />
+            <TabPane tab={<span className="md-subfeed-icons">Rejected</span>} key="flagged" />
+            <TabPane tab={<span className="md-subfeed-icons">Pending</span>} key="pending" />
+          </Tabs>: null}
+        {(match.path.split('/')[2] === 'moderations') ? this.renderDatePicker() : null}
         <Feed
           content={ contributions }
           isFetching={ isFetching }
