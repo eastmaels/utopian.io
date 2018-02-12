@@ -103,7 +103,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>You could translate less than the minimum amount of words if the project itself has less to be translated in total. May lead to a lower vote.</li>
             <li>Entire translations are always preferred. If you are writing about a partial translation we reserve the right to evaluate the actual work.</li>
             <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
-            <li>Translations must be provided as a <a href="https://help.github.com/articles/about-pull-requests/">Pull Requst</a> on the GitHub repository.</li>
+            <li>If the translations is provided via GitHub is has to be a merged pull request</li>
             <li>The Pull Request must have been merged within the past <b>14 days</b>.</li>
             <li>Updates on <b>Own Projects</b> can be committed directly, without a Pull Request. <b>Commits must not be older than 14 days.</b></li>
             <li>Your GitHub username must match that on Utopian. If it does not, you must add your Utopian username in <a href="https://github.com/settings/profile">your GitHub profile.</a></li>
