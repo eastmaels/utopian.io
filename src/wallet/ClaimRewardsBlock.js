@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
-import SteemConnect from '../steemConnectAPI';
+import sc2 from '../sc2';
 import { getAuthenticatedUser } from '../reducers';
 import { getUserAccountHistory } from './walletActions';
 import { updateAuthUser } from '../auth/authActions';
@@ -49,7 +49,7 @@ class ClaimRewardsBlock extends Component {
     this.setState({
       loading: true,
     });
-    SteemConnect.claimRewardBalance(name, steemBalance, sbdBalance, vestingBalance, err => {
+    sc2.claimRewardBalance(name, steemBalance, sbdBalance, vestingBalance, err => {
       if (!err) {
         this.setState({
           loading: false,
@@ -114,7 +114,7 @@ class ClaimRewardsBlock extends Component {
             </div>
           )}
           <Action
-            text={buttonText}
+            text={<span>{buttonText}</span>}
             disabled={rewardClaimed}
             onClick={this.handleClaimRewards}
             loading={this.state.loading}

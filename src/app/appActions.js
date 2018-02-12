@@ -1,5 +1,7 @@
 import Promise from 'bluebird';
 import fetch from 'isomorphic-fetch';
+import _ from 'lodash';
+import { createAction } from 'redux-actions';
 import { createAsyncActionType } from '../helpers/stateHelpers';
 import { setLocaleMetadata } from '../helpers/metadata';
 
@@ -28,6 +30,9 @@ export const GET_CURRENT_MEDIAN_HISTORY_PRICE_START = '@app/GET_CURRENT_MEDIAN_H
 export const GET_CURRENT_MEDIAN_HISTORY_PRICE_SUCCESS = '@app/GET_CURRENT_MEDIAN_HISTORY_PRICE_SUCCESS';
 export const GET_CURRENT_MEDIAN_HISTORY_PRICE_ERROR = '@app/GET_CURRENT_MEDIAN_HISTORY_PRICE_ERROR';
 
+export const GET_CRYPTO_PRICE_HISTORY = createAsyncActionType('@app/GET_CRYPTOS_PRICE_HISTORY');
+export const REFRESH_CRYPTO_PRICE_HISTORY = '@app/REFRESH_CRYPTO_PRICE_HISTORY';
+export const refreshCryptoPriceHistory = createAction(REFRESH_CRYPTO_PRICE_HISTORY);
 
 export const setLocale = locale =>
   (dispatch) => {
@@ -80,3 +85,31 @@ export const getTrendingTopics = () => (dispatch, getState, { steemAPI }) => {
     },
   });
 };
+
+export const getCryptoPriceHistory = (symbol, refresh = false) => dispatch => {
+  if (refresh) {
+    dispatch(refreshCryptoPriceHistory(symbol));
+  }
+  dispatch({
+    type: GET_CRYPTO_PRICE_HISTORY.ACTION,
+    payload: {
+      promise: Promise.all([
+        fetch(
+          `https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=USD&limit=6`,
+        ).then(res => res.json()),
+        fetch(
+          `https://min-api.cryptocompare.com/data/histoday?fsym=${symbol}&tsym=BTC&limit=6`,
+        ).then(res => res.json()),
+      ]).then(response => {
+        const usdPriceHistory = _.get(response, 0, {});
+        const btcPriceHistory = _.get(response, 1, {});
+        return {
+          usdPriceHistory,
+          btcPriceHistory,
+          symbol,
+        };
+      }),
+    },
+  });
+};
+
