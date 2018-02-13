@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'antd';
+import { Button } from 'antd';
 import { withRouter, NavLink } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import 'antd/dist/antd';
@@ -22,7 +22,7 @@ export default class CookiePolicyBanner extends Component {
 
     Cookies.set(
       'isCookiePolicyAccepted',
-      'true',
+      true,
       {
         expires: 3650, // ten years from now
         domain: process.env.NODE_ENV === 'development'
@@ -39,12 +39,20 @@ export default class CookiePolicyBanner extends Component {
 
     return (
       <div className="CookiePolicyBanner">
-        <p className="CookiePolicyBanner__PolicySummary">To help provide a safer and more optimal experience, we use cookies. By clicking or navigating the site, you agree to allow our collection of information on and off Utopian through cookies. Learn more, including about available controls: <NavLink to="/cookies">Cookies Policy.</NavLink></p>
+        <div>
+          <p className="CookiePolicyBanner__PolicySummary">
+            To help provide a safer and more optimal experience, we use cookies. By clicking or navigating the site, you agree to allow our collection of information on and off Utopian through cookies. Learn more, including about available controls: 
+            <NavLink className="CookiePolicyBanner__PolicyLink" to="/cookies">Cookies Policy</NavLink>.
+          </p>
+          <p className="CookiePolicyBanner__PolicySummary">
+            If you do not agree with our Cookie Policy, 
+            <a href="https://www.google.com" className="CookiePolicyBanner__PolicyLink">please leave the site</a>.
+          </p>
+        </div>
         <Button
           className="CookiePolicyBanner__ProceedButton"
           onClick={this.handleAcceptButtonClick}
-        ><Icon type="close" />
-        </Button>
+        >OK</Button>
       </div>
     );
   }
