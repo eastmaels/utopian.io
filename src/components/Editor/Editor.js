@@ -552,8 +552,11 @@ class Editor extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { intl, loading, isUpdating, isReviewed, type, saving, getGithubRepos, repos, setGithubRepos, user, getPullRequests, pullRequests, parsedPostData } = this.props;
-
     const chosenType = this.state.currentType || type || 'ideas';
+    const hasGithubSynced = () => {
+      if (!user || !user.github || !user.github.lastSynced) return false;
+      return (user.github.lastSynced) != null;
+    };
 
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
@@ -649,6 +652,7 @@ class Editor extends React.Component {
 
         {!this.state.rulesAccepted && !isUpdating  ? <Rules
             inEditor={true}
+            githubSynced={hasGithubSynced()}
             type={chosenType}
             acceptRules={() => this.setState({rulesAccepted: true})} />
           : null}
