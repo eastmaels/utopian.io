@@ -321,6 +321,7 @@ class StoryFull extends React.Component {
     const repository = metaData.repository;
     const postType = post.json_metadata.type;
     const alreadyChecked = isModerator && (post.reviewed || post.pending || post.flagged);
+    const unreviewed = !post.reviewed && !post.pending && !post.flagged;
     const mobileView = (window.innerWidth <= 736);
     const shortLong = (s, l) => {
       if (mobileView) {
@@ -387,16 +388,12 @@ class StoryFull extends React.Component {
             {!mobileView ? 
             <span>
             <h3><center><Icon type="safety" /> Moderation Control </center></h3>
-            {post.reviewed && <p><b>Status: &nbsp;</b> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
-            {post.flagged && <p><b>Status: &nbsp;</b> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
-            {post.pending && <p><b>Status: &nbsp;</b> <Icon type="sync"/>&nbsp; Pending <span className="smallBr"><br/></span> <b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {<p><b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
             </span>
             :
             <span>
             <h3><center><Icon type="safety" /> Moderation  </center></h3>
-            {post.reviewed && <p> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
-            {post.flagged && <p> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
-            {post.pending && <p> <Icon type="sync"/>&nbsp; Pending <span className="smallBr"><br/></span> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
+            {<p> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
             </span>
             }
           </div> 
@@ -446,8 +443,25 @@ class StoryFull extends React.Component {
             {!post.reviewed && <span className="floatRight"><BanUser intl={intl} user={post.author}/>&nbsp;&nbsp;</span>}
           </div> : null
           }
-
         </div> : null}
+
+        <div className="StoryFull__info">
+          {!mobileView ? 
+          <span>
+            {post.reviewed && <p><b>Status: &nbsp;</b> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> </p>}
+            {post.flagged && <p><b>Status: &nbsp;</b> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> </p>}
+            {post.pending && <p><b>Status: &nbsp;</b> <Icon type="sync"/>&nbsp; Pending <span className="smallBr"><br/></span> </p>}
+            {unreviewed && <p><b>Status: &nbsp;</b> <Icon type="eye-o"/>&nbsp; Not Reviewed <span className="smallBr"><br/></span> </p>}
+          </span>
+          :
+          <span>
+            {post.reviewed && <p> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> </p>}
+            {post.flagged && <p> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> </p>}
+            {post.pending && <p> <Icon type="sync"/>&nbsp; Pending <span className="smallBr"><br/></span> </p>}
+            {unreviewed && <p> <Icon type="eye-o"/>&nbsp; Not Reviewed <span className="smallBr"><br/></span> </p>}
+          </span>
+          }
+        </div>
 
         <Contribution
           type={postType}
