@@ -14,7 +14,7 @@ function getLoginUrl(state) {
 
   const response = 'response_type=code';
 
-  const clientId = `client_id=${encodeURIComponent('utopian.app')}`;
+  const clientId = 'client_id=utopian.app';
   state = `state=${state ? encodeURIComponent(state) : ''}`;
   const scopes = [
     'vote',
