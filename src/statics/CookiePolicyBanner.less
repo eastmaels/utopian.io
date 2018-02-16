@@ -12,14 +12,31 @@
   color: #ccc;
   
   &__PolicySummary {
-    max-width: 80em;
-    margin: 1em 0 1em 1em;
-
+    font-size: 90%;
+    max-width: 60em;
+    margin-left: 0.5em;
+    line-height: 105%;
     text-align: justify;
+    
+    &:first-child {
+      margin-top: 0.5em;
+    }
+
+    &:last-child {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  &__PolicyLink {
+    color: #fff;
+    margin-left: 1em;
+    &:before {
+      content: ' ';
+    }
   }
 
   &__ProceedButton {
-    margin: 0 2em;
-    background-color: transparent;
+    margin: 0 3%;
+    height: 200%;
   }
 }

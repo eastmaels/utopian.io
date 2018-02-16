@@ -6,7 +6,7 @@ const AcceptRules = ({acceptRules}) => (
   <Action
     className="accept-rules-btn"
     primary
-    text='I understand. Proceed'
+    text={'I understand. Proceed'}
     onClick={e => {
       e.preventDefault();
       acceptRules();
@@ -14,7 +14,19 @@ const AcceptRules = ({acceptRules}) => (
   />
 );
 
-export const Rules = ({type, acceptRules, inEditor}) => {
+const SyncGithub = () => (
+  <Action
+    className="accept-rules-btn"
+    disabled
+    primary
+    text={'Your Utopian account must be connected to your GitHub account'}
+    onClick={e => {
+      e.preventDefault();
+    }}
+  />
+);
+
+export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
   switch(type) {
     case 'ideas':
       return (
@@ -66,7 +78,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'bug-hunting':
