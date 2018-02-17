@@ -49,7 +49,7 @@ export const getContributionRequest = (author, permlink) => ({
 
 export const getContribution = (author, permlink) => dispatch => dispatch(getContributionRequest(author, permlink));
 
-export const moderatorActionRequest = (author, permlink, moderator, status) => ({
+export const moderatorActionRequest = (author, permlink, moderator, status, type) => ({
   [CALL_API]: {
     types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
     endpoint: `posts/${author}/${permlink}`,
@@ -59,16 +59,17 @@ export const moderatorActionRequest = (author, permlink, moderator, status) => (
       author,
       permlink,
       moderator,
-      reviewed: status === 'reviewed' ,
+      reviewed: status === 'reviewed',
       flagged: status === 'flagged',
       pending: status === 'pending',
+      type: type,
     },
     additionalParams: {},
     absolute: false
   }
 });
 
-export const moderatorAction = (author, permlink, moderator, status) => dispatch => dispatch(moderatorActionRequest(author, permlink, moderator, status));
+export const moderatorAction = (author, permlink, moderator, status, type) => dispatch => dispatch(moderatorActionRequest(author, permlink, moderator, status, type));
 
 export const setContribution = (contribution) => ({
   type: Actions.SET_CONTRIBUTION,
