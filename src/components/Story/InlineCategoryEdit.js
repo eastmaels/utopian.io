@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { broadcastComment } from '../../post/Write/editorActions';
-
 class InlineCategoryEdit extends React.Component {
   constructor (props) {
     super(props);
@@ -27,17 +25,7 @@ class InlineCategoryEdit extends React.Component {
         type: type
     };
 
-    const {
-      author,
-      body,
-      permlink,
-      title,
-      reward_weight,
-      parent_permlink,
-      parent_author,
-    } = this.props.post;
-    const { moderatorAction } = this.props;
-
+    const { post, user, moderatorAction } = this.props;
     moderatorAction(
       post.author,
       post.permlink,
@@ -54,11 +42,10 @@ class InlineCategoryEdit extends React.Component {
       <option value={type.type} key={idx}>{type.slug}</option>
     ))
     const type = this.props.value;
-    console.log(type);
 
     return (
       <select
-        value={type}
+        value={this.state.value}
         className="inline-category-edit-select"
         onChange={ this.onCategoryChange }>
         {types}

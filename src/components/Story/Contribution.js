@@ -182,6 +182,7 @@ const Contribution = ({
             types={types}
             post={post}
             moderatorAction={moderatorAction}
+            user={user}
           /> :
           categorySlug(type)
         }
