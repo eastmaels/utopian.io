@@ -70,9 +70,9 @@ export const moderatorActionRequest = (
           reviewed: status === 'reviewed',
           flagged: status === 'flagged',
           pending: status === 'pending',
-          type: type,
           questions: questions,
           score: score,
+          type: type,
         },
         additionalParams: {},
         absolute: false
