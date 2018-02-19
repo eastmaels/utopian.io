@@ -578,7 +578,7 @@ class StoryFull extends React.Component {
               onClick={() => this.setState({ verifyModal: true })}
             /> : null}
 
-            {!post.reviewed && <span className="floatRight"><BanUser intl={intl} user={post.author}/>&nbsp;&nbsp;</span>}
+            {!post.reviewed && <span className="floatRight"><BanUser intl={intl} username={post.author}/>&nbsp;&nbsp;</span>}
           </div> : null
           }
         </div> : null}

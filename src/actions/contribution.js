@@ -50,21 +50,15 @@ export const getContributionRequest = (author, permlink) => ({
 export const getContribution = (author, permlink) => dispatch => dispatch(getContributionRequest(author, permlink));
 
 export const moderatorActionRequest = (
-    author,
-    permlink,
-    moderator,
-    status,
-    repo,
-  ) => ({
-export const moderatorActionRequest = (
-    author,
-    permlink,
-    moderator,
-    status,
-    questions = [],
-    score = 0,
-    repo,
-  ) => ({
+      author,
+      permlink,
+      moderator,
+      status,
+      questions = [],
+      score = 0,
+      type,
+      repo,
+    ) => ({
     [CALL_API]: {
       types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
       endpoint: `posts/${author}/${permlink}`,
@@ -79,6 +73,7 @@ export const moderatorActionRequest = (
         pending: status === 'pending',
         questions: questions,
         score: score,
+        type: type,
         repo: repo,
       },
       additionalParams: {},
@@ -87,23 +82,26 @@ export const moderatorActionRequest = (
 });
 
 export const moderatorAction = (
-    author,
-    permlink,
-    moderator,
-    status,
-    questions = [],
-    score = 0
-  ) => dispatch => dispatch(
-      moderatorActionRequest(
-          author,
-          permlink,
-          moderator,
-          status,
-          questions,
-          score,
-          repo,
-      )
-  );
+      author,
+      permlink,
+      moderator,
+      status,
+      questions = [],
+      score = 0,
+      type,
+      repo,
+    ) => dispatch => dispatch(
+        moderatorActionRequest(
+            author,
+            permlink,
+            moderator,
+            status,
+            questions,
+            score,
+            type,
+            repo,
+        )
+    );
 
 export const setContribution = (contribution) => ({
   type: Actions.SET_CONTRIBUTION,
