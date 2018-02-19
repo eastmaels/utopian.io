@@ -59,27 +59,27 @@ export const moderatorActionRequest = (
       type,
       repo,
     ) => ({
-    [CALL_API]: {
-      types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
-      endpoint: `posts/${author}/${permlink}`,
-      schema: null,
-      method: 'PUT',
-      payload: {
-        author,
-        permlink,
-        moderator,
-        reviewed: status === 'reviewed' ,
-        flagged: status === 'flagged',
-        pending: status === 'pending',
-        questions: questions,
-        score: score,
-        type: type,
-        repo: repo,
-      },
-      additionalParams: {},
-      absolute: false
-    }
-});
+      [CALL_API]: {
+        types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
+        endpoint: `posts/${author}/${permlink}`,
+        schema: null,
+        method: 'PUT',
+        payload: {
+          author,
+          permlink,
+          moderator,
+          reviewed: status === 'reviewed' ,
+          flagged: status === 'flagged',
+          pending: status === 'pending',
+          questions: questions,
+          score: score,
+          type: type,
+          repo: repo,
+        },
+        additionalParams: {},
+        absolute: false
+      }
+    });
 
 export const moderatorAction = (
       author,
