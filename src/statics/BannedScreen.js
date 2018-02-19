@@ -124,10 +124,8 @@ class BannedScreen extends React.Component {
             <b className="BannedScreen_sectitle">
               Why you were banned:
             </b><br />
-            You were banned by <Link to={`@${bannedBy}`}>@{bannedBy}</Link>, a moderator, due to violations of the Utopian
-            Rules. <br />
-            The reason listed for your ban is:
-            <Body full body={banReason} /><br />
+            Who banned you: <Link to={`@${bannedBy}`}>@{bannedBy}</Link><br />
+            Why You were banned: <Body full body={banReason} /><br />
             Feel free to contact the Utopian Moderators <a href="https://discord.gg/5geMSSZ">on Discord</a> for more
             information, or if you would like to appeal against
             your ban.<br />
