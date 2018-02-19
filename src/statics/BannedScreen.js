@@ -80,6 +80,7 @@ class BannedScreen extends React.Component {
       return (<span className="text-center"><Icon type="loading" /></span>);
     }
 
+
     return (<div className="main-panel">
       <div className="mt-5 text-center">
         <h2>
@@ -99,10 +100,6 @@ class BannedScreen extends React.Component {
 
         <div className="BannedScreen__left_padded">
           <div className="container pb-5">
-            <b className="BannedScreen_sectitle">
-              What can I do?
-            </b><br />
-
             You will no longer be allowed to <b>post contributions</b> on Utopian.
 
             However, you will still be allowed to:
@@ -125,7 +122,7 @@ class BannedScreen extends React.Component {
 
           <div className="container pb-5">
             <b className="BannedScreen_sectitle">
-              Why was I banned?
+              Why you were banned:
             </b><br />
             You were banned by <Link to={`@${bannedBy}`}>@{bannedBy}</Link>, a moderator, due to violations of the Utopian
             Rules. <br />
