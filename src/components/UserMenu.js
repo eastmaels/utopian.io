@@ -7,14 +7,14 @@ import { connect } from 'react-redux';
 import * as R from 'ramda';
 
 import { getModerators } from '../actions/moderators';
-import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
+import { getIsAuthenticated, getUser } from '../reducers';
 
 import './UserMenu.less';
 
 @connect(
-  state => ({
+  (state, ownProps) => ({
     authenticated: getIsAuthenticated(state),
-    user: getAuthenticatedUser(state),
+    user: getUser(state, ownProps.match.params.name),
     moderators: state.moderators,
   }),
   {
