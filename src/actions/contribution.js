@@ -57,11 +57,11 @@ export const moderatorActionRequest = (
     repo,
   ) => ({
 export const moderatorActionRequest = (
-    author, 
-    permlink, 
-    moderator, 
-    status, 
-    questions = [], 
+    author,
+    permlink,
+    moderator,
+    status,
+    questions = [],
     score = 0,
     repo,
   ) => ({
@@ -86,7 +86,24 @@ export const moderatorActionRequest = (
     }
 });
 
-export const moderatorAction = (author, permlink, moderator, status, questions = [], score = 0) => dispatch => dispatch(moderatorActionRequest(author, permlink, moderator, status, questions, score));
+export const moderatorAction = (
+    author,
+    permlink,
+    moderator,
+    status,
+    questions = [],
+    score = 0
+  ) => dispatch => dispatch(
+      moderatorActionRequest(
+          author,
+          permlink,
+          moderator,
+          status,
+          questions,
+          score,
+          repo,
+      )
+  );
 
 export const setContribution = (contribution) => ({
   type: Actions.SET_CONTRIBUTION,
