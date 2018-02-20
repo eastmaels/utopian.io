@@ -89,6 +89,12 @@ const Sidenav = ({ username }) =>
             FAQ
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/cookies" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/cookies', match, location)}>
+            <Icon type="flag" style={{ 'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px' }} />
+            Cookie Policy  
+          </NavLink>
+        </li>
       </ul>}
   </div>);
 

@@ -1,8 +1,8 @@
-import React from "react";
-import {Rules} from "../components/Rules";
-import {RulesTask} from "../components/RulesTask";
+import React from 'react';
+import { Rules } from '../components/Rules';
+import { RulesTask } from '../components/RulesTask';
 
-import "./Rules.less";
+import './Rules.less';
 
 export default (props) =>
   (<div className="main-panel rules-section">
