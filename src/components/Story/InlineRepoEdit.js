@@ -67,7 +67,7 @@ class InlineRepoEdit extends React.Component {
   callModeratorAction(target) {
     const { post, user, moderatorAction } = this.props;
     const status = null, questions = [], score = 0, type = null;
-    console.log(this.state.repository),
+    console.log(this.state.repository);
 
     /*
     moderatorAction(
