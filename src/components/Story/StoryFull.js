@@ -8,6 +8,7 @@ import { find } from 'lodash';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Lightbox from 'react-image-lightbox';
+import RawSlider from "../Slider/RawSlider";
 import {
   ShareButtons,
   ShareCounts,
@@ -41,6 +42,10 @@ import Contribution from './Contribution';
 
 import * as R from 'ramda';
 import './StoryFull.less';
+
+const SLIDER_MAXSCORE = 20;
+
+import { QualitySlider } from "../../QualitySliderQuestions";
 
 @connect(
   state => ({
@@ -106,6 +111,12 @@ class StoryFull extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      qualitySliderSet: false,
+      questionaireResult: 0,
+      totalQuestionaireScore: 0,
+      questionaireAnswersMissing: true,
+      questionaireAnswers: [],
+      sliderValue: 0,
       verifyModal: false,
       submitting: false,
       moderatorCommentModal: false,
@@ -119,6 +130,16 @@ class StoryFull extends React.Component {
         index: 0,
       },
     };
+
+    
+    let metaData = this.props.post.json_metadata;
+    this.state.questionaireAnswers = metaData.questions || [];
+    this.state.sliderValue = metaData.score || 0;
+	this.setState({
+      sliderValue: this.state.sliderValue,
+    });
+    this.validateQuestionaire();
+
   }
 
   componentDidMount() {
@@ -211,6 +232,123 @@ class StoryFull extends React.Component {
     return ret;
   }
 
+  updateQualitySlider(value)
+  {
+    this.state.sliderValue = value;
+    this.setState({
+      sliderValue: value,
+      qualitySliderSet: true,
+    });
+    
+	  this.updateQuestionareScore();
+  }
+
+  updateQuestionareScore()
+  {
+    let totalQuestionaireScore = Math.min(100, this.state.questionaireResult + ((SLIDER_MAXSCORE/100)*this.state.sliderValue));
+    this.state.totalQuestionaireScore = totalQuestionaireScore;
+    this.setState({
+      totalQuestionaireScore: totalQuestionaireScore,
+    });
+  }
+
+  validateQuestionaire()
+  {
+    let answeredQuestions = this.state.questionaireAnswers.filter( answeredQuestion => {
+      if(answeredQuestion.selected >= 0)
+        return true;
+      return false;
+    });
+
+    if(answeredQuestions.length != QualitySlider[this.props.post.json_metadata.type].questions.length)
+    {
+      this.state.questionaireAnswersMissing = true;
+      this.setState({
+        questionaireAnswersMissing: true,
+      });
+    }else{
+      this.state.questionaireAnswersMissing = false;
+      this.setState({
+        questionaireAnswersMissing: false,
+      });
+    }
+
+    let questionaireResult = 0;
+    answeredQuestions.forEach( questions => {
+      questions.answers.forEach( answer => {
+        if(answer.selected)
+        {
+          questionaireResult += answer.score;
+        }
+      })
+      
+    });
+    this.state.questionaireResult = questionaireResult;
+    this.setState({
+      questionaireResult
+    });
+
+    this.updateQuestionareScore();
+  }
+
+	renderQuestionaire()
+	{
+		let meta = this.props.post.json_metadata;
+    
+
+		if(!QualitySlider[this.props.post.json_metadata.type])
+		{
+			return null;
+		}
+
+		let questions = QualitySlider[this.props.post.json_metadata.type].questions.map( (question, qindex) => {
+			let options = question.answers.map( (answer, aindex) => {
+				return (<option value={aindex}>{answer.answer}</option>);
+			});
+
+			return (
+				<ul>
+					<li>
+						<b> {question.question} </b>
+					</li>
+					<li>
+						<select style={{width:"100%", display:"relative", top:0}} defaultValue={(this.state.questionaireAnswers[qindex]? this.state.questionaireAnswers[qindex].selected : -1)} onChange={(event, handler) => {
+
+              let answerIndex = parseInt(event.target.value);
+							let answers = question.answers.map((answer, answerId) => {
+                let answerData = {
+                  value: answer.answer,
+                  selected: false,
+                  score: answer.value,
+                };
+                if(answerIndex == answerId)
+                {
+                  answerData.selected = true;
+                }
+                return answerData;
+              });
+              let questionaireAnswers = this.state.questionaireAnswers || [];
+              questionaireAnswers[qindex] = {
+                question: question.question,
+                answers: answers,
+                selected: answerIndex,
+              };
+              this.setState({questionaireAnswers});
+							
+							this.validateQuestionaire();
+							
+						}}>
+							<option value="-1">Please Choose</option>
+							{options}
+						</select>
+					</li>
+				</ul>
+			);
+		});
+
+		return questions;
+	}
+
   render() {
     const {
       intl,
@@ -286,7 +424,6 @@ class StoryFull extends React.Component {
 
     let popoverMenu = [];
 
-    console.log("OWN POST", ownPost)
 
     if (ownPost && post.cashout_time !== '1969-12-31T23:59:59') {
       popoverMenu = [...popoverMenu, <PopoverMenuItem key="edit">
@@ -345,7 +482,7 @@ class StoryFull extends React.Component {
       LivejournalShareButton,
       EmailShareButton,
     } = ShareButtons;
-  
+
     const FacebookIcon = generateShareIcon('facebook');
     const TwitterIcon = generateShareIcon('twitter');
     const GooglePlusIcon = generateShareIcon('google');
@@ -360,9 +497,10 @@ class StoryFull extends React.Component {
     const MailruIcon = generateShareIcon('mailru');
     const EmailIcon = generateShareIcon('email');
     const LivejournalIcon = generateShareIcon('livejournal');
-  
+
     const shareTitle = `${post.title} - Utopian.io`
     const shareUrl = "https://utopian.io/" + post.url;
+ 
 
     return (
       <div className="StoryFull">
@@ -383,9 +521,9 @@ class StoryFull extends React.Component {
             Please make sure this contribution meets the{' '}<Link to="/rules">Utopian Quality Standards</Link>.<br />
           </p> : null}
 
-          {isModerator && alreadyChecked ? 
+          {isModerator && alreadyChecked ?
           <div>
-            {!mobileView ? 
+            {!mobileView ?
             <span>
             <h3><center><Icon type="safety" /> Moderation Control </center></h3>
             {<p><b>Moderated By: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
@@ -396,7 +534,7 @@ class StoryFull extends React.Component {
             {<p> <b>Mod: &nbsp;</b> <Link className="StoryFull__modlink" to={`/@${post.moderator}`}>@{post.moderator}</Link></p>}
             </span>
             }
-          </div> 
+          </div>
           : null}
 
           {isModerator ? <div>
@@ -431,7 +569,7 @@ class StoryFull extends React.Component {
               }}
             />*/}
 
-            {!post.reviewed && !post.flagged || (post.flagged && isModerator.supermoderator === true) ? <Action
+            {!post.reviewed && !post.flagged || (isModerator.supermoderator === true) ? <Action
               id="verified"
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
@@ -440,13 +578,13 @@ class StoryFull extends React.Component {
               onClick={() => this.setState({ verifyModal: true })}
             /> : null}
 
-            {!post.reviewed && <span className="floatRight"><BanUser intl={intl} user={post.author}/>&nbsp;&nbsp;</span>}
+            {!post.reviewed && <span className="floatRight"><BanUser intl={intl} username={post.author}/>&nbsp;&nbsp;</span>}
           </div> : null
           }
         </div> : null}
 
         <div className="StoryFull__info">
-          {!mobileView ? 
+          {!mobileView ?
           <span>
             {post.reviewed && <p><b>Status: &nbsp;</b> <Icon type="check-circle"/>&nbsp; Accepted <span className="smallBr"><br /></span> </p>}
             {post.flagged && <p><b>Status: &nbsp;</b> <Icon type="exclamation-circle"/>&nbsp; Hidden <span className="smallBr"><br /></span> </p>}
@@ -473,6 +611,10 @@ class StoryFull extends React.Component {
           showFlagged={ post.flagged }
           showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
           fullMode={true}
+          post={post}
+          user={user}
+          isModerator={isModerator}
+          moderatorAction={moderatorAction}
         />
 
         {/*postType === 'blog' && <Blog
@@ -499,8 +641,17 @@ class StoryFull extends React.Component {
             this.setState({ verifyModal: false })
           }}
           onOk={() => {
+            if(!this.state.qualitySliderSet)
+            {
+              return window.alert("Please set the quality slider!")
+            }
+            if(this.state.questionaireAnswersMissing)
+            {
+              return window.alert("You haven't answered all questions.")
+            }
             this.setState({ submitting: true });
-            moderatorAction(post.author, post.permlink, user.name, 'reviewed').then(() => {
+            
+            moderatorAction(post.author, post.permlink, user.name, 'reviewed', this.state.questionaireAnswers, this.state.sliderValue).then(() => {
               this.setState({ verifyModal: false });
               this.setState({ submitting: false });
               this.setState({ commentFormText: 'Thank you for the contribution. It has been approved.' + this.state.commentDefaultFooter })
@@ -522,15 +673,33 @@ class StoryFull extends React.Component {
           <br />
           <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified. Check replies to your comments often to see if the user has submitted the changes you have requested.</p>
           <p><b>Is this contribution ready to be verified? <Link to="/rules">Read the rules</Link></b></p>
+		  <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
+		  <br /><br /><br /><br />
+		  {this.state.questionaireAnswersMissing ? 
+		  	<p>Please answer all the questions!</p> : null
+		  }
+		  {this.renderQuestionaire()}
+		  <br /><br /><br /><br />
+		  <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
+		  <b>How would you reate the quality of this post?</b>
+		  
+      
+		   <RawSlider
+		    initialValue={this.state.sliderValue}
+            value={this.state.sliderValue}
+            onChange={this.updateQualitySlider.bind(this)}
+          />
+
+		  
         </Modal>
 
         {/* Moderator Comment Modal - Allows for moderator to publish template-based comment after marking a post as reviewed/flagged/pending */}
-
+        
         <Modal
           visible={this.state.moderatorCommentModal}
           title='Write a Moderator Comment'
           footer={false}
-          // okText='Done' 
+          // okText='Done'
           onCancel={() => {
             var mark = "verified";
             if (post.reviewed) {
@@ -676,7 +845,7 @@ class StoryFull extends React.Component {
               }
             >
               <span className="StoryFull__header__text__date">
-                <FormattedRelative value={`${post.created}Z`} /> 
+                <FormattedRelative value={`${post.created}Z`} />
               </span>
             </Tooltip>
           </div>
@@ -741,7 +910,7 @@ class StoryFull extends React.Component {
         )}
         <div className="StoryFull__topics">
           <Tooltip title={<span><b>Tags:</b> {this.tagString(tags)}</span>}>
-          {tags && tags.map(tag => 
+          {tags && tags.map(tag =>
           <span>
           <Topic key={tag} name={tag} />&nbsp;
           </span>
