@@ -22,6 +22,7 @@ import UserProfile from './UserProfile';
 import UserComments from './UserComments';
 import UserFollowers from './UserFollowers';
 import UserFollowing from './UserFollowing';
+import UserWallet from './UserWallet';
 import ProjectsFeed from '../feed/ProjectsFeed';
 import UserReblogs from './UserReblogs';
 import UserFeed from './UserFeed';
@@ -176,7 +177,7 @@ export default class User extends React.Component {
         )}
         <div className="shifted">
           <div className="feed-layout container">
-            <Affix className="leftContainer" stickPosition={72}>
+            <Affix className="leftContainer leftContainer__user" stickPosition={72}>
               <div className="left">
                 <LeftSidebar />
               </div>
@@ -213,6 +214,7 @@ export default class User extends React.Component {
                 />
                 <Route path={`${match.path}/followers`} component={UserFollowers} />
                 <Route path={`${match.path}/followed`} component={UserFollowing} />
+                <Route path={`${match.path}/transfers`} component={UserWallet} />
                 {/* <Route path={`${match.path}/reblogs`} component={UserReblogs} /> */}
                 {/* <Route path={`${match.path}/feed`} component={UserFeed} /> */}
               </Switch>
