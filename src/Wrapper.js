@@ -148,8 +148,8 @@ export default class Wrapper extends React.PureComponent {
             {this.props.children}
             <Transfer />
           </div>
+          <CookiePolicyBanner />
         </Layout>
-        <CookiePolicyBanner />
       </IntlProvider>
     );
   }

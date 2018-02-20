@@ -48,7 +48,10 @@ export default class Post extends React.Component {
     const { contribution, contributions, getContribution, setContribution } = this.props;
     const paramAuthor = this.props.match.params.author;
     const paramPermlink = this.props.match.params.permlink;
-    const stateContribution = R.find(R.propEq('author', paramAuthor) && R.propEq('permlink', paramPermlink))(contributions);
+    const stateContribution = R.find(R.whereEq({
+      author: paramAuthor,
+      permlink: paramPermlink,
+    }))(contributions);
 
     if (stateContribution) {
       setContribution(stateContribution);
