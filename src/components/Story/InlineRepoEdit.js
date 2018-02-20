@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Icon } from 'antd';
 import Autocomplete from 'react-autocomplete';
 import { connect } from 'react-redux';
@@ -14,6 +15,17 @@ import { getGithubRepos, setGithubRepos } from '../../actions/projects';
   },
 )
 class InlineRepoEdit extends React.Component {
+  static propTypes = {
+    post: PropTypes.shape().isRequired,
+    moderatorAction: PropTypes.func,
+    value: PropTypes.string,
+  };
+
+  static defaultProps = {
+    post: [],
+    moderatorAction: () => {},
+    value: '',
+  };
 
   state = {
     value: this.props.value,
@@ -43,45 +55,41 @@ class InlineRepoEdit extends React.Component {
       event.preventDefault();
       this.setState({loading: true, loaded: false});
       this.search.refs.input.click();
-      getGithubRepos({
+      this.props.getGithubRepos({
         q,
-      })(getStore().dispatch).then((repo) => {
+      }).then(() => {
         this.setState({loaded: true, loading: false});
         this.search.refs.input.click();
       });
     }
   }
 
-  onInlineRepoEditSelect(value, repo) {
-    this.setState({
-        value: repo.full_name
-    });
+  callModeratorAction(target) {
+    const { post, user, moderatorAction } = this.props;
+    const status = null, questions = [], score = 0, type = null;
+    console.log(this.state.repository),
 
-    const jsonMetadata = this.post['json_metadata'];
-    const metadata = {
-        ...jsonMetadata,
-        repository: repo
-    };
-    const {
-      author,
-      body,
-      permlink,
-      title,
-      reward_weight,
-      parent_permlink,
-      parent_author
-    } = this.post;
-/*
+    /*
     moderatorAction(
-      post.author,
-      post.permlink,
-      user.name,
-      null,
-      repo,
+      this.post.author,
+      this.post.permlink,
+      this.post.name,
+      status,
+      questions,
+      score,
+      type,
+      this.state.repository,
     ).then((res) => {
       console.log(res);
     });
-*/
+    */
+  }
+
+  onInlineRepoEditSelect(value, repo) {
+    this.setState({
+        value: repo.full_name,
+        repository: repo,
+    });
   }
   render () {
     const { repos } = this.props;
@@ -93,24 +101,26 @@ class InlineRepoEdit extends React.Component {
             id: 'inline-edit',
             placeholder: 'Browse Github repositories',
             className: `inline-repo-edit`,
-            onKeyPress: (event) => this.onInlineRepoEditKeyPress(event)
+            onKeyPress: (event) => this.onInlineRepoEditKeyPress(event),
+            onBlur: (event) => this.callModeratorAction(event),
           }}
         items={ repos }
-        onSelect={(value, repo) => this.onInlineRepoEditSelect(value, repo)}
+        onSelect={(value, repo) => {
+          this.setState({
+            value: repo.full_name,
+          });
+        }}
         getItemValue={repo => repo.full_name}
         onChange={(event, value) => {
           this.setState({value});
-
           if (value === '') {
             this.setState({loaded: false});
           }
-
         }}
         renderItem={(repo, isHighlighted) => (
           <div
             className='Topnav__search-item'
-            key={repo.full_name}
-          >
+            key={repo.full_name}>
             <span><Icon type='github' /> <b>{repo.full_name}</b></span>
             <span>{repo.html_url}</span>
           </div>
