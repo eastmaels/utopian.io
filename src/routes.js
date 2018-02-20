@@ -36,6 +36,8 @@ import WriteTask from './post/Write/WriteTask';
 import Drafts from './post/Write/Drafts';
 import RequireLogin from './auth/RequireLogin';
 
+import CookiePolicy from './statics/CookiePolicy'; 
+
 export default (
   <Wrapper>
     <Switch>
@@ -60,6 +62,7 @@ export default (
       <Route path="/moderators" exact component={Moderators} />
       <Route path="/welcome-moderator" exact component={WelcomeModerator} />
       <Route path="/faq" exact component={Faq} />
+      <Route path="/cookies" exact component={CookiePolicy} /> 
       <Route path="/banned" exact component={BannedScreen} />
       <Route
         path="/bookmarks"
