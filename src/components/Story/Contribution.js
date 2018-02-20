@@ -3,7 +3,93 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import CategoryIcon from '../CategoriesIcons';
 
+import InlineCategoryEdit from '../Story/InlineCategoryEdit';
+
+
 import './Contribution.less';
+
+const types = [
+	{
+		'type': 'ideas',
+		'slug': 'SUGGESTION'
+	},
+	{
+		'type': 'sub-project',
+		'slug': 'SUB-PROJECT'
+	},
+	{
+		'type': 'development',
+		'slug': 'DEVELOPMENT'
+	},
+	{
+		'type': 'bug-hunting',
+		'slug':	'BUG'
+	},
+	{
+		'type': 'translations',
+		'slug': 'TRANSLATION'
+	},
+	{
+		'type': 'analysis',
+		'slug': 'ANALYSIS'
+	},
+	{
+		'type': 'social',
+		'slug': 'VISIBILITY'
+	},
+	{
+		'type': 'documentation',
+		'slug':	'DOCUMENTATION'
+	},
+	{
+		'type': 'tutorials',
+		'slug': 'TUTORIAL'
+	},
+	{
+		'type': 'video-tutorials',
+		'slug': 'VIDEO TUTORIAL'
+	},
+	{
+		'type': 'copywriting',
+		'slug': 'COPYWRITING'
+	},
+	{
+		'type': 'blog',
+		'slug': 'BLOG POST'
+	},
+	{
+		'type': 'task-ideas',
+		'slug': 'THINKERS'
+	},
+	{
+		'type': 'task-development',
+		'slug': 'DEVELOPERS'
+	},
+	{
+		'type': 'task-bug-hunting',
+		'slug':	'BUG HUNTERS'
+	},
+	{
+		'type': 'task-documentation',
+		'slug': 'TECH WRITERS'
+	},
+	{
+		'type': 'task-translations',
+		'slug': 'TRANSLATORS'
+	},
+	{
+		'type': 'task-analysis',
+		'slug':	'DATA ANALYSTS'
+	},
+	{
+		'type': 'task-graphics',
+		'slug': 'DESIGNERS'
+	},
+	{
+		'type': 'task-social',
+		'slug': 'INFLUENCERS'
+	}
+];
 
 const categorySlug = type => {
   switch (type) {
@@ -70,11 +156,38 @@ const modeClass = fm => {
   return "nofull";
 }
 
-const Contribution = ({type, repository, platform, id, showVerified, showPending, showFlagged, showInProgress, fullMode}) => (
+const Contribution = ({
+    type,
+    repository,
+    platform,
+    id,
+    showVerified,
+    showPending,
+    showFlagged,
+    showInProgress,
+    fullMode,
+    post,
+    user,
+    isModerator,
+    moderatorAction,
+  }) => (
   <div className={`Contribution ${type} ${modeClass(fullMode)}`}>
     <span>
-    
-      <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}><CategoryIcon from="from-story" type={type}/></span> {categorySlug(type)}
+
+      <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}>
+        <CategoryIcon from="from-story" type={type}/>
+        { isModerator ?
+          <InlineCategoryEdit
+            value={type}
+            types={types}
+            post={post}
+            moderatorAction={moderatorAction}
+            user={user}
+          /> :
+          categorySlug(type)
+        }
+      </span>
+
 
       {repository && platform && id ? <span>
         {' '} <b>&middot;</b> {'  '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a> <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>{parsedRepoName(repository.owner.login, repository.name)}</Link>
