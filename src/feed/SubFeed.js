@@ -13,7 +13,7 @@ import EmptyFeed from '../statics/EmptyFeed';
 import ScrollToTop from '../components/Utils/ScrollToTop';
 import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
 // @UTOPIAN
-import { getContributions, getContributionsAccepted, getContributionsPending, getContributionsRequest, getModerations } from '../actions/contributions';
+import { getContributions, getModerations } from '../actions/contributions';
 import { getModerators } from '../actions/moderators';
 import CategoryIcon from '../components/CategoriesIcons';
 import './SubFeed.less';
@@ -93,7 +93,6 @@ class SubFeed extends React.Component {
         this.setState({ skip: skip + limit });
       });
     } else if (match.path === '/@:name' || match.path.split('/')[2] === 'contributions') {
-      console.log('match pathhh', match.params.status);
       if (match.params.status === '') {
         match.params.status = 'all';
       }
@@ -106,6 +105,7 @@ class SubFeed extends React.Component {
         sortBy: 'created',
         author: match.params.name,
         status: statusArray.indexOf(match.params.status) >= 0 ? match.params.status : 'all',
+        reset: true,
       }).then((res) => {
         this.total = res.response.total;
         this.setState({ skip: skip + limit });
@@ -180,7 +180,7 @@ class SubFeed extends React.Component {
         // console.log("PATH /@:name ", contribution.author, match.params.name, contribution.reviewed, contribution.pending, contribution.flagged);
         return contribution.author === match.params.name &&
           !contribution.flagged;
-      } else if (match.path.split('/')[2] === 'moderations') {
+      } else if (match.path.split('/')[2] === 'moderations' || 'contributions') {
         return true;
       } else if ((match.params.type && match.params.type === 'tasks') || (match.path === '/tasks') || (match.filterBy === 'review' && contribution.reviewed === false && contribution.flagged === false)) {
         // console.log("PATH2 /tasks ",contribution.json_metadata.type, contribution.reviewed);
