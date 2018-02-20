@@ -14,7 +14,7 @@ const Sidenav = ({ username }) =>
     {username &&
       <ul className="Sidenav" style={{listStyleType: 'none'}}>
         <li>
-          <NavLink to={`/@${username}`} activeClassName="Sidenav__item--active">
+          <NavLink to={`/@${username}`} activeClassName="Sidenav__item--active" onClick={() => {window.location.href = `/@${username}`; }}>
             <i className="iconfont icon-mine" />
             My profile
           </NavLink>
