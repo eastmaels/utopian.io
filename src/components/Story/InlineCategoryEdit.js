@@ -1,6 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class InlineCategoryEdit extends React.Component {
+  static propTypes = {
+    post: PropTypes.shape().isRequired,
+    moderatorAction: PropTypes.func,
+    value: PropTypes.string,
+  };
+
+  static defaultProps = {
+    post: [],
+    moderatorAction: () => {},
+    value: '',
+  };
+
   constructor (props) {
     super(props);
     this.state = {
@@ -19,18 +32,15 @@ class InlineCategoryEdit extends React.Component {
       return t.type == value;
     })[0].type;
 
-    const jsonMetadata = this.props.post['json_metadata'];
-    const metadata = {
-        ...jsonMetadata,
-        type: type
-    };
-
     const { post, user, moderatorAction } = this.props;
+    const status = null, questions = [], score = 0;
     moderatorAction(
       post.author,
       post.permlink,
       user.name,
-      null,
+      status,
+      questions,
+      score,
       type,
     ).then((res) => {
       console.log(res);
