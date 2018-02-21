@@ -9,7 +9,7 @@ import Error401 from '../statics/Error401';
 import Help from '../statics/Help';
 import { Modal, Input } from 'antd';
 import TOSText from "../statics/TOS";
-import PrivacyPolicyText from "../static/PrivacyPolicy";
+import PrivacyPolicyText from "../statics/PrivacyPolicy";
 
 @connect((state, ownProps) => ({
   fetching: getIsAuthFetching(state),
@@ -70,7 +70,6 @@ export default class RequireTos extends React.Component
     if(!stats || !user || !user.account || fetching)
       return null;
       
-    console.log("user,", user, user, fetching)
 
     let lastTOSEdit = new Date(stats.last_date_edit_tos);
     let TOSAgreements = (user.tos || []).filter( aggreement => {
@@ -87,10 +86,10 @@ export default class RequireTos extends React.Component
         return false;
       return true;
     });
-    console.log("TOSAgreements", TOSAgreements, PrivacyAgreements)
+    
     if(TOSAgreements.length && PrivacyAgreements.length)
       return null;
-    console.log("Modals rendered.. fuck")
+    
     return (
       <div>
         <Modal
@@ -115,7 +114,7 @@ export default class RequireTos extends React.Component
         }}
         >
           <p>Please read and accept the Terms of Service</p>
-          <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onscroll={() => {
+          <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onScroll={() => {
               if( this.TOSContainer.scrollTop === (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight))
               {
                 this.setState({
@@ -149,7 +148,7 @@ export default class RequireTos extends React.Component
         }}
         >
           <p>Please read and accept the Privacy Policy Aggreement</p>
-           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onscroll={() => {
+           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onScroll={() => {
               if( this.PrivacyContainer.scrollTop === (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight))
               {
                 this.setState({
