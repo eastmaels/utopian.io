@@ -22,6 +22,8 @@ import Bookmarks from './bookmarks/Bookmarks';
 import About from './statics/About';
 import Help from './statics/Help';
 import Rules from './statics/Rules';
+import PrivacyPolicy from './statics/PrivacyPolicy';
+import TOS from './statics/TOS';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
 import WelcomeModerator from './statics/WelcomeModerator';
@@ -35,9 +37,12 @@ import WriteTask from './post/Write/WriteTask';
 
 import Drafts from './post/Write/Drafts';
 import RequireLogin from './auth/RequireLogin';
+import RequireTos from "./auth/RequireTos";
+import CookiePolicy from './statics/CookiePolicy'; 
 
 export default (
   <Wrapper>
+    <RequireTos />
     <Switch>
       <Route exact path="/" component={Page} />
       {/*<Route
@@ -50,6 +55,8 @@ export default (
       />*/}
       <Route path="/help" exact component={Help} />
       <Route path="/rules" exact component={Rules} />
+      <Route path="/privacy" exact component={PrivacyPolicy} />
+      <Route path="/tos" exact component={TOS} />
       {/*
       <Route path="/about" component={About} />
       <Route path="/team" component={Team} />
@@ -60,6 +67,7 @@ export default (
       <Route path="/moderators" exact component={Moderators} />
       <Route path="/welcome-moderator" exact component={WelcomeModerator} />
       <Route path="/faq" exact component={Faq} />
+      <Route path="/cookies" exact component={CookiePolicy} /> 
       <Route path="/banned" exact component={BannedScreen} />
       <Route
         path="/bookmarks"

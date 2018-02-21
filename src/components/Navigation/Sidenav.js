@@ -14,7 +14,7 @@ const Sidenav = ({ username }) =>
     {username &&
       <ul className="Sidenav" style={{listStyleType: 'none'}}>
         <li>
-          <NavLink to={`/@${username}`} activeClassName="Sidenav__item--active" onClick={() => {window.location.href = `/@${username}`; }}>
+          <NavLink to={`/@${username}`} activeClassName="Sidenav__item--active">
             <i className="iconfont icon-mine" />
             My profile
           </NavLink>
@@ -87,6 +87,12 @@ const Sidenav = ({ username }) =>
           <NavLink to="/faq" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/faq', match, location)}>
             <Icon type="question" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
             FAQ
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/cookies" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/cookies', match, location)}>
+            <Icon type="flag" style={{ 'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px' }} />
+            Cookie Policy  
           </NavLink>
         </li>
       </ul>}
