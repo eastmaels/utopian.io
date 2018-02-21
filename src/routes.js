@@ -35,11 +35,12 @@ import WriteTask from './post/Write/WriteTask';
 
 import Drafts from './post/Write/Drafts';
 import RequireLogin from './auth/RequireLogin';
-
+import RequireTos from "./auth/RequireTos";
 import CookiePolicy from './statics/CookiePolicy'; 
 
 export default (
   <Wrapper>
+    <RequireTos />
     <Switch>
       <Route exact path="/" component={Page} />
       {/*<Route
@@ -52,6 +53,8 @@ export default (
       />*/}
       <Route path="/help" exact component={Help} />
       <Route path="/rules" exact component={Rules} />
+      <Route path="/privacy" exact component={PrivacyPolicy} />
+      <Route path="/tos" exact component={TOS} />
       {/*
       <Route path="/about" component={About} />
       <Route path="/team" component={Team} />
