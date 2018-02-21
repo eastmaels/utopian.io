@@ -1,10 +1,6 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import Accordion from 'react-responsive-accordion';
 import './Faq.less';
-import FAQ from '../components/faq.js';
-
- 
+import FAQ from '../components/faq';
 
 export default () =>
   (<div className="main-panel FAQ">
@@ -16,7 +12,7 @@ export default () =>
           <center>Here are the most asked questions, and their answers.</center>
       </h4>
       <div className="container pb-5">
-      <FAQ ></FAQ>
+      <FAQ></FAQ>
 
       <p className="Welcome__bigbreak">
       &nbsp;<br className="Welcome__bigbreak"/>
