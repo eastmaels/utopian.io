@@ -8,8 +8,8 @@ import Loading from '../components/Icon/Loading';
 import Error401 from '../statics/Error401';
 import Help from '../statics/Help';
 import { Modal, Input } from 'antd';
-import TOSText from "../TOS";
-import PrivacyPolicyText from "../PrivacyPolicy";
+import TOSText from "../statics/TOS";
+import PrivacyPolicyText from "../static/PrivacyPolicy";
 
 @connect((state, ownProps) => ({
   fetching: getIsAuthFetching(state),
@@ -44,6 +44,8 @@ export default class RequireTos extends React.Component
       stats: null,
       tosAccepted: false,
       privacyAccepted: false,
+      privacyScroll: false,
+      TOSScroll: false,
     };
     const { getStats } = this.props;
     getStats().then( res => {
@@ -94,13 +96,18 @@ export default class RequireTos extends React.Component
         <Modal
         visible={!TOSAgreements.length && !this.state.tosAccepted}
         title='Terms Of Service'
-        okText='Accept'
+        okType={(this.state.TOSScroll?'primary':'disabled')}
+        okText={(this.state.TOSScroll?'Accept':'Scroll Down')}
         cancelText="Cancel"
         onCancel={() => {
           alert("You must accept the Terms of Services in order to use the website!");
           return;
         }}
         onOk={() => {
+          if(!this.state.TOSScroll)
+          {
+              return alert("Scroll down to accept!")
+          }
           this.setState({
             tosAccepted: true
           })
@@ -108,19 +115,33 @@ export default class RequireTos extends React.Component
         }}
         >
           <p>Please read and accept the Terms of Service</p>
-          <Input.TextArea readOnly size='large' style={{height: '300px', background: '#ffffff'}}>{TOSText}</Input.TextArea>
+          <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onscroll={() => {
+              if( this.TOSContainer.scrollTop === (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight))
+              {
+                this.setState({
+                  TOSScroll: true,
+                })
+              }
+            }} >
+            <TOSText />
+          </div>
 
         </Modal>
 
         <Modal
         visible={!PrivacyAgreements.length && !this.state.privacyAccepted}
         title='Privacy Policy Agreement'
-        okText='Accept'
+        okType={(this.state.privacyScroll?'primary':'disabled')}
+        okText={(this.state.privacyScroll?'Accept':'Scroll Down')}
         cancelText="Cancel"
         onCancel={() => {
           alert("You must accept our Privacy Policy Agreement to continue use the website!");
         }}
         onOk={() => {
+          if(!this.state.privacyScroll)
+          {
+              return alert("Scroll down to accept!")
+          }
           this.setState({
             privacyAccepted: true
           })
@@ -128,7 +149,16 @@ export default class RequireTos extends React.Component
         }}
         >
           <p>Please read and accept the Privacy Policy Aggreement</p>
-          <Input.TextArea readOnly size='large' style={{height: '300px', background: '#ffffff'}}>{PrivacyPolicyText}</Input.TextArea>
+           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onscroll={() => {
+              if( this.PrivacyContainer.scrollTop === (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight))
+              {
+                this.setState({
+                  privacyScroll: true,
+                })
+              }
+            }} >
+            <PrivacyPolicyText />
+          </div>
         </Modal>
       </div>
     )
