@@ -22,6 +22,8 @@ import Bookmarks from './bookmarks/Bookmarks';
 import About from './statics/About';
 import Help from './statics/Help';
 import Rules from './statics/Rules';
+import PrivacyPolicy from './statics/PrivacyPolicy';
+import TOS from './statics/TOS';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
 import WelcomeModerator from './statics/WelcomeModerator';
