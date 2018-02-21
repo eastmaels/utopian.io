@@ -198,6 +198,7 @@ const Contribution = ({
             value={parsedRepoName(repository.owner.login, repository.name)}
             post={post}
             moderatorAction={moderatorAction}
+            user={user}
         /> :
             <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>{parsedRepoName(repository.owner.login, repository.name)}</Link>
         }

@@ -17,12 +17,14 @@ import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 class InlineRepoEdit extends React.Component {
   static propTypes = {
     post: PropTypes.shape().isRequired,
+    user: PropTypes.shape().isRequired,
     moderatorAction: PropTypes.func,
     value: PropTypes.string,
   };
 
   static defaultProps = {
     post: [],
+    user: [],
     moderatorAction: () => {},
     value: '',
   };
@@ -67,13 +69,11 @@ class InlineRepoEdit extends React.Component {
   callModeratorAction(target) {
     const { post, user, moderatorAction } = this.props;
     const status = null, questions = [], score = 0, type = null;
-    console.log(this.state.repository);
 
-    /*
     moderatorAction(
       this.post.author,
       this.post.permlink,
-      this.post.name,
+      user.name,
       status,
       questions,
       score,
@@ -82,7 +82,6 @@ class InlineRepoEdit extends React.Component {
     ).then((res) => {
       console.log(res);
     });
-    */
   }
 
   onInlineRepoEditSelect(value, repo) {
@@ -108,6 +107,7 @@ class InlineRepoEdit extends React.Component {
         onSelect={(value, repo) => {
           this.setState({
             value: repo.full_name,
+            repository: repo,
           });
         }}
         getItemValue={repo => repo.full_name}
