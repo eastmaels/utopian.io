@@ -31,6 +31,7 @@ class InlineRepoEdit extends React.Component {
 
   state = {
     value: this.props.value,
+    previousValue: '',
     loading: false,
     loaded: true
   }
@@ -66,10 +67,21 @@ class InlineRepoEdit extends React.Component {
     }
   }
 
+  setPreviousValue(target) {
+    console.log("setting previous state: " + this.state.previousValue);
+    this.setState({
+      previousValue: event.target.value,
+    })
+  }
+
   callModeratorAction(target) {
     const { post, user, moderatorAction } = this.props;
     const status = null, questions = [], score = 0, type = null;
-
+    console.log(this.state.previousValue);
+    if (this.state.value !== this.state.previousValue) {
+      console.log("value changed");
+    }
+/*
     moderatorAction(
       this.post.author,
       this.post.permlink,
@@ -82,6 +94,7 @@ class InlineRepoEdit extends React.Component {
     ).then((res) => {
       console.log(res);
     });
+*/
   }
 
   onInlineRepoEditSelect(value, repo) {
@@ -101,6 +114,7 @@ class InlineRepoEdit extends React.Component {
             placeholder: 'Browse Github repositories',
             className: `inline-repo-edit`,
             onKeyPress: (event) => this.onInlineRepoEditKeyPress(event),
+            onFocus: (event) => this.setPreviousValue(event),
             onBlur: (event) => this.callModeratorAction(event),
           }}
         items={ repos }
