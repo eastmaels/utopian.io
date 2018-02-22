@@ -626,6 +626,7 @@ class StoryFull extends React.Component {
         />*/}
 
         <Modal
+          maskClosable={false}
           visible={this.state.verifyModal}
           title='Does this contribution meet the Utopian Standards?'
           okText={this.state.submitting ? 'Submitting...' : 'Yes, Verify'}
