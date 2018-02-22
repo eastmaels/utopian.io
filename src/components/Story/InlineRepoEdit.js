@@ -143,7 +143,13 @@ class InlineRepoEdit extends React.Component {
               {items.length > 0 && this.renderItems(items)}
             </div>
           </div>
-        )}
+        )}               
+        wrapperStyle={{
+          display: 'inline-block',
+          position: 'fixed',
+          zIndex: 600
+        }}
+
       />
     );
   }
