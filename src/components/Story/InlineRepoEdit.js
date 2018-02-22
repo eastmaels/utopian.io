@@ -67,8 +67,7 @@ class InlineRepoEdit extends React.Component {
     }
   }
 
-  setPreviousValue(target) {
-    console.log("setting previous state: " + this.state.previousValue);
+  setPreviousValue(event) {
     this.setState({
       previousValue: event.target.value,
     })
@@ -77,24 +76,20 @@ class InlineRepoEdit extends React.Component {
   callModeratorAction(target) {
     const { post, user, moderatorAction } = this.props;
     const status = null, questions = [], score = 0, type = null;
-    console.log(this.state.previousValue);
     if (this.state.value !== this.state.previousValue) {
-      console.log("value changed");
+      moderatorAction(
+        this.post.author,
+        this.post.permlink,
+        user.name,
+        status,
+        questions,
+        score,
+        type,
+        this.state.repository,
+      ).then((res) => {
+        // do nothing; post success
+      });
     }
-/*
-    moderatorAction(
-      this.post.author,
-      this.post.permlink,
-      user.name,
-      status,
-      questions,
-      score,
-      type,
-      this.state.repository,
-    ).then((res) => {
-      console.log(res);
-    });
-*/
   }
 
   onInlineRepoEditSelect(value, repo) {
