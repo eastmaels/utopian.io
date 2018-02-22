@@ -222,7 +222,7 @@ class Topnav extends React.Component {
                 </Link>
               // </Tooltip>
               }
-              onclick={() => {window.location.href="/write"}}
+              onClick={() => {window.location.href="/write"}}
               />
             </Menu.Item>
             <Menu.Item key="user" className="Topnav__item-user">

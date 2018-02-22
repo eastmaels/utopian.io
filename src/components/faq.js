@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import Accordion from 'react-responsive-accordion';
 
 class FAQ extends React.Component {
