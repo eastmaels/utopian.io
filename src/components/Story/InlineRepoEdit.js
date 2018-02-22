@@ -10,7 +10,8 @@ import { getGithubRepos, setGithubRepos } from '../../actions/projects';
   state => ({
     repos: state.repos,
   }),
-  { getGithubRepos,
+  {
+    getGithubRepos,
     setGithubRepos
   },
 )
@@ -39,32 +40,11 @@ class InlineRepoEdit extends React.Component {
   constructor (props) {
     super(props);
     this.renderItems = this.renderItems.bind(this);
-    this.onInlineRepoEditKeyPress = this.onInlineRepoEditKeyPress.bind(this);
     this.post = props.post
   }
 
   renderItems(items) {
     return items;
-  }
-
-  onInlineRepoEditKeyPress(event) {
-    let q = event.target.value;
-    q = q.replace('https://', '');
-    q = q.replace('http://', '');
-    q = q.replace('github.com/', '');
-    q = '"' + q + '"';
-
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      this.setState({loading: true, loaded: false});
-      this.search.refs.input.click();
-      this.props.getGithubRepos({
-        q,
-      }).then(() => {
-        this.setState({loaded: true, loading: false});
-        this.search.refs.input.click();
-      });
-    }
   }
 
   setPreviousValue(event) {
@@ -73,31 +53,41 @@ class InlineRepoEdit extends React.Component {
     })
   }
 
-  callModeratorAction(target) {
+  callModeratorAction(event) {
     const { post, user, moderatorAction } = this.props;
     const status = null, questions = [], score = 0, type = null;
+
     if (this.state.value !== this.state.previousValue) {
-      moderatorAction(
-        this.post.author,
-        this.post.permlink,
-        user.name,
-        status,
-        questions,
-        score,
-        type,
-        this.state.repository,
-      ).then((res) => {
-        // do nothing; post success
+      const repoName = this.state.value;
+      let q = repoName.replace('https://', '');
+      if (repoName.indexOf('github') > -1) {
+        q = q.replace('http://', '');
+        q = q.replace('github.com/', '');
+        q = '"' + q + '"';
+      }
+
+      this.props.getGithubRepos(q).then(() => {
+        // TODO: if valid repo selected, call moderator action, else, return to previous value
+          /*
+          this.props.moderatorAction(
+            this.post.author,
+            this.post.permlink,
+            user.name,
+            status,
+            questions,
+            score,
+            type,
+            this.state.repository,
+          ).then((res) => {
+            console.log("after post mod action: " + res);
+            // do nothing; post success
+          });
+          */
       });
+
     }
   }
 
-  onInlineRepoEditSelect(value, repo) {
-    this.setState({
-        value: repo.full_name,
-        repository: repo,
-    });
-  }
   render () {
     const { repos } = this.props;
     return (
@@ -108,7 +98,41 @@ class InlineRepoEdit extends React.Component {
             id: 'inline-edit',
             placeholder: 'Browse Github repositories',
             className: `inline-repo-edit`,
-            onKeyPress: (event) => this.onInlineRepoEditKeyPress(event),
+            onKeyPress: (event) => {
+              let q = event.target.value;
+              q = q.replace('https://', '');
+              q = q.replace('http://', '');
+              q = q.replace('github.com/', '');
+              q = '"' + q + '"';
+
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                this.setState({loading: true, loaded: false});
+                this.search.refs.input.click();
+                this.props.getGithubRepos({
+                  q,
+                }).then(() => {
+                  this.setState({loaded: true, loading: false});
+                  this.search.refs.input.click();
+                });
+              }
+            },
+            onPaste: (event) => {
+              const pasted = event.clipboardData.getData('Text');
+              if (pasted.indexOf('github') > -1) {
+                let q = pasted.replace('https://', '');
+                q = q.replace('http://', '');
+                q = q.replace('github.com/', '');
+                q = '"' + q + '"';
+
+                this.search.refs.input.click();
+
+                this.props.getGithubRepos(q).then(() => {
+                  this.setState({loaded: true, loading: false});
+                  this.search.refs.input.click();
+                });
+              }
+            },
             onFocus: (event) => this.setPreviousValue(event),
             onBlur: (event) => this.callModeratorAction(event),
           }}
