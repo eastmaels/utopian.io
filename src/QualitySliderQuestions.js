@@ -2,7 +2,7 @@ export const QualitySlider = {
 	development: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -14,27 +14,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -58,19 +58,19 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Completely new project",
-					value: 25,
+					value: 30,
 				},
 				{
 					answer: "Contains Bugfixes and new features",
-					value: 20,
+					value: 30,
 				},
 				{
 					answer: "New Feature",
-					value: 15,
+					value: 25,
 				},
 				{
-					answer: "Not a security fix",
-					value: 10,
+					answer: "Other",
+					value: 15,
 				}],
 			},
 			{
@@ -85,7 +85,7 @@ export const QualitySlider = {
 					value: 20,
 				},
 				{
-					answer: "Slightly Important",
+					answer: "Less Important",
 					value: 15,
 				},
 				{
@@ -98,7 +98,7 @@ export const QualitySlider = {
 	blog: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -110,27 +110,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -180,10 +180,10 @@ export const QualitySlider = {
 				],
 			},
 			{
-				question: "Is the blog post structured?",
+				question: "Is the blog post well structured?",
 				answers: [
 				{
-					answer: "Yes",
+					answer: "Yes, very nice",
 					value: 10,
 				},
 				{
@@ -201,7 +201,7 @@ export const QualitySlider = {
 	tutorials: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -213,27 +213,43 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is there information about the additonal frameworks?",
+				question: "Was the template followed?",
+				answers: [
+				{
+					answer: "Yes",
+					value: 10,
+				},
+				{
+					answer: "Partially",
+					value: 5,
+				},
+				{
+					answer: "No",
+					value: 0,
+				}],
+			},
+			{
+				question: "Is there information about the additional frameworks?",
 				answers: [
 				{
 					answer: "Yes, everything is explained",
@@ -244,9 +260,10 @@ export const QualitySlider = {
 					value: 5,
 				},
 				{
-					answer: "No detail at all",
+					answer: "No details at all",
 					value: 0,
-				}],
+				}
+				],
 			},
 			{
 				question: "Is there code in the tutorial?",
@@ -300,7 +317,7 @@ export const QualitySlider = {
 				],
 			},
 			{
-				question: "Is the tutorial well structured?",
+				question: "Is the tutorial post structured?",
 				answers: [
 				{
 					answer: "Yes",
@@ -321,7 +338,7 @@ export const QualitySlider = {
 	"video-tutorials": {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -333,27 +350,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -373,15 +390,15 @@ export const QualitySlider = {
 				answers: [
 				{
 					answer: "More than 15 minutes",
-					value: 30,
+					value: 60,
 				},
 				{
 					answer: "More than 10 minutes",
-					value: 15,
+					value: 30,
 				},
 				{
 					answer: "Around 5 minutes",
-					value: 5,
+					value: 10,
 				}],
 			},
 		]
@@ -389,7 +406,7 @@ export const QualitySlider = {
 	translations: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -401,27 +418,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -454,7 +471,7 @@ export const QualitySlider = {
 				],
 			},
 			{
-				question: "Are there any traces of machine translation?",
+				question: "Are there any traces of machine translation making the work inaccurate?",
 				answers: [
 				{
 					answer: "No",
@@ -471,7 +488,7 @@ export const QualitySlider = {
 				answers: [
 				{
 					answer: "No",
-					value: 20,
+					value: 25,
 				},
 				{
 					answer: "Yes",
@@ -484,7 +501,7 @@ export const QualitySlider = {
 				answers: [
 				{
 					answer: "Yes",
-					value: 20,
+					value: 5,
 				},
 				{
 					answer: "No",
@@ -497,7 +514,7 @@ export const QualitySlider = {
 	graphics: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -509,27 +526,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -613,39 +630,23 @@ export const QualitySlider = {
 	"bug-hunting": {
 		questions: [
 			{
-				question: "Is the project description informal?",
-				answers: [
-				{
-					answer: "Yes it’s straight to the point",
-					value: 10,
-				},
-				{
-					answer: "Need more description ",
-					value: 5,
-				},
-				{
-					answer: "Not too descriptive",
-					value: 20,
-				}],
-			},
-			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -665,11 +666,11 @@ export const QualitySlider = {
 				answers: [
 				{
 					answer: "Yes straight to the point",
-					value: 40,
+					value: 50,
 				},
 				{
-					answer: "Steps are missing to reproduce the issue",
-					value: 20,
+					answer: "No steps to reproduce",
+					value: 25,
 				},
 				{
 					answer: "Not informal and not formal",
@@ -698,11 +699,11 @@ export const QualitySlider = {
 				question: "Is there any unrelated content in the bug report?",
 				answers: [
 				{
-					answer: "No, only talk about the bug report",
+					answer: "No, post solely discusses only talk about the bug report",
 					value: 10,
 				},
 				{
-					answer: "Yes, personal intro or other unrelated content",
+					answer: "Yes, personal intro or other unrelated content ",
 					value: 0,
 				}
 				],
@@ -712,7 +713,7 @@ export const QualitySlider = {
 	social: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -724,27 +725,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -763,37 +764,20 @@ export const QualitySlider = {
 				question: "Kind of visibility?",
 				answers: [
 				{
-					answer: "Personal Presentation / Meeting",
-					value: 20,
+					answer: "Paid Advertisement",
+					value: 60,
 				},
 				{
-					answer: "Youtube Presentation",
-					value: 10,
+					answer: "Meetup, Group Gathering",
+					value: 50,
 				},
 				{
-					answer: "Other",
-					value: 5,
-				}
-				],
-			},
-			{
-				question: "Reached ... users",
-				answers: [
-				{
-					answer: "More than 5000",
-					value: 40,
-				},
-				{
-					answer: "More than 1000",
+					answer: "Presentation, or Youtube",
 					value: 30,
 				},
 				{
-					answer: "More than 500",
+					answer: "Other",
 					value: 20,
-				},
-				{
-					answer: "Less than 500",
-					value: 10,
 				}
 				],
 			}
@@ -802,7 +786,7 @@ export const QualitySlider = {
 	documentation: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -814,27 +798,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -849,12 +833,29 @@ export const QualitySlider = {
 					value: 0,
 				}],
 			},
+			{
+				question: "Is the documentation good in detail?",
+				answers: [
+				{
+					answer: "Yes, lot's of details and examples",
+					value: 60,
+				},
+				{
+					answer: "Yes lot's of details but not many examples",
+					value: 30,
+				},
+				{
+					answer: "Not much details",
+					value: 0,
+				}
+				],
+			},
 		]
 	},
 	analysis: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -866,27 +867,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -895,6 +896,22 @@ export const QualitySlider = {
 				{
 					answer: "Partially",
 					value: 5,
+				},
+				{
+					answer: "No",
+					value: 0,
+				}],
+			},
+			{
+				question: "Is the analysis benefical in the future?",
+				answers: [
+				{
+					answer: "Yes",
+					value: 60,
+				},
+				{
+					answer: "Partially",
+					value: 30,
 				},
 				{
 					answer: "No",
@@ -906,7 +923,7 @@ export const QualitySlider = {
 	ideas: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -918,27 +935,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -958,7 +975,7 @@ export const QualitySlider = {
 	"sub-projects": {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -970,27 +987,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
@@ -1010,7 +1027,7 @@ export const QualitySlider = {
 	copywriting: {
 		questions: [
 			{
-				question: "Is the project description informal?",
+				question: "Is the project description formal?",
 				answers: [
 				{
 					answer: "Yes it’s straight to the point",
@@ -1022,27 +1039,27 @@ export const QualitySlider = {
 				},
 				{
 					answer: "Not too descriptive",
-					value: 20,
+					value: 0,
 				}],
 			},
 			{
 				question: "Is the language / grammar correct?",
 				answers: [
 				{
-					answer: "Yes, It's good quality",
+					answer: "Yes",
 					value: 20,
 				},
 				{
-					answer: "Yes, but there are a few mistakes",
+					answer: "A few mistakes",
 					value: 10,
 				},
 				{
-					answer: "No, it is pretty bad",
+					answer: "It's pretty bad",
 					value: 0,
 				}],
 			},
 			{
-				question: "Is the template followed?",
+				question: "Was the template followed?",
 				answers: [
 				{
 					answer: "Yes",
