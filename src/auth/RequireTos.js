@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { login, logout } from './authActions';
 import { getIsAuthFetching, getIsAuthenticated, getAuthenticatedUser, stats } from '../reducers';
 import { getStats } from "../actions/stats";
 import { acceptTOS, acceptPrivacyPolicy } from "../actions/user";
@@ -16,7 +17,7 @@ import PrivacyPolicyText from "../statics/PrivacyPolicy";
   authenticated: getIsAuthenticated(state),
   user: getAuthenticatedUser(state),
 }), {
-  getStats, acceptPrivacyPolicy, acceptTOS
+  getStats, acceptPrivacyPolicy, acceptTOS, logout
 })
 export default class RequireTos extends React.Component
 {
@@ -27,6 +28,7 @@ export default class RequireTos extends React.Component
     getStats: PropTypes.func.isRequired,
     acceptPrivacyPolicy: PropTypes.func.isRequired,
     acceptTOS: PropTypes.func.isRequired,
+	logout: PropTypes.func,
   };
 
   static defaultProps = {
@@ -35,6 +37,7 @@ export default class RequireTos extends React.Component
     privacyAccepted: false,
     acceptPrivacyPolicy: () => {},
     acceptTOS: () => {},
+	logout: () => {},
   };
 
   constructor(props)
@@ -96,16 +99,16 @@ export default class RequireTos extends React.Component
         visible={!TOSAgreements.length && !this.state.tosAccepted}
         title='Terms Of Service'
         okType={(this.state.TOSScroll?'primary':'disabled')}
-        okText={(this.state.TOSScroll?'Accept':'Scroll Down')}
+        okText="Accept"
         cancelText="Cancel"
+		maskClosable={false}
         onCancel={() => {
-          alert("You must accept the Terms of Services in order to use the website!");
-          return;
+		  this.props.logout();
         }}
         onOk={() => {
           if(!this.state.TOSScroll)
           {
-              return alert("Scroll down to accept!")
+              return;
           }
           this.setState({
             tosAccepted: true
@@ -115,6 +118,8 @@ export default class RequireTos extends React.Component
         >
           <p>Please read and accept the Terms of Service</p>
           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onScroll={() => {
+			  if(!this.TOSContainer)
+			    return;
               if( this.TOSContainer.scrollTop === (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight))
               {
                 this.setState({
@@ -131,15 +136,16 @@ export default class RequireTos extends React.Component
         visible={!PrivacyAgreements.length && !this.state.privacyAccepted}
         title='Privacy Policy Agreement'
         okType={(this.state.privacyScroll?'primary':'disabled')}
-        okText={(this.state.privacyScroll?'Accept':'Scroll Down')}
+        okText="Accept"
         cancelText="Cancel"
+		maskClosable={false}
         onCancel={() => {
-          alert("You must accept our Privacy Policy Agreement to continue use the website!");
+          this.props.logout();
         }}
         onOk={() => {
           if(!this.state.privacyScroll)
           {
-              return alert("Scroll down to accept!")
+              return;
           }
           this.setState({
             privacyAccepted: true
@@ -149,6 +155,8 @@ export default class RequireTos extends React.Component
         >
           <p>Please read and accept the Privacy Policy Aggreement</p>
            <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onScroll={() => {
+			  if(!this.PrivacyContainer)
+			  	return;
               if( this.PrivacyContainer.scrollTop === (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight))
               {
                 this.setState({
