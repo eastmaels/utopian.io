@@ -12,7 +12,7 @@ import { getGithubRepos, setGithubRepos } from '../../actions/projects';
   }),
   {
     getGithubRepos,
-    setGithubRepos
+    setGithubRepos,
   },
 )
 class InlineRepoEdit extends React.Component {
@@ -65,10 +65,11 @@ class InlineRepoEdit extends React.Component {
         q = q.replace('github.com/', '');
         q = '"' + q + '"';
       }
+      // set query to search for specific repository only
+      q = "repo:" + repoName;
 
-      this.props.getGithubRepos(q).then(() => {
-        // TODO: if valid repo selected, call moderator action, else, return to previous value
-          /*
+      this.props.getGithubRepos({q}).then(resp => {
+          this.setState({loaded: true, loading: false});
           this.props.moderatorAction(
             this.post.author,
             this.post.permlink,
@@ -79,11 +80,13 @@ class InlineRepoEdit extends React.Component {
             type,
             this.state.repository,
           ).then((res) => {
-            console.log("after post mod action: " + res);
-            // do nothing; post success
+            // do nothing; moderator action succeeded
+            // console.log(res);
           });
-          */
-      });
+        }).catch(e => {
+          // if inputted repository does not exist, reset to previous valid repo.
+          this.setState({value: this.state.previousValue});
+        });
 
     }
   }
@@ -127,7 +130,9 @@ class InlineRepoEdit extends React.Component {
 
                 this.search.refs.input.click();
 
-                this.props.getGithubRepos(q).then(() => {
+                this.props.getGithubRepos({
+                  q,
+                }).then(() => {
                   this.setState({loaded: true, loading: false});
                   this.search.refs.input.click();
                 });
