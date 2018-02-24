@@ -118,6 +118,8 @@ export default class RequireTos extends React.Component
         >
           <p>Please read and accept the Terms of Service</p>
           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onScroll={() => {
+			  if(!this.TOSContainer)
+			    return;
               if( this.TOSContainer.scrollTop === (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight))
               {
                 this.setState({
@@ -153,6 +155,8 @@ export default class RequireTos extends React.Component
         >
           <p>Please read and accept the Privacy Policy Aggreement</p>
            <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onScroll={() => {
+			  if(!this.PrivacyContainer)
+			  	return;
               if( this.PrivacyContainer.scrollTop === (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight))
               {
                 this.setState({
