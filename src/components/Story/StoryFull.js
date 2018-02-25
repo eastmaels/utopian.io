@@ -551,7 +551,7 @@ class StoryFull extends React.Component {
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
               tiny={mobileView}
-              text={shortLong(<span><Icon type="exclamation-circle"/></span>, 'Hide Forever')}
+              text={shortLong(<span><Icon type="exclamation-circle"/></span>, <span>Hide Forever</span>)}
               onClick={() => {
                 var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the contribution is against the Utopian Rules.')
                 if (confirm) {
@@ -582,7 +582,7 @@ class StoryFull extends React.Component {
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
               tiny={mobileView}
-              text={shortLong(<span><Icon type="check-circle"/></span>, 'Verify')}
+              text={shortLong(<span><Icon type="check-circle"/></span>, <span>Verify</span>)}
               onClick={() => this.setState({ verifyModal: true })}
             /> : null}
 
