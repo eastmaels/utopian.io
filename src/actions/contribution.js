@@ -57,6 +57,7 @@ export const moderatorActionRequest = (
       questions = [],
       score = 0,
       type,
+      repository,
     ) => ({
       [CALL_API]: {
         types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
@@ -73,6 +74,7 @@ export const moderatorActionRequest = (
           questions: questions,
           score: score,
           type: type,
+          repository: repository,
         },
         additionalParams: {},
         absolute: false
@@ -87,6 +89,7 @@ export const moderatorAction = (
       questions = [],
       score = 0,
       type,
+      repository,
     ) => dispatch => dispatch(
         moderatorActionRequest(
             author,
@@ -96,6 +99,7 @@ export const moderatorAction = (
             questions,
             score,
             type,
+            repository,
         )
     );
 
