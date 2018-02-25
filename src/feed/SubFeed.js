@@ -68,7 +68,6 @@ class SubFeed extends React.Component {
   }
 
   componentDidMount() {
-    console.log('[c] Subfeed mounted');
     this.loadContributions();
   }
 
@@ -138,6 +137,7 @@ class SubFeed extends React.Component {
         status: this.isModerator() && match.params.status === 'pending' ? 'pending' : 'any',
         moderator: user.name || 'any',
         type: match.params.type || 'all',
+		reset: (skip == 0),
       }).then((res) => {
         this.total = res.response.total;
         this.setState({ skip: skip + limit });
@@ -150,6 +150,7 @@ class SubFeed extends React.Component {
         sortBy: 'created',
         filterBy: match.params.filterBy || 'any',
         type: match.params.type || 'all',
+		reset: (skip == 0),
       }).then((res) => {
         this.total = res.response.total;
         this.setState({ skip: skip + limit });
