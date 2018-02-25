@@ -50,3 +50,12 @@ node_modules
 .tern-port
 .envrc
 utopian.server.js
+
+# Environment configs
+*.env
+
+# Bat scripts
+*.bat
+
+# NPM locks
+package-lock.json
