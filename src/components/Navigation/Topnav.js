@@ -214,16 +214,12 @@ class Topnav extends React.Component {
         <div className="Topnav__menu-container">
           <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
             <Menu.Item key="write" className="Topnav__item-write-new nobottom">
-              <Action primary={true} cozy={true} style={{ margin: '3px 0' }}
-              text={
-              // <Tooltip placement="bottom" title={<span><a href="/write" style={{color: "white"}}>Write a new Contributor Report</a></span>}>
-                <Link to="/write" className="Topnav__newReport">
-                  <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">{this.contributionWord()}</span></span>
-                </Link>
-              // </Tooltip>
-              }
-              onClick={() => {window.location.href="/write"}}
-              />
+			  <Link to="/write" className="Topnav__newReport" style={{ marginRight: '15px' }}>
+                <Action primary={true} cozy={true}
+                text={
+                     <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">{this.contributionWord()}</span></span>
+                } />
+			  </Link>
             </Menu.Item>
             <Menu.Item key="user" className="Topnav__item-user">
               <Link className="Topnav__user" to={`/@${username}`}>

@@ -68,7 +68,6 @@ class SubFeed extends React.Component {
   }
 
   componentDidMount() {
-    console.log('[c] Subfeed mounted');
     this.loadContributions();
   }
 
