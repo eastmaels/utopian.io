@@ -14,7 +14,7 @@ const types = [
     'slug': 'SUGGESTION'
   },
   {
-    'type': 'sub-project',
+    'type': 'sub-projects',
     'slug': 'SUB-PROJECT'
   },
   {
