@@ -34,7 +34,7 @@ class BanUser extends React.Component {
     intl: PropTypes.shape().isRequired,
     authenticated: PropTypes.bool.isRequired,
     authenticatedUser: PropTypes.shape().isRequired,
-    username: PropTypes.shape().isRequired,
+    username: PropTypes.string.isRequired,
   };
 
   static defaultProps = {

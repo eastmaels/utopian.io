@@ -130,20 +130,17 @@ class StoryFull extends React.Component {
         index: 0,
       },
     };
-
-    
-    let metaData = this.props.post.json_metadata;
-    this.state.questionaireAnswers = metaData.questions || [];
-    this.state.sliderValue = metaData.score || 0;
-	this.setState({
-      sliderValue: this.state.sliderValue,
-    });
-    this.validateQuestionaire();
-
   }
 
   componentDidMount() {
     document.body.classList.add('white-bg');
+    this.setState({
+      sliderValue: this.state.sliderValue,
+    });
+    let metaData = this.props.post.json_metadata;
+    this.state.questionaireAnswers = metaData.questions || [];
+    this.state.sliderValue = metaData.score || 0;
+    this.validateQuestionaire();
   }
 
   componentWillUnmount() {
@@ -240,7 +237,7 @@ class StoryFull extends React.Component {
       qualitySliderSet: true,
     });
     
-	  this.updateQuestionareScore();
+    this.updateQuestionareScore();
   }
 
   updateQuestionareScore()
@@ -254,13 +251,20 @@ class StoryFull extends React.Component {
 
   validateQuestionaire()
   {
+    let { post } = this.props;
+
+     if(!post || !post.json_metadata)
+      return false;
+    let metaData = post.json_metadata;
+    let postType = metaData.type;
+
     let answeredQuestions = this.state.questionaireAnswers.filter( answeredQuestion => {
       if(answeredQuestion.selected >= 0)
         return true;
       return false;
     });
 
-    if(answeredQuestions.length != QualitySlider[this.props.post.json_metadata.type].questions.length)
+    if(answeredQuestions.length != QualitySlider[postType].questions.length)
     {
       this.state.questionaireAnswersMissing = true;
       this.setState({
@@ -291,31 +295,35 @@ class StoryFull extends React.Component {
     this.updateQuestionareScore();
   }
 
-	renderQuestionaire()
-	{
-		let meta = this.props.post.json_metadata;
+  renderQuestionaire()
+  {
+    let { post } = this.props;
+    if(!post || !post.json_metadata)
+      return false;
+      
+    let metaData = post.json_metadata;
+    let postType = metaData.type;
     
+    if(!QualitySlider[postType])
+    {
+      return null;
+    }
 
-		if(!QualitySlider[this.props.post.json_metadata.type])
-		{
-			return null;
-		}
+    let questions = QualitySlider[postType].questions.map( (question, qindex) => {
+      let options = question.answers.map( (answer, aindex) => {
+        return (<option value={aindex}>{answer.answer}</option>);
+      });
 
-		let questions = QualitySlider[this.props.post.json_metadata.type].questions.map( (question, qindex) => {
-			let options = question.answers.map( (answer, aindex) => {
-				return (<option value={aindex}>{answer.answer}</option>);
-			});
-
-			return (
-				<ul>
-					<li>
-						<b> {question.question} </b>
-					</li>
-					<li>
-						<select style={{width:"100%", display:"relative", top:0}} defaultValue={(this.state.questionaireAnswers[qindex]? this.state.questionaireAnswers[qindex].selected : -1)} onChange={(event, handler) => {
+      return (
+        <ul>
+          <li>
+            <b> {question.question} </b>
+          </li>
+          <li>
+            <select style={{width:"100%", display:"relative", top:0}} defaultValue={(this.state.questionaireAnswers[qindex]? this.state.questionaireAnswers[qindex].selected : -1)} onChange={(event, handler) => {
 
               let answerIndex = parseInt(event.target.value);
-							let answers = question.answers.map((answer, answerId) => {
+              let answers = question.answers.map((answer, answerId) => {
                 let answerData = {
                   value: answer.answer,
                   selected: false,
@@ -334,20 +342,20 @@ class StoryFull extends React.Component {
                 selected: answerIndex,
               };
               this.setState({questionaireAnswers});
-							
-							this.validateQuestionaire();
-							
-						}}>
-							<option value="-1">Please Choose</option>
-							{options}
-						</select>
-					</li>
-				</ul>
-			);
-		});
+              
+              this.validateQuestionaire();
+              
+            }}>
+              <option value="-1">Please Choose</option>
+              {options}
+            </select>
+          </li>
+        </ul>
+      );
+    });
 
-		return questions;
-	}
+    return questions;
+  }
 
   render() {
     const {
@@ -674,24 +682,24 @@ class StoryFull extends React.Component {
           <br />
           <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified. Check replies to your comments often to see if the user has submitted the changes you have requested.</p>
           <p><b>Is this contribution ready to be verified? <Link to="/rules">Read the rules</Link></b></p>
-		  <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
-		  <br /><br /><br /><br />
-		  {this.state.questionaireAnswersMissing ? 
-		  	<p>Please answer all the questions!</p> : null
-		  }
-		  {this.renderQuestionaire()}
-		  <br /><br /><br /><br />
-		  <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
-		  <b>How would you reate the quality of this post?</b>
-		  
+      <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
+      <br /><br /><br /><br />
+      {this.state.questionaireAnswersMissing ? 
+        <p>Please answer all the questions!</p> : null
+      }
+      {this.renderQuestionaire()}
+      <br /><br /><br /><br />
+      <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
+      <b>How would you reate the quality of this post?</b>
       
-		   <RawSlider
-		    initialValue={this.state.sliderValue}
+      
+       <RawSlider
+        initialValue={this.state.sliderValue}
             value={this.state.sliderValue}
             onChange={this.updateQualitySlider.bind(this)}
           />
 
-		  
+      
         </Modal>
 
         {/* Moderator Comment Modal - Allows for moderator to publish template-based comment after marking a post as reviewed/flagged/pending */}
