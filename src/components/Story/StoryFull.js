@@ -253,10 +253,15 @@ class StoryFull extends React.Component {
   {
     let { post } = this.props;
 
-     if(!post || !post.json_metadata)
+    if(!post || !post.json_metadata)
       return false;
+
     let metaData = post.json_metadata;
     let postType = metaData.type;
+    if(!QualitySlider[postType])
+    {
+      return false;
+    }
 
     let answeredQuestions = this.state.questionaireAnswers.filter( answeredQuestion => {
       if(answeredQuestion.selected >= 0)
@@ -737,16 +742,16 @@ class StoryFull extends React.Component {
           {post.pending ?
             <div onChange={this.setModTemplate.bind(this)}>
               <b>Choose a template, or start editing:</b>
-              <ul class="list">
-                <li class="list__item"><input type="radio" value="pendingDefault" id="pendingDefault" name="modTemplate" checked={this.state.modTemplate === 'pendingDefault'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingDefault") }} for="pendingDefault" class="label">Default</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingWrongRepo" id="pendingWrongRepo" name="modTemplate" checked={this.state.modTemplate === 'pendingWrongRepo'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepo") }} for="pendingWrongRepo" class="label">Wrong Repository</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingWrongCategory" id="pendingWrongCategory" name="modTemplate" checked={this.state.modTemplate === 'pendingWrongCategory'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongCategory") }} for="pendingWrongCategory" class="label">Wrong Category</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingWrongRepoSpecified" id="pendingWrongRepoSpecified" name="modTemplate" checked={this.state.modTemplate === 'pendingWrongRepoSpecified'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepoSpecified") }} for="pendingWrongRepoSpecified" class="label">Wrong Repository (Specify Correct One)</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingPow" id="pendingPow" name="modTemplate" checked={this.state.modTemplate === 'pendingPow'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingPow") }} for="pendingPow" class="label">Proof of Work Required</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingTooShort" id="pendingTooShort" name="modTemplate" checked={this.state.modTemplate === 'pendingTooShort'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingTooShort") }} for="pendingTooShort" class="label">Too Short</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingNotEnglish" id="pendingNotEnglish" name="modTemplate" checked={this.state.modTemplate === 'pendingNotEnglish'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingNotEnglish") }} for="pendingNotEnglish" class="label">Not in English</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingBadTags" id="pendingBadTags" name="modTemplate" checked={this.state.modTemplate === 'pendingBadTags'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBadTags") }} for="pendingBadTags" class="label">Irrelevant Tags</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingBanner" id="pendingBanner" name="modTemplate" checked={this.state.modTemplate === 'pendingBanner'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBanner") }} for="pendingBanner" class="label">Banners Present</label><br /></li>
+              <ul className="list">
+                <li className="list__item"><input type="radio" value="pendingDefault" id="pendingDefault" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingDefault'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingDefault") }} htmlFor="pendingDefault" className="label">Default</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingWrongRepo" id="pendingWrongRepo" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingWrongRepo'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepo") }} htmlFor="pendingWrongRepo" className="label">Wrong Repository</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingWrongCategory" id="pendingWrongCategory" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingWrongCategory'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongCategory") }} htmlFor="pendingWrongCategory" className="label">Wrong Category</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingWrongRepoSpecified" id="pendingWrongRepoSpecified" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingWrongRepoSpecified'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepoSpecified") }} htmlFor="pendingWrongRepoSpecified" className="label">Wrong Repository (Specify Correct One)</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingPow" id="pendingPow" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingPow'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingPow") }} htmlFor="pendingPow" className="label">Proof of Work Required</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingTooShort" id="pendingTooShort" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingTooShort'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingTooShort") }} htmlFor="pendingTooShort" className="label">Too Short</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingNotEnglish" id="pendingNotEnglish" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingNotEnglish'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingNotEnglish") }} htmlFor="pendingNotEnglish" className="label">Not in English</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingBadTags" id="pendingBadTags" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingBadTags'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBadTags") }} htmlFor="pendingBadTags" className="label">Irrelevant Tags</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingBanner" id="pendingBanner" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingBanner'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBanner") }} htmlFor="pendingBanner" className="label">Banners Present</label><br /></li>
               </ul>
             </div>
             : null}
@@ -754,14 +759,14 @@ class StoryFull extends React.Component {
           {post.flagged ?
             <div onChange={this.setModTemplate.bind(this)}>
               <b>Choose a template, or start editing:</b>
-              <ul class="list">
-                <li class="list__item"><input type="radio" value="flaggedDefault" id="flaggedDefault" name="modTemplate" checked={this.state.modTemplate === 'flaggedDefault'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDefault") }} for="flaggedDefault" class="label">Default</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedDuplicate" id="flaggedDuplicate" name="modTemplate" checked={this.state.modTemplate === 'flaggedDuplicate'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDuplicate") }} for="flaggedDuplicate" class="label">Duplicate Contribution</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedNotOpenSource" id="flaggedNotOpenSource" name="modTemplate" checked={this.state.modTemplate === 'flaggedNotOpenSource'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotOpenSource") }} for="flaggedNotOpenSource" class="label">Not Related to Open-Source</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedSpam" id="flaggedSpam" name="modTemplate" checked={this.state.modTemplate === 'flaggedSpam'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedSpam") }} for="flaggedSpam" class="label">Spam</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedPlagiarism" id="flaggedPlagiarism" name="modTemplate" checked={this.state.modTemplate === 'flaggedPlagiarism'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedPlagiarism") }} for="flaggedPlagiarism" class="label">Plagiarism</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedTooShort" id="flaggedTooShort" name="modTemplate" checked={this.state.modTemplate === 'flaggedTooShort'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedTooShort") }} for="flaggedTooShort" class="label">Too Short</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedNotEnglish" id="flaggedNotEnglish" name="modTemplate" checked={this.state.modTemplate === 'flaggedNotEnglish'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotEnglish") }} for="flaggedNotEnglish" class="label">Not in English</label><br /></li>
+              <ul className="list">
+                <li className="list__item"><input type="radio" value="flaggedDefault" id="flaggedDefault" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedDefault'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDefault") }} htmlFor="flaggedDefault" className="label">Default</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedDuplicate" id="flaggedDuplicate" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedDuplicate'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDuplicate") }} htmlFor="flaggedDuplicate" className="label">Duplicate Contribution</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedNotOpenSource" id="flaggedNotOpenSource" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedNotOpenSource'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotOpenSource") }} htmlFor="flaggedNotOpenSource" className="label">Not Related to Open-Source</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedSpam" id="flaggedSpam" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedSpam'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedSpam") }} htmlFor="flaggedSpam" className="label">Spam</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedPlagiarism" id="flaggedPlagiarism" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedPlagiarism'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedPlagiarism") }} htmlFor="flaggedPlagiarism" className="label">Plagiarism</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedTooShort" id="flaggedTooShort" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedTooShort'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedTooShort") }} htmlFor="flaggedTooShort" className="label">Too Short</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedNotEnglish" id="flaggedNotEnglish" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedNotEnglish'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotEnglish") }} htmlFor="flaggedNotEnglish" className="label">Not in English</label><br /></li>
               </ul>
             </div>
             : null}
