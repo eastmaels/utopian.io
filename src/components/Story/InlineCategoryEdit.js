@@ -43,7 +43,7 @@ class InlineCategoryEdit extends React.Component {
       score,
       type,
     ).then((res) => {
-      console.log(res);
+//      console.log("category changed", res);
     });
   }
 
@@ -57,7 +57,8 @@ class InlineCategoryEdit extends React.Component {
       <select
         value={this.state.value}
         className="inline-category-edit-select"
-        onChange={ this.onCategoryChange }>
+        onChange={ this.onCategoryChange }
+		defaultChecked={ this.state.value }>
         {types}
       </select>
     );

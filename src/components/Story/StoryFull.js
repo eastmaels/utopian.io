@@ -130,20 +130,17 @@ class StoryFull extends React.Component {
         index: 0,
       },
     };
-
-    
-    let metaData = this.props.post.json_metadata;
-    this.state.questionaireAnswers = metaData.questions || [];
-    this.state.sliderValue = metaData.score || 0;
-	this.setState({
-      sliderValue: this.state.sliderValue,
-    });
-    this.validateQuestionaire();
-
   }
 
   componentDidMount() {
     document.body.classList.add('white-bg');
+    this.setState({
+      sliderValue: this.state.sliderValue,
+    });
+    let metaData = this.props.post.json_metadata;
+    this.state.questionaireAnswers = metaData.questions || [];
+    this.state.sliderValue = metaData.score || 0;
+    this.validateQuestionaire();
   }
 
   componentWillUnmount() {
@@ -240,7 +237,7 @@ class StoryFull extends React.Component {
       qualitySliderSet: true,
     });
     
-	  this.updateQuestionareScore();
+    this.updateQuestionareScore();
   }
 
   updateQuestionareScore()
@@ -254,13 +251,25 @@ class StoryFull extends React.Component {
 
   validateQuestionaire()
   {
+    let { post } = this.props;
+
+    if(!post || !post.json_metadata)
+      return false;
+
+    let metaData = post.json_metadata;
+    let postType = metaData.type;
+    if(!QualitySlider[postType])
+    {
+      return false;
+    }
+
     let answeredQuestions = this.state.questionaireAnswers.filter( answeredQuestion => {
       if(answeredQuestion.selected >= 0)
         return true;
       return false;
     });
 
-    if(answeredQuestions.length != QualitySlider[this.props.post.json_metadata.type].questions.length)
+    if(answeredQuestions.length != QualitySlider[postType].questions.length)
     {
       this.state.questionaireAnswersMissing = true;
       this.setState({
@@ -291,31 +300,35 @@ class StoryFull extends React.Component {
     this.updateQuestionareScore();
   }
 
-	renderQuestionaire()
-	{
-		let meta = this.props.post.json_metadata;
+  renderQuestionaire()
+  {
+    let { post } = this.props;
+    if(!post || !post.json_metadata)
+      return false;
+      
+    let metaData = post.json_metadata;
+    let postType = metaData.type;
     
+    if(!QualitySlider[postType])
+    {
+      return null;
+    }
 
-		if(!QualitySlider[this.props.post.json_metadata.type])
-		{
-			return null;
-		}
+    let questions = QualitySlider[postType].questions.map( (question, qindex) => {
+      let options = question.answers.map( (answer, aindex) => {
+        return (<option value={aindex}>{answer.answer}</option>);
+      });
 
-		let questions = QualitySlider[this.props.post.json_metadata.type].questions.map( (question, qindex) => {
-			let options = question.answers.map( (answer, aindex) => {
-				return (<option value={aindex}>{answer.answer}</option>);
-			});
-
-			return (
-				<ul>
-					<li>
-						<b> {question.question} </b>
-					</li>
-					<li>
-						<select style={{width:"100%", display:"relative", top:0}} defaultValue={(this.state.questionaireAnswers[qindex]? this.state.questionaireAnswers[qindex].selected : -1)} onChange={(event, handler) => {
+      return (
+        <ul>
+          <li>
+            <b> {question.question} </b>
+          </li>
+          <li>
+            <select style={{width:"100%", display:"relative", top:0}} defaultValue={(this.state.questionaireAnswers[qindex]? this.state.questionaireAnswers[qindex].selected : -1)} onChange={(event, handler) => {
 
               let answerIndex = parseInt(event.target.value);
-							let answers = question.answers.map((answer, answerId) => {
+              let answers = question.answers.map((answer, answerId) => {
                 let answerData = {
                   value: answer.answer,
                   selected: false,
@@ -334,20 +347,20 @@ class StoryFull extends React.Component {
                 selected: answerIndex,
               };
               this.setState({questionaireAnswers});
-							
-							this.validateQuestionaire();
-							
-						}}>
-							<option value="-1">Please Choose</option>
-							{options}
-						</select>
-					</li>
-				</ul>
-			);
-		});
+              
+              this.validateQuestionaire();
+              
+            }}>
+              <option value="-1">Please Choose</option>
+              {options}
+            </select>
+          </li>
+        </ul>
+      );
+    });
 
-		return questions;
-	}
+    return questions;
+  }
 
   render() {
     const {
@@ -543,7 +556,7 @@ class StoryFull extends React.Component {
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
               tiny={mobileView}
-              text={shortLong(<span><Icon type="exclamation-circle"/></span>, 'Hide Forever')}
+              text={shortLong(<span><Icon type="exclamation-circle"/></span>, <span>Hide Forever</span>)}
               onClick={() => {
                 var confirm = window.confirm('Are you sure? Flagging should be done only if this is spam or if the contribution is against the Utopian Rules.')
                 if (confirm) {
@@ -574,7 +587,7 @@ class StoryFull extends React.Component {
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
               tiny={mobileView}
-              text={shortLong(<span><Icon type="check-circle"/></span>, 'Verify')}
+              text={shortLong(<span><Icon type="check-circle"/></span>, <span>Verify</span>)}
               onClick={() => this.setState({ verifyModal: true })}
             /> : null}
 
@@ -674,24 +687,24 @@ class StoryFull extends React.Component {
           <br />
           <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified. Check replies to your comments often to see if the user has submitted the changes you have requested.</p>
           <p><b>Is this contribution ready to be verified? <Link to="/rules">Read the rules</Link></b></p>
-		  <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
-		  <br /><br /><br /><br />
-		  {this.state.questionaireAnswersMissing ? 
-		  	<p>Please answer all the questions!</p> : null
-		  }
-		  {this.renderQuestionaire()}
-		  <br /><br /><br /><br />
-		  <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
-		  <b>How would you reate the quality of this post?</b>
-		  
+      <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
+      <br /><br /><br /><br />
+      {this.state.questionaireAnswersMissing ? 
+        <p>Please answer all the questions!</p> : null
+      }
+      {this.renderQuestionaire()}
+      <br /><br /><br /><br />
+      <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
+      <b>How would you reate the quality of this post?</b>
       
-		   <RawSlider
-		    initialValue={this.state.sliderValue}
+      
+       <RawSlider
+        initialValue={this.state.sliderValue}
             value={this.state.sliderValue}
             onChange={this.updateQualitySlider.bind(this)}
           />
 
-		  
+      
         </Modal>
 
         {/* Moderator Comment Modal - Allows for moderator to publish template-based comment after marking a post as reviewed/flagged/pending */}
@@ -729,16 +742,16 @@ class StoryFull extends React.Component {
           {post.pending ?
             <div onChange={this.setModTemplate.bind(this)}>
               <b>Choose a template, or start editing:</b>
-              <ul class="list">
-                <li class="list__item"><input type="radio" value="pendingDefault" id="pendingDefault" name="modTemplate" checked={this.state.modTemplate === 'pendingDefault'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingDefault") }} for="pendingDefault" class="label">Default</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingWrongRepo" id="pendingWrongRepo" name="modTemplate" checked={this.state.modTemplate === 'pendingWrongRepo'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepo") }} for="pendingWrongRepo" class="label">Wrong Repository</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingWrongCategory" id="pendingWrongCategory" name="modTemplate" checked={this.state.modTemplate === 'pendingWrongCategory'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongCategory") }} for="pendingWrongCategory" class="label">Wrong Category</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingWrongRepoSpecified" id="pendingWrongRepoSpecified" name="modTemplate" checked={this.state.modTemplate === 'pendingWrongRepoSpecified'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepoSpecified") }} for="pendingWrongRepoSpecified" class="label">Wrong Repository (Specify Correct One)</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingPow" id="pendingPow" name="modTemplate" checked={this.state.modTemplate === 'pendingPow'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingPow") }} for="pendingPow" class="label">Proof of Work Required</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingTooShort" id="pendingTooShort" name="modTemplate" checked={this.state.modTemplate === 'pendingTooShort'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingTooShort") }} for="pendingTooShort" class="label">Too Short</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingNotEnglish" id="pendingNotEnglish" name="modTemplate" checked={this.state.modTemplate === 'pendingNotEnglish'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingNotEnglish") }} for="pendingNotEnglish" class="label">Not in English</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingBadTags" id="pendingBadTags" name="modTemplate" checked={this.state.modTemplate === 'pendingBadTags'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBadTags") }} for="pendingBadTags" class="label">Irrelevant Tags</label><br /></li>
-                <li class="list__item"><input type="radio" value="pendingBanner" id="pendingBanner" name="modTemplate" checked={this.state.modTemplate === 'pendingBanner'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBanner") }} for="pendingBanner" class="label">Banners Present</label><br /></li>
+              <ul className="list">
+                <li className="list__item"><input type="radio" value="pendingDefault" id="pendingDefault" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingDefault'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingDefault") }} htmlFor="pendingDefault" className="label">Default</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingWrongRepo" id="pendingWrongRepo" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingWrongRepo'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepo") }} htmlFor="pendingWrongRepo" className="label">Wrong Repository</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingWrongCategory" id="pendingWrongCategory" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingWrongCategory'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongCategory") }} htmlFor="pendingWrongCategory" className="label">Wrong Category</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingWrongRepoSpecified" id="pendingWrongRepoSpecified" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingWrongRepoSpecified'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingWrongRepoSpecified") }} htmlFor="pendingWrongRepoSpecified" className="label">Wrong Repository (Specify Correct One)</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingPow" id="pendingPow" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingPow'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingPow") }} htmlFor="pendingPow" className="label">Proof of Work Required</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingTooShort" id="pendingTooShort" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingTooShort'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingTooShort") }} htmlFor="pendingTooShort" className="label">Too Short</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingNotEnglish" id="pendingNotEnglish" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingNotEnglish'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingNotEnglish") }} htmlFor="pendingNotEnglish" className="label">Not in English</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingBadTags" id="pendingBadTags" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingBadTags'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBadTags") }} htmlFor="pendingBadTags" className="label">Irrelevant Tags</label><br /></li>
+                <li className="list__item"><input type="radio" value="pendingBanner" id="pendingBanner" name="modTemplate" defaultChecked={this.state.modTemplate === 'pendingBanner'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("pendingBanner") }} htmlFor="pendingBanner" className="label">Banners Present</label><br /></li>
               </ul>
             </div>
             : null}
@@ -746,14 +759,14 @@ class StoryFull extends React.Component {
           {post.flagged ?
             <div onChange={this.setModTemplate.bind(this)}>
               <b>Choose a template, or start editing:</b>
-              <ul class="list">
-                <li class="list__item"><input type="radio" value="flaggedDefault" id="flaggedDefault" name="modTemplate" checked={this.state.modTemplate === 'flaggedDefault'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDefault") }} for="flaggedDefault" class="label">Default</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedDuplicate" id="flaggedDuplicate" name="modTemplate" checked={this.state.modTemplate === 'flaggedDuplicate'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDuplicate") }} for="flaggedDuplicate" class="label">Duplicate Contribution</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedNotOpenSource" id="flaggedNotOpenSource" name="modTemplate" checked={this.state.modTemplate === 'flaggedNotOpenSource'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotOpenSource") }} for="flaggedNotOpenSource" class="label">Not Related to Open-Source</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedSpam" id="flaggedSpam" name="modTemplate" checked={this.state.modTemplate === 'flaggedSpam'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedSpam") }} for="flaggedSpam" class="label">Spam</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedPlagiarism" id="flaggedPlagiarism" name="modTemplate" checked={this.state.modTemplate === 'flaggedPlagiarism'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedPlagiarism") }} for="flaggedPlagiarism" class="label">Plagiarism</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedTooShort" id="flaggedTooShort" name="modTemplate" checked={this.state.modTemplate === 'flaggedTooShort'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedTooShort") }} for="flaggedTooShort" class="label">Too Short</label><br /></li>
-                <li class="list__item"><input type="radio" value="flaggedNotEnglish" id="flaggedNotEnglish" name="modTemplate" checked={this.state.modTemplate === 'flaggedNotEnglish'} class="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotEnglish") }} for="flaggedNotEnglish" class="label">Not in English</label><br /></li>
+              <ul className="list">
+                <li className="list__item"><input type="radio" value="flaggedDefault" id="flaggedDefault" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedDefault'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDefault") }} htmlFor="flaggedDefault" className="label">Default</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedDuplicate" id="flaggedDuplicate" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedDuplicate'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedDuplicate") }} htmlFor="flaggedDuplicate" className="label">Duplicate Contribution</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedNotOpenSource" id="flaggedNotOpenSource" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedNotOpenSource'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotOpenSource") }} htmlFor="flaggedNotOpenSource" className="label">Not Related to Open-Source</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedSpam" id="flaggedSpam" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedSpam'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedSpam") }} htmlFor="flaggedSpam" className="label">Spam</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedPlagiarism" id="flaggedPlagiarism" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedPlagiarism'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedPlagiarism") }} htmlFor="flaggedPlagiarism" className="label">Plagiarism</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedTooShort" id="flaggedTooShort" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedTooShort'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedTooShort") }} htmlFor="flaggedTooShort" className="label">Too Short</label><br /></li>
+                <li className="list__item"><input type="radio" value="flaggedNotEnglish" id="flaggedNotEnglish" name="modTemplate" defaultChecked={this.state.modTemplate === 'flaggedNotEnglish'} className="radio-btn" /> <label onClick={() => { this.setModTemplateByName("flaggedNotEnglish") }} htmlFor="flaggedNotEnglish" className="label">Not in English</label><br /></li>
               </ul>
             </div>
             : null}
