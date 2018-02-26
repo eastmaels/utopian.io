@@ -107,7 +107,7 @@ class InlineRepoEdit extends React.Component {
               q = q.replace('http://', '');
               q = q.replace('github.com/', '');
               q = '"' + q + '"';
-              
+    
               if (event.key === 'Enter')
               {
                 event.preventDefault();
@@ -125,6 +125,7 @@ class InlineRepoEdit extends React.Component {
                 });
 
               }, 2000);
+
             },
             onPaste: (event) => {
               const pasted = event.clipboardData.getData('Text');
@@ -133,7 +134,6 @@ class InlineRepoEdit extends React.Component {
                 q = q.replace('http://', '');
                 q = q.replace('github.com/', '');
                 q = '"' + q + '"';
-
                 this.props.getGithubRepos({
                   q,
                 }).then(() => {
@@ -142,7 +142,9 @@ class InlineRepoEdit extends React.Component {
               }
             },
             onFocus: (event) => this.setPreviousValue(event),
+
             onBlur: (event) => this.callModeratorAction(),
+
           }}
         items={ repos }
         onSelect={(value, repo) => {
