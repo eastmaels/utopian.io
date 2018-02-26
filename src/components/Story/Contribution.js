@@ -14,10 +14,6 @@ const types = [
     'slug': 'SUGGESTION'
   },
   {
-    'type': 'sub-project',
-    'slug': 'SUB-PROJECT'
-  },
-  {
     'type': 'development',
     'slug': 'DEVELOPMENT'
   },
@@ -59,84 +55,37 @@ const types = [
   },
   {
     'type': 'task-ideas',
-    'slug': 'THINKERS'
+    'slug': 'TASK/THINKERS'
   },
   {
     'type': 'task-development',
-    'slug': 'DEVELOPERS'
+    'slug': 'TASK/DEVELOPERS'
   },
   {
     'type': 'task-bug-hunting',
-    'slug':	'BUG HUNTERS'
+    'slug':	'TASK/BUG HUNTERS'
   },
   {
     'type': 'task-documentation',
-    'slug': 'TECH WRITERS'
+    'slug': 'TASK/TECH WRITERS'
   },
   {
     'type': 'task-translations',
-    'slug': 'TRANSLATORS'
+    'slug': 'TASK/TRANSLATORS'
   },
   {
     'type': 'task-analysis',
-    'slug':	'DATA ANALYSTS'
+    'slug':	'TASK/DATA ANALYSTS'
   },
   {
     'type': 'task-graphics',
-    'slug': 'DESIGNERS'
+    'slug': 'TASK/DESIGNERS'
   },
   {
     'type': 'task-social',
-    'slug': 'INFLUENCERS'
+    'slug': 'TASK/INFLUENCERS'
   }
 ];
-
-const categorySlug = type => {
-  switch (type) {
-    case 'ideas':
-      return 'SUGGESTION';
-    case 'sub-projects':
-      return 'SUB-PROJECT';
-    case 'development':
-      return 'DEVELOPMENT';
-    case 'bug-hunting':
-      return 'BUG';
-    case 'translations':
-      return 'TRANSLATION';
-    case 'analysis':
-      return 'ANALYSIS';
-    case 'graphics':
-      return 'GRAPHICS';
-    case 'social':
-      return 'VISIBILITY';
-    case 'documentation':
-      return 'DOCUMENTATION';
-    case 'tutorials':
-      return 'TUTORIAL';
-    case 'video-tutorials':
-      return 'VIDEO TUTORIAL';
-    case 'copywriting':
-      return 'COPYWRITING';
-    case 'blog':
-      return 'BLOG POST';
-    case 'task-ideas':
-      return 'THINKERS';
-    case 'task-development':
-      return 'DEVELOPERS';
-    case 'task-bug-hunting':
-      return 'BUG HUNTERS';
-    case 'task-documentation':
-      return 'TECH WRITERS';
-    case 'task-translations':
-      return 'TRANSLATORS';
-    case 'task-analysis':
-      return 'DATA ANALYSTS';
-    case 'task-graphics':
-      return 'DESIGNERS';
-    case 'task-social':
-      return 'INFLUENCERS';
-  }
-};
 
 const parsedRepoName = (author, name) => {
   if ((author.length + name.length) < 35) {
@@ -184,7 +133,7 @@ const Contribution = ({
             moderatorAction={moderatorAction}
             user={user}
           /> :
-          categorySlug(type)
+          types[type]
         }
       </span>
 
