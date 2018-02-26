@@ -53,7 +53,7 @@ class InlineRepoEdit extends React.Component {
     })
   }
 
-  callModeratorAction(event) {
+  callModeratorAction() {
     const { post, user, moderatorAction } = this.props;
     const status = null, questions = [], score = 0, type = null;
 
@@ -81,13 +81,13 @@ class InlineRepoEdit extends React.Component {
             this.state.repository,
           ).then((res) => {
             // do nothing; moderator action succeeded
-            // console.log(res);
+            // console.log("repo changed", res);
           });
         }).catch(e => {
           // if inputted repository does not exist, reset to previous valid repo.
           this.setState({value: this.state.previousValue});
         });
-
+  debounceTimer = null;
     }
   }
 
@@ -107,18 +107,24 @@ class InlineRepoEdit extends React.Component {
               q = q.replace('http://', '');
               q = q.replace('github.com/', '');
               q = '"' + q + '"';
-
-              if (event.key === 'Enter') {
+              
+              if (event.key === 'Enter')
+              {
                 event.preventDefault();
-                this.setState({loading: true, loaded: false});
-                this.search.refs.input.click();
+              }
+              
+              this.setState({loading: true, loaded: false});
+              
+              clearTimeout(this.debounceTimer);
+              this.debounceTimer = setTimeout(() => {
+                this.debounceTimer = null;
                 this.props.getGithubRepos({
                   q,
                 }).then(() => {
-                  this.setState({loaded: true, loading: false});
-                  this.search.refs.input.click();
+                  this.setState({loading: false, loaded: true});
                 });
-              }
+
+              }, 2000);
             },
             onPaste: (event) => {
               const pasted = event.clipboardData.getData('Text');
@@ -128,25 +134,25 @@ class InlineRepoEdit extends React.Component {
                 q = q.replace('github.com/', '');
                 q = '"' + q + '"';
 
-                this.search.refs.input.click();
-
                 this.props.getGithubRepos({
                   q,
                 }).then(() => {
                   this.setState({loaded: true, loading: false});
-                  this.search.refs.input.click();
                 });
               }
             },
             onFocus: (event) => this.setPreviousValue(event),
-            onBlur: (event) => this.callModeratorAction(event),
+            onBlur: (event) => this.callModeratorAction(),
           }}
         items={ repos }
         onSelect={(value, repo) => {
           this.setState({
             value: repo.full_name,
             repository: repo,
+          }, () => {
+            this.callModeratorAction()
           });
+          
         }}
         getItemValue={repo => repo.full_name}
         onChange={(event, value) => {
@@ -157,6 +163,7 @@ class InlineRepoEdit extends React.Component {
         }}
         renderItem={(repo, isHighlighted) => (
           <div
+        style={{ padding: '5px', paddingRight: '10px'  }}
             className='Topnav__search-item'
             key={repo.full_name}>
             <span><Icon type='github' /> <b>{repo.full_name}</b></span>
@@ -164,12 +171,11 @@ class InlineRepoEdit extends React.Component {
           </div>
         )}
         renderMenu={(items, value) => (
-          <div className="Topnav__search-menu-reg inline-repo-edit-menu">
             <div>
               {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
               {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
               {this.state.loading && <div className="Topnav__search-tip">Loading...</div>}
-              {items.length > 0 && this.renderItems(items)}
+              {items.length > 0 && items}
             </div>
           </div>
         )}

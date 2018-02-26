@@ -14,10 +14,6 @@ const types = [
     'slug': 'SUGGESTION'
   },
   {
-    'type': 'sub-projects',
-    'slug': 'SUB-PROJECT'
-  },
-  {
     'type': 'development',
     'slug': 'DEVELOPMENT'
   },
@@ -59,35 +55,35 @@ const types = [
   },
   {
     'type': 'task-ideas',
-    'slug': 'THINKERS'
+    'slug': 'TASK/THINKERS'
   },
   {
     'type': 'task-development',
-    'slug': 'DEVELOPERS'
+    'slug': 'TASK/DEVELOPERS'
   },
   {
     'type': 'task-bug-hunting',
-    'slug':	'BUG HUNTERS'
+    'slug':	'TASK/BUG HUNTERS'
   },
   {
     'type': 'task-documentation',
-    'slug': 'TECH WRITERS'
+    'slug': 'TASK/TECH WRITERS'
   },
   {
     'type': 'task-translations',
-    'slug': 'TRANSLATORS'
+    'slug': 'TASK/TRANSLATORS'
   },
   {
     'type': 'task-analysis',
-    'slug':	'DATA ANALYSTS'
+    'slug':	'TASK/DATA ANALYSTS'
   },
   {
     'type': 'task-graphics',
-    'slug': 'DESIGNERS'
+    'slug': 'TASK/DESIGNERS'
   },
   {
     'type': 'task-social',
-    'slug': 'INFLUENCERS'
+    'slug': 'TASK/INFLUENCERS'
   }
 ];
 
