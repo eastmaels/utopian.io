@@ -87,10 +87,10 @@ class InlineRepoEdit extends React.Component {
           // if inputted repository does not exist, reset to previous valid repo.
           this.setState({value: this.state.previousValue});
         });
-  debounceTimer = null;
+
     }
   }
-
+  debounceTimer = null;
   render () {
     const { repos } = this.props;
     return (
@@ -171,6 +171,7 @@ class InlineRepoEdit extends React.Component {
           </div>
         )}
         renderMenu={(items, value) => (
+          <div className="Topnav__search-menu-reg inline-repo-edit-menu" style={{ position: 'absolute', paddingRight: '10px', zIndex: '100'  }}>
             <div>
               {items.length === 0 && !this.state.loaded && !this.state.loading && <div className="Topnav__search-tip"><b>Press enter to see results</b></div>}
               {items.length === 0 && this.state.loaded && <div className="Topnav__search-tip">No projects found</div>}
