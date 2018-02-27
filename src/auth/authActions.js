@@ -80,7 +80,6 @@ export const logout = () => (dispatch) => {
         .then(() => {
           Cookie.remove('session');
           window.location.href = 'https://join.utopian.io;
-          }
         })
     }
   });
