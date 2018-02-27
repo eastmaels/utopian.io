@@ -137,7 +137,7 @@ const Contribution = ({
             moderatorAction={moderatorAction}
             user={user}
           /> :
-          types[type]
+          types[type].slug
         }
       </span>
 
