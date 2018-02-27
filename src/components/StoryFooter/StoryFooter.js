@@ -214,7 +214,8 @@ class StoryFooter extends React.Component {
 
   redirectToSignup = () => {
     this.setState({ signInModal: false });
-    window.location.href = 'https://signup.utopian.io';
+    //window.location.href = 'https://signup.utopian.io';
+    window.location.href = 'https://steemit.com/pick_account';
   };
 
   redirectToLogin = () => {

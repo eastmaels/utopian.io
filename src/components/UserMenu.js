@@ -67,22 +67,34 @@ class UserMenu extends React.Component {
   };
 
   render() {
+    const renderContribution = () => {
+      let result;
+      if (this.state.current === 'contributions') {
+        result = (<li className={this.getItemClasses('contributions')} onClick={this.handleClick} role="presentation" data-key="contributions">
+          <FormattedMessage id="contributions" defaultMessage="Contributions" />
+        </li>);
+      } else {
+        result = (<li className={this.getItemClasses('discussions')} onClick={this.handleClick} role="presentation" data-key="discussions">
+          <FormattedMessage id="contributions" defaultMessage="Contributions" />
+        </li>);
+      }
+      return result;
+    };
+
     return (
       <div className="UserMenu">
         <div className="container menu-layout">
           <div className="left" />
           <Scrollbars autoHide style={{ width: '100%', height: 46 }}>
             <ul className="UserMenu__menu center">
-              <li className={this.getItemClasses('discussions')} onClick={this.handleClick} role="presentation" data-key="discussions">
-                <FormattedMessage id="contributions" defaultMessage="Contributions" />
-              </li>
+              {renderContribution()}
               {this.isModerator() &&
               <li className={this.getItemClasses('moderations')} onClick={this.handleClick} role="presentation" data-key="moderations">
-                <FormattedMessage id="moderations" defaultMessage="Moderations" /> 
+                <FormattedMessage id="moderations" defaultMessage="Moderations" />
               </li>}
-              {/*<li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
+              {/* <li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
                 <FormattedMessage id="comments" defaultMessage="Comments" />
-              </li>*/}
+              </li> */}
               <li className={this.getItemClasses('projects')} onClick={this.handleClick} role="presentation" data-key="projects">
                 Projects
               </li>
