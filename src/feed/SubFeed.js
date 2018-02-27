@@ -104,7 +104,7 @@ class SubFeed extends React.Component {
         sortBy: 'created',
         author: match.params.name,
         status: statusArray.indexOf(match.params.status) >= 0 ? match.params.status : 'all',
-        reset: true,
+        reset: (skip == 0),
       }).then((res) => {
         this.total = res.response.total;
         this.setState({ skip: skip + limit });
