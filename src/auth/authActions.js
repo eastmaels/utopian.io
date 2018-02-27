@@ -79,7 +79,7 @@ export const logout = () => (dispatch) => {
         .set({ session: Cookie.get('session') })
         .then(() => {
           Cookie.remove('session');
-          window.location.href = 'https://join.utopian.io;
+          window.location.href = 'https://join.utopian.io';
         })
     }
   });
