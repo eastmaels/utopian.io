@@ -82,9 +82,7 @@ export const logout = () => (dispatch) => {
         .set({ session: Cookie.get('session') })
         .then(() => {
           Cookie.remove('session');
-          if (process.env.NODE_ENV === 'production') {
-            window.location.href = process.env.UTOPIAN_LANDING_URL;
-          }
+          window.location.href = 'https://join.utopian.io';
         })
     }
   });
