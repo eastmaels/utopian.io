@@ -173,8 +173,10 @@ class Topnav extends React.Component {
     visible: true,
       });
     setTimeout(() => {
+      const { visible, loading } = this.state;
+      if(visible){
       window.location.href=sc2.getLoginUrl(window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : '');
-      this.setState({ loading: false, visible: false });
+      this.setState({ loading: false, visible: false });}
     }, 6000);
   }
 
