@@ -18,6 +18,10 @@ const types = [
     'slug': 'DEVELOPMENT'
   },
   {
+    'type': 'graphics',
+    'slug': 'GRAPHICS'
+  },
+  {
     'type': 'bug-hunting',
     'slug':	'BUG'
   },
