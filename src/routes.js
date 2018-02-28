@@ -37,12 +37,10 @@ import WriteTask from './post/Write/WriteTask';
 
 import Drafts from './post/Write/Drafts';
 import RequireLogin from './auth/RequireLogin';
-import RequireTos from "./auth/RequireTos";
 import CookiePolicy from './statics/CookiePolicy'; 
 
 export default (
   <Wrapper>
-    <RequireTos />
     <Switch>
       <Route exact path="/" component={Page} />
       {/*<Route
