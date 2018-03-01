@@ -9,10 +9,10 @@ export default () =>
 		<h1>
 			Utopian Company SRLs Privacy Policy
 		</h1>
-		<h2>
+		<span class="PrivacyPolicy-date">
 			Effective February 19, 2018
-		</h2>
-		<br/>
+		</span>
+		
 		<p>
 			1. We want you to understand how and why Utopian, Inc (“Utopian,” “we” or
 			“us”) collects, uses, and shares information about you when you access and
@@ -20,25 +20,25 @@ export default () =>
 			and services (collectively, the "Services") or when you otherwise interact
 			with us.
 		</p>
-		<br/>
+		
 		<h2>
 			Information You Provide to Us
 		</h2>
-		<br/>
+		
 		<p>
 			2. We collect information you provide directly to us when you use our
 			Services. Depending on which Service you use, we may collect different
 			information about you.
 		</p>
-		<br/>
+		
 		<p>
 			This includes:
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Information Regarding Your Use of the Services
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			3. We collect the content and other information you provide when you use
 			our Services. This includes information used to create your account (e.g.,
@@ -46,11 +46,11 @@ export default () =>
 			content of information you post to the Services (e.g., text, photos,
 			videos, links).
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Transactional Information
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			4. If you purchase products or services from us (e.g., Steem Power), we
 			will collect certain information from you, including your name, address,
@@ -60,11 +60,11 @@ export default () =>
 			privacy policy for more information about how payment information is
 			processed and stored.
 		</p>
-		<br/>
+		
 		<h2>
 			Other Information
 		</h2>
-		<br/>
+		
 		<p>
 			5. You may choose to provide other information directly to us. For example,
 			we may collect information when you fill out a form, participate in
@@ -72,20 +72,20 @@ export default () =>
 			via third-party sites and services, request customer support or otherwise
 			communicate with us.
 		</p>
-		<br/>
+		
 		<h2>
 			Information We Collect Automatically
 		</h2>
-		<br/>
+		
 		<p>
 			6. When you access or use our Services, we may also automatically collect
 			information about you. This includes:
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Log and Usage Data
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			7. We may log information when you access and use the Services. This may
 			include your IP address, user-agent string, browser type, operating system,
@@ -93,11 +93,11 @@ export default () =>
 			clicked, user interactions (e.g., voting data), the requested URL, hardware
 			settings, and search terms.
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Information Collected from Cookies
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			8. We may receive information from cookies, which are pieces of data your
 			browser stores and sends back to us when making requests. We use this
@@ -107,11 +107,11 @@ export default () =>
 			can disable cookies, please see “Your Choices” below. For more information
 			about cookies read our cookie policy section https://utopian.io/cookies
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Location Information
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			9. With your consent, we may collect information about the specific
 			location of your mobile device (for example, by using GPS or Bluetooth).
@@ -119,11 +119,11 @@ export default () =>
 			device, but doing so may affect your ability to use all of the features and
 			functionality of our Services.
 		</p>
-		<br/>
+		
 		<h2>
 			Social Sharing
 		</h2>
-		<br/>
+		
 		<p>
 			10. We may offer social sharing features or other integrated tools that let
 			you share content or actions you take on our Services with other media.
@@ -135,11 +135,11 @@ export default () =>
 			policies of the third parties that provide these social sharing features
 			(e.g., Tumblr, Facebook, Reddit, Pinterest, and Twitter).
 		</p>
-		<br/>
+		
 		<h2>
 			How We Use Information About You
 		</h2>
-		<br/>
+		
 		<p>
 			11. We use information about you to:
 		</p>
@@ -188,11 +188,11 @@ export default () =>
 				</p>
 			</li>
 		</ul>
-		<br/>
+		
 		<h2>
 			How We Share Information
 		</h2>
-		<br/>
+		
 		<p>
 			12. When you use the Services, certain information may be shared with other
 			users and the public. For example:
@@ -218,14 +218,14 @@ export default () =>
 				</p>
 			</li>
 		</ul>
-		<br/>
+		
 		<p>
 			13. Please note that, even when you delete your account, the posts,
 			comments and messages you submit through the Services may still be viewable
 			or available on our servers. For more information, see “Your Choices”
 			below.
 		</p>
-		<br/>
+		
 		<p>
 			14. We will not share, sell, or give away any of our users’ personal
 			information to third parties, unless one of the following circumstances
@@ -285,16 +285,16 @@ export default () =>
 				</p>
 			</li>
 		</ul>
-		<br/>
+		
 		<p>
 			15. We may share aggregated or de-identified information, which cannot
 			reasonably be used to identify you.
 		</p>
-		<br/>
+		
 		<h2>
 			Ads and Analytics Partners
 		</h2>
-		<br/>
+		
 		<p>
 			16. We may partner with third-party advertisers, ad networks, and analytics
 			providers to deliver advertising and content targeted to your interests and
@@ -303,11 +303,11 @@ export default () =>
 			response to a request for content, such as unique identifiers, your IP
 			address, or other information about your computer or device. For example:
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Advertisers and Ad Networks
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			17. Our ad partners and network may use cookies and use related
 			technologies to collect information when ads are delivered to you on our
@@ -317,68 +317,68 @@ export default () =>
 			cannot see advertisers’ cookies and advertisers will not see Utopian
 			cookies.
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Analytics Partners
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			18. We use analytics partners (such as Google Analytics) to help analyze
 			usage and traffic for our Services. As an example, we may use analytics
 			partners to analyze and measure, in the aggregate, the number of unique
 			visitors to our Services.
 		</p>
-		<br/>
+		
 		<p>
 			19. For more information about how you may control the collection and/or
 			use of information for advertising and analytics purposes, please see “Your
 			Choices.”
 		</p>
-		<br/>
+		
 		<h2>
 			Security
 		</h2>
-		<br/>
+		
 		<p>
 			20. We take reasonable measures to help protect information about you from
 			loss, theft, misuse and unauthorized access, disclosure, alteration, and
 			destruction.
 		</p>
-		<br/>
+		
 		<h2>
 			Children under 18
 		</h2>
-		<br/>
+		
 		<p>
 			21. Although we welcome users from all walks of life, Utopian is not
 			intended or directed at individuals under the age of 18. Therefore,
 			individuals under the age of 18 may not create an account or otherwise
 			access or use the Services.
 		</p>
-		<br/>
+		
 		<h2>
 			Your Choices
 		</h2>
-		<br/>
+		
 		<p>
 			22. As a Utopian user, you have choices about how to protect and limit the
 			collection, use, and disclosure of, information about you. This includes:
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Preferences
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			23. We may provide you with tools and preference settings that allow you to
 			access, correct, delete, and modify information associated with your
 			account.
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Account Information
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			24. You may delete your account information at any time by logging into
 			your account and following the steps under “Preferences.” When you delete
@@ -391,11 +391,11 @@ export default () =>
 			Any information that has been published to the Steem blockchain will also
 			remain indefinitely.
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Cookies
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			25. Most web browsers are set to accept cookies by default. If you prefer,
 			you can usually choose to set your browser to remove or reject first- and
@@ -404,11 +404,11 @@ export default () =>
 			Services. For more information about cookies read our cookie policy section
 			https://utopian.io/cookies
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Third-Party Advertising and Analytics
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			26. Some analytics providers may provide specific opt-out mechanisms (e.g.
 			Google Analytics Opt-out), and we will provide, as needed, additional tools
@@ -417,11 +417,11 @@ export default () =>
 			browsing information used for behavioral advertising purposes. For more
 		information about behavioral advertising, or to opt out, please visit    <a href="http://www.aboutads.info/choices">www.aboutads.info/choices</a>.
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Do Not Track
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			27. Do Not Track (“DNT”) is a privacy preference that you can set in most
 			web browsers. We support DNT in our Services. There is no accepted standard
@@ -432,33 +432,33 @@ export default () =>
 			having information about you collected and used for behavioral advertising
 			purposes, as described above.
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Promotional Communications
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			28. You may opt out of receiving promotional communications from us by
 			following the instructions in those communications. If you opt out, we may
 			still send you non-promotional communications, such as information about
 			your account or your use of our Services.
 		</p>
-		<br/>
-		<h4>
+		
+		<h2>
 			Mobile Notifications
-		</h4>
-		<br/>
+		</h2>
+		
 		<p>
 			29. With your consent, we may send promotional and non-promotional push
 			notifications or alerts to your mobile device. You can deactivate these
 			messages at any time by changing the notification settings on your mobile
 			device.
 		</p>
-		<br/>
+		
 		<h2>
 			International Data Transfers
 		</h2>
-		<br/>
+		
 		<p>
 			30. We are based in the Italy and the information we collect is governed by
 			Italy law. By accessing or using the Services or otherwise providing
@@ -466,7 +466,7 @@ export default () =>
 			information in and to Italy and other countries, where you may not have the
 			same rights as you do under local law.
 		</p>
-		<br/>
+		
 		<h2>
 			Changes
 		</h2>
@@ -482,12 +482,12 @@ export default () =>
 			privacy. If you continue to use our Services after Privacy Policy changes
 			go into effect, you consent to the revised policy.
 		</p>
-		<br/>
+		
 		<h2>
 			Contact Us
 		</h2>
 		<p>
-		32. If you have any questions about this Privacy Policy, please email    <a href="mailto:privacy@utopian.io">privacy@utopian.io</a>
+			32. If you have any questions about this Privacy Policy, please email    <a href="mailto:privacy@utopian.io">privacy@utopian.io</a>
 		</p>
 
       </div>

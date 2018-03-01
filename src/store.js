@@ -2,7 +2,7 @@ import promiseMiddleware from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import { API } from './middlewares';
 import { applyMiddleware, createStore, compose } from 'redux';
-import { routerMiddleware } from 'react-router-redux';
+import { CALL_HISTORY_METHOD } from 'react-router-redux';
 import api from './steemAPI';
 import { history } from './routes';
 import { mountResponsive } from './vendor/responsive';
@@ -34,7 +34,15 @@ const middleware = [
   thunk.withExtraArgument({
     steemAPI: api,
   }),
-  routerMiddleware(history),
+  () => next => action => {
+	  if (action.type !== CALL_HISTORY_METHOD) {
+     return next(action);
+    }
+
+    const { payload: { method, args } } = action;
+    history[method](...args);
+  },
+  //routerMiddleware(history),
 ];
 
 let enhancer;
