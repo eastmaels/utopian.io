@@ -67,15 +67,9 @@ const Sidenav = ({ username }) =>
     </ul>
     <ul className="Sidenav" style={{listStyleType: 'none'}}>
       <li>
-        <NavLink to="/sponsors" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/sponsors', match, location)}>
-          <Icon type="heart" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
-          Sponsors
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/moderators" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/moderators', match, location)}>
-          <Icon type="safety" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
-          Moderators
+        <NavLink to="/faq" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/faq', match, location)}>
+          <Icon type="question" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+          FAQ
         </NavLink>
       </li>
       <li>
@@ -84,16 +78,34 @@ const Sidenav = ({ username }) =>
           Rules
         </NavLink>
       </li>
+      {username &&
       <li>
-        <NavLink to="/faq" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/faq', match, location)}>
-          <Icon type="question" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
-          FAQ
+        <NavLink to="/sponsors" activeClassName="Sidenav__item--active"
+                 isActive={(match, location) => isActive('/sponsors', match, location)}>
+          <Icon type="heart" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+          Sponsors
+        </NavLink>
+      </li>
+      }
+      {username &&
+      <li>
+        <NavLink to="/moderators" activeClassName="Sidenav__item--active"
+                 isActive={(match, location) => isActive('/moderators', match, location)}>
+          <Icon type="safety" style={{'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px'}}/>
+          Moderators
+        </NavLink>
+      </li>
+      }
+      <li>
+        <NavLink to="/tos" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/tos', match, location)}>
+          <Icon type="flag" style={{ 'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px' }} />
+          Terms of Service
         </NavLink>
       </li>
       <li>
-        <NavLink to="/cookies" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/cookies', match, location)}>
+        <NavLink to="/privacy" activeClassName="Sidenav__item--active" isActive={(match, location) => isActive('/privacy', match, location)}>
           <Icon type="flag" style={{ 'verticalAlign': 'middle', 'fontSize': '22px', 'marginRight': '10px' }} />
-          Cookie Policy
+          Privacy Policy
         </NavLink>
       </li>
     </ul>
