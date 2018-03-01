@@ -673,20 +673,6 @@ class StoryFull extends React.Component {
             });
           }}
         >
-          <p>By moderating contributions on Utopian <b>you will earn 5% of the total author rewards generated on the platform</b> based on the amount of contributions reviewed.</p>
-          <br />
-          <ul>
-            <li><Icon type="heart" /> This contribution is personal, meaningful and informative.</li>
-            <li><Icon type="bulb" /> If it's an idea it is very well detailed and realistic.</li>
-            {postType !== 'tutorials' && postType !== 'video-tutorials' ?
-              <li><Icon type="smile" /> This is the first and only time this contribution has been shared with the community. </li> : null
-            }
-            <li><Icon type="search" /> This contribution is verifiable and provides proof of the work.</li>
-            <li><Icon type="safety" /> Read all the rules: <Link to="/rules">Read the rules</Link></li>
-          </ul>
-          <br />
-          <p>If this contribution does not meet the Utopian Standards please advise changes to the user using the comments or leave it unverified. Check replies to your comments often to see if the user has submitted the changes you have requested.</p>
-          <p><b>Is this contribution ready to be verified? <Link to="/rules">Read the rules</Link></b></p>
       <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
       <br /><br /><br /><br />
       {this.state.questionaireAnswersMissing ? 
@@ -697,13 +683,11 @@ class StoryFull extends React.Component {
       <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
       <b>How would you reate the quality of this post?</b>
       
-      
        <RawSlider
         initialValue={this.state.sliderValue}
             value={this.state.sliderValue}
             onChange={this.updateQualitySlider.bind(this)}
           />
-
       
         </Modal>
 
@@ -1032,6 +1016,21 @@ class StoryFull extends React.Component {
           <br/>
           { this.state.modalCopied && <span>&nbsp;&nbsp;&nbsp;&nbsp;Copied</span> }
         </Modal>
+
+        {metaData.pullRequests && metaData.pullRequests.length > 0 && metaData.pullRequests[0].user ?
+          <div>
+            <h4><Icon type="github" /> Github Connection</h4>
+            <div className="StoryFull__pullrequests">
+              {metaData.pullRequests[0].user.avatar_url
+              && <Avatar username={metaData.pullRequests[0].user.avatar_url} size={45} /> }
+              <span>
+                <a target="_blank" href={`https://github.com/${metaData.pullRequests[0].user.account}`}>
+                  {metaData.pullRequests[0].user.account}
+                  </a>
+              </span>
+            </div>
+          </div>
+          : null}
 
         {metaData.pullRequests && metaData.pullRequests.length > 0 ?
           <div>

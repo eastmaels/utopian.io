@@ -4,7 +4,7 @@ import { RulesTask } from '../components/RulesTask';
 
 import './Rules.less';
 
-export default (props) =>
+export default props =>
   (<div className="main-panel rules-section">
     <div className="container text-center my-5">
       <h1>General Rules</h1>
@@ -186,7 +186,10 @@ export default (props) =>
             The linked Github repository must always contain code, a README and a license. <b>[SOFT]</b>
           </li>
           <li>
-            Contributions for un-official repositories will only be accepted if present in <a href="https://docs.google.com/spreadsheets/d/1RMQyfqKRmgeIWPM80h31hS1NdLxqLJ6qy3I5ucNGuuc/edit?usp=sharing">Utopian un-official repos whitelist</a>
+            Contributions will only be accepted for repositories not present in the <a href="https://docs.google.com/spreadsheets/d/1q49j3mjjJVwqxRUdX0sqEApV7mAVil-K-OS-lKlFP_Y/">Utopian repository blacklist</a>.
+          </li>
+          <li>
+            Contributions for un-official repositories will only be accepted if present in the <a href="https://docs.google.com/spreadsheets/d/1RMQyfqKRmgeIWPM80h31hS1NdLxqLJ6qy3I5ucNGuuc/edit?usp=sharing">Utopian un-official repository whitelist</a>.
           </li>
           <li>
             Contributions on <b>official</b> repositories that are mirrors of another subversioning system are always accepted.
@@ -203,7 +206,7 @@ export default (props) =>
       <div>
         <h1>Categories Rules</h1>
         <div><Rules inEditor={false} type="ideas" /></div>
-        {/*<div><Rules inEditor={false} type="sub-projects" /></div>*/}
+        {/* <div><Rules inEditor={false} type="sub-projects" /></div>*/}
         <div><Rules inEditor={false} type="development" /></div>
         <div><Rules inEditor={false} type="bug-hunting" /></div>
         <div><Rules inEditor={false} type="translations" /></div>
@@ -240,7 +243,7 @@ export default (props) =>
 
       <div>
         <h1>Report a Moderation Issue</h1>
-        <p>Get in touch with the Supervisor assigned to the moderator that reviewed your contribution. <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">Find them on this document.</a></p>
+        <p>If you disagree with a moderator\'s decision or experience other moderation related issues, you can get in touch with us on Discord. You can mention <b>@Moderators</b> or <b>@Supervisors</b> in the <a href="https://discord.gg/KXpest">#review-discussion</a> channel. Mention Supervisors only in urgent situations.<br /><br /><b>Supervisors and Moderators are not required to and most likely will not respond to direct messages</b>.</p>
       </div>
 
       <div>
@@ -255,10 +258,10 @@ export default (props) =>
           <ul>
             <li>You must be at least 18 years old.</li>
             <li>
-              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor.
+              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
             </li>
             <li>
-              The public Steemit post must be pasted in the channel <a href="https://discord.gg/Ddj8SJf" target="_blank">#mod-applicant on Discord</a>. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
+                You must <a href="https://docs.google.com/forms/d/1YAkcRyjBRCIrdLOizgO7E8mATAU6_ZSPjL2WCZrPn_4">complete our application form and pass the integrated test</a>.
             </li>
           </ul>
           <div>

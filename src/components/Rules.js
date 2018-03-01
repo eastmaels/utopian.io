@@ -6,7 +6,7 @@ const AcceptRules = ({acceptRules}) => (
   <Action
     className="accept-rules-btn"
     primary
-    text='I understand. Proceed'
+    text={'I understand. Proceed'}
     onClick={e => {
       e.preventDefault();
       acceptRules();
@@ -14,7 +14,19 @@ const AcceptRules = ({acceptRules}) => (
   />
 );
 
-export const Rules = ({type, acceptRules, inEditor}) => {
+const SyncGithub = () => (
+  <Action
+    className="accept-rules-btn"
+    disabled
+    primary
+    text={'Your Utopian account must be connected to your GitHub account'}
+    onClick={e => {
+      e.preventDefault();
+    }}
+  />
+);
+
+export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
   switch(type) {
     case 'ideas':
       return (
@@ -66,7 +78,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Your Utopian account must be connected to your GitHub account.</li>
           </ul>
           <p>Not respecting the rules will either give you lower votes or your contribution won't be accepted.</p>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'bug-hunting':
@@ -98,11 +110,12 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>This category is meant only for translations you have created or updated for an Open Source project.</li>
             <li>You must translate a minimum of 1000 words per translation contribution.</li>
+            <li>CrowdIn contributions can be submitted only by translator with <b>Proofreading permissions</b> in the project, for the given language.</li>
             <li>Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
             <li>You could translate less than the minimum amount of words if the project itself has less to be translated in total. May lead to a lower vote.</li>
             <li>Entire translations are always preferred. If you are writing about a partial translation we reserve the right to evaluate the actual work.</li>
             <li>If it is obvious that you can't properly write in the source language of the translation, your contribution will be rejected.</li>
-            <li>Translations must be provided as a <a href="https://help.github.com/articles/about-pull-requests/">Pull Requst</a> on the GitHub repository.</li>
+            <li>If the translations is provided via GitHub is has to be a merged pull request</li>
             <li>The Pull Request must have been merged within the past <b>14 days</b>.</li>
             <li>Updates on <b>Own Projects</b> can be committed directly, without a Pull Request. <b>Commits must not be older than 14 days.</b></li>
             <li>Your GitHub username must match that on Utopian. If it does not, you must add your Utopian username in <a href="https://github.com/settings/profile">your GitHub profile.</a></li>
@@ -164,8 +177,8 @@ export const Rules = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>This category is meant only for providing results of <b>online social engagement</b>, ads and similar for an Open Source project.</li>
             <li>Promotions done on chats (e.g. Whatsapp, Telegram and similar) won't be accepted as valid contributions.</li>
-            <li>Only ads on Search engines, Social media platforms, Thunderclap campaigns, posts on social media accounts with at least 10000 followers / potential audience will be accepted as valid contributions.</li>
-            <li>You must have reached at least an audience of 1000 people.</li>
+            Valid contributions to the visibility category are paid search engine and display ads placement; paid social media ads; Thunderclap campaigns and posts to social media accounts with over 10,000 unique followers.
+            <li>You must have reached at least an audience of 5000 people.</li>
             <li>You must include links and proofs of the visibility effort you made and write down the results.</li>
             <li>You must provide a clear way to recognise you are the author of the social effort, by matching your Steem/Utopian account with the one on the social platforms or by using any other field to immediately verify that.</li>
           </ul>
@@ -217,7 +230,7 @@ export const Rules = ({type, acceptRules, inEditor}) => {
             <li>Video Tutorials must be technical instructions that teach non-trivial aspects of an Open Source project.</li>
             <li>Design or video editing related tutorials, gameplay, simple on-screen instructions, ubiquitous functions (Save, Open, Print, etc.) or basic programming concepts (variables, operators, loops, etc.) will not be accepted.</li>
             <li>Your contribution can be rejected if the moderator provides a link to another tutorial that covers the same topic better.</li>
-            <li>You must mention your Utopian username at the beginning of the video.</li>
+            <li>A personal introduction should be included in the video [SOFT]</li>
             <li>Video Tutorials using a machine voice will be rejected.</li>
             <li>The video and audio recording must be in HD (min. 720p).</li>
             <li>You must host the video on YouTube or DTube and embed it in your post.</li>

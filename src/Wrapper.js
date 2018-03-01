@@ -14,10 +14,11 @@ import { getUser } from './actions/user';
 import { login, logout } from './auth/authActions';
 import { getRate, getRewardFund, getTrendingTopics, getCurrentMedianHistoryPrice } from './app/appActions';
 import Topnav from './components/Navigation/Topnav';
-import CookiePolicyBanner from './statics/CookiePolicyBanner'; 
+import CookiePolicyBanner from './statics/CookiePolicyBanner';
 import Transfer from './wallet/Transfer';
 import * as reblogActions from './app/Reblog/reblogActions';
 import getTranslations, { getAvailableLocale } from './translations';
+import RequireTos from "./auth/RequireTos";
 
 @withRouter
 @connect(
@@ -137,7 +138,7 @@ export default class Wrapper extends React.PureComponent {
       <IntlProvider key={locale} locale={locale} messages={translations}>
         <Layout>
           <Layout.Header style={{ position: 'fixed', width: '100%', zIndex: 5 }}>
-            <Topnav 
+            <Topnav
               username={user.name}
               onMenuItemClick={this.handleMenuItemClick}
               history={this.props.history}
@@ -149,6 +150,7 @@ export default class Wrapper extends React.PureComponent {
             <Transfer />
           </div>
           <CookiePolicyBanner />
+          <RequireTos />
         </Layout>
       </IntlProvider>
     );
