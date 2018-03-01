@@ -28,7 +28,7 @@ export default class RequireTos extends React.Component
     getStats: PropTypes.func.isRequired,
     acceptPrivacyPolicy: PropTypes.func.isRequired,
     acceptTOS: PropTypes.func.isRequired,
-	logout: PropTypes.func,
+	  logout: PropTypes.func,
   };
 
   static defaultProps = {
@@ -37,7 +37,7 @@ export default class RequireTos extends React.Component
     privacyAccepted: false,
     acceptPrivacyPolicy: () => {},
     acceptTOS: () => {},
-	logout: () => {},
+	  logout: () => {},
   };
 
   constructor(props)
@@ -66,13 +66,13 @@ export default class RequireTos extends React.Component
   {
     const { acceptTOS, acceptPrivacyPolicy, user, fetching, authenticated } = this.props;
     let stats = this.state.stats;
-  
-    if(!authenticated)
-      return null;
+    
+    console.log("user fetching data", user.account, fetching, authenticated);
 
-    if(!stats || !user || !user.account || fetching)
+    if(!stats || !user || !user.account || fetching || !authenticated)
       return null;
       
+    console.log("user.tos & privacy", user.tos, user.privacy);
 
     let lastTOSEdit = new Date(stats.last_date_edit_tos);
     let TOSAgreements = (user.tos || []).filter( aggreement => {
@@ -93,6 +93,7 @@ export default class RequireTos extends React.Component
     if(TOSAgreements.length && PrivacyAgreements.length)
       return null;
     
+    console.log("TOSAgreements", TOSAgreements);
     return (
       <div>
         <Modal
@@ -101,19 +102,21 @@ export default class RequireTos extends React.Component
         okType={(this.state.TOSScroll?'primary':'disabled')}
         okText="Accept"
         cancelText="Cancel"
-		maskClosable={false}
+		    maskClosable={false}
         onCancel={() => {
-		  this.props.logout();
+		      this.props.logout();
         }}
         onOk={() => {
           if(!this.state.TOSScroll)
           {
               return;
           }
-          this.setState({
-            tosAccepted: true
+          
+          acceptTOS(user.account).then( accepted => {
+            this.setState({
+              tosAccepted: true
+            })
           })
-          acceptTOS(user.account);
         }}
         >
           <p>Please read and accept the Terms of Service</p>
@@ -147,10 +150,11 @@ export default class RequireTos extends React.Component
           {
               return;
           }
-          this.setState({
-            privacyAccepted: true
+          acceptPrivacyPolicy(user.account).then( accepted => {
+            this.setState({
+              privacyAccepted: true
+            })
           })
-          acceptPrivacyPolicy(user.account);
         }}
         >
           <p>Please read and accept the Privacy Policy Aggreement</p>

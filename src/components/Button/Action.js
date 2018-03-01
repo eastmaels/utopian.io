@@ -24,7 +24,10 @@ const Action = ({ text, loading, disabled, primary, tooltipData, compact, cozy, 
 );
 
 Action.propTypes = {
-  text: PropTypes.object.isRequired,
+  text: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
   primary: PropTypes.bool,

@@ -12,13 +12,17 @@ import UserWallet from './user/UserWallet';
 
 import Page from './feed/Page';
 import Project from './feed/Project';
+
 import Replies from './replies/Replies';
+
 import User from './user/User';
 import GithubConnect from './user/GithubConnect';
+
 import Tags from './tags/Tags';
-import Donors from './statics/Donors';
-import Post from './post/Post';
+
 import Bookmarks from './bookmarks/Bookmarks';
+
+import Donors from './statics/Donors';
 import About from './statics/About';
 import Help from './statics/Help';
 import Rules from './statics/Rules';
@@ -31,18 +35,18 @@ import PostShortlink from './statics/PostShortlink';
 import Faq from './statics/Faq';
 import BannedScreen from './statics/BannedScreen';
 import Team from './statics/Team';
+
+import Post from './post/Post';
 import Write from './post/Write/Write';
 import WriteTask from './post/Write/WriteTask';
 //import WriteBlog from './post/Write/WriteBlog';
-
 import Drafts from './post/Write/Drafts';
+
 import RequireLogin from './auth/RequireLogin';
-import RequireTos from "./auth/RequireTos";
-import CookiePolicy from './statics/CookiePolicy'; 
+import CookiePolicy from './statics/CookiePolicy';
 
 export default (
   <Wrapper>
-    <RequireTos />
     <Switch>
       <Route exact path="/" component={Page} />
       {/*<Route
@@ -67,7 +71,7 @@ export default (
       <Route path="/moderators" exact component={Moderators} />
       <Route path="/welcome-moderator" exact component={WelcomeModerator} />
       <Route path="/faq" exact component={Faq} />
-      <Route path="/cookies" exact component={CookiePolicy} /> 
+      <Route path="/cookies" exact component={CookiePolicy} />
       <Route path="/banned" exact component={BannedScreen} />
       <Route
         path="/bookmarks"

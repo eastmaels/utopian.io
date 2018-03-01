@@ -91,6 +91,16 @@ const types = [
   }
 ];
 
+function getCategorySlug(type)
+{
+  let slugType = types.find( slugType => {
+    if(slugType.type == type)
+      return true;
+    return false;
+  });
+  return slugType ? slugType.slug : "";
+}
+
 const parsedRepoName = (author, name) => {
   if ((author.length + name.length) < 35) {
     return `${author}/${name}`;
@@ -137,7 +147,7 @@ const Contribution = ({
             moderatorAction={moderatorAction}
             user={user}
           /> :
-          types[type]
+          getCategorySlug(type)
         }
       </span>
 

@@ -9,9 +9,9 @@ export default () =>
 		<h1>
 			Utopian Terms of Service
 		</h1>
-		<p>
+		<span className="tos-date">
 			Last Updated February 16, 2018
-		</p>
+		</span>
 		<p>
 			Welcome to Utopian! These Terms of Service (“Terms”) apply to your access
 			to and use of Utopian.io and any other products or services that link to
@@ -30,23 +30,23 @@ export default () =>
 			and use of, Utopian and that, when you use other Utopian services such as
 			Utopian.io, the terms and policies particular to those services apply.
 		</p>
-		<p>
+		<h2>
 			1. Privacy Policy
-		</p>
+		</h2>
 		<p>
 			Please refer to our Privacy Policy https://utopian.io/privacy for
 			information about how we collect, use and disclose information about you.
 		</p>
-		<p>
+		<h2>
 			2. Eligibility
-		</p>
+		</h2>
 		<p>
 			Utopian is not targeted towards, nor intended for use by, anyone under the
 			age of 18. You must be at least 18 years of age to access or use Utopian.
 		</p>
-		<p>
+		<h2>
 			3. Copyright and Limited License
-		</p>
+		</h2>
 		<p>
 			Utopian contains data, text, photographs, images, video, audio, graphics,
 			articles, comments, software, code, scripts and other content supplied by
@@ -69,9 +69,9 @@ export default () =>
 			authorized in these Terms is strictly prohibited and will terminate the
 			license granted herein. This license is revocable at any time.
 		</p>
-		<p>
+		<h2>
 			4. Adult-Oriented Content
-		</p>
+		</h2>
 		<p>
 			Utopian is intended for a general audience and, as a result, some Utopian
 			Content may discuss or depict adult-oriented topics. We realize that this
@@ -85,9 +85,9 @@ export default () =>
 			the type of content you view on Utopian. You understand and agree that you
 			access content marked as NSFW at your own risk.
 		</p>
-		<p>
+		<h2>
 			5. Trademarks
-		</p>
+		</h2>
 		<p>
 			“Utopian”, the Utopian logo and any other product or service names, logos
 			or slogans that may appear on Utopian are trademarks of Utopian and may not
@@ -107,9 +107,9 @@ export default () =>
 			or otherwise does not constitute or imply endorsement, sponsorship or
 			recommendation by Utopian.
 		</p>
-		<p>
+		<h2>
 			6. Assumption of Risk, Limitations on Liability &amp; Indemnity
-		</p>
+		</h2>
 		<p>
 			6.1. You accept and acknowledge that there are risks associated with
 			utilizing an Internet- based STEEM account service including, but not
@@ -166,9 +166,9 @@ export default () =>
 			other liability which may not otherwise be limited or excluded under Italy
 			law.
 		</p>
-		<p>
+		<h2>
 			7. Agreement to Hold Utopian Harmless
-		</p>
+		</h2>
 		<p>
 			7.1. You agree to hold harmless Utopian (and each of our officers,
 			directors, members, employees, agents and affiliates) from any claim,
@@ -192,9 +192,9 @@ export default () =>
 			sole discretion, to control any action or proceeding (at our expense) and
 			determine whether we wish to settle it.
 		</p>
-		<p>
+		<h2>
 			8. No Liability For Third Party Services And Content
-		</p>
+		</h2>
 		<p>
 			8.1. In using our Services, you may view content or utilize services
 			provided by third parties, including links to web pages and services of
@@ -208,9 +208,9 @@ export default () =>
 			result of any such dealings and you understand that your use of Third Party
 			Content, and your interactions with third parties, is at your own risk.
 		</p>
-		<p>
+		<h2>
 			9. Account Registration
-		</p>
+		</h2>
 		<p>
 			9.1. You need not use a Utopian Account. If you wish to use an Account, you
 			must create an Account with Utopian to access the Services (“ Account”).
@@ -230,9 +230,9 @@ export default () =>
 			authorized or unauthorized access to your Account, to the maximum extent
 			permitted by law.
 		</p>
-		<p>
+		<h2>
 			10. The Utopian Services
-		</p>
+		</h2>
 		<p>
 			10.1. As described in more detail below, the Services, among other things,
 			provide in-browser (or otherwise local) software that (a) generates and
@@ -320,26 +320,26 @@ export default () =>
 			transactions or for collecting, reporting, withholding or remitting any
 			taxes arising from any Steem transactions.
 		</p>
-		<p>
+		<h2>
 			11. Fees for Using the Utopian Services
-		</p>
+		</h2>
 		<p>
 			11.1. Company Fees Creating an Account. Utopian does not currently charge
 			fees for any Services, however we reserve the right to do so in future, and
 			in such case any applicable fees will be displayed prior to you using any
 			Service to which a fee applies.
 		</p>
-		<p>
+		<h2>
 			12. No Right To Cancel And/Or Reverse Steem Transactions
-		</p>
+		</h2>
 		<p>
 			14.1. If you use a Service to which Steem, Steem Dollars or Steem Power is
 			transacted, you will not be able to change your mind once you have
 			confirmed that you wish to proceed with the Service or transaction.
 		</p>
-		<p>
+		<h2>
 			15. Discontinuation of Services
-		</p>
+		</h2>
 		<p>
 			15.1. We may, in our sole discretion and without cost to you, with or
 			without prior notice and at any time, modify or discontinue, temporarily or
@@ -353,9 +353,9 @@ export default () =>
 			Steem Power associated with any Account Name maintained in your Account in
 			the event that we discontinue or deprecate the Services.
 		</p>
-		<p>
+		<h2>
 			16. Suspension or Termination of Service.
-		</p>
+		</h2>
 		<p>
 			16.1. We may suspend or terminate your access to the Services in our sole
 			discretion, immediately and without prior notice, and delete or deactivate
@@ -365,9 +365,9 @@ export default () =>
 			on your access to your backup of your Account data including your Account
 			Name and Private Keys.
 		</p>
-		<p>
+		<h2>
 			17. User Conduct
-		</p>
+		</h2>
 		<p>
 			17.1. When accessing or using the Services, you agree that you will not
 			commit any unlawful act, and that you are solely responsible for your
@@ -417,9 +417,9 @@ export default () =>
 			discover source code or bypass or circumvent measures employed to prevent
 			or limit access to any Utopian Content, area or code of Utopian.
 		</p>
-		<p>
+		<h2>
 			18. Third-Party Content and Sites
-		</p>
+		</h2>
 		<p>
 			Utopian may include links and other content owned or operated by third
 			parties, including advertisements and social “ widgets” (we call these
@@ -431,9 +431,9 @@ export default () =>
 			the terms and policies of those third-party sites or services will then
 			apply.
 		</p>
-		<p>
+		<h2>
 			19. Feedback
-		</p>
+		</h2>
 		<p>
 			You may submit questions, comments, feedback, suggestions, and other
 			information regarding Utopian (we call this “Feedback“). You acknowledge
@@ -445,9 +445,9 @@ export default () =>
 			execute any documentation required by Utopian to confirm such assignment to
 			Utopian.
 		</p>
-		<p>
+		<h2>
 			20. Copyright Complaints
-		</p>
+		</h2>
 		<p>
 			Utopian respects the intellectual property of others by not reading
 			infringed content from the Steem blockchain. If you believe that your work
@@ -469,9 +469,9 @@ export default () =>
 			result of Utopian’s relying upon such misrepresentation in removing or
 			disabling access to the material or activity claimed to be infringing.
 		</p>
-		<p>
+		<h2>
 			21. Disclaimers
-		</p>
+		</h2>
 		<p>
 			TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, UTOPIAN AND THE UTOPIAN
 			CONTENT ARE PROVIDED ON AN “ AS IS” AND “AS AVAILABLE” BASIS, WITHOUT
@@ -488,9 +488,9 @@ export default () =>
 			WITH CONSUMERS, SO SOME OR ALL OF THE DISCLAIMERS IN THIS SECTION MAY NOT
 			APPLY TO YOU.
 		</p>
-		<p>
+		<h2>
 			22. Limitation of Liability
-		</p>
+		</h2>
 		<p>
 			TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
 			UTOPIAN OR THE UTOPIAN PARTIES BE LIABLE FOR ANY SPECIAL, INDIRECT,
@@ -512,18 +512,18 @@ export default () =>
 			DAMAGES, SO SOME OR ALL OF THE EXCLUSIONS AND LIMITATIONS IN THIS SECTION
 			MAY NOT APPLY TO YOU.
 		</p>
-		<p>
+		<h2>
 			23. Modifications to Utopian
-		</p>
+		</h2>
 		<p>
 			Utopian reserves the right to modify or discontinue, temporarily or
 			permanently, UTopian, or any features or portions of Utopian, without prior
 			notice. You agree that Utopian will not be liable for any modification,
 			suspension or discontinuance of Utopian, or any part of Utopian.
 		</p>
-		<p>
+		<h2>
 			24. Applicable Law and Venue
-		</p>
+		</h2>
 		<p>
 			These Terms and your access to and use of Utopian and the Utopian Content
 			will be governed by, and construed in accordance with, the laws of Italy,
@@ -533,26 +533,26 @@ export default () =>
 			and submit to the exclusive jurisdiction of such courts over any suit,
 			action or proceeding arising out of these Terms.
 		</p>
-		<p>
+		<h2>
 			25. Termination
-		</p>
+		</h2>
 		<p>
 			Utopian reserves the right, without notice and in our sole discretion, to
 			terminate your license to access and use Utopian and to block or prevent
 			your future access to, and use of, Utopian.
 		</p>
-		<p>
+		<h2>
 			26. Severability
-		</p>
+		</h2>
 		<p>
 			If any term, clause or provision of these Terms is deemed to be unlawful,
 			void or for any reason unenforceable, then that term, clause or provision
 			shall be deemed severable from these Terms and shall not affect the
 			validity and enforceability of any remaining provisions.
 		</p>
-		<p>
+		<h2>
 			27. Questions &amp; Contact Information
-		</p>
+		</h2>
 		<p>
 		Questions or comments about Utopian may be directed to    <a href="mailto:info@utopian.io">info@utopian.io</a>
 		</p>

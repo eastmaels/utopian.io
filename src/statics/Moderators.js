@@ -3,14 +3,16 @@ import { connect } from 'react-redux';
 import { getModerators } from '../actions/moderators';
 import { getStats } from '../actions/stats';
 import { Link } from 'react-router-dom';
-
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { getAuthenticatedUser } from '../reducers';
+import { Icon } from 'antd';
+import * as ReactIcon from 'react-icons/lib/md';
 import './Moderators.less';
 
 @connect(
   (state, ownProps) => ({
     moderators: state.moderators,
     stats: state.stats,
+    authenticatedUser: getAuthenticatedUser(state),
   }), { getModerators, getStats })
 class Moderators extends React.PureComponent {
 
@@ -21,7 +23,8 @@ class Moderators extends React.PureComponent {
   }
 
   render () {
-    const { moderators, stats } = this.props;
+    const { moderators, stats, authenticatedUser } = this.props;
+    const isUser = authenticatedUser.name;
 
     return (
       <div className="main-panel help-section">
@@ -33,10 +36,10 @@ class Moderators extends React.PureComponent {
               <p>To become an Utopian Moderator you must have high reputation and often review submitted contributions.</p>
             </div>
             <br />
-            <div style={{textAlign: "center"}}>
+            {isUser && <div style={{textAlign: "center"}}>
               <em>All the below figures converted in USD for simplicity. Will be sent as Steem Power.</em>
-            </div>
-            <div className="Moderators__stats">
+            </div>}
+            {isUser && <div className="Moderators__stats">
               <div className="Moderators__stats-box">
                 <h3>${Math.round(stats.total_pending_rewards)}</h3>
                 <p><b>Pending Rewards</b></p>
@@ -53,9 +56,9 @@ class Moderators extends React.PureComponent {
                 <h3>${Math.round(stats.total_paid_rewards) + Math.round(stats.total_pending_rewards)}</h3>
                 <p><b>Total Generated</b></p>
               </div>
-            </div>
+            </div>}
             <div><h2><Icon type="safety"/> MODERATORS</h2></div>
-            <div style={{textAlign: "center"}}><em>5% of all the author rewards generated on Utopian are reserved for the moderators.</em></div>
+            {isUser && <div style={{textAlign: "center"}}><em>5% of all the author rewards generated on Utopian are reserved for the moderators.</em></div>}
             <div className="Moderators__moderators">
               {moderators.map(moderator => {
                 const picture = `https://img.busy.org/@${moderator.account}?s=72`;
