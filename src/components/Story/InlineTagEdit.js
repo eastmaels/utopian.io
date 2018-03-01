@@ -109,7 +109,7 @@ class InlineTagEdit extends React.Component {
   handleRemoveTag(event) {
     event.preventDefault();
     const index = parseInt(event.target.attributes['data-index'].value, 10);
-    removeTag(index);
+    this.removeTag(index);
     setTimeout(() => {
       this.updatePostTags();
     }, 100);
@@ -132,7 +132,7 @@ class InlineTagEdit extends React.Component {
     if(event.target.value === '') {
       // remove added tag span when value is empty
       const index = parseInt(event.target.attributes['data-index'].value, 10);
-      removeTag(index);
+      this.removeTag(index);
     } else if (prevTags.sort().join(',') === newTags.sort().join(',')
         || !this.props.validation(newTags)) {
       // do nothing; do not broadcoast
