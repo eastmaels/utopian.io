@@ -40,6 +40,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Blog from './Blog';
 import Contribution from './Contribution';
 
+import InlineTagEdit from '../Story/InlineTagEdit';
+
 import * as R from 'ramda';
 import './StoryFull.less';
 
@@ -236,7 +238,7 @@ class StoryFull extends React.Component {
       sliderValue: value,
       qualitySliderSet: true,
     });
-    
+
     this.updateQuestionareScore();
   }
 
@@ -290,7 +292,7 @@ class StoryFull extends React.Component {
           questionaireResult += answer.score;
         }
       })
-      
+
     });
     this.state.questionaireResult = questionaireResult;
     this.setState({
@@ -300,15 +302,32 @@ class StoryFull extends React.Component {
     this.updateQuestionareScore();
   }
 
+  handleTagValidation(value) {
+    let valid = true;
+    if (typeof value === 'string') {
+      valid = /^[a-z0-9]+(-[a-z0-9]+)*$/.test(value);
+    } else {
+      for(let i=0; i<value.length; i++) {
+        const check = /^[a-z0-9]+(-[a-z0-9]+)*$/.test(value[i]);
+        if (!check) {
+          valid = false;
+          break;
+        }
+      }
+    }
+    this.setState({ displayTopicsError : !valid });
+    return valid;
+  }
+
   renderQuestionaire()
   {
     let { post } = this.props;
     if(!post || !post.json_metadata)
       return false;
-      
+
     let metaData = post.json_metadata;
     let postType = metaData.type;
-    
+
     if(!QualitySlider[postType])
     {
       return null;
@@ -347,9 +366,9 @@ class StoryFull extends React.Component {
                 selected: answerIndex,
               };
               this.setState({questionaireAnswers});
-              
+
               this.validateQuestionaire();
-              
+
             }}>
               <option value="-1">Please Choose</option>
               {options}
@@ -513,7 +532,7 @@ class StoryFull extends React.Component {
 
     const shareTitle = `${post.title} - Utopian.io`
     const shareUrl = "https://utopian.io/" + post.url;
- 
+
 
     return (
       <div className="StoryFull">
@@ -664,7 +683,7 @@ class StoryFull extends React.Component {
               return window.alert("You haven't answered all questions.")
             }
             this.setState({ submitting: true });
-            
+
             moderatorAction(post.author, post.permlink, user.name, 'reviewed', this.state.questionaireAnswers, this.state.sliderValue).then(() => {
               this.setState({ verifyModal: false });
               this.setState({ submitting: false });
@@ -689,26 +708,26 @@ class StoryFull extends React.Component {
           <p><b>Is this contribution ready to be verified? <Link to="/rules">Read the rules</Link></b></p>
       <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
       <br /><br /><br /><br />
-      {this.state.questionaireAnswersMissing ? 
+      {this.state.questionaireAnswersMissing ?
         <p>Please answer all the questions!</p> : null
       }
       {this.renderQuestionaire()}
       <br /><br /><br /><br />
       <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
       <b>How would you reate the quality of this post?</b>
-      
-      
+
+
        <RawSlider
         initialValue={this.state.sliderValue}
             value={this.state.sliderValue}
             onChange={this.updateQualitySlider.bind(this)}
           />
 
-      
+
         </Modal>
 
         {/* Moderator Comment Modal - Allows for moderator to publish template-based comment after marking a post as reviewed/flagged/pending */}
-        
+
         <Modal
           visible={this.state.moderatorCommentModal}
           title='Write a Moderator Comment'
@@ -923,14 +942,31 @@ class StoryFull extends React.Component {
           />
         )}
         <div className="StoryFull__topics">
-          <Tooltip title={<span><b>Tags:</b> {this.tagString(tags)}</span>}>
-          {tags && tags.map(tag =>
-          <span>
-          <Topic key={tag} name={tag} />&nbsp;
-          </span>
-          )}
-          </Tooltip>
+          { isModerator ?
+            <InlineTagEdit
+              post={post}
+              user={user}
+              moderatorAction={moderatorAction}
+              validation={this.handleTagValidation.bind(this)}
+              /> :
+            <Tooltip title={<span><b>Tags:</b> {this.tagString(tags)}</span>}>
+              {tags && tags.map(tag =>
+                <span>
+                  <Topic key={tag} name={tag} />&nbsp;
+                </span>
+              )}
+            </Tooltip>
+          }
           <b>&nbsp;&nbsp;&middot;&nbsp;&nbsp;</b> <a href="#" onClick={() => {this.setState({shareModal: true})}}><ReactIcon.MdShare /> Share</a>
+        </div>
+        <div className="ant-form-explain"
+          style={{display: this.state.displayTopicsError ? '' : 'none'}}
+          >
+          {intl.formatMessage({
+            id: 'topics_allowed_chars',
+            defaultMessage:
+              'Only lowercase letters, numbers and hyphen character is permitted.',
+          })}
         </div>
         <Modal
           visible={this.state.shareModal}
