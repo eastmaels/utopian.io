@@ -1017,6 +1017,21 @@ class StoryFull extends React.Component {
           { this.state.modalCopied && <span>&nbsp;&nbsp;&nbsp;&nbsp;Copied</span> }
         </Modal>
 
+        {metaData.pullRequests && metaData.pullRequests.length > 0 && metaData.pullRequests[0].user ?
+          <div>
+            <h4><Icon type="github" /> Github Connection</h4>
+            <div className="StoryFull__pullrequests">
+              {metaData.pullRequests[0].user.avatar_url
+              && <Avatar username={metaData.pullRequests[0].user.avatar_url} size={45} /> }
+              <span>
+                <a target="_blank" href={`https://github.com/${metaData.pullRequests[0].user.account}`}>
+                  {metaData.pullRequests[0].user.account}
+                  </a>
+              </span>
+            </div>
+          </div>
+          : null}
+
         {metaData.pullRequests && metaData.pullRequests.length > 0 ?
           <div>
             <h3><Icon type="github" /> Linked Pull Requests</h3>

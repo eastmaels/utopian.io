@@ -97,6 +97,7 @@ const Sidenav = ({ username }) =>
         </NavLink>
       </li>
     </ul>
+
   </div>);
 
 Sidenav.propTypes = {
