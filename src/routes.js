@@ -43,8 +43,6 @@ import WriteTask from './post/Write/WriteTask';
 import Drafts from './post/Write/Drafts';
 
 import RequireLogin from './auth/RequireLogin';
-import CookiePolicy from './statics/CookiePolicy'; 
-
 import CookiePolicy from './statics/CookiePolicy';
 
 export default (
