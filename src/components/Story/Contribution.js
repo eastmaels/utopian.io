@@ -154,7 +154,7 @@ const Contribution = ({
 
       {repository && platform && id ? <span>
         {' '} <b>&middot;</b> {'  '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a>
-        { isModerator && !post.reviewed ?
+        { isModerator && !post.reviewed ? (
           <span>
             {' '} <b>&middot;</b> {'  '} <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}><Icon type="folder-open" /></Link>
             <InlineRepoEdit
