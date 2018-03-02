@@ -924,7 +924,7 @@ class StoryFull extends React.Component {
           />
         )}
         <div className="StoryFull__topics">
-          { isModerator && !post.reviewed ?
+          { (isModerator && !post.reviewed) || (isModerator && isModerator.supermoderator === true) ?
             <InlineTagEdit
               post={post}
               user={user}
