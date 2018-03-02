@@ -31,7 +31,7 @@ class InlineRepoEdit extends React.Component {
   };
 
   state = {
-    value: this.props.value,
+    value: '',
     previousValue: '',
     loading: false,
     loaded: true
@@ -41,6 +41,16 @@ class InlineRepoEdit extends React.Component {
     super(props);
     this.renderItems = this.renderItems.bind(this);
     this.post = props.post
+  }
+
+  componentWillMount() {
+    this.setState({ value: this.props.value });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({ value: nextProps.value });
+    }
   }
 
   renderItems(items) {
@@ -107,14 +117,14 @@ class InlineRepoEdit extends React.Component {
               q = q.replace('http://', '');
               q = q.replace('github.com/', '');
               q = '"' + q + '"';
-    
+
               if (event.key === 'Enter')
               {
                 event.preventDefault();
               }
-              
+
               this.setState({loading: true, loaded: false});
-              
+
               clearTimeout(this.debounceTimer);
               this.debounceTimer = setTimeout(() => {
                 this.debounceTimer = null;
@@ -154,7 +164,7 @@ class InlineRepoEdit extends React.Component {
           }, () => {
             this.callModeratorAction()
           });
-          
+
         }}
         getItemValue={repo => repo.full_name}
         onChange={(event, value) => {
