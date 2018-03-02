@@ -51,9 +51,7 @@ class InlineCategoryEdit extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.value !== nextProps.value) {
-      this.setState({
-        value: nextProps.value,
-      });
+      this.setState({ value: nextProps.value });
     }
   }
 
