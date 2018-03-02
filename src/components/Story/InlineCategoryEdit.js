@@ -14,15 +14,13 @@ class InlineCategoryEdit extends React.Component {
     value: '',
   };
 
-  constructor (props) {
+  constructor(props) {
     super(props);
-    this.state = {
-        value: props.value
-    }
+    this.state = { value: '' };
     this.onCategoryChange = this.onCategoryChange.bind(this);
   }
 
-  onCategoryChange (e) {
+  onCategoryChange(e) {
     const value = e.target.value;
     this.setState({
         value: e.target.value
@@ -47,18 +45,29 @@ class InlineCategoryEdit extends React.Component {
     });
   }
 
-  render () {
+  componentWillMount() {
+    this.setState({ value: this.props.value });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({
+        value: nextProps.value,
+      });
+    }
+  }
+
+  render() {
     const types = this.props.types.map((type, idx) => (
       <option value={type.type} key={idx}>{type.slug}</option>
     ))
-    const type = this.props.value;
 
     return (
       <select
         value={this.state.value}
         className="inline-category-edit-select"
         onChange={ this.onCategoryChange }
-		defaultChecked={ this.state.value }>
+        defaultChecked={ this.state.value }>
         {types}
       </select>
     );
