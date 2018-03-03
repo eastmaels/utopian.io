@@ -48,24 +48,64 @@ export default {
 				value: 0,
 			}],
 		},
+
+		// Topic Related Questions
 		{
-			question: "Kind of visibility?",
+			question: "How many people were reached with the visibility effort?",
 			answers: [
 			{
-				answer: "Paid Advertisement",
-				value: 60,
-			},
-			{
-				answer: "Meetup, Group Gathering",
-				value: 50,
-			},
-			{
-				answer: "Presentation, or Youtube",
-				value: 30,
-			},
-			{
-				answer: "Other",
+				answer: "more than 10,000 people",
 				value: 20,
+			},
+			{
+				answer: "7,500-10,000 people",
+				value: 18,
+			},
+			{
+				answer: "5,000-7,500 people",
+				value: 16,
+			},
+			],
+		},
+		{
+			question: "Was the English version of the advertisement provided?",
+			answers: [
+			{
+				answer: "Yes",
+				value: 5,
+			},
+			{
+				answer: "No",
+				value: 0,
+			}
+			],
+		},
+		{
+			question: "How big is the real impact of the visibility effort?",
+			answers: [
+			{
+				answer: "500 of reached people clicked the ad / commented to the advertised post",
+				value: 15,
+			},
+			{
+				answer: "400 of reached people clicked the ad / commented to the advertised post",
+				value: 14,
+			},
+			{
+				answer: "300 of reached people clicked the ad / commented to the advertised post",
+				value: 12,
+			},
+			{
+				answer: "200 of reached people clicked the ad / commented to the advertised post",
+				value: 11,
+			},
+			{
+				answer: "100 of reached people clicked the ad / commented to the advertised post",
+				value: 9,
+			},
+			{
+				answer: "The impact is not big.",
+				value: 7,
 			}
 			],
 		}
