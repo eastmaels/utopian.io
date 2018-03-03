@@ -65,5 +65,45 @@ export default {
 			}],
 		},
 		// Topic related questions
+		{
+			question: "Is the copywriting and brief?",
+			answers: [
+			{
+				answer: "Yes, very brief",
+				value: 20,
+			},
+			{
+				answer: "Yes",
+				value: 10,
+			},
+			{
+				answer: "No",
+				value: 0,
+			}],
+		},
+		{
+			question: "Is it targeting a single or multiple subjects?",
+			answers: [
+			{
+				answer: "Just one",
+				value: 20,
+			},
+			{
+				answer: "Multiple",
+				value: 10,
+			}],
+		},
+		{
+			question: "Is it catching attention?",
+			answers: [
+			{
+				answer: "Yes",
+				value: 10,
+			},
+			{
+				answer: "No",
+				value: 0,
+			}],
+		}
 	]
 };
