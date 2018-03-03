@@ -48,6 +48,8 @@ export default {
 				value: 0,
 			}],
 		},
+
+		// Topic related questions
 		{
 			question: "How many translated words?",
 			answers: [
@@ -70,7 +72,7 @@ export default {
 			answers: [
 			{
 				answer: "No",
-				value: 20,
+				value: 5,
 			},
 			{
 				answer: "Yes",
@@ -83,7 +85,7 @@ export default {
 			answers: [
 			{
 				answer: "No",
-				value: 25,
+				value: 20,
 			},
 			{
 				answer: "Yes",

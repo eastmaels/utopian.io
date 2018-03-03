@@ -48,11 +48,30 @@ export default {
                 value: 0,
             }],
         },
+
+		// Topic related questions
+		{
+            question: "Was the contribution requested?",
+            answers: [
+            {
+                answer: "Yes, it was requested",
+                value: 10,
+            },
+            {
+                answer: "No, it is a spontaneous work but it is a benefit for the project",
+                value: 5,
+            },
+			{
+                answer: "No",
+                value: 0,
+            }
+            ],
+        },
         {
             question: "This contribution is a ...",
             answers: [
             {
-                answer: "Marged / Used art work",
+                answer: "Merged / Used art work",
                 value: 10,
             },
             {
@@ -62,21 +81,25 @@ export default {
             ],
         },
         {
-            question: "How many art work is available in the contribution?",
+            question: "How many distinctively different designs are available in the contribution?",
             answers: [
             {
-                answer: "10+",
+                answer: "5+",
                 value: 10,
             },
             {
-                answer: "5-10",
-                value: 7,
+                answer: "4",
+                value: 8,
             },
-            {
-                answer: "2-3",
-                value: 5,
+			{
+                answer: "3",
+                value: 6,
             },
-            {
+			{
+                answer: "2",
+                value: 4,
+            },
+			{
                 answer: "1",
                 value: 2,
             },
@@ -87,7 +110,7 @@ export default {
             answers: [
             {
                 answer: "Yes",
-                value: 20,
+                value: 5,
             },
             {
                 answer: "No",
@@ -100,11 +123,11 @@ export default {
             answers: [
             {
                 answer: "Good Quality",
-                value: 20,
+                value: 5,
             },
             {
                 answer: "Acceptable",
-                value: 10,
+                value: 3,
             },
             {
                 answer: "Bad Quality",
