@@ -48,16 +48,46 @@ export default {
 				value: 0,
 			}],
 		},
+
+		// Topic related questions
 		{
-			question: "Is the analysis benefical in the future?",
+			question: "Were the reasons for creating the analysis explained enough?",
 			answers: [
 			{
-				answer: "Yes",
-				value: 60,
+				answer: "Yes, it was explained well why the analysis was created",
+				value: 10,
 			},
 			{
-				answer: "Partially",
-				value: 30,
+				answer: "No, it is not",
+				value: 0,
+			}],
+		},
+		{
+			question: "Is it a recurring analysis?",
+			answers: [
+			{
+				answer: "No, it is a new analysis",
+				value: 20,
+			},
+			{
+				answer: "Yes but the data are well processed and presented.",
+				value: 12,
+			},
+			{
+				answer: "Yes, it is a recurring analysis with different time period",
+				value: 4,
+			}],
+		},
+		{
+			question: "Where the tools and query scripts used included in the contribution?",
+			answers: [
+			{
+				answer: "Yes, both tools and scripts were included",
+				value: 10,
+			},
+			{
+				answer: "No, the query script was not included in the contribution.",
+				value: 5,
 			},
 			{
 				answer: "No",
