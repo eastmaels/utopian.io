@@ -170,13 +170,13 @@ class Topnav extends React.Component {
 
   showModal = () => {
     this.setState({
-    visible: true,
-      });
+      visible: true,
+    });
     setTimeout(() => {
       const { visible, loading } = this.state;
       if(visible){
-      window.location.href=sc2.getLoginUrl(window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : '');
-      this.setState({ loading: false, visible: false });}
+        window.location.href=sc2.getLoginUrl(window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : '');
+        this.setState({ loading: false, visible: false });}
     }, 6000);
   }
 
@@ -216,12 +216,12 @@ class Topnav extends React.Component {
         <div className="Topnav__menu-container">
           <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
             <Menu.Item key="write" className="Topnav__item-write-new nobottom">
-			  <Link to="/write" className="Topnav__newReport" style={{ marginRight: '15px' }}>
+              <Link to="/write" className="Topnav__newReport" style={{ marginRight: '15px' }}>
                 <Action primary={true} cozy={true}
-                text={
-                     <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">{this.contributionWord()}</span></span>
-                } />
-			  </Link>
+                        text={
+                          <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">{this.contributionWord()}</span></span>
+                        } />
+              </Link>
             </Menu.Item>
             <Menu.Item key="user" className="Topnav__item-user">
               <Link className="Topnav__user" to={`/@${username}`}>
@@ -268,8 +268,8 @@ class Topnav extends React.Component {
                       New Contribution
                     </PopoverMenuItem>
                     {/*<PopoverMenuItem key="new-blog-post">
-                      New Blog Post
-                    </PopoverMenuItem>*/}
+                     New Blog Post
+                     </PopoverMenuItem>*/}
                     <PopoverMenuItem key="activity">
                       Activity
                     </PopoverMenuItem>
@@ -315,23 +315,23 @@ class Topnav extends React.Component {
             </Menu.Item>
           </Menu>
           <Modal
-          visible={visible}
-          title="Redirection to SteemConnect v2"
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>Return</Button>,
-            <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
-              Submit
-            </Button>,
-          ]}
-        >
-          You will be redirected to SteemConnect v2 to authenticate to the Steem blockchain.
-          <br/>
-          SteemConnect is developed and maintained by Steemit, Inc. and Busy.org.
-          <br/>
-          Utopian.io will never access your private keys.
-        </Modal>
+            visible={visible}
+            title="Logging in..."
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>Return</Button>,
+              <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+                Submit
+              </Button>,
+            ]}
+          >
+            You are now being redirected to SteemConnect to authorise your STEEM session.
+            <br/>
+            For your safety double check that the url starts with https://v2.steemconnect.com/
+            <br/>
+            <small>Utopian.io will never access your private keys.</small>
+          </Modal>
         </div>
       );
     }
@@ -354,7 +354,7 @@ class Topnav extends React.Component {
               <Link className="Topnav__brand" to="/">
                 <img id="MainLogo" src={logoSource()}/>
               </Link>
-    <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}beta</Link></span>
+              <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}beta</Link></span>
             </div>
             <div className="center">
               <div className="Topnav__input-container nomobile">
