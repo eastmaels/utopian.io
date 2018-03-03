@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
 import { getStats } from '../actions/stats';
 import './TOS.less';
 
