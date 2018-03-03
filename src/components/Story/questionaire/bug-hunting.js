@@ -49,22 +49,40 @@ export default {
 			}
 			],
 		},
+		
+		// Topic related questions
 		{
-			question: "Is there visual presentation provided for the bug?",
+			question: "Is the bug report formal / professional?",
 			answers: [
 			{
-				answer: "Yes",
+				answer: "Yes, straight to the point ",
 				value: 10,
 			},
 			{
-				answer: "Yes but low quality",
+				answer: "Almost, contains minor informal parts",
 				value: 5,
+			}
+			],
+		},
+		{
+			question: "How severe is the bug?",
+			answers: [
+			{
+				answer: "Critical/Security/Crash, affects very critical functions or sensitive data",
+				value: 20,
 			},
 			{
-				answer: "No",
-				value: 0,
+				answer: "Major, functionality is affected, no workaround",
+				value: 15,
 			},
-			],
+			{
+				answer: "Minor, functionality is affected, has easy and obvious workaround",
+				value: 10,
+			},
+			{
+				answer: "Cosmetic, functionality is not affected",
+				value: 5,
+			}],
 		},
 		{
 			question: "Is there any unrelated content in the bug report?",

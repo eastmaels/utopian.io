@@ -14,21 +14,21 @@ import taskRequestQuestions from "./task-requests";
 
 export const QualitySlider = {
 	// Main cetegories
-	'ideas': ideasQuestions,
-	'development': developmentQuestions,
-	'graphics': graphicsQuestions,
-	'bug-hunting': bughuntingQuestions,
-	'translations': translationsQuestions,
-	'analysis': analysisQuestions,
-	'social': socialQuestions,
-	'documentation': documentationQuestions,
-	'tutorials': tutorialsQuestions,
-	"video-tutorials": videotutorialsQuestions,
-	'copywriting': copywritingQuestions,
-	'blog': blogQuestions,
+	'ideas': ideasQuestions, // Done
+	'development': developmentQuestions, // Done
+	'graphics': graphicsQuestions, // Done
+	'bug-hunting': bughuntingQuestions, // Done
+	'translations': translationsQuestions, // Done
+	'analysis': analysisQuestions, // Done
+	'social': socialQuestions, // Done
+	'documentation': documentationQuestions, // Done
+	'tutorials': tutorialsQuestions, // Done
+	"video-tutorials": videotutorialsQuestions, // Done
+	'copywriting': copywritingQuestions, // Done
+	'blog': blogQuestions, // Done
 
-	// Task Requests
-	'task-ideas': taskRequestQuestions,
+	// Task Requests // Done
+	'task-ideas': taskRequestQuestions, 
 	'task-development': taskRequestQuestions,
 	'task-bug-hunting': taskRequestQuestions,
 	'task-documentation': taskRequestQuestions,

@@ -48,6 +48,8 @@ export default {
 				value: 0,
 			}],
 		},
+
+		// Topic related questions
 		{
 			question: "Is the suggestion related to any technical issue?",
 			answers: [

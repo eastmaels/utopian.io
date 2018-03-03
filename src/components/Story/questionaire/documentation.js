@@ -48,20 +48,39 @@ export default {
 				value: 0,
 			}],
 		},
+
+		// Topic related questions
 		{
 			question: "Is the documentation good in detail?",
 			answers: [
 			{
 				answer: "Yes, lot's of details and examples",
-				value: 60,
+				value: 20,
 			},
 			{
 				answer: "Yes lot's of details but not many examples",
-				value: 30,
+				value: 10,
 			},
 			{
 				answer: "Not much details",
-				value: 0,
+				value: 5,
+			}
+			],
+		},
+		{
+			question: "Is the documentation well structured?",
+			answers: [
+			{
+				answer: "Yes, very easy to understand",
+				value: 20,
+			},
+			{
+				answer: "A bit complicated but straight to the point",
+				value: 10,
+			},
+			{
+				answer: "Difficult to get started",
+				value: 5,
 			}
 			],
 		},

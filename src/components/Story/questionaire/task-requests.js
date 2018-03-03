@@ -48,5 +48,56 @@ export default {
 				value: 0,
 			}],
 		},
+
+		// Topic related questions
+		{
+			question: "Are the tasks described in great detail?",
+			answers: [
+			{
+				answer: "Yes, with great detail",
+				value: 10,
+			},
+			{
+				answer: "Yes, but not much information",
+				value: 5,
+			},
+			{
+				answer: "No",
+				value: 0,
+			}],
+		},
+		{
+			question: "Is there a guide on completing the tasks?",
+			answers: [
+			{
+				answer: "Yes, with great detail",
+				value: 10,
+			},
+			{
+				answer: "Yes, but not much information",
+				value: 5,
+			},
+			{
+				answer: "No",
+				value: 0,
+			}],
+		},
+		{
+			question: "Is there a deadline for this task request?",
+			answers: [
+			{
+				answer: "Yes, considerably enough time to complete the tasks",
+				value: 20,
+			},
+			{
+				answer: "No",
+				value: 15,
+			},
+			{
+				answer: "Yes, but too short",
+				value: 5,
+			}
+			],
+		},
 	]
 };

@@ -48,5 +48,22 @@ export default {
 				value: 0,
 			}],
 		},
+		{
+			question: "Was the template followed?",
+			answers: [
+			{
+				answer: "Yes",
+				value: 10,
+			},
+			{
+				answer: "Partially",
+				value: 5,
+			},
+			{
+				answer: "No",
+				value: 0,
+			}],
+		},
+		// Topic related questions
 	]
 };
