@@ -48,20 +48,22 @@ export default {
 				value: 0,
 			}],
 		},
+
+
 		{
 			question: "Is there visual content in the contribution?",
 			answers: [
 			{
 				answer: "Yes",
-				value: 25,
+				value: 8,
 			},
 			{
 				answer: "Yes, but bad quality",
-				value: 10,
+				value: 4,
 			},
 			{
 				answer: "No",
-				value: 0,
+				value: 2,
 			}
 			],
 		},
@@ -70,15 +72,32 @@ export default {
 			answers: [
 			{
 				answer: "Yes",
-				value: 25,
+				value: 8,
 			},
 			{
 				answer: "Not so unique",
-				value: 10,
+				value: 4,
 			},
 			{
 				answer: "No",
-				value: 0,
+				value: 2,
+			}
+			],
+		},
+		{
+			question: "Is the blog post a detailed development changelog?",
+			answers: [
+			{
+				answer: "Yes, it is. Demo screenshots are included",
+				value: 8,
+			},
+			{
+				answer: "It is not detailed enough / Demo screenshots are not included",
+				value: 4,
+			},
+			{
+				answer: "No, it is not",
+				value: 2,
 			}
 			],
 		},
@@ -87,15 +106,32 @@ export default {
 			answers: [
 			{
 				answer: "Yes, very nice",
-				value: 10,
+				value: 8,
 			},
 			{
 				answer: "Not so good",
-				value: 5,
+				value: 4,
 			},
 			{
 				answer: "No",
-				value: 0,
+				value: 2,
+			}
+			],
+		},
+		{
+			question: "Is it a part of series?",
+			answers: [
+			{
+				answer: "Yes",
+				value: 8,
+			},
+			{
+				answer: "It is the first post of a series",
+				value: 4,
+			},
+			{
+				answer: "No",
+				value: 2,
 			}
 			],
 		},

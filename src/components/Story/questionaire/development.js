@@ -48,49 +48,55 @@ export default {
 				value: 0,
 			}],
 		},
+		
 		{
-			question: "What kind of code contribution is this?",
+			question: "How do you rate the amount of work?",
 			answers: [
 			{
-				answer: "Serius Security fix",
-				value: 30,
-			},
-			{
-				answer: "Completely new project",
-				value: 30,
-			},
-			{
-				answer: "Contains Bugfixes and new features",
-				value: 30,
-			},
-			{
-				answer: "New Feature",
-				value: 25,
-			},
-			{
-				answer: "Other",
-				value: 15,
-			}],
-		},
-		{
-			question: "How important is the feature / bugfix for the project?",
-			answers: [
-			{
-				answer: "Very important",
-				value: 30,
-			},
-			{
-				answer: "Important",
+				answer: "Very High",
 				value: 20,
 			},
 			{
-				answer: "Less Important",
-				value: 15,
+				answer: "High",
+				value: 20*0.8,
 			},
 			{
-				answer: "Not important",
-				value: 10,
+				answer: "Medium",
+				value: 20*0.6,
+			},
+			{
+				answer: "Low",
+				value: 20*0.35,
+			},
+			{
+				answer: "Very Low",
+				value: 20*0.15,
 			}],
-		}
+		},
+
+		{
+			question: "How do you rate the impact on the Project?",
+			answers: [
+			{
+				answer: "Very High",
+				value: 20,
+			},
+			{
+				answer: "High",
+				value: 20*0.8,
+			},
+			{
+				answer: "Medium",
+				value: 20*0.6,
+			},
+			{
+				answer: "Low",
+				value: 20*0.35,
+			},
+			{
+				answer: "Very Low",
+				value: 20*0.15,
+			}],
+		},
 	]
 };
