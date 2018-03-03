@@ -3,8 +3,24 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
+import { connect } from 'react-redux';
+import * as R from 'ramda';
+
+import { getModerators } from '../actions/moderators';
+import { getIsAuthenticated, getUser } from '../reducers';
+
 import './UserMenu.less';
 
+@connect(
+  (state, ownProps) => ({
+    authenticated: getIsAuthenticated(state),
+    user: getUser(state, ownProps.match.params.name),
+    moderators: state.moderators,
+  }),
+  {
+    getModerators,
+  },
+)
 class UserMenu extends React.Component {
   static propTypes = {
     onChange: PropTypes.func,
@@ -27,15 +43,23 @@ class UserMenu extends React.Component {
     };
   }
 
-  componentDidUpdate (prevProps) {
-    if (prevProps.match.params.name !== this.props.match.params.name) {
-      this.setState({
-        current: 'discussions',
-      })
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      current: nextProps.defaultKey ? nextProps.defaultKey : 'discussions',
+    });
+  }
+
+  componentWillMount() {
+    const { getModerators, moderators, user } = this.props;
+    getModerators();
   }
 
   getItemClasses = key => classNames('UserMenu__item', { 'UserMenu__item--active': this.state.current === key });
+
+  isModerator() {
+    const { moderators, user } = this.props;
+    return R.find(R.propEq('account', user.name))(moderators);
+  }
 
   handleClick = (e) => {
     const key = e.currentTarget.dataset.key;
@@ -43,18 +67,34 @@ class UserMenu extends React.Component {
   };
 
   render() {
+    const renderContribution = () => {
+      let result;
+      if (this.state.current === 'contributions') {
+        result = (<li className={this.getItemClasses('contributions')} onClick={this.handleClick} role="presentation" data-key="contributions">
+          <FormattedMessage id="contributions" defaultMessage="Contributions" />
+        </li>);
+      } else {
+        result = (<li className={this.getItemClasses('discussions')} onClick={this.handleClick} role="presentation" data-key="discussions">
+          <FormattedMessage id="contributions" defaultMessage="Contributions" />
+        </li>);
+      }
+      return result;
+    };
+
     return (
       <div className="UserMenu">
         <div className="container menu-layout">
           <div className="left" />
           <Scrollbars autoHide style={{ width: '100%', height: 46 }}>
             <ul className="UserMenu__menu center">
-              <li className={this.getItemClasses('discussions')} onClick={this.handleClick} role="presentation" data-key="discussions">
-                <FormattedMessage id="contributions" defaultMessage="Contributions" />
-              </li>
-              {/*<li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
+              {renderContribution()}
+              {this.isModerator() &&
+              <li className={this.getItemClasses('moderations')} onClick={this.handleClick} role="presentation" data-key="moderations">
+                <FormattedMessage id="moderations" defaultMessage="Moderations" />
+              </li>}
+              {/* <li className={this.getItemClasses('comments')} onClick={this.handleClick} role="presentation" data-key="comments">
                 <FormattedMessage id="comments" defaultMessage="Comments" />
-              </li>*/}
+              </li> */}
               <li className={this.getItemClasses('projects')} onClick={this.handleClick} role="presentation" data-key="projects">
                 Projects
               </li>
@@ -69,6 +109,14 @@ class UserMenu extends React.Component {
                 <span className="UserMenu__badge">
                   <FormattedNumber value={this.props.following} />
                 </span>
+              </li>
+              <li
+                className={this.getItemClasses('transfers')}
+                onClick={this.handleClick}
+                role="presentation"
+                data-key="transfers"
+              >
+                <FormattedMessage id="wallet" defaultMessage="Wallet" />
               </li>
             </ul>
           </Scrollbars>

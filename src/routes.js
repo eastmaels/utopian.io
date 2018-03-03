@@ -7,6 +7,8 @@ import Wrapper from './Wrapper';
 import Settings from './settings/Settings';
 import ProfileSettings from './app/ProfileSettings';
 import Activity from './activity/Activity';
+import Wallet from './wallet/Wallet';
+import UserWallet from './user/UserWallet';
 
 import Page from './feed/Page';
 import Project from './feed/Project';
@@ -24,6 +26,8 @@ import Donors from './statics/Donors';
 import About from './statics/About';
 import Help from './statics/Help';
 import Rules from './statics/Rules';
+import PrivacyPolicy from './statics/PrivacyPolicy';
+import TOS from './statics/TOS';
 import Sponsors from './statics/Sponsors';
 import Moderators from './statics/Moderators';
 import WelcomeModerator from './statics/WelcomeModerator';
@@ -39,7 +43,6 @@ import WriteTask from './post/Write/WriteTask';
 import Drafts from './post/Write/Drafts';
 
 import RequireLogin from './auth/RequireLogin';
-
 import CookiePolicy from './statics/CookiePolicy';
 
 export default (
@@ -56,6 +59,8 @@ export default (
       />*/}
       <Route path="/help" exact component={Help} />
       <Route path="/rules" exact component={Rules} />
+      <Route path="/privacy" exact component={PrivacyPolicy} />
+      <Route path="/tos" exact component={TOS} />
       {/*
       <Route path="/about" component={About} />
       <Route path="/team" component={Team} />
@@ -146,6 +151,12 @@ export default (
           <RequireLogin>
             <GithubConnect {...props}/>
           </RequireLogin>
+        )}
+      />
+      <Route
+        path="/wallet"
+        render={() => (
+            <Wallet />
         )}
       />
       <Route path="/@:name" component={User} />

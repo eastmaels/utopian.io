@@ -13,6 +13,8 @@ import { updateContribution } from '../../actions/contribution';
 import steem from 'steem';
 import * as R from 'ramda';
 import Cookie from 'js-cookie';
+import { Modal, Button } from 'antd';
+import sc2 from '../../sc2';
 import './StoryFooter.less';
 
 @connect(
@@ -61,6 +63,7 @@ class StoryFooter extends React.Component {
     voteWithSponsors: false,
     sponsorsAccount: null,
     project: null,
+    signInModal: false,
   };
 
   constructor(props) {
@@ -152,7 +155,9 @@ class StoryFooter extends React.Component {
 
   handleLikeClick = () => {
     const { sliderMode, user } = this.props;
-    if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {
+    if (!user.name) {
+      this.setState({ signInModal: true });
+    } else if (sliderMode === 'on' || (sliderMode === 'auto' && getHasDefaultSlider(user))) {
       if (!this.state.sliderVisible) {
         this.setState(prevState => ({ sliderVisible: !prevState.sliderVisible }));
       }
@@ -207,6 +212,19 @@ class StoryFooter extends React.Component {
     }
   };
 
+  redirectToSignup = () => {
+    this.setState({ signInModal: false });
+    //window.location.href = 'https://signup.utopian.io';
+    window.location.href = 'https://steemit.com/pick_account';
+  };
+
+  redirectToLogin = () => {
+    this.setState({ signInModal: false });
+    window.location.href = sc2.getLoginUrl(
+      window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : ''
+    );
+  };
+
   render() {
     const { post, postState, pendingLike, loading, ownPost, defaultVotePercent, fullMode } = this.props;
 
@@ -242,6 +260,18 @@ class StoryFooter extends React.Component {
             onChange={this.handleSliderChange}
           />
         )}
+        <Modal
+          visible={this.state.signInModal}
+          title="You Must Be Signed In to Vote"
+          onCancel={() => this.setState({ signInModal: false })}
+          onOk={() => this.setState({ signInModal: false })}
+          footer={null}
+        >
+          <div className="StoryFooter__signinModal">
+            <Button onClick={this.redirectToSignup} type="primary" size="large">Sign up</Button>
+            <Button onClick={this.redirectToLogin} size="large">Login</Button>
+          </div>
+        </Modal>
       </div>
     );
   }

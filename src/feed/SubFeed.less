@@ -1,3 +1,5 @@
+@import (reference) "../styles/custom.less";
+
 .from-subfeed.md-react-icon {
     margin-right: 6px !important;
     margin-bottom: 3px !important;
@@ -10,4 +12,70 @@
     &.md-copywriting {
         margin-bottom: -1px !important;
     }
+}
+
+.CalendarDay__selected_span {
+    background: #7736df;
+    border: 1px solid #5c19c7;
+    color: #fff;
+}
+
+.CalendarDay__selected_span, .CalendarDay__selected:hover, .CalendarDay__selected:active {
+    background: #9b5dff;
+}
+
+.CalendarDay__hovered_span, .CalendarDay__hovered_span:hover {
+    background: #c9b3ec;
+    color: #5c19c7;
+    border: 1px solid #e4e7e7 !important;
+}
+
+.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+    background: #5c19c7;
+    border: 1px solid #5c19c7;
+    color: #fff;
+}
+
+.DateRangePicker {
+    width: 100%;
+}
+
+.DateRangePickerInput {
+    width: 100%;
+    margin-bottom: 15px;
+    height: 40px;
+}
+
+.DateInput {
+    width: 46%;
+}
+
+.DateInput_input {
+    height: 38px;
+}
+
+.DateInput_input__focused {
+    border-bottom: 2px solid #5c19c7;
+}
+
+.DateRangePicker_picker {
+    top: 50px !important;
+}
+
+.DateInput_fang {
+    top: 39px !important;
+}
+
+.DateRangePickerInput_clearDates {
+    top: 35% !important;
+}
+
+.filter-tab .ant-tabs-tab:hover {
+    color: @purple !important;
+}
+
+.filter-tab .ant-tabs-tab-active {
+    color: @purple !important;
+    
+    border-bottom: 2px solid @purple !important;
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Menu, Popover, Tooltip, Input, Badge, Select } from 'antd';
+import { Menu, Popover, Tooltip, Input, Badge, Select, Modal, Button } from 'antd';
 import Action from '../Button/Action';
 
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
@@ -48,7 +48,7 @@ class Topnav extends React.Component {
     if (location.pathname.indexOf('search/social') > -1) return 'social';
     if (location.pathname.indexOf('search/blog') > -1) return 'blog';
 
-    const which = location.pathname.substring(1); 
+    const which = location.pathname.substring(1);
     if (which === 'all' || which === '/all') return 'projects';
     if (location.pathname.split('/').length != 1 && this.inValidPaths(which)) {
       return which;
@@ -108,7 +108,7 @@ class Topnav extends React.Component {
     const size = window.innerWidth;
     if (size <= 736) {
       return shorter;
-    } 
+    }
     return longer;
   }
 
@@ -161,8 +161,36 @@ class Topnav extends React.Component {
 
       </div>
     )}
+// Login Modal
+
+  state = {
+    loading: false,
+    visible: false,
+  }
+
+  showModal = () => {
+    this.setState({
+    visible: true,
+      });
+    setTimeout(() => {
+      const { visible, loading } = this.state;
+      if(visible){
+      window.location.href=sc2.getLoginUrl(window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : '');
+      this.setState({ loading: false, visible: false });}
+    }, 6000);
+  }
+
+  handleOk = () => {
+    this.setState({ loading: true });
+    window.location.href=sc2.getLoginUrl(window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : '');
+  }
+
+  handleCancel = () => {
+    this.setState({ visible: false });
+  }
 
   render() {
+    const { visible, loading } = this.state;
     const {
       intl,
       username,
@@ -188,16 +216,12 @@ class Topnav extends React.Component {
         <div className="Topnav__menu-container">
           <Menu selectedKeys={[]} className="Topnav__menu-container__menu" mode="horizontal">
             <Menu.Item key="write" className="Topnav__item-write-new nobottom">
-              <Action primary={true} cozy={true} style={{ margin: '3px 0' }} 
-              text={
-              // <Tooltip placement="bottom" title={<span><a href="/write" style={{color: "white"}}>Write a new Contributor Report</a></span>}>
-                <Link to="/write" className="Topnav__newReport">
-                  <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">{this.contributionWord()}</span></span>
-                </Link>
-              // </Tooltip>
-              }
-              onclick={() => {window.location.href="/write"}}
-              />
+			  <Link to="/write" className="Topnav__newReport" style={{ marginRight: '15px' }}>
+                <Action primary={true} cozy={true}
+                text={
+                     <span style={{textDecoration: "none"}}><i className="iconfont icon-add"/> <span className="Topnav__newReport_texts">{this.contributionWord()}</span></span>
+                } />
+			  </Link>
             </Menu.Item>
             <Menu.Item key="user" className="Topnav__item-user">
               <Link className="Topnav__user" to={`/@${username}`}>
@@ -285,11 +309,29 @@ class Topnav extends React.Component {
               |
             </Menu.Item>
             <Menu.Item className="UWhite" key="login">
-              <a href={sc2.getLoginUrl(next)} className="UWhite">
+              <span onClick={this.showModal} className="UWhite">
                 <FormattedMessage id="login" className="UWhite" defaultMessage="Log in"/>
-              </a>
+              </span>
             </Menu.Item>
           </Menu>
+          <Modal
+          visible={visible}
+          title="Redirection to SteemConnect v2"
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={[
+            <Button key="back" onClick={this.handleCancel}>Return</Button>,
+            <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+              Submit
+            </Button>,
+          ]}
+        >
+          You will be redirected to SteemConnect v2 to authenticate to the Steem blockchain.
+          <br/>
+          SteemConnect is developed and maintained by Steemit, Inc. and Busy.org.
+          <br/>
+          Utopian.io will never access your private keys.
+        </Modal>
         </div>
       );
     }

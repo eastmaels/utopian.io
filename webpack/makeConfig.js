@@ -61,6 +61,7 @@ function makePlugins(options) {
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_LANDING_URL: JSON.stringify(UTOPIAN_LANDING_URL),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'https://api.utopian.io/api/'),
+		UTOPIAN_APP: JSON.stringify(process.env.UTOPIAN_APP || 'utopian.app'),
         UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '06b0ef5509fc7de00493'),
         UTOPIAN_GITHUB_REDIRECT_URL: JSON.stringify(process.env.UTOPIAN_GITHUB_REDIRECT_URL || 'https://utopian.io/github/callback'),
         IS_BROWSER: JSON.stringify(true),

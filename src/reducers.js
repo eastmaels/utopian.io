@@ -84,6 +84,7 @@ export const getRewardFund = state => fromApp.getRewardFund(state.app);
 export const getCurrentMedianHistoryPrice = state => fromApp.getCurrentMedianHistoryPrice(state.app);
 export const getIsFetching = state => fromApp.getIsFetching(state.app);
 
+export const getCryptosPriceHistory = state => fromApp.getCryptosPriceHistory(state.app);
 
 export const getFeed = state => fromFeed.getFeed(state.feed);
 
@@ -102,6 +103,12 @@ export const getFollowingList = state => fromUser.getFollowingList(state.user);
 export const getPendingFollows = state => fromUser.getPendingFollows(state.user);
 
 export const getUser = (state, username) => fromUsers.getUser(state.users, username);
+export const getIsUserFetching = (state, username) =>
+  fromUsers.getIsUserFetching(state.users, username);
+export const getIsUserLoaded = (state, username) =>
+  fromUsers.getIsUserLoaded(state.users, username);
+export const getIsUserFailed = (state, username) =>
+  fromUsers.getIsUserFailed(state.users, username);
 
 export const getFavoriteCategories = state => fromFavorites.getFavoriteCategories(state.favorites);
 
@@ -112,3 +119,24 @@ export const getIsSettingsLoading = state => fromSettings.getIsLoading(state.set
 export const getLocale = state => fromSettings.getLocale(state.settings);
 export const getVotingPower = state => fromSettings.getVotingPower(state.settings);
 export const getVotePercent = state => fromSettings.getVotePercent(state.settings);
+export const getTotalVestingShares = state => fromWallet.getTotalVestingShares(state.wallet);
+export const getTotalVestingFundSteem = state => fromWallet.getTotalVestingFundSteem(state.wallet);
+export const getUsersTransactions = state => fromWallet.getUsersTransactions(state.wallet);
+export const getUsersAccountHistory = state => fromWallet.getUsersAccountHistory(state.wallet);
+export const getUsersAccountHistoryLoading = state =>
+  fromWallet.getUsersAccountHistoryLoading(state.wallet);
+export const getUsersEstAccountsValues = state =>
+  fromWallet.getUsersEstAccountsValues(state.wallet);
+export const getLoadingEstAccountValue = state =>
+  fromWallet.getLoadingEstAccountValue(state.wallet);
+export const getLoadingGlobalProperties = state =>
+  fromWallet.getLoadingGlobalProperties(state.wallet);
+export const getLoadingMoreUsersAccountHistory = state =>
+  fromWallet.getLoadingMoreUsersAccountHistory(state.wallet);
+export const getUserHasMoreAccountHistory = (state, username) =>
+  fromWallet.getUserHasMoreAccountHistory(state.wallet, username);
+export const getAccountHistoryFilter = state => fromWallet.getAccountHistoryFilter(state.wallet);
+export const getCurrentDisplayedActions = state =>
+  fromWallet.getCurrentDisplayedActions(state.wallet);
+export const getCurrentFilteredActions = state =>
+  fromWallet.getCurrentFilteredActions(state.wallet);

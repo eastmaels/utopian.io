@@ -69,14 +69,15 @@ class SubFeed extends React.Component {
   loadResults (nextProps = false) {
 
     const { match, getContributions, getGithubRepos, user, loading, contributions } = nextProps || this.props;
-    const q = match.params.query;
     const searchSection = match.params.searchSection;
     const skip =  nextProps ? 0 : this.state.skip;
     const limit = 20;
+    const hash = location.hash || '';
+    const q = (match.params.query || '') + hash;
     this.total = nextProps ? 0 : this.total;
     this.toRenderContributions = nextProps ? [] : this.toRenderContributions;
-    
-    if(this.total !== 0 && this.total <= this.state.skip){
+
+    if (this.total !== 0 && this.total <= this.state.skip) {
       return;
     }
 

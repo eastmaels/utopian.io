@@ -49,26 +49,63 @@ export const getContributionRequest = (author, permlink) => ({
 
 export const getContribution = (author, permlink) => dispatch => dispatch(getContributionRequest(author, permlink));
 
-export const moderatorActionRequest = (author, permlink, moderator, status) => ({
-  [CALL_API]: {
-    types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
-    endpoint: `posts/${author}/${permlink}`,
-    schema: null,
-    method: 'PUT',
-    payload: {
+export const moderatorActionRequest = (
       author,
       permlink,
       moderator,
-      reviewed: status === 'reviewed' ,
-      flagged: status === 'flagged',
-      pending: status === 'pending',
-    },
-    additionalParams: {},
-    absolute: false
-  }
-});
+      status,
+      questions = [],
+      score = 0,
+      type,
+      repository,
+      tags,
+    ) => ({
+      [CALL_API]: {
+        types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
+        endpoint: `posts/${author}/${permlink}`,
+        schema: null,
+        method: 'PUT',
+        payload: {
+          author,
+          permlink,
+          moderator,
+          reviewed: status === 'reviewed',
+          flagged: status === 'flagged',
+          pending: status === 'pending',
+          questions: questions,
+          score: score,
+          type: type,
+          repository: repository,
+          tags: tags,
+        },
+        additionalParams: {},
+        absolute: false
+      }
+    });
 
-export const moderatorAction = (author, permlink, moderator, status) => dispatch => dispatch(moderatorActionRequest(author, permlink, moderator, status));
+export const moderatorAction = (
+      author,
+      permlink,
+      moderator,
+      status,
+      questions = [],
+      score = 0,
+      type,
+      repository,
+      tags,
+    ) => dispatch => dispatch(
+        moderatorActionRequest(
+            author,
+            permlink,
+            moderator,
+            status,
+            questions,
+            score,
+            type,
+            repository,
+            tags,
+        )
+    );
 
 export const setContribution = (contribution) => ({
   type: Actions.SET_CONTRIBUTION,

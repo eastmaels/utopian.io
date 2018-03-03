@@ -4,6 +4,7 @@ import { createSponsor } from '../actions/sponsor';
 import { getSponsors } from '../actions/sponsors';
 import { getStats } from '../actions/stats';
 import * as Actions from '../actions/constants';
+import { getAuthenticatedUser } from '../reducers';
 import { Link } from 'react-router-dom';
 
 import steem from 'steem';
@@ -16,6 +17,7 @@ import './Sponsors.less';
     sponsors: state.sponsors,
     stats: state.stats,
     loading: state.loading,
+    authenticatedUser: getAuthenticatedUser(state),
   }), { createSponsor, getSponsors, getStats })
 class Sponsors extends React.PureComponent {
   constructor (props) {
@@ -78,9 +80,10 @@ class Sponsors extends React.PureComponent {
   }
 
   render () {
-    const { createSponsor, loading, sponsors, stats, match, location } = this.props;
+    const { createSponsor, loading, sponsors, stats, match, location, authenticatedUser } = this.props;
     const isLoading = loading === Actions.CREATE_SPONSOR_SUCCESS;
     const steemconnectHost = process.env.STEEMCONNECT_HOST || "https://v2.steemconnect.com";
+    const isUser = authenticatedUser.name;
 
     if (location.search.indexOf('plain') > -1) {
       return (
@@ -102,15 +105,15 @@ class Sponsors extends React.PureComponent {
             <div className="Sponsors__intro">
               <h1>The Utopian Sponsors <Icon type="heart" /> The Open Source World!</h1>
               <p>Utopian uses the delegated Steem Power to reward the best Open Source contributions.</p>
-              <p><b>20% of the total contributor rewards generated goes to the Sponsors based on their delegated amount.</b></p>
-              <div
+              {isUser && <p><b>20% of the total contributor rewards generated goes to the Sponsors based on their delegated amount.</b></p>}
+              {isUser && <div
                 className="Sponsors__intro-delegate"
                 onClick={() => this.setState({sponsorModal: true})}>
                 DELEGATE
-              </div>
+              </div>}
             </div>
-            <div style={{textAlign: "center"}}><em>All the below figures converted in USD for simplicity. Will be sent as Steem Power.</em></div>
-            <div className="Sponsors__stats">
+            {isUser && <div style={{textAlign: "center"}}><em>All the below figures converted in USD for simplicity. Will be sent as Steem Power.</em></div>}
+            isUser && <div className="Sponsors__stats">
               <div className="Sponsors__stats-box">
                 <h3>${Math.round(stats.total_pending_rewards)}</h3>
                 <p><b>Pending Rewards</b></p>
@@ -127,7 +130,7 @@ class Sponsors extends React.PureComponent {
                 <h3>${Math.round(stats.total_paid_rewards) + Math.round(stats.total_pending_rewards)}</h3>
                 <p><b>Total Generated</b></p>
               </div>
-            </div>
+            </div>}
             <div><h2>HEROES</h2></div>
             <div style={{textAlign: "center"}}><em>20% of all the author rewards generated on Utopian are reserved for the sponsors.</em></div>
             <div className="Sponsors__heroes">

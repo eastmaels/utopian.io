@@ -129,6 +129,7 @@ export default ({ large = true, noImage = false, sanitizeErrors = [] }) => ({
         'text-justify',
         'text-rtl',
         'text-center',
+        'utopian-hide',
         'text-right',
         'videoWrapper',
       ];
