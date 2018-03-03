@@ -16,14 +16,18 @@ class InlineCategoryEdit extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = {
+        value: '',
+        waitModResponse: false,
+    };
     this.onCategoryChange = this.onCategoryChange.bind(this);
   }
 
   onCategoryChange(e) {
     const value = e.target.value;
     this.setState({
-        value: e.target.value
+        value: e.target.value,
+        waitModResponse: true,
     });
 
     const type = this.props.types.filter((t) => {
@@ -41,7 +45,9 @@ class InlineCategoryEdit extends React.Component {
       score,
       type,
     ).then((res) => {
-//      console.log("category changed", res);
+      this.setState({
+        waitModResponse: false,
+      });
     });
   }
 
@@ -61,13 +67,20 @@ class InlineCategoryEdit extends React.Component {
     ))
 
     return (
-      <select
-        value={this.state.value}
-        className="inline-category-edit-select"
-        onChange={ this.onCategoryChange }
-        defaultChecked={ this.state.value }>
-        {types}
-      </select>
+      <div style={{display: "inline-block"}}>
+        <select
+          value={this.state.value}
+          className="inline-category-edit-select"
+          onChange={ this.onCategoryChange }
+          defaultChecked={ this.state.value }>
+          {types}
+        </select>
+        <span style={{
+            display: this.state.waitModResponse ? '' : 'none'
+          }}>
+          <i className="fa fa-spinner fa-spin" />
+        </span>
+      </div>
     );
   }
 }
