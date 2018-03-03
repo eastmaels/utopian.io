@@ -570,7 +570,7 @@ class StoryFull extends React.Component {
           : null}
 
           {isModerator ? <div>
-            {!post.flagged && !post.json_metadata.moderator.reviewed || (post.reviewed && isModerator.supermoderator === true) ? <Action
+            {!post.flagged && !post.reviewed || (post.reviewed && isModerator.supermoderator === true) ? <Action
               id="hide"
               className={`${mobileView ? 'StoryFull__mobilebtn' : ''}`}
               primary={true}
@@ -924,7 +924,7 @@ class StoryFull extends React.Component {
           />
         )}
         <div className="StoryFull__topics">
-          { (isModerator && !post.reviewed) || (isModerator && isModerator.supermoderator === true) ?
+          { (isModerator && !post.json_metadata.moderator.reviewed) || (isModerator && isModerator.supermoderator === true) ?
             <InlineTagEdit
               post={post}
               user={user}
