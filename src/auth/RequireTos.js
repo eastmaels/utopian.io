@@ -5,12 +5,11 @@ import { login, logout } from './authActions';
 import { getIsAuthFetching, getIsAuthenticated, getAuthenticatedUser, stats } from '../reducers';
 import { getStats } from "../actions/stats";
 import { acceptTOS, acceptPrivacyPolicy } from "../actions/user";
-import Loading from '../components/Icon/Loading';
-import Error401 from '../statics/Error401';
-import Help from '../statics/Help';
 import { Modal, Input } from 'antd';
 import TOSText from "../statics/TOS";
 import PrivacyPolicyText from "../statics/PrivacyPolicy";
+import Cookies from "js-cookie";
+
 
 @connect((state, ownProps) => ({
   fetching: getIsAuthFetching(state),
@@ -71,6 +70,12 @@ export default class RequireTos extends React.Component
 
     if(!stats || !user || !user.account || fetching || !authenticated)
       return null;
+
+    let {tosCookie,privacyCookie} = {tosCookie:Cookies.get('isTOSAccepted') || false, privacyCookie: Cookies.get('isPrivacyAccepted') || false};
+
+    if (tosCookie && privacyCookie) {
+      return null;
+    }
       
     console.log("user.tos & privacy", user.tos, user.privacy);
 
@@ -94,6 +99,10 @@ export default class RequireTos extends React.Component
       return null;
     
     console.log("TOSAgreements", TOSAgreements);
+
+    //Load Cookie values
+
+
     return (
       <div>
         <Modal
@@ -113,6 +122,16 @@ export default class RequireTos extends React.Component
           }
           
           acceptTOS(user.account).then( accepted => {
+            Cookies.set(
+              'isTOSAccepted',
+              true,
+              {
+                expires: 1209600, // ten years from now
+                domain: process.env.NODE_ENV === 'development'
+                  ? 'localhost'
+                  : 'utopian.io',
+              },
+            );
             this.setState({
               tosAccepted: true
             })
@@ -151,6 +170,16 @@ export default class RequireTos extends React.Component
               return;
           }
           acceptPrivacyPolicy(user.account).then( accepted => {
+            Cookies.set(
+              'isPrivacyAccepted',
+              true,
+              {
+                expires: 1209600, // ten years from now
+                domain: process.env.NODE_ENV === 'development'
+                  ? 'localhost'
+                  : 'utopian.io',
+              },
+            );
             this.setState({
               privacyAccepted: true
             })

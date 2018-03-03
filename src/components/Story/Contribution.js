@@ -139,7 +139,7 @@ const Contribution = ({
 
       <span className={`Contribution__c-${(fullMode === false) ? type : "yes-full"}`}>
         <CategoryIcon from="from-story" type={type}/>
-        { isModerator ?
+        { (isModerator && !post.json_metadata.moderator.reviewed) || (isModerator && isModerator.supermoderator === true) ?
           <InlineCategoryEdit
             value={type}
             types={types}
@@ -154,13 +154,16 @@ const Contribution = ({
 
       {repository && platform && id ? <span>
         {' '} <b>&middot;</b> {'  '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a>
-        { isModerator ?
-          <InlineRepoEdit
+        { (isModerator && !post.json_metadata.moderator.reviewed) || (isModerator && isModerator.supermoderator === true) ? (
+          <span>
+            {' '} <b>&middot;</b> {'  '} <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}><Icon type="folder-open" /></Link>
+            <InlineRepoEdit
               value={parsedRepoName(repository.owner.login, repository.name)}
               post={post}
               moderatorAction={moderatorAction}
               user={user}
-          /> :
+            />
+          </span> ) :
           <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}>{parsedRepoName(repository.owner.login, repository.name)}</Link>
         }
       </span> : null}

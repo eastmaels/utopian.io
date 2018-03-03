@@ -16,7 +16,6 @@ class InlineTagEdit extends React.Component {
   };
 
   static defaultProps = {
-    value: '',
     user: {},
     post: {},
     moderatorAction: () => {},
@@ -25,12 +24,10 @@ class InlineTagEdit extends React.Component {
 
   constructor (props) {
     super(props);
-
     this.state = {
       tags: [],
       waitModResponse: false,
     }
-
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
     this.removeTag = this.removeTag.bind(this);
     this.resizeInput = this.resizeInput.bind(this);
@@ -49,10 +46,7 @@ class InlineTagEdit extends React.Component {
     const tags = this.post['json_metadata'].tags.map((tag) => {
       return { title: tag };
     });
-
-    this.setState({
-      tags: this.state.tags.concat(tags)
-    });
+    this.setState({ tags: this.state.tags.concat(tags) });
 
     setTimeout(() => {
       const tagInputs = document.getElementsByClassName('inline-tag-edit-input');
@@ -60,6 +54,18 @@ class InlineTagEdit extends React.Component {
         return this.resizeInput(tagInput);
       });
     }, 100);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const prevTags = this.props.post['json_metadata'].tags;
+    const nextTags = nextProps.post['json_metadata'].tags;
+
+    if (prevTags.sort().join(',') !== nextTags.sort().join(',')) {
+      const tags = nextProps.post['json_metadata'].tags.map((tag) => {
+        return { title: tag, selected: false };
+      });
+      this.setState({ tags: tags });
+    }
   }
 
   updatePostTags() {
@@ -267,9 +273,9 @@ class InlineTagEdit extends React.Component {
               className="inline-tag-edit-item"
               key={lastTagPos}>
               <span
-                style={{
+              style = {{
                   display: this.state.waitModResponse ? '' : 'none'
-                }}>
+              }}>
                 <i className="fa fa-spinner fa-spin" />
               </span>
               <span
