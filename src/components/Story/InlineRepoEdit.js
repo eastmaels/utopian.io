@@ -31,7 +31,7 @@ class InlineRepoEdit extends React.Component {
   };
 
   state = {
-    value: this.props.value,
+    value: '',
     previousValue: '',
     loading: false,
     loaded: true,
@@ -42,6 +42,16 @@ class InlineRepoEdit extends React.Component {
     super(props);
     this.renderItems = this.renderItems.bind(this);
     this.post = props.post
+  }
+
+  componentWillMount() {
+    this.setState({ value: this.props.value });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.setState({ value: nextProps.value });
+    }
   }
 
   renderItems(items) {
@@ -96,6 +106,7 @@ class InlineRepoEdit extends React.Component {
             waitModResponse: false,
           });
         });
+
     }
   }
   debounceTimer = null;
@@ -107,50 +118,54 @@ class InlineRepoEdit extends React.Component {
           ref={ search => this.search = search }
           value={ this.state.value }
           inputProps={{
-              id: 'inline-edit',
-              placeholder: 'Browse Github repositories',
-              className: `inline-repo-edit`,
-              onKeyPress: (event) => {
-                let q = event.target.value;
-                q = q.replace('https://', '');
+            id: 'inline-edit',
+            placeholder: 'Browse Github repositories',
+            className: `inline-repo-edit`,
+            onKeyPress: (event) => {
+              let q = event.target.value;
+              q = q.replace('https://', '');
+              q = q.replace('http://', '');
+              q = q.replace('github.com/', '');
+              q = '"' + q + '"';
+
+              if (event.key === 'Enter')
+              {
+                event.preventDefault();
+              }
+
+              this.setState({loading: true, loaded: false});
+
+              clearTimeout(this.debounceTimer);
+              this.debounceTimer = setTimeout(() => {
+                this.debounceTimer = null;
+                this.props.getGithubRepos({
+                  q,
+                }).then(() => {
+                  this.setState({loading: false, loaded: true});
+                });
+
+              }, 2000);
+
+            },
+            onPaste: (event) => {
+              const pasted = event.clipboardData.getData('Text');
+              if (pasted.indexOf('github') > -1) {
+                let q = pasted.replace('https://', '');
                 q = q.replace('http://', '');
                 q = q.replace('github.com/', '');
                 q = '"' + q + '"';
+                this.props.getGithubRepos({
+                  q,
+                }).then(() => {
+                  this.setState({loaded: true, loading: false});
+                });
+              }
+            },
+            onFocus: (event) => this.setPreviousValue(event),
 
-                if (event.key === 'Enter')
-                {
-                  event.preventDefault();
-                }
+            onBlur: (event) => this.callModeratorAction(),
 
-                this.setState({loading: true, loaded: false});
-
-                clearTimeout(this.debounceTimer);
-                this.debounceTimer = setTimeout(() => {
-                  this.debounceTimer = null;
-                  this.props.getGithubRepos({
-                    q,
-                  }).then(() => {
-                    this.setState({loading: false, loaded: true});
-                  });
-                }, 2000);
-              },
-              onPaste: (event) => {
-                const pasted = event.clipboardData.getData('Text');
-                if (pasted.indexOf('github') > -1) {
-                  let q = pasted.replace('https://', '');
-                  q = q.replace('http://', '');
-                  q = q.replace('github.com/', '');
-                  q = '"' + q + '"';
-                  this.props.getGithubRepos({
-                    q,
-                  }).then(() => {
-                    this.setState({loaded: true, loading: false});
-                  });
-                }
-              },
-              onFocus: (event) => this.setPreviousValue(event),
-              onBlur: (event) => this.callModeratorAction(),
-            }}
+          }}
           items={ repos }
           onSelect={(value, repo) => {
             this.setState({
@@ -159,14 +174,15 @@ class InlineRepoEdit extends React.Component {
             }, () => {
               this.callModeratorAction()
             });
+
           }}
           getItemValue={repo => repo.full_name}
           onChange={(event, value) => {
             this.setState({value});
             if (value === '') {
-              this.setState({
-                loaded: false
-              });
+                this.setState({
+                  loaded: false
+                });
             }
           }}
           renderItem={(repo, isHighlighted) => (
