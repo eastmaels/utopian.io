@@ -28,6 +28,7 @@ class InlineTagEdit extends React.Component {
 
     this.state = {
       tags: [],
+      waitModResponse: false,
     }
 
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
@@ -68,6 +69,7 @@ class InlineTagEdit extends React.Component {
 
     const { post, user, moderatorAction } = this.props;
     const status = null, questions = [], score = 0, type = null, repo = null;
+    this.setState({ waitModResponse: true });
     moderatorAction(
       post.author,
       post.permlink,
@@ -79,7 +81,7 @@ class InlineTagEdit extends React.Component {
       repo,
       tags,
     ).then((res) => {
-      // do nothing.
+      this.setState({ waitModResponse: false });
     });
   }
 
@@ -263,12 +265,18 @@ class InlineTagEdit extends React.Component {
             {tags}
             <li
               className="inline-tag-edit-item"
-              key={lastTagPos}
-              style = {{
-                display: this.state.tags.length < 5 ? '' : 'none'
-              }}>
+              key={lastTagPos}>
+              <span
+                style={{
+                  display: this.state.waitModResponse ? '' : 'none'
+                }}>
+                <i className="fa fa-spinner fa-spin" />
+              </span>
               <span
                 className="text-right inline-tag-edit-add"
+                style = {{
+                  display: this.state.tags.length < 5 ? '' : 'none'
+                }}
                 data-index={lastTagPos}
                 onClick={this.handleAddTagButtonClick}>+</span>
             </li>
