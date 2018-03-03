@@ -9,7 +9,7 @@ export default () =>
 		<h1>
 			Utopian Company SRLs Privacy Policy
 		</h1>
-		<span class="PrivacyPolicy-date">
+		<span className="PrivacyPolicy-date">
 			Effective February 19, 2018
 		</span>
 		
