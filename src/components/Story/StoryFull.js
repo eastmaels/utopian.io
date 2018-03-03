@@ -136,12 +136,15 @@ class StoryFull extends React.Component {
 
   componentDidMount() {
     document.body.classList.add('white-bg');
-    this.setState({
-      sliderValue: this.state.sliderValue,
-    });
     let metaData = this.props.post.json_metadata;
     this.state.questionaireAnswers = metaData.questions || [];
     this.state.sliderValue = metaData.score || 0;
+	this.setState({
+      questionaireAnswers: this.state.questionaireAnswers,
+    });
+	this.setState({
+      sliderValue: this.state.sliderValue,
+    });
     this.validateQuestionaire();
   }
 
@@ -703,7 +706,7 @@ class StoryFull extends React.Component {
       <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
       <b>How would you reate the quality of this post?</b>
        <RawSlider
-        initialValue={this.state.sliderValue}
+        	initialValue={this.state.sliderValue}
             value={this.state.sliderValue}
             onChange={this.updateQualitySlider.bind(this)}
           />
