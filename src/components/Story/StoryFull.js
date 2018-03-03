@@ -47,7 +47,7 @@ import './StoryFull.less';
 
 const SLIDER_MAXSCORE = 20;
 
-import { QualitySlider } from "../../QualitySliderQuestions";
+import { QualitySlider } from "./questionaire";
 
 @connect(
   state => ({
@@ -260,6 +260,7 @@ class StoryFull extends React.Component {
 
     let metaData = post.json_metadata;
     let postType = metaData.type;
+	
     if(!QualitySlider[postType])
     {
       return false;
@@ -327,7 +328,7 @@ class StoryFull extends React.Component {
 
     let metaData = post.json_metadata;
     let postType = metaData.type;
-
+	
     if(!QualitySlider[postType])
     {
       return null;
