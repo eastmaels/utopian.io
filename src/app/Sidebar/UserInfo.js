@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal } from 'antd';
 
 import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 import _ from 'lodash';
 import urlParse from 'url-parse';
-import querystring from 'querystring';
 
 import {
   getUser,
@@ -16,7 +14,6 @@ import {
 
 
 import { openTransfer } from '../../wallet/walletActions';
-import Action from '../../components/Button/Action';
 import BanUser from '../../components/BanUser';
 import CreateModerator from '../../components/CreateModerator';
 

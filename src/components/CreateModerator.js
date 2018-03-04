@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { Modal } from 'antd';
 
-import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
-import _ from 'lodash';
-import urlParse from 'url-parse';
+import { injectIntl } from 'react-intl';
 
 import {
   getIsAuthenticated,
   getAuthenticatedUser,
 } from '../reducers';
 import { getModerators, createModerator, removeModerator } from '../actions/moderators';
-import { moderatorAction } from '../actions/contribution';
 import Action from './Button/Action';
 import { getUser } from '../actions/user'
 import * as R from 'ramda';

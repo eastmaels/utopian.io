@@ -5,7 +5,6 @@ import { getStats } from '../actions/stats';
 import { Link } from 'react-router-dom';
 import { getAuthenticatedUser } from '../reducers';
 import { Icon } from 'antd';
-import * as ReactIcon from 'react-icons/lib/md';
 import './Moderators.less';
 
 @connect(

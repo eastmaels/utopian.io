@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, logout } from './authActions';
+import { logout } from './authActions';
 import { getIsAuthFetching, getIsAuthenticated, getAuthenticatedUser, stats, getAuthenticatedUserName } from '../reducers';
 import { getStats } from "../actions/stats";
 import { acceptTOS, acceptPrivacyPolicy, getUser } from "../actions/user";

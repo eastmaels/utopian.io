@@ -1,10 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPostById } from '../actions/contributions';
-import { Link } from 'react-router-dom';
 
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { Icon } from 'antd';
 import './Moderators.less';
 
 @connect(

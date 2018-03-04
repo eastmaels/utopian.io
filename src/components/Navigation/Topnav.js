@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Menu, Popover, Tooltip, Input, Badge, Select, Modal, Button } from 'antd';
+import { Menu, Popover, Input, Select, Modal, Button } from 'antd';
 import Action from '../Button/Action';
 
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 import sc2 from '../../sc2';
 
 import Icon from 'antd/lib/icon';
-import * as ReactIcon from 'react-icons/lib/md';
-import Autocomplete from 'react-autocomplete';
 import Avatar from '../Avatar';
-import Notifications from './Notifications/Notifications';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 
 import CategoryIcon from '../CategoriesIcons';

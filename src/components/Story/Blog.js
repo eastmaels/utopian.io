@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { Icon } from 'antd';
 import CategoryIcon from '../CategoriesIcons/index';
 
 import './Blog.less';

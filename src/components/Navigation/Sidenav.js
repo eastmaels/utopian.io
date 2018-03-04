@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { Icon } from 'antd';
 import CategoryIcon from "../CategoriesIcons/index";
 import './Sidenav.less';
 
