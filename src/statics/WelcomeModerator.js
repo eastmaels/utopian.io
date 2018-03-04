@@ -29,7 +29,7 @@ export default () =>
             <br/>
             
             Also, make sure to join our Discord Server if you haven't already:<br/>
-            <center><b><a class="Welcome__bigButton" href="https://discord.gg/5geMSSZ">Join Utopian on Discord</a></b></center>
+            <center><b><a className="Welcome__bigButton" href="https://discord.gg/5geMSSZ">Join Utopian on Discord</a></b></center>
             <br/>You'll be able to meet many friendly moderators and users there. Not only will you be able to make many friends, but you will also be kept up-to-date on moderator issues and Utopian updates.
             It is mandatory for all moderators to be on the Discord Server. Once you join, please tell everyone your STEEM username and that you are a moderator.
             <br/><h3>
