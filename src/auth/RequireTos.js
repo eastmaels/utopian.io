@@ -140,7 +140,7 @@ export default class RequireTos extends React.Component
            
 			this.props.getUser(user.account).then( result => {
 				 this.setState({
-					//tosAccepted: true,
+					tosAccepted: true,
 					modalAcceptPending: false,
 				});
 			});
@@ -195,7 +195,7 @@ export default class RequireTos extends React.Component
             );
 			this.props.getUser(user.account).then( result => {
 				 this.setState({
-					//privacyAccepted: true,
+					privacyAccepted: true,
 					modalAcceptPending: false,
 				});
 			});
