@@ -77,7 +77,9 @@ class SubFeed extends React.Component {
     // console.log('[c] m',match);
     const limit = 20;
     this.total = nextProps ? 0 : this.total;
-
+	this.setState({
+		skip: skip
+	});
     if (match.params.repoId) {
       getContributions({
         limit,
@@ -160,6 +162,11 @@ class SubFeed extends React.Component {
 
   renderContributions() {
     const { contributions, match, user } = this.props;
+	
+	if(!this.state.skip)
+	{
+		return [];
+	}
 
     const filteredContributions = contributions.filter((contribution) => {
       if (match.params.repoId && contribution.json_metadata.repository) {
@@ -260,7 +267,7 @@ class SubFeed extends React.Component {
     const contributions = this.renderContributions();
     const isFetching = loading === Actions.GET_CONTRIBUTIONS_REQUEST;
     const hasMore = this.total > contributions.length;
-
+	
     const goTo = (type) => {
       const { history, location, match } = this.props;
 
