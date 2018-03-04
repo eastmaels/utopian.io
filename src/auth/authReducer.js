@@ -31,6 +31,8 @@ export default (state = initialState, action) => {
     case Actions.GET_USER_SUCCESS: {
       const userData = action.response;
 
+      if (userData.account !== state.user.name) return state;
+
       return {
         ...state,
         user: {
