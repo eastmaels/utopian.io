@@ -22,7 +22,7 @@ import './StoryFooter.less';
     loading: state.loading,
   }),
   {
-    getProject,
+    //getProject,
     voteWithSponsors,
     updateContribution,
   }
@@ -66,11 +66,12 @@ class StoryFooter extends React.Component {
     signInModal: false,
   };
 
-  constructor(props) {
+  /*constructor(props) {
     super(props);
     this.handleVoteWithSponsors = this.handleVoteWithSponsors.bind(this);
-  }
+  }*/
 
+  /*
   loadSponsorship() {
     const { user, post, getProject, defaultVotePercent, rewardFund, currentMedianHistoryPrice } = this.props;
     const postData = post.json_metadata;
@@ -121,14 +122,14 @@ class StoryFooter extends React.Component {
         }
       })
     }
-  }
+  } */
 
   componentWillMount() {
     const { user, post, defaultVotePercent } = this.props;
 
-    if (post.json_metadata.repository) {
+    /*if (post.json_metadata.repository) {
       this.loadSponsorship();
-    }
+    }*/
 
     if (user) {
       const userVote = find(post.active_votes, { voter: user.name }) || {};
@@ -144,14 +145,14 @@ class StoryFooter extends React.Component {
     }
   }
 
-  handleVoteWithSponsors (checkbox) {
+  /*handleVoteWithSponsors (checkbox) {
     const checked = checkbox.target.checked;
 
     this.setState({
       voteWithSponsors: checked || false,
     });
 
-  }
+  }*/
 
   handleLikeClick = () => {
     const { sliderMode, user } = this.props;
@@ -191,7 +192,18 @@ class StoryFooter extends React.Component {
     const { user, rewardFund, currentMedianHistoryPrice } = this.props;
     const { sponsorsAccount } = this.state;
 
-    if (!this.state.voteWithSponsors) {
+
+    const voteWorth = getVoteValue(
+      user,
+      rewardFund.recent_claims,
+      rewardFund.reward_balance,
+      currentMedianHistoryPrice,
+      value * 100,
+    );
+
+    this.setState({ sliderValue: value, voteWorth });
+
+    /*if (!this.state.voteWithSponsors) {
       const voteWorth = getVoteValue(
         user,
         rewardFund.recent_claims,
@@ -209,7 +221,7 @@ class StoryFooter extends React.Component {
         value * 100,
       );
       this.setState({ sliderSponsorsValue: value, sponsorsVoteWorth });
-    }
+    }*/
   };
 
   redirectToSignup = () => {
@@ -248,18 +260,25 @@ class StoryFooter extends React.Component {
             />
           )}
         </div>
-        {this.state.sliderVisible && this.state.project ? <div>
+        {/*this.state.sliderVisible && this.state.project ? <div>
             <label>
               <input type="checkbox" id="voteSponsors" defaultChecked={this.state.voteWithSponsors} onChange={this.handleVoteWithSponsors}/> Vote with sponsors account
             </label>
-          </div> : null}
-        {this.state.sliderVisible && (
+          </div> : null */}
+        {/*this.state.sliderVisible && (
           <Slider
             value={this.state.voteWithSponsors ? this.state.sliderSponsorsValue : this.state.sliderValue}
             voteWorth={this.state.voteWithSponsors ? this.state.sponsorsVoteWorth : this.state.voteWorth}
             onChange={this.handleSliderChange}
           />
-        )}
+        )*/}
+        {this.state.sliderVisible && (
+         <Slider
+         value={this.state.sliderValue}
+         voteWorth={this.state.voteWorth}
+         onChange={this.handleSliderChange}
+         />
+         )}
         <Modal
           visible={this.state.signInModal}
           title="You Must Be Signed In to Vote"
