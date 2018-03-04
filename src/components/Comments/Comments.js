@@ -111,8 +111,11 @@ class Comments extends React.Component {
   };
 
   componentWillMount() {
-    const { getModerators } = this.props;
-    getModerators();
+    const { moderators, getModerators } = this.props;
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
   }
 
   submitComment = (parentPost, commentValue) => {

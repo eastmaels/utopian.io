@@ -16,9 +16,13 @@ import './Moderators.less';
 class Moderators extends React.PureComponent {
 
   componentWillMount () {
-    const { getModerators, getStats } = this.props;
+    const { moderators, getModerators, getStats } = this.props;
+
     getStats();
-    getModerators();
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
   }
 
   render () {
