@@ -66,7 +66,7 @@ export default class RequireTos extends React.Component
     const { acceptTOS, acceptPrivacyPolicy, user, fetching, authenticated } = this.props;
     let stats = this.state.stats;
     
-    console.log("user fetching data", user.account, fetching, authenticated);
+    //console.log("user fetching data", user.account, fetching, authenticated);
 
     if(!stats || !user || !user.account || fetching || !authenticated)
       return null;
@@ -77,7 +77,7 @@ export default class RequireTos extends React.Component
       return null;
     }
       
-    console.log("user.tos & privacy", user.tos, user.privacy);
+    //console.log("user.tos & privacy", user.tos, user.privacy);
 
     let lastTOSEdit = new Date(stats.last_date_edit_tos);
     let TOSAgreements = (user.tos || []).filter( aggreement => {
@@ -98,7 +98,7 @@ export default class RequireTos extends React.Component
     if(TOSAgreements.length && PrivacyAgreements.length)
       return null;
     
-    console.log("TOSAgreements", TOSAgreements);
+    //console.log("TOSAgreements", TOSAgreements);
 
     //Load Cookie values
 
@@ -138,7 +138,7 @@ export default class RequireTos extends React.Component
           })
         }}
         >
-          <p>Please read and accept the Terms of Service</p>
+          <p>Please read and accept the Terms of Service. You must scroll to the bottom to proceed.</p>
           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onScroll={() => {
 			  if(!this.TOSContainer)
 			    return;
@@ -186,7 +186,7 @@ export default class RequireTos extends React.Component
           })
         }}
         >
-          <p>Please read and accept the Privacy Policy Aggreement</p>
+          <p>Please read and accept the Privacy Policy Aggreement. You must scroll to the bottom to proceed.</p>
            <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onScroll={() => {
 			  if(!this.PrivacyContainer)
 			  	return;
