@@ -25,7 +25,7 @@ export default class TermsOfService extends React.PureComponent {
       <div className="mt-5 text-center">
         <div className="container pb-5">
       <h1>
-        Utopian Terms of Service
+        Terms of Service
       </h1>
       <span className="tos-date">
         
@@ -36,9 +36,8 @@ export default class TermsOfService extends React.PureComponent {
         to and use of Utopian.io and any other products or services that link to
         these Terms (“Utopian”). Utopian is provided by Utopian Company SRLs,
         registered in Italy, with head office in Via A. Manzoni 50, Rieti (RI),
-        02100 (“Utopian”, “we” or “us”). By accessing or using Utopian, you agree
-        to be bound by these Terms. If you do not agree to these Terms, including
-        the mandatory arbitration provision and class action waiver in Section 14,
+        02100, VAT #: IT01174530574 (“Utopian”, “we” or “us”). By accessing or using Utopian, you agree
+        to be bound by these Terms. If you do not agree to these Terms,
         do not access or use Utopian. If we make changes to these Terms, we will
         provide notice of those changes by updating the “Last Updated” date above
         or posting notice on Utopian. Your continued use of Utopian will confirm
