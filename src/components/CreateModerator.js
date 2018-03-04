@@ -57,20 +57,27 @@ class CreateModerator extends React.Component {
 
   moderatorsLoad (force = false) {
     if ((this.state.moderatorsDidLoad == true) && (!force)) return;
-    const { getModerators, username } = this.props;
+    const { moderators, getModerators, username } = this.props;
     console.log("username: ", username);
-    getModerators().then((res) => {
-        const { moderators } = this.props;
-        console.log(res);
-        if (R.find(R.propEq('account', username))(moderators)) {
-            console.log("Viewed user is a Moderator.");
-            this.setState({userIsMod: true});
-        } else {
-            console.log("Viewed user is not a Moderator.");
-            this.setState({userIsMod: false});
-        }
-        this.setState({moderatorsDidLoad: true});
-    });
+
+    const setMods = (mods) => {
+      if (R.find(R.propEq('account', username))(mods)) {
+        console.log("Viewed user is a Moderator.");
+        this.setState({userIsMod: true});
+      } else {
+        console.log("Viewed user is not a Moderator.");
+        this.setState({userIsMod: false});
+      }
+      this.setState({moderatorsDidLoad: true});
+    };
+
+    if (!moderators || !moderators.length) {
+      getModerators().then((res) => {
+        setMods(res.response.results);
+      });
+    } else {
+      setMods(moderators);
+    }
   }
 
   componentWillMount() {

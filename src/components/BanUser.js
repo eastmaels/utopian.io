@@ -53,7 +53,7 @@ class BanUser extends React.Component {
   }
 
   componentDidMount () {
-    const { getModerators, getUser, username, banUser, createUser } = this.props;
+    const { moderators, getModerators, getUser, username, banUser, createUser } = this.props;
     if (username) {
       console.log("banUser.js -> username: ", username);
     } else {
@@ -61,7 +61,11 @@ class BanUser extends React.Component {
       return;
     }
     this.setState({nowdate: new Date(Date.now())});
-    getModerators();
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
+
     getUser(username).then((res) => {
       if (res.status === 404) {
         console.log("USER DOES NOT EXIST, creating...", res);
@@ -74,6 +78,7 @@ class BanUser extends React.Component {
         console.log("USER DOES NOT EXIST, creating...", e);
         createUser(username).then((res) => console.log("CREATED",res));
       });
+
     getUser(username).then((res) => {
       const user = res.response;
       console.log("banUser.js -> user: ", user);
