@@ -74,7 +74,7 @@ export default class User extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { getReposByGithub, match } = this.props;
     if (!this.props.user.name) {
       this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
