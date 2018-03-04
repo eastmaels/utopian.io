@@ -11,6 +11,11 @@ import * as Actions from '../../../src/actions/constants'
 import './GithubConnection.less';
 
 const GithubRepos = ({ user, repositories }) => {
+
+  if (!user || !user.github) {
+    return null;
+  }
+
   const RequiredScopeVersion = Actions.REQUIRED_SCOPE_VERSION; // REQUIRED GITHUB SCOPE VERSION 
 
   if (user && user.github && user.github.scopeVersion) {

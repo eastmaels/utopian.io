@@ -177,9 +177,9 @@ export default class RightSidebar extends React.Component {
       )
     }
 
-    var gitUser = (this.props.authenticatedUser || user);
-    if (this.state && this.state.user && this.state.user.github) gitUser = this.state.user;
-    if (this.state && this.state.authenticatedUser && this.state.authenticatedUser.github) gitUser = this.state.authenticatedUser;
+    var gitUser = this.state.authenticatedUser;
+    //if (this.state && this.state.user && this.state.user.github) gitUser = this.state.user;
+    //if (this.state && this.state.authenticatedUser && this.state.authenticatedUser.github) gitUser = this.state.authenticatedUser;
 
     return (
       <span>
