@@ -155,6 +155,7 @@ export default class RequireTos extends React.Component
           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onScroll={() => {
 			  if(!this.TOSContainer)
 			    return;
+			console.log("TOSContainer scrollTop", this.TOSContainer.scrollTop, (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight));
               if( this.TOSContainer.scrollTop >= (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight) - 500)
               {
 				this.state.TOSScroll = true;
@@ -210,6 +211,7 @@ export default class RequireTos extends React.Component
            <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onScroll={() => {
 			  if(!this.PrivacyContainer)
 			  	return;
+				console.log("PrivacyContainer scrollTop", this.PrivacyContainer.scrollTop, (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight));
               if( this.PrivacyContainer.scrollTop >= (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight) - 500)
               {
 				this.state.privacyScroll = true;
