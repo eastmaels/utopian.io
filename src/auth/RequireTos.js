@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { login, logout } from './authActions';
 import { getIsAuthFetching, getIsAuthenticated, getAuthenticatedUser, stats } from '../reducers';
 import { getStats } from "../actions/stats";
-import { acceptTOS, acceptPrivacyPolicy } from "../actions/user";
+import { acceptTOS, acceptPrivacyPolicy, getUser } from "../actions/user";
 import { Modal, Input } from 'antd';
 import TOSText from "../statics/TOS";
 import PrivacyPolicyText from "../statics/PrivacyPolicy";
@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
   authenticated: getIsAuthenticated(state),
   user: getAuthenticatedUser(state),
 }), {
-  getStats, acceptPrivacyPolicy, acceptTOS, logout
+  getStats, acceptPrivacyPolicy, acceptTOS, logout, getUser
 })
 export default class RequireTos extends React.Component
 {
@@ -27,7 +27,8 @@ export default class RequireTos extends React.Component
     getStats: PropTypes.func.isRequired,
     acceptPrivacyPolicy: PropTypes.func.isRequired,
     acceptTOS: PropTypes.func.isRequired,
-	  logout: PropTypes.func,
+	logout: PropTypes.func,
+	getUser: PropTypes.func,
   };
 
   static defaultProps = {
@@ -36,7 +37,8 @@ export default class RequireTos extends React.Component
     privacyAccepted: false,
     acceptPrivacyPolicy: () => {},
     acceptTOS: () => {},
-	  logout: () => {},
+	logout: () => {},
+	getUser: (account) => {},
   };
 
   constructor(props)
@@ -48,6 +50,7 @@ export default class RequireTos extends React.Component
       privacyAccepted: false,
       privacyScroll: false,
       TOSScroll: false,
+	  modalAcceptPending: false
     };
     const { getStats } = this.props;
     getStats().then( res => {
@@ -57,6 +60,7 @@ export default class RequireTos extends React.Component
     })
   }
 
+  
   componentWillMount()
   {
   }
@@ -77,8 +81,6 @@ export default class RequireTos extends React.Component
       return null;
     }
       
-    //console.log("user.tos & privacy", user.tos, user.privacy);
-
     let lastTOSEdit = new Date(stats.last_date_edit_tos);
     let TOSAgreements = (user.tos || []).filter( aggreement => {
       let aggrementDate = new Date(aggreement.date);
@@ -109,9 +111,9 @@ export default class RequireTos extends React.Component
         visible={!TOSAgreements.length && !this.state.tosAccepted}
         title='Terms Of Service'
         okType={(this.state.TOSScroll?'primary':'disabled')}
-        okText="Accept"
+        okText={(this.state.modalAcceptPending?"Processing...":"Accept")}
         cancelText="Cancel"
-		    maskClosable={false}
+		maskClosable={false}
         onCancel={() => {
 		      this.props.logout();
         }}
@@ -120,6 +122,9 @@ export default class RequireTos extends React.Component
           {
               return;
           }
+		  this.setState({
+			  modalAcceptPending: true,
+		  });
           
           acceptTOS(user.account).then( accepted => {
             Cookies.set(
@@ -132,9 +137,14 @@ export default class RequireTos extends React.Component
                   : 'utopian.io',
               },
             );
-            this.setState({
-              tosAccepted: true
-            })
+           
+			this.props.getUser(user.account).then( result => {
+				 this.setState({
+					//tosAccepted: true,
+					modalAcceptPending: false,
+				});
+			});
+			
           })
         }}
         >
@@ -158,7 +168,7 @@ export default class RequireTos extends React.Component
         visible={!PrivacyAgreements.length && !this.state.privacyAccepted}
         title='Privacy Policy Agreement'
         okType={(this.state.privacyScroll?'primary':'disabled')}
-        okText="Accept"
+        okText={(this.state.modalAcceptPending?"Processing...":"Accept")}
         cancelText="Cancel"
 		maskClosable={false}
         onCancel={() => {
@@ -169,6 +179,9 @@ export default class RequireTos extends React.Component
           {
               return;
           }
+		  this.setState({
+			  modalAcceptPending: true,
+		  });
           acceptPrivacyPolicy(user.account).then( accepted => {
             Cookies.set(
               'isPrivacyAccepted',
@@ -180,9 +193,12 @@ export default class RequireTos extends React.Component
                   : 'utopian.io',
               },
             );
-            this.setState({
-              privacyAccepted: true
-            })
+			this.props.getUser(user.account).then( result => {
+				 this.setState({
+					//privacyAccepted: true,
+					modalAcceptPending: false,
+				});
+			});
           })
         }}
         >
