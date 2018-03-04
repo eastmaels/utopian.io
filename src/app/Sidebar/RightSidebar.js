@@ -177,9 +177,10 @@ export default class RightSidebar extends React.Component {
       )
     }
 
-    var gitUser = this.state.authenticatedUser;
-    //if (this.state && this.state.user && this.state.user.github) gitUser = this.state.user;
-    //if (this.state && this.state.authenticatedUser && this.state.authenticatedUser.github) gitUser = this.state.authenticatedUser;
+    var gitUser = this.props.authenticatedUser;
+    /*
+    if (this.state && this.state.user && this.state.user.github) gitUser = this.state.user;
+    if (this.state && this.state.authenticatedUser && this.state.authenticatedUser.github) gitUser = this.state.authenticatedUser;*/
 
     return (
       <span>
@@ -187,7 +188,7 @@ export default class RightSidebar extends React.Component {
           <Route path="/@:name/transfers" render={() => <WalletSidebar />} />
         </Switch>
         {!match || (match && !match.params.repoId) ? <SideAnnouncement user={user} /> : null}
-        {
+        {/*
           match &&
           match.params.repoId &&
           repo.fork !== true &&
@@ -199,8 +200,8 @@ export default class RightSidebar extends React.Component {
               createProjectSponsor={createProjectSponsor}
             /> :
             null
-        }
-        {
+        */}
+        {/*
           match &&
           match.params.repoId &&
           (!project || (project && project.sponsorship.enabled === false)) &&
@@ -213,7 +214,7 @@ export default class RightSidebar extends React.Component {
               platform={match.params.platform}
               createProjectAccount={createProjectAccount}
             /> : null
-        }
+        */}
         <GithubConnection user={gitUser} repositories={this.state.repositories || []}/>
       </span>
     );

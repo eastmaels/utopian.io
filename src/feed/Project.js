@@ -10,7 +10,7 @@ import { getGithubRepo, setGithubRepo } from '../actions/project';
 import { getReposByGithub } from '../actions/projects';
 import { getProject, createProjectAccount, createProjectSponsor } from '../actions/project';
 
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import { Icon } from 'antd';
 import SubFeed from './SubFeed';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import RightSidebar from '../app/Sidebar/RightSidebar';
@@ -34,7 +34,7 @@ import './Project.less';
   }),
   { getGithubRepo,
     setGithubRepo,
-    getProject,
+    //getProject,
     createProjectAccount,
     createProjectSponsor,
     getReposByGithub,
@@ -134,7 +134,7 @@ class Project extends React.Component {
     }
   }
 
-  loadSponsorship(isOwner) {
+  /*loadSponsorship(isOwner) {
     const { getProject, match } = this.props;
     const repoId = parseInt(match.params.repoId);
     getProject(match.params.platform, repoId).then(res => {
@@ -150,13 +150,13 @@ class Project extends React.Component {
         loadingProject: false,
       });
     })
-  }
+  }*/
 
   loadGithubData() {
     const { user, repo, match} = this.props;
     const repoId = parseInt(match.params.repoId);
     const isOwner = R.find(R.propEq('id', repoId))(user.repos || []);
-    if(repo.fork !== true) {
+    /*if(repo.fork !== true) {
       this.loadSponsorship(isOwner);
     } else {
       this.setState({
@@ -164,7 +164,12 @@ class Project extends React.Component {
         loadedProject: true,
         loadingProject: false,
       });
-    }
+    }*/
+    this.setState({
+      isOwner: isOwner ? true : false,
+      loadedProject: true,
+      loadingProject: false,
+    });
   }
 
   render() {
