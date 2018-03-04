@@ -54,6 +54,18 @@ export const banUserRequest = (account, banned, bannedBy, banReason, bannedUntil
   }
 });
 
+export const acceptAggreement = (account, aggreement) => ({
+  [CALL_API]: {
+    types: [ Actions.GET_USER_AGREEMENT_REQUEST, Actions.GET_USER_AGREEMENT_SUCCESS, Actions.GET_USER_AGREEMENT_FAILURE ],
+    endpoint: `users/${account}/approve${aggreement}`,
+    schema: null,
+    method: 'GET',
+  payload: {},
+    additionalParams: {},
+    absolute: false
+  }
+});
+
 export const getBanRequest = (account) => ({
   [CALL_API]: {
     types: [ Actions.GET_BAN_REQUEST, Actions.GET_BAN_SUCCESS, Actions.GET_BAN_FAILURE ],
@@ -68,3 +80,5 @@ export const getBanRequest = (account) => ({
 
 export const banUser = (account = "undefined", banned = 1, bannedBy = "<anonymous-mod>", reason="Violation of Utopian Rules", bannedUntil = new Date(0)) => dispatch => dispatch(banUserRequest(account, banned, bannedBy, reason, bannedUntil));
 export const getBanUser = (account) => dispatch => dispatch(getBanRequest(account));
+export const acceptTOS = (account = "undefined") => dispatch => dispatch(acceptAggreement(account, "TOS"));
+export const acceptPrivacyPolicy = (account = "undefined") => dispatch => dispatch(acceptAggreement(account, "Privacy"));

@@ -34,7 +34,7 @@ class BanUser extends React.Component {
     intl: PropTypes.shape().isRequired,
     authenticated: PropTypes.bool.isRequired,
     authenticatedUser: PropTypes.shape().isRequired,
-    username: PropTypes.shape().isRequired,
+    username: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -245,7 +245,7 @@ class BanUser extends React.Component {
       negative={(this.state.banned === 0)}
       positive={(this.state.banned !== 0)}
       style={{ margin: '5px 0' }}
-      text={this.actionText()}
+      text={<span>{this.actionText()}</span>}
       onClick={() => {
         this.setState({showBanModal: true});
         if (this.state.banned === 0) {

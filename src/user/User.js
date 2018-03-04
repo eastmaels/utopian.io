@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import {
@@ -22,6 +22,7 @@ import UserProfile from './UserProfile';
 import UserComments from './UserComments';
 import UserFollowers from './UserFollowers';
 import UserFollowing from './UserFollowing';
+import UserWallet from './UserWallet';
 import ProjectsFeed from '../feed/ProjectsFeed';
 import UserReblogs from './UserReblogs';
 import UserFeed from './UserFeed';
@@ -64,8 +65,8 @@ export default class User extends React.Component {
 
   static needs = needs;
 
-  constructor (props) {
-    super (props);
+  constructor(props) {
+    super(props);
 
     this.state = {
       githubProjects: [],
@@ -74,7 +75,7 @@ export default class User extends React.Component {
   }
 
   componentWillMount() {
-    const {getReposByGithub, match} = this.props;
+    const { getReposByGithub, match } = this.props;
     if (!this.props.user.name) {
       this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
       return;
@@ -89,7 +90,7 @@ export default class User extends React.Component {
 
 
   componentDidUpdate(prevProps) {
-    const {getReposByGithub, match, authenticatedUser, user} = this.props;
+    const { getReposByGithub, match, authenticatedUser, user } = this.props;
 
     if (prevProps.match.params.name !== this.props.match.params.name) {
       this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });
@@ -176,7 +177,7 @@ export default class User extends React.Component {
         )}
         <div className="shifted">
           <div className="feed-layout container">
-            <Affix className="leftContainer" stickPosition={72}>
+            <Affix className="leftContainer leftContainer__user" stickPosition={72}>
               <div className="left">
                 <LeftSidebar />
               </div>
@@ -184,34 +185,39 @@ export default class User extends React.Component {
             <Affix className="rightContainer" stickPosition={72}>
               <div className="right">
                 {user && user.name &&
-                <RightSidebar key={user.name} match={match}/>
+                <RightSidebar key={user.name} match={match} />
                 }
               </div>
             </Affix>
             <div className="center">
-              <Route exact path={`${match.path}`} component={UserProfile} />
-              <Route path={`${match.path}/projects`} component={() => {
-
-                if(this.state.githubProjects.length) {
-                  return (
-                    <ProjectsFeed
-                      content={ this.state.githubProjects }
-                      isFetching={ loading === Actions.GET_USER_REPOS_GITHUB_REQUEST }
-                      hasMore={ false }
-                      loadMoreContent={() => null}
-                    />
-                  )
-                }
-
-                if(!this.state.githubProjects.length && loading !== Actions.GET_USER_REPOS_GITHUB_REQUEST) {
-                  return <EmptyFeed type={'project'} />
-                }
-              }}
-              />
-              <Route path={`${match.path}/followers`} component={UserFollowers} />
-              <Route path={`${match.path}/followed`} component={UserFollowing} />
-              {/*<Route path={`${match.path}/reblogs`} component={UserReblogs} />*/}
-              {/*<Route path={`${match.path}/feed`} component={UserFeed} />*/}
+              <Switch>
+                <Route exact path={`${match.path}`} component={UserProfile} />
+                <Route exact path={`${match.path}/contributions/:status?`} component={UserProfile} />
+                <Route exact path={`${match.path}/moderations/:status?/:startDate?/:endDate?`} component={UserProfile} />
+                <Route
+                  path={`${match.path}/projects`}
+                  component={() => {
+                    if (this.state.githubProjects.length) {
+                      return (
+                        <ProjectsFeed
+                          content={this.state.githubProjects}
+                          isFetching={loading === Actions.GET_USER_REPOS_GITHUB_REQUEST}
+                          hasMore={false}
+                          loadMoreContent={() => null}
+                        />
+                      );
+                    }
+                    if (!this.state.githubProjects.length && loading !== Actions.GET_USER_REPOS_GITHUB_REQUEST) {
+                      return <EmptyFeed type={'project'} />;
+                    }
+                  }}
+                />
+                <Route path={`${match.path}/followers`} component={UserFollowers} />
+                <Route path={`${match.path}/followed`} component={UserFollowing} />
+                <Route path={`${match.path}/transfers`} component={UserWallet} />
+                {/* <Route path={`${match.path}/reblogs`} component={UserReblogs} /> */}
+                {/* <Route path={`${match.path}/feed`} component={UserFeed} /> */}
+              </Switch>
             </div>
           </div>
         </div>

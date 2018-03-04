@@ -186,7 +186,10 @@ export default props =>
             The linked Github repository must always contain code, a README and a license. <b>[SOFT]</b>
           </li>
           <li>
-            Contributions for un-official repositories will only be accepted if present in <a href="https://docs.google.com/spreadsheets/d/1RMQyfqKRmgeIWPM80h31hS1NdLxqLJ6qy3I5ucNGuuc/edit?usp=sharing">Utopian un-official repos whitelist</a>
+            Contributions will only be accepted for repositories not present in the <a href="https://docs.google.com/spreadsheets/d/1q49j3mjjJVwqxRUdX0sqEApV7mAVil-K-OS-lKlFP_Y/">Utopian repository blacklist</a>.
+          </li>
+          <li>
+            Contributions for un-official repositories will only be accepted if present in the <a href="https://docs.google.com/spreadsheets/d/1RMQyfqKRmgeIWPM80h31hS1NdLxqLJ6qy3I5ucNGuuc/edit?usp=sharing">Utopian un-official repository whitelist</a>.
           </li>
           <li>
             Contributions on <b>official</b> repositories that are mirrors of another subversioning system are always accepted.

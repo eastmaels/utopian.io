@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
-
+import { Route, Switch } from 'react-router-dom';
 import {
   getIsAuthenticated,
   getAuthenticatedUser,
@@ -16,7 +16,7 @@ import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SideAnnouncement from '../../components/Sidebar/SideAnnouncement';
 import ProjectSponsors from '../../components/Sidebar/ProjectSponsors';
 import ActivateSponsorship from '../../components/Sidebar/ActivateSponsorship';
-
+import WalletSidebar from '../../components/Sidebar/WalletSidebar';
 import { getUser } from '../../actions/user';
 import { getReposByGithub} from '../../actions/projects';
 //import { getReposByGithub } from '../../actions/projects';
@@ -183,6 +183,9 @@ export default class RightSidebar extends React.Component {
 
     return (
       <span>
+        <Switch>
+          <Route path="/@:name/transfers" render={() => <WalletSidebar />} />
+        </Switch>
         {!match || (match && !match.params.repoId) ? <SideAnnouncement user={user} /> : null}
         {
           match &&

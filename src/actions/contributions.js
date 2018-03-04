@@ -18,6 +18,22 @@ export const getContributionsRequest = query => ({
 
 export const getContributions = query => dispatch => dispatch(getContributionsRequest(query));
 
+export const getModerationsRequest = query => ({
+    [CALL_API]: {
+        types: [ Actions.GET_CONTRIBUTIONS_REQUEST, Actions.GET_CONTRIBUTIONS_SUCCESS, Actions.GET_CONTRIBUTIONS_FAILURE ],
+        endpoint: `posts/moderator/?${querystring.encode(query)}`,
+        schema: null,
+        method: 'GET',
+        payload: {},
+        additionalParams: {
+          reset: query.reset || false
+        },
+        absolute: false
+    }
+});
+
+export const getModerations = query => dispatch => dispatch(getModerationsRequest(query));
+
 export const getPostByIdRequest = (postId) => ({
     [CALL_API]: {
         types: [ Actions.GET_POSTBYID_REQUEST, Actions.GET_POSTBYID_SUCCESS, Actions.GET_POSTBYID_FAILURE ],

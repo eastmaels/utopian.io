@@ -110,7 +110,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
           <ul>
             <li>This category is meant only for translations you have created or updated for an Open Source project.</li>
             <li>You must translate a minimum of 1000 words per translation contribution.</li>
-            <li>CrowdIn contributions can be submitted only by users with proofreading permissions in the project.</li>
+            <li>CrowdIn contributions can be submitted only by translator with <b>Proofreading permissions</b> in the project, for the given language.</li>
             <li>Text that is supposed to remain untranslated (links, code, paths, ...) or duplicated strings/text can't be included in the minimum amount of words.</li>
             <li>You could translate less than the minimum amount of words if the project itself has less to be translated in total. May lead to a lower vote.</li>
             <li>Entire translations are always preferred. If you are writing about a partial translation we reserve the right to evaluate the actual work.</li>

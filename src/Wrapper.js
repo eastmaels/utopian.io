@@ -18,6 +18,7 @@ import CookiePolicyBanner from './statics/CookiePolicyBanner';
 import Transfer from './wallet/Transfer';
 import * as reblogActions from './app/Reblog/reblogActions';
 import getTranslations, { getAvailableLocale } from './translations';
+import RequireTos from "./auth/RequireTos";
 
 @withRouter
 @connect(
@@ -149,6 +150,7 @@ export default class Wrapper extends React.PureComponent {
             <Transfer />
           </div>
           <CookiePolicyBanner />
+          <RequireTos />
         </Layout>
       </IntlProvider>
     );

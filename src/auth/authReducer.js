@@ -48,12 +48,13 @@ export default (state = initialState, action) => {
         user: {},
       };
     case types.LOGIN_SUCCESS:
+      if (action.meta && action.meta.refresh) return state;
       return {
         ...state,
         isFetching: false,
         isAuthenticated: true,
         loaded: true,
-        user: action.payload.account,
+        user: action.payload.account || state.user,
       };
     case types.LOGIN_ERROR:
       return {
@@ -86,6 +87,15 @@ export default (state = initialState, action) => {
         isFetching: false,
         loaded: true,
         user: {},
+      };
+    case types.UPDATE_AUTH_USER.SUCCESS:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.payload,
+        },
+        loadingUpdateAuthUser: false,
       };
     default:
       return state;

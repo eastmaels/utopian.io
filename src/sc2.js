@@ -13,7 +13,8 @@ function getLoginUrl(state) {
   const redirect = `redirect_uri=${url}`;
 
   const response = 'response_type=code';
-  const clientId = `client_id=${encodeURIComponent('utopian.app')}`;
+  const utopianAppId = process.env.UTOPIAN_APP || 'utopian.app';
+  const clientId = `client_id=${utopianAppId}`;
   state = `state=${state ? encodeURIComponent(state) : ''}`;
   const scopes = [
     'vote',
@@ -45,14 +46,40 @@ function updateMetadata(metadata) {
                 .then(res => res.body);
 }
 
-function broadcast(operations) {
+function broadcast(operations, cb) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/broadcast';
   const session = Cookie.get('session');
-  return request.post(endpoint)
-                .send({ operations })
-                .set('session', session)
-                .then(res => res.body);
+  
+  if (!cb) {
+    return request.post(endpoint)
+                  .send({ operations })
+                  .set('session', session)
+                  .then(res => res.body);
+  } else {
+    return request.post(endpoint)
+                  .send({ operations })
+                  .set('session', session)
+                  .then(function (ret) {
+                        if (ret.error) {
+                          cb(new SDKError('sc2-sdk error', ret), null);
+                        } else {
+                          cb(null, ret);
+                        }
+                      }, function (err) {
+                        return cb(new SDKError('sc2-sdk error', err), null);
+                      });
+  }
 }
+
+function claimRewardBalance(account, rewardSteem, rewardSbd, rewardVests, cb) {
+  var params = {
+    account: account,
+    reward_steem: rewardSteem,
+    reward_sbd: rewardSbd,
+    reward_vests: rewardVests
+  };
+  return broadcast([['claim_reward_balance', params]], cb);
+};
 
 function vote(voter, author, permlink, weight) {
   const params = {
@@ -131,6 +158,7 @@ module.exports = {
   profile,
   updateMetadata,
   broadcast,
+  claimRewardBalance,
   comment,
   vote,
   reblog,
