@@ -138,7 +138,7 @@ export default class RequireTos extends React.Component
           })
         }}
         >
-          <p>Please read and accept the Terms of Service</p>
+          <p>Please read and accept the Terms of Service. You must scroll to the bottom to proceed.</p>
           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onScroll={() => {
 			  if(!this.TOSContainer)
 			    return;
@@ -186,7 +186,7 @@ export default class RequireTos extends React.Component
           })
         }}
         >
-          <p>Please read and accept the Privacy Policy Aggreement</p>
+          <p>Please read and accept the Privacy Policy Aggreement. You must scroll to the bottom to proceed.</p>
            <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onScroll={() => {
 			  if(!this.PrivacyContainer)
 			  	return;
