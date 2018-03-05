@@ -689,7 +689,8 @@ class StoryFull extends React.Component {
             });
           }}
         >
-      <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
+      <p><b>Please fill in the following questionnaire to rate this contribution.</b></p>
+      <p className="StoryFull__review">This feature is still being tested and has <b>NO EFFECT</b> on the reward.</p>
       <br /><br /><br /><br />
       {this.state.questionaireAnswersMissing ?
         <p>Please answer all the questions!</p> : null
