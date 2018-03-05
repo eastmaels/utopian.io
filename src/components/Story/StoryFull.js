@@ -11,16 +11,11 @@ import Lightbox from 'react-image-lightbox';
 import RawSlider from "../Slider/RawSlider";
 import {
   ShareButtons,
-  ShareCounts,
   generateShareIcon
 } from 'react-share';
 import { formatter } from 'steem';
 import {
-  getComments,
-  getCommentsList,
-  getCommentsPendingVotes,
   getIsAuthenticated,
-  getAuthenticatedUserName,
 } from '../../reducers';
 import Body from './Body';
 import * as ReactIcon from 'react-icons/lib/md';
@@ -30,14 +25,12 @@ import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 import Action from '../../components/Button/Action';
 import CommentForm from '../Comments/CommentForm';
-import Comments from "../Comments/Comments";
 import BanUser from '../../components/BanUser';
 import * as commentsActions from '../../comments/commentsActions';
 import { Modal } from 'antd';
 import { notify } from '../../app/Notification/notificationActions';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import Blog from './Blog';
 import Contribution from './Contribution';
 
 import InlineTagEdit from '../Story/InlineTagEdit';

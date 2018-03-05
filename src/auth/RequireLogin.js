@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getIsAuthFetching, getIsAuthenticated } from '../reducers';
 import Loading from '../components/Icon/Loading';
-import Error401 from '../statics/Error401';
 import Help from '../statics/Help';
 
 const RequiredLogin = ({ children, authenticated, fetching }) => {

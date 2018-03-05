@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/constants';
-import { Link } from 'react-router-dom';
 import Feed from './Feed';
 import ProjectsFeed from './ProjectsFeed';
 import EmptyFeed from '../statics/EmptyFeed';
@@ -14,7 +13,6 @@ import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
 import { getContributions } from '../actions/contributions';
 import { getGithubRepos } from '../actions/projects';
 import { getModerators } from '../actions/moderators';
-import { Tabs, Icon } from 'antd';
 
 import * as R from 'ramda';
 
@@ -53,8 +51,11 @@ class SubFeed extends React.Component {
   }
 
   componentWillMount() {
-    const { getModerators, match, history } = this.props;
-    getModerators();
+    const { moderators, getModerators, match, history } = this.props;
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
   }
 
   componentDidMount() {

@@ -26,7 +26,7 @@ import BannedScreen from '../../statics/BannedScreen';
 const version = require('../../../package.json').version;
 
 // @UTOPIAN
-import { Modal, Icon } from 'antd';  import * as ReactIcon from 'react-icons/lib/md';
+import { Modal, Icon } from 'antd';
 import { getBeneficiaries } from '../../actions/beneficiaries';
 import { getStats } from '../../actions/stats';
 import { getUser } from '../../actions/user';

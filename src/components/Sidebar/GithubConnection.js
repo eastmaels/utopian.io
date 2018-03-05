@@ -3,8 +3,7 @@ import GithubBtn from '../../components/Button/Github';
 import Avatar from '../Avatar';
 import { FormattedRelative, } from 'react-intl';
 
-import { Icon, Tooltip } from 'antd';
-import * as ReactIcon from 'react-icons/lib/md';
+import { Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import * as Actions from '../../../src/actions/constants'
 

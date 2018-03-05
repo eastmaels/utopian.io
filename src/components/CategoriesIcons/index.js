@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
+import * as ReactIcon from 'react-icons/lib/md';
 import "../../styles/custom.less";
 import "../../styles/fonts.less";
 import "./categoryIcon.less";

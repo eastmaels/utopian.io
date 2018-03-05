@@ -5,7 +5,7 @@ export default () => (
   <div className="main-panel FAQ">
     <div className="mt-5 text-center">
       <h1>
-        <center>Utopian.io Cookie Policy</center>
+        <center>Cookie Policy</center>
       </h1>
 
       <p className="container pb-5">

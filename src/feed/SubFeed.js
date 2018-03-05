@@ -59,8 +59,11 @@ class SubFeed extends React.Component {
     return R.find(R.propEq('account', user.name))(moderators);
   }
   componentWillMount() {
-    const { getModerators, match, history } = this.props;
-    getModerators();
+    const { moderators, getModerators, match, history } = this.props;
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
 
     if (match.params.status && !this.isModerator() && match.path.split('/')[2] !== 'moderations') {
       history.push('/all/review');

@@ -19,16 +19,10 @@ import Affix from '../components/Utils/Affix';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
 
 import UserProfile from './UserProfile';
-import UserComments from './UserComments';
 import UserFollowers from './UserFollowers';
 import UserFollowing from './UserFollowing';
 import UserWallet from './UserWallet';
 import ProjectsFeed from '../feed/ProjectsFeed';
-import UserReblogs from './UserReblogs';
-import UserFeed from './UserFeed';
-import SubFeed from '../feed/SubFeed';
-
-import GithubConnect from './GithubConnect';
 
 export const needs = [getAccountWithFollowingCount];
 
@@ -74,7 +68,7 @@ export default class User extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { getReposByGithub, match } = this.props;
     if (!this.props.user.name) {
       this.props.getAccountWithFollowingCount({ name: this.props.match.params.name });

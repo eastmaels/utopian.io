@@ -1,11 +1,8 @@
-import Promise from 'bluebird';
 import Cookie from 'js-cookie';
 import { getAccount } from '../helpers/apiHelpers';
 import { getFollowing } from '../user/userActions';
 import { createAsyncActionType } from '../helpers/stateHelpers';
-import { initPushpad } from '../helpers/pushpadHelper';
 import { getDrafts } from '../helpers/localStorageHelpers';
-import getImage from '../helpers/getImage';
 import * as request from 'superagent';
 import sc2 from '../sc2';
 

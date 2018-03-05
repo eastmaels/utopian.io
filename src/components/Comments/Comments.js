@@ -5,13 +5,8 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import { MAXIMUM_UPLOAD_SIZE_HUMAN } from '../../helpers/image';
 import { sortComments } from '../../helpers/sortHelpers';
 import { connect } from 'react-redux';
-import { Modal, Icon } from 'antd';
-import * as ReactIcon from 'react-icons/lib/md';
 import Loading from '../Icon/Loading';
 import CommentForm from './CommentForm';
-import _ from 'lodash';
-import urlParse from 'url-parse';
-import * as R from 'ramda';
 import { getModerators } from '../../actions/moderators';
 import Comment from './Comment';
 import './Comments.less';
@@ -116,8 +111,11 @@ class Comments extends React.Component {
   };
 
   componentWillMount() {
-    const { getModerators } = this.props;
-    getModerators();
+    const { moderators, getModerators } = this.props;
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
   }
 
   submitComment = (parentPost, commentValue) => {
