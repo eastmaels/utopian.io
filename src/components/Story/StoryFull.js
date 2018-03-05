@@ -697,7 +697,7 @@ class StoryFull extends React.Component {
       {this.renderQuestionaire()}
       <br /><br /><br /><br />
       <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
-      <b>How would you reate the quality of this post?</b>
+      <b>How would you rate the quality of this post?</b>
        <RawSlider
         	initialValue={this.state.sliderValue}
             value={this.state.sliderValue}
