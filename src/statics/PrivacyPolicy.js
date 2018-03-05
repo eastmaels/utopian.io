@@ -24,14 +24,16 @@ export default class PrivacyPolicy extends React.PureComponent {
 		<div className="mt-5 text-center">
 		<div className="container pb-5">
 			<h1>
-				Utopian Company SRLs Privacy Policy
+				Privacy Policy
 			</h1>
 			<span className="PrivacyPolicy-date">
 				Effective {lastUpdateDate}
 			</span>
 			
 			<p>
-				1. We want you to understand how and why Utopian, Inc (“Utopian,” “we” or
+				1. We want you to understand how and why Utopian Company SRLs,
+        registered in Italy, with head office in Via A. Manzoni 50, Rieti (RI),
+        02100, VAT #: IT01174530574 (“Utopian,” “we” or
 				“us”) collects, uses, and shares information about you when you access and
 				use Utopians’s websites, mobile apps, widgets, and other online products
 				and services (collectively, the "Services") or when you otherwise interact

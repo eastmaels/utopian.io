@@ -5,7 +5,6 @@ import { getStats } from '../actions/stats';
 import { Link } from 'react-router-dom';
 import { getAuthenticatedUser } from '../reducers';
 import { Icon } from 'antd';
-import * as ReactIcon from 'react-icons/lib/md';
 import './Moderators.less';
 
 @connect(
@@ -17,9 +16,13 @@ import './Moderators.less';
 class Moderators extends React.PureComponent {
 
   componentWillMount () {
-    const { getModerators, getStats } = this.props;
+    const { moderators, getModerators, getStats } = this.props;
+
     getStats();
-    getModerators();
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
   }
 
   render () {

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login, logout } from './authActions';
-import { getIsAuthFetching, getIsAuthenticated, getAuthenticatedUser, stats } from '../reducers';
+import { logout } from './authActions';
+import { getIsAuthFetching, getIsAuthenticated, getAuthenticatedUser, stats, getAuthenticatedUserName } from '../reducers';
 import { getStats } from "../actions/stats";
 import { acceptTOS, acceptPrivacyPolicy, getUser } from "../actions/user";
 import { Modal, Input } from 'antd';
@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
   fetching: getIsAuthFetching(state),
   authenticated: getIsAuthenticated(state),
   user: getAuthenticatedUser(state),
+  username: getAuthenticatedUserName(state),
 }), {
   getStats, acceptPrivacyPolicy, acceptTOS, logout, getUser
 })
@@ -27,8 +28,9 @@ export default class RequireTos extends React.Component
     getStats: PropTypes.func.isRequired,
     acceptPrivacyPolicy: PropTypes.func.isRequired,
     acceptTOS: PropTypes.func.isRequired,
-	logout: PropTypes.func,
-	getUser: PropTypes.func,
+	logout: PropTypes.func.isRequired,
+	getUser: PropTypes.func.isRequired,
+	username: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -67,12 +69,13 @@ export default class RequireTos extends React.Component
 
   render()
   {
-    const { acceptTOS, acceptPrivacyPolicy, user, fetching, authenticated } = this.props;
+    const { acceptTOS, acceptPrivacyPolicy, user, fetching, authenticated, username } = this.props;
     let stats = this.state.stats;
-    
-    //console.log("user fetching data", user.account, fetching, authenticated);
+	
+	if(!user)
+		return null;
 
-    if(!stats || !user || !user.account || fetching || !authenticated)
+    if(!stats || !user || !user.account || fetching || !authenticated || username != user.account || !username)
       return null;
 
     let {tosCookie,privacyCookie} = {tosCookie:Cookies.get('isTOSAccepted') || false, privacyCookie: Cookies.get('isPrivacyAccepted') || false};
@@ -126,7 +129,7 @@ export default class RequireTos extends React.Component
 			  modalAcceptPending: true,
 		  });
           
-          acceptTOS(user.account).then( accepted => {
+          acceptTOS(username).then( accepted => {
             Cookies.set(
               'isTOSAccepted',
               true,
@@ -138,7 +141,7 @@ export default class RequireTos extends React.Component
               },
             );
            
-			this.props.getUser(user.account).then( result => {
+			this.props.getUser(username).then( result => {
 				 this.setState({
 					tosAccepted: true,
 					modalAcceptPending: false,
@@ -152,8 +155,10 @@ export default class RequireTos extends React.Component
           <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.TOSContainer = el }} onScroll={() => {
 			  if(!this.TOSContainer)
 			    return;
-              if( this.TOSContainer.scrollTop === (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight))
+			  console.log("TOSContainer scrollTop", this.TOSContainer.scrollTop, (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight));
+              if( this.TOSContainer.scrollTop >= (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight) - 100)
               {
+				this.state.TOSScroll = true;
                 this.setState({
                   TOSScroll: true,
                 })
@@ -182,7 +187,7 @@ export default class RequireTos extends React.Component
 		  this.setState({
 			  modalAcceptPending: true,
 		  });
-          acceptPrivacyPolicy(user.account).then( accepted => {
+          acceptPrivacyPolicy(username).then( accepted => {
             Cookies.set(
               'isPrivacyAccepted',
               true,
@@ -193,7 +198,7 @@ export default class RequireTos extends React.Component
                   : 'utopian.io',
               },
             );
-			this.props.getUser(user.account).then( result => {
+			this.props.getUser(username).then( result => {
 				 this.setState({
 					privacyAccepted: true,
 					modalAcceptPending: false,
@@ -206,8 +211,10 @@ export default class RequireTos extends React.Component
            <div style={{height: '300px', width: '100%', background: '#ffffff', overflowY: 'scroll'}} ref={(el) => { this.PrivacyContainer = el }} onScroll={() => {
 			  if(!this.PrivacyContainer)
 			  	return;
-              if( this.PrivacyContainer.scrollTop === (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight))
+			  console.log("PrivacyContainer scrollTop", this.PrivacyContainer.scrollTop, (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight));
+              if( this.PrivacyContainer.scrollTop >= (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight) - 100)
               {
+				this.state.privacyScroll = true;
                 this.setState({
                   privacyScroll: true,
                 })

@@ -8,15 +8,13 @@ import {
   FormattedTime,
 } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Tag, Icon, Popover, Tooltip } from 'antd';  import * as ReactIcon from 'react-icons/lib/md';
+import { Tag, Icon, Popover, Tooltip } from 'antd';
 import { formatter } from 'steem';
 import StoryPreview from './StoryPreview';
 import StoryFooter from '../StoryFooter/StoryFooter';
 import Avatar from '../Avatar';
-import Topic from '../Button/Topic';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
 
-import Blog from './Blog';
 import Contribution from './Contribution';
 import './Story.less';
 

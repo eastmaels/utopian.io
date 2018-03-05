@@ -33,7 +33,7 @@ class Avatar extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.username !== nextProps.username) {
       this.setState({
-        imageUrl: nextProps.username.indexOf('https') !== -1 ? username : getImage(`@${nextProps.username}?s=${nextProps.size}`),
+        imageUrl: nextProps.username.indexOf('https') !== -1 ? nextProps.username : getImage(`@${nextProps.username}?s=${nextProps.size}`),
       });
     }
   }

@@ -18,8 +18,6 @@ import CommentForm from './CommentForm';
 import EmbeddedCommentForm from './EmbeddedCommentForm';
 import Avatar from '../Avatar';
 import Body from '../Story/Body';
-import _ from 'lodash';
-import urlParse from 'url-parse';
 import * as R from 'ramda';
 import CommentFooter from '../CommentFooter/CommentFooter';
 import HiddenCommentMessage from './HiddenCommentMessage';

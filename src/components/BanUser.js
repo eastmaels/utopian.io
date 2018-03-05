@@ -1,19 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Modal, Icon } from 'antd';
-import * as ReactIcon from 'react-icons/lib/md';
+import { Modal } from 'antd';
 
-import { injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
-import _ from 'lodash';
-import urlParse from 'url-parse';
+import { injectIntl } from 'react-intl';
 
 import {
   getIsAuthenticated,
   getAuthenticatedUser,
 } from '../reducers';
 import { getModerators } from '../actions/moderators';
-import { moderatorAction } from '../actions/contribution';
 import Action from './Button/Action';
 import { getUser, banUser, createUser } from '../actions/user'
 import * as R from 'ramda';
@@ -57,7 +53,7 @@ class BanUser extends React.Component {
   }
 
   componentDidMount () {
-    const { getModerators, getUser, username, banUser, createUser } = this.props;
+    const { moderators, getModerators, getUser, username, banUser, createUser } = this.props;
     if (username) {
       console.log("banUser.js -> username: ", username);
     } else {
@@ -65,7 +61,11 @@ class BanUser extends React.Component {
       return;
     }
     this.setState({nowdate: new Date(Date.now())});
-    getModerators();
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
+
     getUser(username).then((res) => {
       if (res.status === 404) {
         console.log("USER DOES NOT EXIST, creating...", res);
@@ -78,6 +78,7 @@ class BanUser extends React.Component {
         console.log("USER DOES NOT EXIST, creating...", e);
         createUser(username).then((res) => console.log("CREATED",res));
       });
+
     getUser(username).then((res) => {
       const user = res.response;
       console.log("banUser.js -> user: ", user);

@@ -10,19 +10,11 @@ import {
 } from '../../reducers';
 
 import SignUp from '../../components/Sidebar/SignUp';
-
-import { Icon } from 'antd'; import * as ReactIcon from 'react-icons/lib/md';
 import GithubConnection from '../../components/Sidebar/GithubConnection';
 import SideAnnouncement from '../../components/Sidebar/SideAnnouncement';
-import ProjectSponsors from '../../components/Sidebar/ProjectSponsors';
-import ActivateSponsorship from '../../components/Sidebar/ActivateSponsorship';
 import WalletSidebar from '../../components/Sidebar/WalletSidebar';
 import { getUser } from '../../actions/user';
 import { getReposByGithub} from '../../actions/projects';
-//import { getReposByGithub } from '../../actions/projects';
-//import { getProject, createProjectAccount, createProjectSponsor } from '../../actions/project';
-
-import * as R from 'ramda';
 
 @connect(
   state => ({
