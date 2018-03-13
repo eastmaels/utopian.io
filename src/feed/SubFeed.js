@@ -74,17 +74,22 @@ class SubFeed extends React.Component {
     this.loadContributions();
   }
 
+  lastRequest = null;
   loadContributions(nextProps = false) {
     const { match, getContributions, getModerations, getContributionsAccepted, getContributionsPending, getContributionsRequest, user, contributions } = nextProps || this.props;
     const skip = nextProps ? 0 : this.state.skip;
     // console.log('[c] m',match);
     const limit = 20;
     this.total = nextProps ? 0 : this.total;
-	this.setState({
-		skip: skip
-	});
+    this.setState({
+      skip: skip
+    });
+    if(this.lastRequest)
+    {
+      this.lastRequest.abort();
+    }
     if (match.params.repoId) {
-      getContributions({
+      this.lastRequest = getContributions({
         limit,
         skip,
         section: 'project',
@@ -102,7 +107,7 @@ class SubFeed extends React.Component {
       }
       const statusArray = ['flagged', 'reviewed', 'pending', 'any'];
 
-      getContributions({
+      this.lastRequest = getContributions({
         limit,
         skip,
         section: 'author',
@@ -133,7 +138,7 @@ class SubFeed extends React.Component {
         });
       });
     } else if (match.params.filterBy === 'review') {
-      getContributions({
+      this.lastRequest = getContributions({
         limit,
         skip,
         section: 'all',
@@ -142,20 +147,20 @@ class SubFeed extends React.Component {
         status: this.isModerator() && match.params.status === 'pending' ? 'pending' : 'any',
         moderator: user.name || 'any',
         type: match.params.type || 'all',
-		reset: (skip == 0),
+	    	reset: (skip == 0),
       }).then((res) => {
         this.total = res.response.total;
         this.setState({ skip: skip + limit });
       });
     } else {
-      getContributions({
+      this.lastRequest = getContributions({
         limit,
         skip,
         section: 'all',
         sortBy: 'created',
         filterBy: match.params.filterBy || 'any',
         type: match.params.type || 'all',
-		reset: (skip == 0),
+	    	reset: (skip == 0),
       }).then((res) => {
         this.total = res.response.total;
         this.setState({ skip: skip + limit });

@@ -146,11 +146,11 @@ export default {
 				value: 5,
 			},
 			{
-				answer: "Yes, but bad quality",
+				answer: "Bad quality",
 				value: 3,
 			},
 			{
-				answer: "No",
+				answer: "No, visual content ",
 				value: 0,
 			}
 			],

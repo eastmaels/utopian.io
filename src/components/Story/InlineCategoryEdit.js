@@ -62,8 +62,11 @@ class InlineCategoryEdit extends React.Component {
   }
 
   render() {
+	// let validTypes = this.props.types.filter( type => {
+	// 	return !type.disabled;
+	// });
     const types = this.props.types.map((type, idx) => (
-      <option value={type.type} key={idx}>{type.slug}</option>
+      <option value={type.type} key={idx} disabled={type.disabled}>{type.slug}</option>
     ))
 
     return (

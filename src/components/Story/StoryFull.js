@@ -689,7 +689,8 @@ class StoryFull extends React.Component {
             });
           }}
         >
-      <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
+      <p><b>Please fill in the following questionnaire to rate this contribution.</b></p>
+      <p className="StoryFull__review">This feature is still being tested and has <b>NO EFFECT</b> on the reward.</p>
       <br /><br /><br /><br />
       {this.state.questionaireAnswersMissing ?
         <p>Please answer all the questions!</p> : null
@@ -697,7 +698,7 @@ class StoryFull extends React.Component {
       {this.renderQuestionaire()}
       <br /><br /><br /><br />
       <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
-      <b>How would you reate the quality of this post?</b>
+      <b>How would you rate the quality of this post?</b>
        <RawSlider
         	initialValue={this.state.sliderValue}
             value={this.state.sliderValue}

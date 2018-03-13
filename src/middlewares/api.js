@@ -7,14 +7,7 @@ const API_ROOT = process.env.UTOPIAN_API;
 
 function processReq(req, session) {
   if (session) req.set({ session });
-  return req.then(res => {
-    return res.body;
-  }).catch(err => {
-    if (err.status === 407 && session) {
-      Cookie.remove('session');
-      window.location.reload(true);
-    }
-  })
+  return req;
 }
 
 const callApi = (endpoint, schema, method, payload, additionalParams, absolute?) => {
@@ -82,25 +75,46 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, schema, method, payload, additionalParams, absolute).then(
-    response => next(actionWith({
-      response,
+  let apiCall = callApi(endpoint, schema, method, payload, additionalParams, absolute);
+  let promise = apiCall.then(
+		response => next(actionWith({
+      response: response ? response.body : null,
       type: successType,
       payload,
       additionalParams,
       absolute
-    })),
-    error => {
-      const errBody = path(['response', 'text'], error)
-      const errResponse = errBody ? JSON.parse(errBody) : {}
-      return next(actionWith({
-        type: failureType,
-        status: error.status,
-        error: error.message || 'Something bad happened',
-        code: errResponse.code,
-        message: errResponse.message,
-        errMessage: errResponse.errMessage
-      }))
-    }
-  )
+		})),
+		error => {
+		const errBody = path(['response', 'text'], error)
+		const errResponse = errBody ? JSON.parse(errBody) : {}
+		return next(actionWith({
+			type: failureType,
+			status: error.status,
+			error: error.message || 'Something bad happened',
+			code: errResponse.code,
+			message: errResponse.message,
+			errMessage: errResponse.errMessage
+		}))
+		}
+	).catch(err => {
+		if (err.status === 407 && session) {
+		Cookie.remove('session');
+		window.location.reload(true);
+		}
+	})
+  
+  return {
+	  then: (resolve, reject) => {
+      promise.then( resolve, reject );
+      return apiCall;
+	  },
+	  catch: (reject) => {
+      promise.catch(reject);
+      return apiCall;
+    },
+	  abort: () => {
+      apiCall.abort();
+      return apiCall;
+	  },
+  }
 }

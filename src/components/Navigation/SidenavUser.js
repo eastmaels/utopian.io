@@ -13,7 +13,7 @@ const SidenavUser = ({ username }) => (
       </a>
     </li>
     <li>
-      <a href={`https://steemit.com/@${username}/recent-replies`} activeClassName="Sidenav__item--active">
+      <a href={`https://steemit.com/@${username}/recent-replies`}>
         <i className="iconfont icon-message" />
         <FormattedMessage id="replies" defaultMessage="Replies" />
       </a>
