@@ -32,10 +32,9 @@ if (process.env.SENTRY_PUBLIC_DSN) {
   Raven.config(process.env.SENTRY_PUBLIC_DSN).install();
 }
 
-/*const session = Cookie.get('session');
-if (!session && process.env.UTOPIAN_LANDING_URL) {
-  window.location.href = process.env.UTOPIAN_LANDING_URL;
-}*/
+if (!Cookie.get('session') && !Cookies.get('lp_visited')) {
+  window.location.href = 'https://join.utopian.io';
+}
 
 steem.api.setOptions({ transport: 'http' });
 if (process.env.STEEMJS_URL) {
