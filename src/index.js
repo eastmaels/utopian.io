@@ -32,7 +32,7 @@ if (process.env.SENTRY_PUBLIC_DSN) {
   Raven.config(process.env.SENTRY_PUBLIC_DSN).install();
 }
 
-if (!Cookie.get('session') && !Cookies.get('lp_visited')) {
+if (!Cookie.get('session') && !Cookie.get('lp_visited')) {
   window.location.href = 'https://join.utopian.io';
 }
 
