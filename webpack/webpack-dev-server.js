@@ -46,7 +46,7 @@ module.exports = {
         SERVER_SSL_KEY: JSON.stringify(process.env.SERVER_SSL_KEY),
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'test-category'),
-        UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_LANDING_URL || 'http://join.utopian.io'),
+        UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_LANDING_URL || 'https://join.utopian.io'),
         UTOPIAN_API: JSON.stringify(UTOPIAN_API),
         UTOPIAN_APP: JSON.stringify(process.env.UTOPIAN_APP || 'utopian.app'),
         UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '1ed58da028b638550c03'),

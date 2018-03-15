@@ -99,7 +99,7 @@ module.exports = {
         SERVER_SSL_CERT: JSON.stringify(process.env.SERVER_SSL_CERT || '/etc/letsencrypt/live/utopian.io/fullchain.pem'),
         SERVER_SSL_KEY: JSON.stringify(process.env.SERVER_SSL_KEY || '/etc/letsencrypt/live/utopian.io/privkey.pem'),
         UTOPIAN_CATEGORY: JSON.stringify(process.env.UTOPIAN_CATEGORY || 'utopian-io'),
-        UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_LANDING_URL || 'http://join.utopian.io'),
+        UTOPIAN_LANDING_URL: JSON.stringify(process.env.UTOPIAN_LANDING_URL || 'https://join.utopian.io'),
         UTOPIAN_API: JSON.stringify(process.env.UTOPIAN_API || 'https://api.utopian.io/api/'),
         UTOPIAN_STEEM_ACCOUNT: JSON.stringify(process.env.UTOPIAN_STEEM_ACCOUNT || 'utopian-io'),
         UTOPIAN_GITHUB_CLIENT_ID: JSON.stringify(process.env.UTOPIAN_GITHUB_CLIENT_ID || '06b0ef5509fc7de00493'),
