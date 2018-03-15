@@ -32,10 +32,10 @@ if (process.env.SENTRY_PUBLIC_DSN) {
   Raven.config(process.env.SENTRY_PUBLIC_DSN).install();
 }
 
-/*const session = Cookie.get('session');
-if (!session && process.env.UTOPIAN_LANDING_URL) {
+// redirect to lp if not visited before, not logged in and not accessing a subpage
+if (!Cookie.get('session') && !Cookie.get('lp_visited') && !window.location.pathname.replace('/', '')) {
   window.location.href = process.env.UTOPIAN_LANDING_URL;
-}*/
+}
 
 steem.api.setOptions({ transport: 'http' });
 if (process.env.STEEMJS_URL) {
