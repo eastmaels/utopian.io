@@ -134,6 +134,10 @@ export default props =>
         <li>Contributors should not ask for Utopian engagement (upvotes and follows) in their contribution posts.</li>
         <li>Contributors may ask for Steem witness votes in a short request (one paragraph) at the footer of their post.</li>
       </ul>
+      <h3>Religious / Political Content</h3>
+      <ul>
+        <li>Content that disseminates religious or political ideologies or beliefs of any kind is rejected.</li>
+      </ul>
 
       <div>
         <h1>Categories Rules</h1>
@@ -181,7 +185,7 @@ export default props =>
       <div>
         <h1>Moderation</h1>
         <ul>
-          <li>Utopian Moderators / Supervisors have full rights to reject or accept a submissions and to evaluate the quality of the submission.</li>
+          <li>Utopian moderators / supervisors have the full right to reject or accept submissions and to assess its quality, even if the submission meets all the rules.</li>
           <li>Supervisors may revert an accepted / rejected contribution.</li>
         </ul>
 
