@@ -21,12 +21,14 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="ideas"/> Conceptors/Thinkers</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner for contributors to provide concepts and ideas.
+          </p>
           <ul>
-            <li>By submitting a task request in this category you are requesting contributors to provide concepts and ideas.</li>
-            <li>You must provide great details about what you are looking for and the problems you want to solve with a concept.</li>
-            <li>Images, screenshots, links and examples are always welcome in this category.</li>
+            <li>Submissions to this tasks category must describe in great detail the requirements and needs of the project manager.</li>
+            <li>Submissions must include details defining what you are looking for and the problems you want to solve with a concept.</li>
+            <li>Images, screenshots, links and examples should be included as part of the submission.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
@@ -35,12 +37,13 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="development"/> Developers</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner recruiting developers to the project team.
+          </p>
           <ul>
-            <li>In this category you can only write if you are looking for developers joining your crew.</li>
-            <li>You must provide all the details for the developers to contribute to your project.</li>
-            <li>Documentation, Repositories, Communities (e.g. Slack, Discord) and specific details are necessary.</li>
+            <li>Submissions must include all the relevant and necessary details for the developers to contribute to your project, such as scope, timeframe, stage of development, etc.</li>
+            <li>Submissions must link to Documentation, Repositories, Communities (e.g. Slack, Discord) and any other relevant information.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
@@ -49,12 +52,13 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bug Hunters</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner to spot bugs in their project service / system / software / website.
+          </p>
           <ul>
-            <li>In this category you can only post if you are looking to spot bugs in your system/software/website and similar.</li>
-            <li>You must provide every possible detail for the bug hunters to be able to start the hunting.</li>
-            <li>You must include for example browsers, devices, operating systems and similar info where you want bugs to be spotted.</li>
+            <li>Submissions must include all available information for bug hunters to be able to begin the bug hunting.</li>
+            <li>Submissions must list the environments on which bugs should be searched for (i.e. browsers, devices, operating systems and other conditions under which bugs may appear).</li>
           </ul>
-          <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
@@ -63,12 +67,13 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="translations"/> Translators</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner to translate the content or documentation of their system / software / website.
+          </p>
           <ul>
-            <li>You can only post in this category if you are looking for translators to translate your project.</li>
-            <li>You must provide any necessary information for the translators to start their work.</li>
-            <li>Location of the files to be translated, tools to use, languages you are looking for and similar info are necessary.</li>
+            <li>Submissions must specify the target language(s) and (when applicable) desired translator specialization (technical, marketing, business applications, etc.).</li>
+            <li>Submissions must include: the location of the files to be translated, tools and platforms to be used and any information pertinent to the project translation.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
@@ -77,12 +82,13 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="graphics"/> Designers</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner recruiting designers to the project team.
+          </p>
           <ul>
-            <li>You can only post in this category if you are looking for designers to join your Open Source project.</li>
-            <li>You must provide exactly what you are looking and how would you like it to be in great details.</li>
-            <li>Whether you are looking for a logo, layout, banner or similar, your request has to be very specific.</li>
+            <li>Submissions must include extensive detail describing the desired outcome.</li>
+            <li>Submissions must include prefered file type for submission, file dimensions and any additional information necessary for the graphic component design.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower votes or your announcement won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
@@ -91,12 +97,14 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="documentation"/> Tech Writers</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner for assistance in updating / creating the documentation of their project.
+          </p>
           <ul>
-            <li>This category is meant only for requiring help in updating/creating the documentation of your Open Source project.</li>
-            <li>You must be very specific about which part of the documentation you wish to update/create.</li>
-            <li>It is important to provide the tools you wish to use and necessary info for the documentation to be actually written.</li>
+            <li>Submissions must include extensive detail describing the desired outcome.</li>
+            <li>Submissions must include the requested features for documentations, desired length of document and any information pertinent to project documentation.</li>
+            <li>Submissions must include links to the tools and information necessary for documentation production and examples (when applicable).</li>
           </ul>
-          <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
@@ -105,12 +113,14 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="analysis"/> Data Analysts</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner for statistical analysis of their project.
+          </p>
           <ul>
-            <li>This category is meant only for requesting data analysis for your Open Source project.</li>
-            <li>Your request must be very specific about the numbers you wish to extract.</li>
-            <li>You must provide the tools and all the information necessary for the analyses to be actually completed.</li>
+            <li>Submissions must specify the desired insights from the analysis requested.</li>
+            <li>Submissions must include specific variables and conditions to process the extracted data.</li>
+            <li>Submissions must include the tools and information necessary for the analysis process.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
@@ -119,12 +129,14 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
         <div className="Editor__rules">
           <h2><CategoryIcon from="from-rules"  type="analysis"/> Influencers</h2>
           {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <p>
+            Task submissions to this category must include a request by an Open Source project owner for the assistance of social influencers in creating public awareness of their project.
+          </p>
           <ul>
-            <li>This category is meant only for requesting help of social influencers in spreading the word about your project.</li>
-            <li>You must provide any possible detail for the influencers to effectively share your Open Source project.</li>
-            <li>You must also provide any graphic, video and similar digital goods the influencers are supposed to share.</li>
+            <li>Submissions must include the information and data necessary for influencers to effectively share the Open Source project.</li>
+            <li>Submissions must include all graphic, video and other resources influencers are expected to share.</li>
+            <li>Submission must detail the requirements of the visibility effort on the behalf of the influencer in terms of target audience, language and expected results.</li>
           </ul>
-          <p>Not respecting the rules will either give you lower exposure or your task request won't be accepted.</p>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>
       )
