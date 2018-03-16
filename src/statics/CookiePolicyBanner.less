@@ -7,36 +7,52 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  padding: 1em 1.8em;
 
-  background-color: #000;
-  color: #ccc;
-  
-  &__PolicySummary {
-    font-size: 90%;
-    max-width: 60em;
-    margin-left: 0.5em;
-    line-height: 105%;
-    text-align: justify;
-    
-    &:first-child {
-      margin-top: 0.5em;
-    }
+  background-color: #4786ff;
+  color: #fff;
 
-    &:last-child {
-      margin-bottom: 0.5em;
-    }
-  }
-
-  &__PolicyLink {
-    color: #fff;
-    margin-left: 1em;
-    &:before {
-      content: ' ';
+  div {
+    line-height: 1.4em;
+    padding-right: 15px;
+    a {
+      color: #fff;
+      opacity: .8;
+      text-decoration: underline;
+      &:hover {
+        opacity: 1;
+        text-decoration: none;
+      }
     }
   }
 
   &__ProceedButton {
-    margin: 0 3%;
-    height: 200%;
+    min-width: 140px;
+    display: block;
+    padding: .4em .8em;
+    font-size: .9em;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    color: #fff;
+    background: transparent;
+    border: 2px solid #fff;
+    flex: 1;
+    &:hover,
+    &:active,
+    &:focus {
+      color: #fff;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .CookiePolicyBanner {
+    padding: 1em;
+    flex-direction: column;
+    &__ProceedButton {
+      width: 100%;
+      margin-top: 15px;
+    }
   }
 }
