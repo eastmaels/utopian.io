@@ -95,6 +95,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             Acceptable contributions in this category must include original translations created or updated for an active Open Source project.
           </p>
           <ul>
+            <li>Translations must be explicitly requested by the project owner. A link to the respective Task Request must be provided.</li>
             <li>Submissions must have a minimum of 2000 words per translation contribution.</li>
             <li>Translation of static text (that is supposed to remain untranslated) like links, code and paths, will lead to immediate rejection.</li>
             <li>Duplicated strings / text cannot be counted toward the minimum translation volume requirements.</li>
@@ -172,6 +173,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             Submission to this category must include proof of results in online and social media engagement for an Open Source project that was driven by promotional activities on public channels online.
           </p>
           <ul>
+            <li>Visibility efforts must be explicitly requested by the project owner and meet their requirements. A link to the respective Task Request must be provided.</li>
             <li>Valid submissions to the visibility category are (1) paid search engine and display ads placement; (2) paid social media ads; (3) Thunderclap campaigns and (4) posts to social media accounts with at least  10,000 unique followers.</li>
             <li>Promotions on chat platforms (e.g. Whatsapp, Telegram and similar) will not be accepted as valid submissions.</li>
             <li>The campaign must have a total reach of at least 10,000 unique users and proof of valid user engagement (over 1.5% on Twitter and 1% on Facebook).</li>
