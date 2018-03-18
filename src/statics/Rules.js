@@ -10,11 +10,21 @@ export default props =>
     <div className="container text-center my-5">
 
       <h1>General Rules</h1>
+
+      <p>
+        These are the rules that apply, if you want to submit a contribution to Utopian. If you have more general questions about Utopian please refer to our <NavLink className="CookiePolicyBanner__PolicyLink" to="/faq">Frequently Asked Questions</NavLink>.
+      </p>
+
       <p>
         <b>Failing to adhere to one or more of the rules set below will lead to the immediate rejection of your contribution. Please be sure to read and understand the rules before submitting a contribution.</b>
       </p>
+
       <p>
-        If you have more general questions about Utopian please refer to our <NavLink className="CookiePolicyBanner__PolicyLink" to="/faq">Frequently Asked Questions</NavLink>.
+        <b>Utopian moderators / supervisors have the full right to reject or accept submissions and to assess its quality, even if the submission meets all the rules.</b>
+      </p>
+
+      <p>
+        <b>Supervisors may revert an accepted / rejected contribution.</b>
       </p>
 
       <h2>Rules vs Guidelines</h2>
@@ -120,7 +130,7 @@ export default props =>
         <li>The contribution should not contain any clear attempt to profit solely from a commercial perspective, and should not be written in a way that suggests the contributor is looking to maximise the returns.</li>
         <li>The author may include links to his social profiles in his submission if they appear in a non-disruptive way.</li>
         <li>Links to commercial products and affiliate links are forbidden.</li>
-        <li>Tagging or mentioning other Steem / Utopian users without an appropriate reason should be avoided.</li>
+        <li><i>Tagging or mentioning other Steem / Utopian users without an appropriate reason should be avoided.</i></li>
       </ul>
       <h3>Defamation</h3>
       <ul>
@@ -130,9 +140,9 @@ export default props =>
       <h3>Solicitation</h3>
       <ul>
         <li>Contributors should not use submission posts to solicit for any activity that it is not strictly accepted by Utopian Rules.</li>
-        <li>Contributors should not ask for Steem / Steemit engagement (upvotes, resteems and follows) in their contribution posts.</li>
-        <li>Contributors should not ask for Utopian engagement (upvotes and follows) in their contribution posts.</li>
-        <li>Contributors may ask for Steem witness votes in a short request (one paragraph) at the footer of their post.</li>
+        <li><i>Contributors should not ask for Steem / Steemit engagement (upvotes, resteems and follows) in their contribution posts.</i></li>
+        <li><i>Contributors should not ask for Utopian engagement (upvotes and follows) in their contribution posts.</i></li>
+        <li><i>Contributors may ask for Steem witness votes in a short request (one paragraph) at the footer of their post.</i></li>
       </ul>
       <h3>Religious / Political Content</h3>
       <ul>
@@ -183,13 +193,7 @@ export default props =>
       </div>
 
       <div>
-        <h1>Moderation</h1>
-        <ul>
-          <li>Utopian moderators / supervisors have the full right to reject or accept submissions and to assess its quality, even if the submission meets all the rules.</li>
-          <li>Supervisors may revert an accepted / rejected contribution.</li>
-        </ul>
-
-        <h2>Reporting a Moderation Issue</h2>
+        <h1>Reporting a Moderation Issue</h1>
         <p>
           Get in touch with the Supervisor assigned to the moderator that reviewed your submission. <a href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web" target={'_blank'}>Find them on this document</a>.
         </p>
