@@ -27,7 +27,7 @@ export const RulesTask = ({type, acceptRules, inEditor}) => {
           <ul>
             <li>Submissions to this tasks category must describe in great detail the requirements and needs of the project manager.</li>
             <li>Submissions must include details defining what you are looking for and the problems you want to solve with a concept.</li>
-            <li>Images, screenshots, links and examples should be included as part of the submission.</li>
+            <li><i>Images, screenshots, links and examples should be included as part of the submission.</i></li>
           </ul>
           {inEditor ? <AcceptRules acceptRules={acceptRules} /> : null}
         </div>

@@ -130,7 +130,7 @@ export default props =>
         <li>The contribution should not contain any clear attempt to profit solely from a commercial perspective, and should not be written in a way that suggests the contributor is looking to maximise the returns.</li>
         <li>The author may include links to his social profiles in his submission if they appear in a non-disruptive way.</li>
         <li>Links to commercial products and affiliate links are forbidden.</li>
-        <li>Tagging or mentioning other Steem / Utopian users without an appropriate reason should be avoided.</li>
+        <li><i>Tagging or mentioning other Steem / Utopian users without an appropriate reason should be avoided.</i></li>
       </ul>
       <h3>Defamation</h3>
       <ul>
@@ -140,9 +140,9 @@ export default props =>
       <h3>Solicitation</h3>
       <ul>
         <li>Contributors should not use submission posts to solicit for any activity that it is not strictly accepted by Utopian Rules.</li>
-        <li>Contributors should not ask for Steem / Steemit engagement (upvotes, resteems and follows) in their contribution posts.</li>
-        <li>Contributors should not ask for Utopian engagement (upvotes and follows) in their contribution posts.</li>
-        <li>Contributors may ask for Steem witness votes in a short request (one paragraph) at the footer of their post.</li>
+        <li><i>Contributors should not ask for Steem / Steemit engagement (upvotes, resteems and follows) in their contribution posts.</i></li>
+        <li><i>Contributors should not ask for Utopian engagement (upvotes and follows) in their contribution posts.</i></li>
+        <li><i>Contributors may ask for Steem witness votes in a short request (one paragraph) at the footer of their post.</i></li>
       </ul>
       <h3>Religious / Political Content</h3>
       <ul>
