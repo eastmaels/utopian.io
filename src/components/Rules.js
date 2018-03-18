@@ -37,7 +37,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Suggestions are minor features / enhancements to an Open Source project.</li>
             <li>Suggestions may only relate to significant technical aspects of the project (rather than processes or organisational issues).</li>
             <li>Suggestions must provide all the information and details for the requested features to be actualized.</li>
-            <li>Images, charts, screenshots, links and examples should be included contributions to this category.</li>
+            <li><i>Images, charts, screenshots, links and examples should be included contributions to this category.</i></li>
           </ul>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
         </div>
@@ -81,7 +81,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Submissions must refer to bugs on the latest released version of the application (not older versions).</li>
             <li>Submission title must briefly describe the occuring issue and include searchable keywords.</li>
             <li>Bug Reports previously submitted as issues on GitHub (either by the contribution author or another party), will not be accepted. Approved Bug Reports will automatically be published on GitHub.</li>
-            <li>Submissions should include screenshots, video recordings or animated GIFs if they can help to describe and understand the bug reported.</li>
+            <li><i>Submissions should include screenshots, video recordings or animated GIFs if they can help to describe and understand the bug reported.</i></li>
           </ul>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
         </div>
@@ -140,7 +140,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Intro videos are acceptable only if the contributed video replaces an existing one of inferior quality already included in the project or if it was explicitly requested by the project owner.</li>
             <li>All submissions must be licensed under the <a href="https://creativecommons.org/choose/" target={'_blank'}>creative commons license</a>.</li>
             <li>All designs should be delivered in a vector format unless otherwise specified by the project owner.</li>
-            <li>Submissions should (ideally) be coordinated with the project owner throughout the design process.</li>
+            <li><i>Submissions should (ideally) be coordinated with the project owner throughout the design process.</i></li>
           </ul>
           {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
         </div>
