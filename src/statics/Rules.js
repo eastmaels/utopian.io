@@ -10,11 +10,21 @@ export default props =>
     <div className="container text-center my-5">
 
       <h1>General Rules</h1>
+
+      <p>
+        These are the rules that apply, if you want to submit a contribution to Utopian. If you have more general questions about Utopian please refer to our <NavLink className="CookiePolicyBanner__PolicyLink" to="/faq">Frequently Asked Questions</NavLink>.
+      </p>
+
       <p>
         <b>Failing to adhere to one or more of the rules set below will lead to the immediate rejection of your contribution. Please be sure to read and understand the rules before submitting a contribution.</b>
       </p>
+
       <p>
-        If you have more general questions about Utopian please refer to our <NavLink className="CookiePolicyBanner__PolicyLink" to="/faq">Frequently Asked Questions</NavLink>.
+        <b>Utopian moderators / supervisors have the full right to reject or accept submissions and to assess its quality, even if the submission meets all the rules.</b>
+      </p>
+
+      <p>
+        <b>Supervisors may revert an accepted / rejected contribution.</b>
       </p>
 
       <h2>Rules vs Guidelines</h2>
@@ -183,13 +193,7 @@ export default props =>
       </div>
 
       <div>
-        <h1>Moderation</h1>
-        <ul>
-          <li>Utopian moderators / supervisors have the full right to reject or accept submissions and to assess its quality, even if the submission meets all the rules.</li>
-          <li>Supervisors may revert an accepted / rejected contribution.</li>
-        </ul>
-
-        <h2>Reporting a Moderation Issue</h2>
+        <h1>Reporting a Moderation Issue</h1>
         <p>
           Get in touch with the Supervisor assigned to the moderator that reviewed your submission. <a href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web" target={'_blank'}>Find them on this document</a>.
         </p>
