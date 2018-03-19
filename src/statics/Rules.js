@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { Rules } from '../components/Rules';
 import { RulesTask } from '../components/RulesTask';
 
@@ -7,321 +8,194 @@ import './Rules.less';
 export default props =>
   (<div className="main-panel rules-section">
     <div className="container text-center my-5">
+
       <h1>General Rules</h1>
-      <div>
-        <h2>
-          Immediate Rejection
-        </h2>
-        <p>Not respecting one or more of the rules below will lead to direct rejection of your contribution.</p>
-      </div>
 
-      <div>
-        <h2>
-          Hard VS Soft Rules
-        </h2>
-        <p>Rules are implicitly marked as Hard rules. Soft rules are marked with the label <b>[SOFT]</b>.</p>
-        <ul>
-          <li>All the rules not marked as <b>[SOFT]</b> lead to immediate rejection.</li>
-          <li>All the rules marked as <b>[SOFT]</b> may lead to rejection if you have been notified about the same mistake multiple times. In any other case the <b>Moderator will ask for a change but accept your contribution anyways</b>.</li>
-        </ul>
-      </div>
+      <p>
+        These are the rules that apply, if you want to submit a contribution to Utopian. If you have more general questions about Utopian please refer to our <NavLink className="CookiePolicyBanner__PolicyLink" to="/faq">Frequently Asked Questions</NavLink>.
+      </p>
 
-      <div>
-        <h2>
-          Editor Templates
-        </h2>
-        <p>When submitting a contribution you will find a standard template that you should follow when writing the details of your contribution.</p>
-        <ul>
-          <li>Templates are editable, as long as your contribution has a clear format. </li>
-          <li>Templates can be extended.</li>
-        </ul>
-      </div>
+      <p>
+        <b>Failing to adhere to one or more of the rules set below will lead to the immediate rejection of your contribution. Please be sure to read and understand the rules before submitting a contribution.</b>
+      </p>
 
-      <div>
-        <h2>
-          Temporary / Lifetime Bans - Utopian Downvote
-        </h2>
-        <p>
-          Utopian may ban your account temporarily or for the lifetime and may also proceed for a downvote in any of the following cases.
-        </p>
-        <li>
-          Any user found harassing a member of the Utopian Moderators or in general any member of the Utopian teams.
-        </li>
-        <li>
-          Using multiple accounts to clearly abuse the system.
-        </li>
-        <li>
-          Keep contributing with low quality contributions even after being notified.
-        </li>
-        <li>
-          Plagiarism.
-        </li>
-        <li>
-          Using Licensed or commercial materials or Creative Commons without citing the source even after being notified.
-        </li>
-        <li>
-          Tag spamming. <b>[SOFT]</b>
-        </li>
-      </div>
+      <p>
+        <b>Utopian moderators / supervisors have the full right to reject or accept submissions and to assess its quality, even if the submission meets all the rules.</b>
+      </p>
 
-      <div>
-        <h2>
-          Commercial/Copyrighted Materials
-        </h2>
-        <p>No commercial or copyrighted material should ever be used in a contribution.</p>
-        <ul>
-          <li>
-            Only Creative Commons for Images and Videos can be accepted and the source should be always cited.
-          </li>
-          <li>
-            You retain full responsibility when using copyrighted or commercial materials without proper permission.
-          </li>
-        </ul>
-      </div>
+      <p>
+        <b>Supervisors may revert an accepted / rejected contribution.</b>
+      </p>
 
-      <div>
-        <h2>Contributions must be Formal and Professional</h2>
-        <p>A moderator may reject a contribution if it is not written in a formal and professional style.</p>
-        <ul>
-          <li>
-            The contributor should follow the templates provided in the editor for each category. <b>[SOFT]</b>
-          </li>
-          <li>
-            The writing style should be formal never informal.
-          </li>
-          <li>
-            The writing style should be professional.
-          </li>
-          <li>
-            Sentences like: <em>Hello Utopians</em>, <em>Hello Steemians</em>, <em>Dear friends</em> and similar informal sentences may lead to rejection. <b>[SOFT]</b>
-          </li>
-          <li>Sentences like <em>resteem, follow, upvote</em> may lead to immediate rejection. <b>[SOFT]</b></li>
-          <li>
-            Quality of the images and videos used in the contribution should be high. Low res images and videos will be rejected. <b>[SOFT]</b>
-          </li>
-          <li>
-            A contribution with bad grammar will be rejected if the contents may be really hard to understand. <b>[SOFT]</b>
-          </li>
-        </ul>
-      </div>
+      <h2>Rules vs Guidelines</h2>
+      <p>
+        Some of the instructions in this document are designated as <i>guidelines</i> in italics. Failure to follow these guidelines will not lead to immediate rejection, but instead to a notification from the category Moderator asking the submission to be corrected.
+      </p>
+      <p>
+        Repeated failures to follow guidelines may lead to the rejection of your submissions.
+      </p>
 
-      <div>
-        <h2>Contributions must be Informative</h2>
-        <p>
-          The contribution must contain as much detail as possible and have some graphical content in it (images, charts, videos, etc) where applicable. The length of the body of the contribution should be enough to give every possible detail about the submitted contribution.
-        </p>
-      </div>
+      <h2>Bans and Downvotes</h2>
+      <p>
+        The following behaviors may lead to a temporary or permanent ban from Utopian:
+      </p>
+      <ul>
+        <li>Harassing any member of the Utopian team.</li>
+        <li>Using multiple accounts to abuse the system.</li>
+        <li>Consistently submitting low quality contributions even after being notified.</li>
+        <li>Plagiarism.</li>
+        <li>Inclusion of licensed or commercial materials or failing to cite the source of Creative Commons media even after being notified.</li>
+        <li>Tag spamming.</li>
+      </ul>
 
-      <div>
-        <h2>Contributions must be in English</h2>
-        <p>Contents of the contributions (post content) must be in plain English and fully understandable.</p>
-      </div>
+      <h2>Vote and Approval Retraction</h2>
+      <ul>
+        <li>Submissions found in violation of Utopian rules can be unvoted or rejected even after they have been accepted.</li>
+        <li>Erroneous (accidental) Utopian upvotes will be retracted.</li>
+      </ul>
 
-      <div>
-        <h2>Never Submitted Before</h2>
-        <p>
-          Contributions must be unique. Users must first check if the same or very similar contribution has been submitted before.</p>
-        <ul>
-          <li>Same contributions will never be accepted in Utopian twice by the same or different user.</li>
-          <li>Contents already shared on the Steem blockchain in general may still be rejected if submitted in Utopian.</li>
-          <li>Contents already shared anywhere else may still be rejected if submitted in Utopian.</li>
-          <li>Same contents already shared before in Utopian or anywhere else by different users may still be rejected if a moderator recognises plagiarism.</li>
-        </ul>
-      </div>
+      <h2>Post Writing and Style</h2>
+      <p>
+        To be accepted, submissions must be written in a formal and professional style. A moderator may reject a contribution if the writing is unprofessional or unclear.
+      </p>
+      <ul>
+        <li>The writing style should be formal and informative.</li>
+        <li>The writing style should be professional and clear.</li>
+      </ul>
+      <p>Guidelines:</p>
+      <ul>
+        <li><i>Sentences like: “Hello Utopians, What’s up Steemians, Dear friends” and similar informal greetings may lead to rejection.</i></li>
+        <li><i>Images and videos used in contribution submissions should be of high resolution. Low resolution images and videos may be rejected.</i></li>
+        <li><i>Submissions with grammar issues that make the content difficult to understand may be rejected.</i></li>
+        <li><i>Failure to apply the templates provided in the editor for each category may lead to rejection. The standard contribution submission templates should be followed when detailing your contribution. However, templates can be edited and extended as long as the formatting is clear.</i></li>
+        <li><i>Contributors may refer to the following resource when writing contribution submissions - <a href="https://owl.english.purdue.edu/owl/resource/656/02/" target={'_blank'}>https://owl.english.purdue.edu/owl/resource/656/02/</a></i></li>
+      </ul>
 
-      <div>
-        <h2>Author of the Contribution</h2>
-        <p>
-          The contribution must provide as much detail as possible to verify the actual work done and that you are the author.
-        </p>
-        <li>If your Steem/Utopian username does not match with the username used in an external platform, you must either edit the username in the external platform or provide an immediate way to verify you are the author.</li>
-      </div>
+      <h2>Contribution Value, Volume and Detail</h2>
+      <ul>
+        <li>The contribution must add value to the Open Source project. Moderators may reject (at their discretion) submissions that offer little to no added value to the project.</li>
+        <li>The contribution must be informative and contain as much detail as possible describing the work done.</li>
+        <li>When applicable, graphical content like images, charts, videos and screenshots must be included.</li>
+        <li>The length of the body of the contribution should be sufficient to provide a thorough overview of the submitted contribution.</li>
+        <li>Every contributor may only submit ONE contribution post per task request. Use of multiple accounts to circumvent this rule will lead to immediate ban from Utopian services.</li>
+      </ul>
 
-      <div>
-        <h2>Contributions Must Not Contain Spam</h2>
-        <p>
-          The contribution should not contain any clear attempt to profit solely from a commercial perspective, and should not be written in a way that suggests the contributor is looking to maximise the returns.
-        </p>
-        <li>The author may provide links to his social profiles in a way that does not disturb the reader.</li>
-        <li>Links to commercial products are forbidden.</li>
-        <li>Misusing the mentions by mentioning other Steem/Utopian users without an obvious reason will lead to rejection. <b>[SOFT]</b></li>
-      </div>
+      <h2>Submission Language</h2>
+      <p>
+        Only contribution posts written in plain and easily understood English will be accepted.
+      </p>
 
-      <div>
-        <h2>Contributions Must Not Contain Defamation</h2>
-        <p>
-          Contributions must not use namecalling directed at other users of the Steem blockchain. Contributions may not contain false information about another user that may be perceived as defamatory.
-        </p>
-      </div>
+      <h2>Github Integration and Repositories</h2>
+      <p>
+        <b>Unless otherwise specified, Utopian contributors must have an active GitHub account connected to the contributor’s Utopian profile.</b>
+      </p>
+      <ul>
+        <li>Only contributions made to open source projects with a GitHub repository can be approved.</li>
+        <li>The Github repository linked to a Utopian contribution post must contain the project’s source code, a readme and a license.</li>
+        <li>A contributor’s Utopian account must be connected to their GitHub account.</li>
+        <li>Contributions for un-official repositories will only be accepted if the repository is listed in <a href="https://docs.google.com/spreadsheets/d/1RMQyfqKRmgeIWPM80h31hS1NdLxqLJ6qy3I5ucNGuuc/edit?usp=sharing" target={'_blank'}>Utopian un-official repository whitelist.</a></li>
+        <li>Contributions for repositories listed on <a href="https://docs.google.com/spreadsheets/d/1q49j3mjjJVwqxRUdX0sqEApV7mAVil-K-OS-lKlFP_Y/edit?usp=sharing" target={'_blank'}>Utopian repository blacklist</a> will be automatically rejected.</li>
+        <li>Contributions on official repositories that are mirrors of another subversioning system will be accepted.</li>
+        <li>Contributions on repositories that have not received any program code updates for longer than 6 months, will be automatically rejected.</li>
+        <li>Contributions on forks that do not have any difference / improvement over the original project will not be accepted.</li>
+        <li>Contributions to repositories that contain books, texts or other types of content but no software code will be rejected.</li>
+      </ul>
 
-      <div>
-        <h2>Contributions Should Not Solicit for Unrelated Activities</h2>
-        <li>
-          Contributors should not ask for Steem/Steemit related activities in their posts, such as upvotes, resteems and follows.  <b>[SOFT]</b>
-        </li>
-        <li>
-          Contributors should not ask for Utopian related activities in their posts, such as upvotes and follows.  <b>[SOFT]</b>
-        </li>
-        <li>
-          Contributors should not solicit for any activity in general that it is not strictly accepted by the Utopian Rules.
-        </li>
-        <li>
-          Contributors should not ask for witness votes in their Utopian posts. <b>[SOFT]</b>
-        </li>
-      </div>
+      <h2>Submission Originality</h2>
+      <p>
+        All submitted contributions <b>must be unique</b>. Users must check if an identical or very similar contribution has been previously submitted.
+      </p>
+      <ul>
+        <li>Duplicate submissions (by the same or different user) will be automatically rejected.</li>
+        <li>Content shared previously will be rejected if a moderator discovers plagiarism, and the user submitting it will be banned from Utopian.</li>
+      </ul>
 
-      <div>
-        <h2>
-          Unvoting - Rejection After Approval
-        </h2>
-        <p>Utopian can unvote or reject an accepted contribution if it is found out that the contribution did not meet the rules and had been upvoted by mistake. This decision considers cases such as attempts of plagiarism, copying work and ideas of others or other violation of the rules which would be obvious to see that the contribution does not deserve the reward.</p>
-      </div>
+      <h2>Contribution Authorship</h2>
+      <ul>
+        <li>The contribution must provide the information necessary to verify the identity of the contributor as the post author.</li>
+        <li>If a contributor’s Steem / Utopian username does not match the username used in an external platform, they must either edit the username on the external platform, or provide alternative means of verification.</li>
+      </ul>
 
-      <div>
-        <h2>
-          Github Repository
-        </h2>
-        <ul>
-          <li>
-            The linked Github repository must always contain code, a README and a license. <b>[SOFT]</b>
-          </li>
-          <li>
-            Contributions will only be accepted for repositories not present in the <a href="https://docs.google.com/spreadsheets/d/1q49j3mjjJVwqxRUdX0sqEApV7mAVil-K-OS-lKlFP_Y/">Utopian repository blacklist</a>.
-          </li>
-          <li>
-            Contributions for un-official repositories will only be accepted if present in the <a href="https://docs.google.com/spreadsheets/d/1RMQyfqKRmgeIWPM80h31hS1NdLxqLJ6qy3I5ucNGuuc/edit?usp=sharing">Utopian un-official repository whitelist</a>.
-          </li>
-          <li>
-            Contributions on <b>official</b> repositories that are mirrors of another subversioning system are always accepted.
-          </li>
-          <li>
-            Contributions on repositories that had no updates for <b>longer than 1 year</b>, will be rejected.
-          </li>
-          <li>
-            Contributions on forks that do not have any difference/improvement from the original project won't be accepted.
-          </li>
-        </ul>
-      </div>
+      <h2>Forbidden Content</h2>
+      <h3>Commercial / Copyrighted Materials</h3>
+      <p>
+        Submissions and contributions must not include any commercial or copyrighted materials.
+      </p>
+      <ul>
+        <li>Images and videos used must be distributed under the Creative Commons license and content source must be cited (when applicable).</li>
+        <li>Contributors assume full responsibility if and when using copyrighted or commercial materials without proper permission.</li>
+      </ul>
+      <h3>Spam</h3>
+      <ul>
+        <li>The contribution should not contain any clear attempt to profit solely from a commercial perspective, and should not be written in a way that suggests the contributor is looking to maximise the returns.</li>
+        <li>The author may include links to his social profiles in his submission if they appear in a non-disruptive way.</li>
+        <li>Links to commercial products and affiliate links are forbidden.</li>
+        <li><i>Tagging or mentioning other Steem / Utopian users without an appropriate reason should be avoided.</i></li>
+      </ul>
+      <h3>Defamation</h3>
+      <ul>
+        <li>Contributions and comments must not include offensive speech directed at others.</li>
+        <li>Contributions and comments may not contain false information about another user that may be perceived as defamatory.</li>
+      </ul>
+      <h3>Solicitation</h3>
+      <ul>
+        <li>Contributors should not use submission posts to solicit for any activity that it is not strictly accepted by Utopian Rules.</li>
+        <li><i>Contributors should not ask for Steem / Steemit engagement (upvotes, resteems and follows) in their contribution posts.</i></li>
+        <li><i>Contributors should not ask for Utopian engagement (upvotes and follows) in their contribution posts.</i></li>
+        <li><i>Contributors may ask for Steem witness votes in a short request (one paragraph) at the footer of their post.</i></li>
+      </ul>
+      <h3>Religious / Political Content</h3>
+      <ul>
+        <li>Content that disseminates religious or political ideologies or beliefs of any kind is rejected.</li>
+      </ul>
 
       <div>
         <h1>Categories Rules</h1>
-        <div><Rules inEditor={false} type="ideas" /></div>
-        {/* <div><Rules inEditor={false} type="sub-projects" /></div>*/}
-        <div><Rules inEditor={false} type="development" /></div>
-        <div><Rules inEditor={false} type="bug-hunting" /></div>
-        <div><Rules inEditor={false} type="translations" /></div>
-        <div><Rules inEditor={false} type="graphics" /></div>
-        <div><Rules inEditor={false} type="analysis" /></div>
-        <div><Rules inEditor={false} type="social" /></div>
-        <div><Rules inEditor={false} type="documentation" /></div>
-        <div><Rules inEditor={false} type="tutorials" /></div>
-        <div><Rules inEditor={false} type="video-tutorials" /></div>
-        <div><Rules inEditor={false} type="copywriting" /></div>
-        <div><Rules inEditor={false} type="blog" /></div>
+        <Rules inEditor={false} type="ideas" />
+        <Rules inEditor={false} type="development" />
+        <Rules inEditor={false} type="bug-hunting" />
+        <Rules inEditor={false} type="translations" />
+        <Rules inEditor={false} type="graphics" />
+        <Rules inEditor={false} type="analysis" />
+        <Rules inEditor={false} type="social" />
+        <Rules inEditor={false} type="documentation" />
+        <Rules inEditor={false} type="tutorials" />
+        <Rules inEditor={false} type="video-tutorials" />
+        <Rules inEditor={false} type="copywriting" />
+        <Rules inEditor={false} type="blog" />
       </div>
 
       <div>
-        <br />
-        <h1>Task Requests</h1>
-        <li>Task requests are meant to be made by the project owner when looking for contributions.</li>
-        <li>A task must be explained in great detail and provide all the necessary details for it to actually be completed. In one task request, there should not be more than one task; and if more, they must be related to the category where the task request is being submitted.</li>
-        <li>Generic task requests, like "We are looking for contributors" won't be accepted.</li>
-        <li>You should always provide contact details for the contributor to get in touch with you.</li>
-        <li>You should always define a deadline. <b>[SOFT]</b> </li>
-
-        <div>
-          <div><RulesTask inEditor={false} type="task-ideas" /></div>
-          <div><RulesTask inEditor={false} type="task-development" /></div>
-          <div><RulesTask inEditor={false} type="task-bug-hunting" /></div>
-          <div><RulesTask inEditor={false} type="task-translations" /></div>
-          <div><RulesTask inEditor={false} type="task-graphics" /></div>
-          <div><RulesTask inEditor={false} type="task-documentation" /></div>
-          <div><RulesTask inEditor={false} type="task-analysis" /></div>
-          <div><RulesTask inEditor={false} type="task-social" /></div>
-        </div>
-      </div>
-
-      <div>
-        <h1>Report a Moderation Issue</h1>
-        <p>If you disagree with a moderator\'s decision or experience other moderation related issues, you can get in touch with us on Discord. You can mention <b>@Moderators</b> or <b>@Supervisors</b> in the <a href="https://discord.gg/KXpest">#review-discussion</a> channel. Mention Supervisors only in urgent situations.<br /><br /><b>Supervisors and Moderators are not required to and most likely will not respond to direct messages</b>.</p>
-      </div>
-
-      <div>
-        <h1>Moderation</h1>
+        <h1>Task Request Rules</h1>
+        <p>
+          Task requests should be submitted by an Open Source project owner seeking contributions to their project.
+        </p>
         <ul>
-          <li>Utopian Moderators/Supervisors have full rights to reject or accept a contribution.</li>
-          <li>Supervisors may always revert an accepted/rejected contribution.</li>
+          <li>Submitted tasks must be explained in great detail and provide all the necessary details for it to actually be completed.</li>
+          <li>Every Task Request Submission post must include one task request only. Submissions with multiple tasks requests will be rejected.</li>
+          <li>Task Request Submissions must be related to the category where the task request is being submitted.</li>
+          <li>Generic Task Request Submissions, like "We are looking for contributors" will be rejected.</li>
+          <li>Task Request Submissions must include a means of communication for the contributor to contact the task publisher.</li>
+          <li>Task Request Submissions must specify a deadline.</li>
+          <li>If no feedback or input from the project owner was received in 2 days, moderators will evaluate the submission at their own discretion.</li>
         </ul>
 
         <div>
-          <h2>Application as an Utopian Moderator</h2>
-          <ul>
-            <li>You must be at least 18 years old.</li>
-            <li>
-              You must write a public Steemit post proposing your intentions, one or more related categories you would like to moderate, your fields of expertise and you should nominate one existing Supervisor. In order to nominate a Supervisor pick one from the <a target="_blank" href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web">official list</a>.
-            </li>
-            <li>
-                You must <a href="https://docs.google.com/forms/d/1YAkcRyjBRCIrdLOizgO7E8mATAU6_ZSPjL2WCZrPn_4">complete our application form and pass the integrated test</a>.
-            </li>
-          </ul>
-          <div>
-            <h3>
-              Related Categories
-            </h3>
-            <p>A moderator may only apply for one category or more as long as they have related know-how</p>
-            <ul>
-              <li>
-                Suggestions - Visibility - Tasks for Thinkers - Tasks for Influencers
-              </li>
-              <li>
-                Translations - Tasks for Translators
-              </li>
-              <li>
-                Graphics - Tasks for Designers
-              </li>
-              <li>
-                Development - Bug Hunting - Documentation - Tasks for Developers, Bug Hunters and Tech Writers
-              </li>
-              <li>
-                Analysis - Tasks for Data Analysts
-              </li>
-              <li>
-                Tutorials - Video Tutorials
-              </li>
-              <li>
-                Copywriting - Blog Posts
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3>Losing Moderation Rights</h3>
-            <p>
-              A Moderator will have to step back if the majority of the other Moderators/Supervisors/Advisors/Overseers believe the position should be left or if the Supervisor assigned to him opts for that.
-            </p>
-          </div>
-        </div>
-
-        <div>
-          <h2>Application as an Utopian Supervisor</h2>
-          <ul>
-            <li>Supervisors will only be accepted if they have moderated at least 600 contributions and being active since at least 2 months.</li>
-            <li>Supervisors must have a proved strong general know-how of the Utopian platform and its categories.</li>
-            <li>Supervisors should always check the work of their teams and make sure work on other teams is proceeding correctly.</li>
-            <li>Supervisors must have a weekly public review of the work of their teams.</li>
-          </ul>
-          <div>
-            <h3>Losing Supervisor Rights</h3>
-            <p>A Supervisor will have to step back if the majority of the other Supervisors/Advisors/Overseers believe the position should be left.</p>
-          </div>
+          <RulesTask inEditor={false} type="task-ideas" />
+          <RulesTask inEditor={false} type="task-development" />
+          <RulesTask inEditor={false} type="task-bug-hunting" />
+          <RulesTask inEditor={false} type="task-translations" />
+          <RulesTask inEditor={false} type="task-graphics" />
+          <RulesTask inEditor={false} type="task-documentation" />
+          <RulesTask inEditor={false} type="task-analysis" />
+          <RulesTask inEditor={false} type="task-social" />
         </div>
       </div>
 
       <div>
-        <h2>
-          See our FAQ
-        </h2>
+        <h1>Reporting a Moderation Issue</h1>
         <p>
-          Click <b><a href="/faq">here</a></b> to view our <em>Frequently Asked Questions</em> (FAQ) page, where we detail the most asked questions and their answers.
+          Get in touch with the Supervisor assigned to the moderator that reviewed your submission. <a href="https://docs.google.com/spreadsheets/u/1/d/11AqLQPgULU4F7fIwfArqYdAcexufSH3IBEY32yVVm4I/edit?usp=drive_web" target={'_blank'}>Find them on this document</a>.
         </p>
       </div>
 

@@ -18,6 +18,11 @@ const types = [
     'slug': 'DEVELOPMENT'
   },
   {
+    'type': 'sub-projects',
+    'slug': 'SUB-PROJECT',
+	'disabled': true,
+  },
+  {
     'type': 'graphics',
     'slug': 'GRAPHICS'
   },

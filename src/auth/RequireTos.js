@@ -30,7 +30,7 @@ export default class RequireTos extends React.Component
     acceptTOS: PropTypes.func.isRequired,
 	logout: PropTypes.func.isRequired,
 	getUser: PropTypes.func.isRequired,
-	username: PropTypes.string.isRequired,
+	username: PropTypes.string,
   };
 
   static defaultProps = {
@@ -156,7 +156,7 @@ export default class RequireTos extends React.Component
 			  if(!this.TOSContainer)
 			    return;
 			  console.log("TOSContainer scrollTop", this.TOSContainer.scrollTop, (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight));
-              if( this.TOSContainer.scrollTop >= (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight) - 100)
+              if( this.TOSContainer.scrollTop >= (this.TOSContainer.scrollHeight - this.TOSContainer.offsetHeight) - 500)
               {
 				this.state.TOSScroll = true;
                 this.setState({
@@ -212,7 +212,7 @@ export default class RequireTos extends React.Component
 			  if(!this.PrivacyContainer)
 			  	return;
 			  console.log("PrivacyContainer scrollTop", this.PrivacyContainer.scrollTop, (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight));
-              if( this.PrivacyContainer.scrollTop >= (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight) - 100)
+              if( this.PrivacyContainer.scrollTop >= (this.PrivacyContainer.scrollHeight - this.PrivacyContainer.offsetHeight) - 500)
               {
 				this.state.privacyScroll = true;
                 this.setState({
