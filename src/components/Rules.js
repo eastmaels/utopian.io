@@ -174,7 +174,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             Submission to this category must include proof of results in online and social media engagement for an Open Source project that was driven by promotional activities on public channels online.
           </p>
           <ul>
-            <li>Visibility efforts must be explicitly requested by the project owner and meet their requirements. A link to the respective Task Request must be provided.</li>
+            <li>Visibility efforts must be explicitly requested by the project owner and meet their requirements. A link to the respective Utopian Task Request must be provided.</li>
             <li>Before you become active, you must obtain the direct permission of the project owner and clarify the details.</li>
             <li>Valid submissions to the visibility category are (1) paid search engine and display ads placement; (2) paid social media ads; (3) Thunderclap campaigns and (4) posts to social media accounts with at least  10,000 unique followers.</li>
             <li>Promotions on chat platforms (e.g. Whatsapp, Telegram and similar) will not be accepted as valid submissions.</li>
