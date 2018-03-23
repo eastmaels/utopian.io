@@ -541,7 +541,7 @@ class StoryFull extends React.Component {
           </h3> : null}
 
           {!isModerator ? <p className="StoryFull__reviewP">
-            A moderator will review this contribution within 24-48 hours and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
+            A moderator will review this contribution within 1 and 4 days and suggest changes if necessary. This is to ensure the quality of the contributions and promote collaboration inside Utopian.
                 {isAuthor ? ' Check the comments often to see if a moderator is requesting for some changes. ' : null}
           </p> : null}
 
@@ -689,7 +689,7 @@ class StoryFull extends React.Component {
             });
           }}
         >
-      <p><b>Please fill in the following quesitoniare to rate this contribution</b></p>
+      <p><b>Please fill in the following questionnaire to rate this contribution.</b></p>
       <br /><br /><br /><br />
       {this.state.questionaireAnswersMissing ?
         <p>Please answer all the questions!</p> : null
@@ -697,7 +697,7 @@ class StoryFull extends React.Component {
       {this.renderQuestionaire()}
       <br /><br /><br /><br />
       <b>Score:</b> {this.state.totalQuestionaireScore.toFixed(2)}%<br /><br />
-      <b>How would you reate the quality of this post?</b>
+      <b>How would you rate the quality of this post?</b>
        <RawSlider
         	initialValue={this.state.sliderValue}
             value={this.state.sliderValue}
