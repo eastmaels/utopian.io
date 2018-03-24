@@ -330,6 +330,14 @@ class StoryFull extends React.Component {
       return null;
     }
 
+
+    if (this.state.devSubCategory === 'dev-project') {
+      return '<div>New Project</div>';
+    } else if (this.state.devSubCategory === 'dev-feature') {
+      return '<div>New Feature</div>';
+    } else if (this.state.devSubCategory === 'dev-bugfix') {
+      return '<div>Bug Fix</div>';
+    }
     let questions = QualitySlider[postType].questions.map( (question, qindex) => {
       let options = question.answers.map( (answer, aindex) => {
         return (<option value={aindex}>{answer.answer}</option>);
@@ -691,6 +699,25 @@ class StoryFull extends React.Component {
         >
       <p><b>Please fill in the following questionnaire to rate this contribution.</b></p>
       <br /><br /><br /><br />
+      
+      <div>
+            <select onChange={(event, handler) => {
+              this.setState({
+              'devSubCategory' : event.target.value});
+            }}>
+              <option value="dev-project">New Project</option>
+              <option value="dev-feature">New Feature/s</option>
+              <option value="dev-bugfix">Bug Fix</option>
+            </select>
+            {
+            }
+        Post type: {postType}
+        {postType === 'development' ?
+          <div>Development</div>
+          : <div>Non-development</div>  
+        }
+      </div>
+      
       {this.state.questionaireAnswersMissing ?
         <p>Please answer all the questions!</p> : null
       }
