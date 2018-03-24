@@ -5,15 +5,15 @@ export default {
       answers: [
         {
           answer: "More than three",
-          value: 15,
+          value: 15*0.8,
         },
         {
           answer: "Two to three",
-          value: 10,
+          value: 10*0.8,
         },
         {
           answer: "Only one",
-          value: 5,
+          value: 5*0.8,
         }
       ],
     },
@@ -22,19 +22,19 @@ export default {
       answers: [
         {
           answer: "Must Have",
-          value: 20,
+          value: 20*0.8,
         },
         {
           answer: "Should Have",
-          value: 15,
+          value: 15*0.8,
         },
         {
           answer: "Could have",
-          value: 10,
+          value: 10*0.8,
         },
         {
           answer: "Won't have this time",
-          value: 5,
+          value: 5*0.8,
         },
       ],
     },
@@ -43,15 +43,15 @@ export default {
       answers: [
         {
           answer: "Complete (100%)",
-          value: 10,
+          value: 10*0.8,
         },
         {
           answer: "Partial (above 50%)",
-          value: 5,
+          value: 5*0.8,
         },
         {
           answer: "Lower than 50%",
-          value: 0,
+          value: 1*0.8,
         },
       ],
     },
