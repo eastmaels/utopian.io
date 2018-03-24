@@ -4,15 +4,15 @@ export default {
       question: "How much detail does the README contain?",
       answers: [
         {
-          answer: "Gone the extra mile",
+          answer: "Gone the extra mile (contains more than the minimum required)",
           value: 20,
         },
         {
-          answer: "Complete - contains a project description, installation steps, and a test link",
+          answer: "Complete (contains a project description, installation steps, and a test link)",
           value: 20*0.8,
         },
         {
-          answer: "Incomplete - lacks any of the minimum required",
+          answer: "Incomplete (lacks any of the minimum required)",
           value: 20*0.4,
         },
         {
@@ -25,15 +25,15 @@ export default {
       question: "How much detail does the project's Roadmap contain?",
       answers: [
         {
-          answer: "Above and beyond",
+          answer: "Above and beyond (includes more than the minimum required)",
           value: 20,
         },
         {
-          answer: "Complete - includes a timeline, planned features, and a development team",
+          answer: "Complete (includes a timeline, planned features, and a development team)",
           value: 20*0.8,
         },
         {
-          answer: "Incomplete - lacks any of the minimum required",
+          answer: "Incomplete (lacks any of the minimum required)",
           value: 20*0.4,
         },
         {
