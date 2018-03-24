@@ -21,19 +21,19 @@ export default {
       question: "How much is the average importance of the feature/s?",
       answers: [
         {
-          answer: "Must Have (Major feature)",
+          answer: "Must Have",
           value: 20,
         },
         {
-          answer: "Should Have ",
+          answer: "Should Have",
           value: 15,
         },
         {
-          answer: "Could have (or nice to have)",
+          answer: "Could have",
           value: 10,
         },
         {
-          answer: "Will not have (or nice to have)",
+          answer: "Won't have this time",
           value: 5,
         },
       ],
