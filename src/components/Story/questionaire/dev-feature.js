@@ -46,11 +46,11 @@ export default {
           value: 10,
         },
         {
-          answer: "Partial",
+          answer: "Partial (above 50%)",
           value: 5,
         },
         {
-          answer: "None(0%)",
+          answer: "Lower than 50%",
           value: 0,
         },
       ],
