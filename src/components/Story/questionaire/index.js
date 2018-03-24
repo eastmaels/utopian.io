@@ -1,5 +1,8 @@
 import ideasQuestions from "./ideas";
 import developmentQuestions from "./development";
+import devProjectQuestions from "./dev-project";
+import devFeatureQuestions from "./dev-feature";
+import devBugfixQuestions from "./dev-bugfix";
 import graphicsQuestions from "./graphics";
 import bughuntingQuestions from "./bug-hunting";
 import translationsQuestions from "./translations";
@@ -16,6 +19,9 @@ export const QualitySlider = {
 	// Main cetegories
 	'ideas': ideasQuestions, // Done
 	'development': developmentQuestions, // Done
+	'dev-project': devProjectQuestions, // Done
+	'dev-feature': devFeatureQuestions, // Done
+	'dev-bugfix': devBugfixQuestions, // Done
 	'graphics': graphicsQuestions, // Done
 	'bug-hunting': bughuntingQuestions, // Done
 	'translations': translationsQuestions, // Done
