@@ -840,6 +840,7 @@ class Editor extends React.Component {
                   ) : (
                     <FormattedMessage
                       id="select_or_past_image"
+                      style="{{display: 'none'}}"
                       defaultMessage="Select image or paste it from the clipboard."
                     />
                   )}
