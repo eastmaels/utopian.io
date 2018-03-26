@@ -439,7 +439,7 @@ class Editor extends React.Component {
     });
   };
 
-  handleDragEnter = () => this.setState({ dropzoneActive: true });
+  handleDragEnter = () => this.setState({ dropzoneActive: false });
 
   handleDragLeave = () => this.setState({ dropzoneActive: false });
 
