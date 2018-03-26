@@ -5,19 +5,19 @@ export default {
       answers: [
         {
           answer: "Critical",
-          value: 20*0.8,
+          value: 15,
         },
         {
           answer: "Major",
-          value: 15*0.8,
+          value: 12,
         },
         {
           answer: "Normal",
-          value: 10*0.8,
+          value: 10,
         },
         {
           answer: "Minor",
-          value: 5*0.8,
+          value: 5,
         }
       ],
     },
@@ -26,11 +26,11 @@ export default {
       answers: [
         {
           answer: "Complete (100%)",
-          value: 10*0.8,
+          value: 10,
         },
         {
           answer: "Partial (above 50%)",
-          value: 5*0.8,
+          value: 5,
         },
         {
           answer: "Lower than 50%",
@@ -43,19 +43,19 @@ export default {
       answers: [
         {
           answer: "Very High",
-          value: 40*0.8,
+          value: 25,
         },
         {
           answer: "High",
-          value: 30*0.8,
+          value: 20,
         },
         {
           answer: "Medium",
-          value: 20*0.8,
+          value: 10,
         },
         {
           answer: "Low",
-          value: 5*0.8,
+          value: 5,
         },
       ],
     },

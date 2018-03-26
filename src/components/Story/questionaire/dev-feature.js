@@ -5,15 +5,15 @@ export default {
       answers: [
         {
           answer: "More than three",
-          value: 15*0.8,
+          value: 10,
         },
         {
           answer: "Two to three",
-          value: 10*0.8,
+          value: 5,
         },
         {
           answer: "Only one",
-          value: 5*0.8,
+          value: 1,
         }
       ],
     },
@@ -22,36 +22,36 @@ export default {
       answers: [
         {
           answer: "Must Have",
-          value: 20*0.8,
+          value: 20,
         },
         {
           answer: "Should Have",
-          value: 15*0.8,
+          value: 15,
         },
         {
           answer: "Could have",
-          value: 10*0.8,
+          value: 10,
         },
         {
           answer: "Won't have this time",
-          value: 5*0.8,
+          value: 5,
         },
       ],
     },
     {
-      question: "How much coverage do the tests have?",
+      question: "How much coverage or proof of test does the contribution have?",
       answers: [
         {
-          answer: "Complete (100%)",
-          value: 10*0.8,
+          answer: "Complete (100%) code coverage",
+          value: 10,
         },
         {
           answer: "Partial (above 50%)",
-          value: 5*0.8,
+          value: 5,
         },
         {
           answer: "Lower than 50%",
-          value: 1*0.8,
+          value: 1,
         },
       ],
     },
@@ -60,15 +60,15 @@ export default {
       answers: [
         {
           answer: "Very High",
-          value: 40,
+          value: 25,
         },
         {
           answer: "High",
-          value: 30,
+          value: 20,
         },
         {
           answer: "Medium",
-          value: 20,
+          value: 10,
         },
         {
           answer: "Low",

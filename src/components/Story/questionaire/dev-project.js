@@ -5,15 +5,15 @@ export default {
       answers: [
         {
           answer: "Gone the extra mile (contains more than the minimum required)",
-          value: 20*0.8,
+          value: 20,
         },
         {
           answer: "Complete (contains a project description, installation steps, and a test link)",
-          value: 15*0.8,
+          value: 15,
         },
         {
           answer: "Incomplete (lacks any of the minimum required)",
-          value: 10*0.8,
+          value: 10,
         },
         {
           answer: "No README (consider rejecting or returning to the contributor)",
@@ -26,15 +26,15 @@ export default {
       answers: [
         {
           answer: "Above and beyond (includes more than the minimum required)",
-          value: 20*0.8,
+          value: 20,
         },
         {
           answer: "Complete (includes a timeline, planned features, and a development team)",
-          value: 15*0.8,
+          value: 15,
         },
         {
           answer: "Incomplete (lacks any of the minimum required)",
-          value: 10*0.8,
+          value: 10,
         },
         {
           answer: "No roadmap (consider rejecting or returning to the contributor)",
@@ -47,15 +47,15 @@ export default {
       answers: [
         {
           answer: "Contains more than the Minimum Viable Product (MVP)",
-          value: 40*0.8,
+          value: 40,
         },
         {
           answer: "Is a Minimum Viable Product (MVP)",
-          value: 30*0.8,
+          value: 30,
         },
         {
           answer: "Less than a Minimum Viable Product (MVP)",
-          value: 20*0.8,
+          value: 20,
         },
         {
           answer: "No features yet (consider rejecting or returning to the contributor)",
