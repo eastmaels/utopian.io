@@ -698,7 +698,7 @@ class StoryFull extends React.Component {
             }
             this.setState({ submitting: true });
 
-            moderatorAction(post.author, post.permlink, user.name, 'reviewed', this.state.questionaireAnswers, this.state.totalQuestionaireScore).then(() => {
+            moderatorAction(post.author, post.permlink, user.name, 'reviewed', this.state.questionaireAnswers, this.state.sliderValue).then(() => {
               this.setState({ verifyModal: false });
               this.setState({ submitting: false });
               this.setState({ commentFormText: 'Thank you for the contribution. It has been approved.' + this.state.commentDefaultFooter })
