@@ -256,10 +256,18 @@ class StoryFull extends React.Component {
 
     let metaData = post.json_metadata;
     let postType = metaData.type;
-	
-    if(!QualitySlider[postType])
+    const devSubCategory = this.state.devSubCategory || 'dev-project';
+
+    if(!QualitySlider[postType] || (postType === 'development' && !QualitySlider[devSubCategory]))
     {
       return false;
+    }
+
+    let qualitySliderObj = {};
+    if (postType === 'development') {
+      qualitySliderObj = QualitySlider[devSubCategory];
+    } else {
+      qualitySliderObj = QualitySlider[postType];
     }
 
     let answeredQuestions = this.state.questionaireAnswers.filter( answeredQuestion => {
@@ -268,7 +276,7 @@ class StoryFull extends React.Component {
       return false;
     });
 
-    if(answeredQuestions.length != QualitySlider[postType].questions.length)
+    if(answeredQuestions.length != qualitySliderObj.questions.length)
     {
       this.state.questionaireAnswersMissing = true;
       this.setState({
@@ -289,8 +297,8 @@ class StoryFull extends React.Component {
           questionaireResult += answer.score;
         }
       })
-
     });
+
     this.state.questionaireResult = questionaireResult;
     this.setState({
       questionaireResult
@@ -324,14 +332,14 @@ class StoryFull extends React.Component {
 
     let metaData = post.json_metadata;
     let postType = metaData.type;
-	
-    if(!QualitySlider[postType])
+    const devSubCategory = this.state.devSubCategory || 'dev-project';
+
+    if(!QualitySlider[postType] || (postType === 'development' && !QualitySlider[devSubCategory]))
     {
       return null;
     }
 
     let qualitySliderObj = {};
-    const devSubCategory = this.state.devSubCategory || 'dev-project';
     if (postType === 'development') {
       qualitySliderObj = QualitySlider[devSubCategory];
     } else {
@@ -349,33 +357,34 @@ class StoryFull extends React.Component {
             <b> {question.question} </b>
           </li>
           <li>
-            <select style={{width:"100%", display:"relative", top:0}} defaultValue={(this.state.questionaireAnswers[qindex]? this.state.questionaireAnswers[qindex].selected : -1)} onChange={(event, handler) => {
-
-              let answerIndex = parseInt(event.target.value);
-              let answers = question.answers.map((answer, answerId) => {
-                let answerData = {
-                  value: answer.answer,
-                  selected: false,
-                  score: answer.value,
+            <select
+              style={{width:"100%", display:"relative", top:0}} 
+              value={(this.state.questionaireAnswers[qindex] ? this.state.questionaireAnswers[qindex].selected : -1)} 
+              onChange={(event, handler) => {
+                let answerIndex = parseInt(event.target.value);
+                let answers = question.answers.map((answer, answerId) => {
+                  let answerData = {
+                    value: answer.answer,
+                    selected: false,
+                    score: answer.value,
+                  };
+                  if(answerIndex == answerId)
+                  {
+                    answerData.selected = true;
+                  }
+                  return answerData;
+                });
+                let questionaireAnswers = this.state.questionaireAnswers || [];
+                questionaireAnswers[qindex] = {
+                  question: question.question,
+                  answers: answers,
+                  selected: answerIndex,
                 };
-                if(answerIndex == answerId)
-                {
-                  answerData.selected = true;
-                }
-                return answerData;
-              });
-              let questionaireAnswers = this.state.questionaireAnswers || [];
-              questionaireAnswers[qindex] = {
-                question: question.question,
-                answers: answers,
-                selected: answerIndex,
-              };
-              this.setState({questionaireAnswers});
-
-              this.validateQuestionaire();
-
-            }}>
-              <option value="-1">Please Choose</option>
+                this.setState({questionaireAnswers});
+                this.validateQuestionaire();
+              }
+            }>
+              <option value={-1}>Please Choose</option>
               {options}
             </select>
           </li>
@@ -689,7 +698,7 @@ class StoryFull extends React.Component {
             }
             this.setState({ submitting: true });
 
-            moderatorAction(post.author, post.permlink, user.name, 'reviewed', this.state.questionaireAnswers, this.state.sliderValue).then(() => {
+            moderatorAction(post.author, post.permlink, user.name, 'reviewed', this.state.questionaireAnswers, this.state.totalQuestionaireScore).then(() => {
               this.setState({ verifyModal: false });
               this.setState({ submitting: false });
               this.setState({ commentFormText: 'Thank you for the contribution. It has been approved.' + this.state.commentDefaultFooter })
@@ -707,7 +716,15 @@ class StoryFull extends React.Component {
           </li>
           <li>
             <select style={{width:"100%", display:"relative", top:0}} onChange={(event, handler) => {
-              this.setState({ 'devSubCategory' : event.target.value });
+              this.setState({ 
+                'devSubCategory' : event.target.value,
+                qualitySliderSet: false,
+                questionaireResult: 0,
+                totalQuestionaireScore: 0,
+                questionaireAnswersMissing: true,
+                questionaireAnswers: [],
+                sliderValue: 0,
+              });
             }}>
               <option value="dev-project">New Project</option>
               <option value="dev-feature">New Feature/s</option>
@@ -718,7 +735,7 @@ class StoryFull extends React.Component {
       }
 
       {this.state.questionaireAnswersMissing ?
-        <p>Please answer all the questions!</p> : null
+        <p style={{color: "red"}}>Please answer all the questions!</p> : null
       }
       {this.renderQuestionaire()}
       <br /><br /><br /><br />
