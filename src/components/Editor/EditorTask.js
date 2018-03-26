@@ -597,36 +597,7 @@ class EditorTask extends React.Component {
             <EditorToolbar onSelect={this.insertCode} />
 
             <div className="Editor__dropzone-base">
-              <Dropzone
-                disableClick
-                style={{}}
-                accept="image/*"
-                onDrop={this.handleDrop}
-                onDragEnter={this.handleDragEnter}
-                onDragLeave={this.handleDragLeave}
-              >
-                {this.state.dropzoneActive && (
-                  <div className="Editor__dropzone">
-                    <div>
-                      <i className="iconfont icon-picture" />
-                      <FormattedMessage id="drop_image" defaultMessage="Drop your images here" />
-                    </div>
-                  </div>
-                )}
-                <HotKeys keyMap={EditorTask.hotkeys} handlers={this.handlers}>
-                  <Input
-                    autosize={{ minRows: 6, maxRows: 12 }}
-                    onChange={this.onUpdate}
-                    ref={ref => this.setInput(ref)}
-                    type="textarea"
-                    placeholder={intl.formatMessage({
-                      id: 'story_placeholder',
-                      defaultMessage: 'Write your story...',
-                    })}
-                    defaultValue={this.setDefaultTemplate()}
-                  />
-                </HotKeys>
-              </Dropzone>
+            
             </div>
             <p className="Editor__imagebox">
               <input type="file" id="inputfile" onChange={this.handleImageChange} />
