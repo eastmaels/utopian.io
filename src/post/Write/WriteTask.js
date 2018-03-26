@@ -344,7 +344,7 @@ class Write extends React.Component {
     const formData = new FormData();
     formData.append('files', blob);
 
-    fetch(`https://busy-img.herokuapp.com/@${this.props.user.name}/uploads`, {
+    fetch(`https://api.utopian.io/api/upload/post`, {
       method: 'POST',
       body: formData,
     })

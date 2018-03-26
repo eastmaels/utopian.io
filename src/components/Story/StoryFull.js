@@ -803,7 +803,7 @@ class StoryFull extends React.Component {
               const formData = new FormData();
               formData.append('files', blob);
 
-              fetch(`https://busy-img.herokuapp.com/@${username}/uploads`, {
+              fetch(`https://api.utopian.io/api/upload/post`, {
                 method: 'POST',
                 body: formData,
               })
