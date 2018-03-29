@@ -1,6 +1,6 @@
 const request = require('superagent');
 
-const API = process.env.UTOPIAN_API || "https://v2.api.utopian.io/api/";
+const API = process.env.UTOPIAN_API || "https://api.utopian.io/api/";
 const LOGIN_ENDPOINT = API.endsWith('/') ? API : API + '/';
 
 function authCallback(opts = {}) {
