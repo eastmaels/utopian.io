@@ -113,7 +113,7 @@ class Sponsors extends React.PureComponent {
               </div>}
             </div>
             {isUser && <div style={{textAlign: "center"}}><em>All the below figures converted in USD for simplicity. Will be sent as Steem Power.</em></div>}
-            isUser && <div className="Sponsors__stats">
+            {isUser && <div className="Sponsors__stats">
               <div className="Sponsors__stats-box">
                 <h3>${Math.round(stats.total_pending_rewards)}</h3>
                 <p><b>Pending Rewards</b></p>
