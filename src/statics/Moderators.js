@@ -64,13 +64,13 @@ class Moderators extends React.PureComponent {
             {isUser && <div style={{textAlign: "center"}}><em>5% of all the author rewards generated on Utopian are reserved for the moderators.</em></div>}
             <div className="Moderators__moderators">
               {moderators.map(moderator => {
-                const picture = `https://img.busy.org/@${moderator.account}?s=72`;
+                const picture = `https://steemitimages.com/u/${moderator.account}/avatar`;
                 const username = moderator.account;
                 return (
                   <div key={username} className="Moderators__moderators-moderator">
                     <div className="infoCont">
                       <Link to={`/@${username}`}>
-                        <img className="picture" src={picture} />
+                        <img style="width:72px;" className="picture" src={picture} />
                         <b className="account">{username}</b>
                         <small>{' '}{moderator.supermoderator === true ? '[supervisor]' : null}</small>
                       </Link>
