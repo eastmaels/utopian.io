@@ -70,7 +70,7 @@ class Moderators extends React.PureComponent {
                   <div key={username} className="Moderators__moderators-moderator">
                     <div className="infoCont">
                       <Link to={`/@${username}`}>
-                        <img style={{width:"72px"}} className="picture" src={picture} />
+                        <img style={{width:"72px",height:"72px"}} className="picture" src={picture} />
                         <b className="account">{username}</b>
                         <small>{' '}{moderator.supermoderator === true ? '[supervisor]' : null}</small>
                       </Link>
