@@ -363,7 +363,7 @@ class Write extends React.Component {
     const formData = new FormData();
     formData.append('files', blob);
 
-    fetch(`https://v2.api.utopian.io/api/upload/post`, {
+    fetch(`https://api.utopian.io/api/upload/post`, {
       method: 'POST',
       body: formData,
     })
