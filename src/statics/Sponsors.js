@@ -143,7 +143,7 @@ class Sponsors extends React.PureComponent {
                   <div key={username} className="Sponsors__heroes-hero">
                     <div className="infoCont">
                       <Link to={`/@${username}`}>
-                        <img style="width:72px;" className="picture" src={picture} />
+                        <img style={{width:"72px"}} className="picture" src={picture} />
                         <b className="account">{username}</b>
                       </Link>
                     </div>
