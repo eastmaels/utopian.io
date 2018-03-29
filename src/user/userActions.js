@@ -1,9 +1,11 @@
 import Promise from 'bluebird';
 import fetch from 'isomorphic-fetch';
 import sc2 from '../sc2';
-
+import busyAPI from '../busyAPI';
+import { getIsAuthenticated, getAuthenticatedUserName } from '../reducers';
 import { getUserCommentsFromState, getFeedLoadingFromState } from '../helpers/stateHelpers';
 import { getAllFollowing } from '../helpers/apiHelpers';
+import { createAsyncActionType } from '../helpers/stateHelpers';
 
 export const GET_USER_COMMENTS = 'GET_USER_COMMENTS';
 export const GET_USER_COMMENTS_START = 'GET_USER_COMMENTS_START';
@@ -199,6 +201,26 @@ export const getFollowing = (userName = '') => (dispatch, getState) => {
     meta: targetUsername,
     payload: {
       promise: getAllFollowing(userName),
+    },
+  });
+};
+
+export const GET_NOTIFICATIONS = createAsyncActionType('@user/GET_NOTIFICATIONS');
+
+export const getNotifications = username => (dispatch, getState) => {
+  const state = getState();
+
+  if (!username && !getIsAuthenticated(state)) {
+    return dispatch({ type: GET_NOTIFICATIONS.ERROR });
+  }
+
+  const targetUsername = username || getAuthenticatedUserName(state);
+
+  return dispatch({
+    type: GET_NOTIFICATIONS.ACTION,
+    meta: targetUsername,
+    payload: {
+      promise: busyAPI.sendAsync('get_notifications', [targetUsername]),
     },
   });
 };

@@ -8,6 +8,7 @@ import Logger from 'js-logger';
 import { AppContainer } from 'react-hot-loader';
 import { LocaleProvider, message } from 'antd';
 import enUS from 'antd/lib/locale-provider/en_US';
+import sc2 from './sc2';
 import { history } from './routes';
 import pkg from '../package.json';
 import getStore from './store';

@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch';
 import _ from 'lodash';
 import { createAction } from 'redux-actions';
 import { createAsyncActionType } from '../helpers/stateHelpers';
+import { BUSY_API_TYPES } from '../../common/constants/notifications';
 import { setLocaleMetadata } from '../helpers/metadata';
 
 export const GET_LOCALE = '@app/GET_LOCALE';
@@ -111,5 +112,17 @@ export const getCryptoPriceHistory = (symbol, refresh = false) => dispatch => {
       }),
     },
   });
+};
+
+export const ADD_NEW_NOTIFICATION = '@user/ADD_NEW_NOTIFICATION';
+export const addNewNotification = createAction(ADD_NEW_NOTIFICATION);
+
+export const busyAPIHandler = (response, message) => dispatch => {
+  const type = _.get(message, 'type');
+
+  if (_.isEqual(type, BUSY_API_TYPES.notification)) {
+    const notification = _.get(message, BUSY_API_TYPES.notification);
+    dispatch(addNewNotification(notification));
+  }
 };
 

@@ -63,4 +63,14 @@ export const toggleBookmarkMetadata = (id, author, permlink) =>
     )
     .then(resp => resp.user_metadata.bookmarks);
 
+export const saveNotificationsLastTimestamp = lastTimestamp =>
+  getMetadata()
+    .then(metadata =>
+      sc2.updateUserMetadata({
+        ...metadata,
+        notifications_last_timestamp: lastTimestamp,
+      }),
+    )
+    .then(resp => resp.user_metadata.notifications_last_timestamp);
+
 export default getMetadata;
