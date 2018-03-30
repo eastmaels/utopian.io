@@ -137,13 +137,13 @@ class Sponsors extends React.PureComponent {
               {sponsors.map(sponsor => {
                 const VS = sponsor.vesting_shares;
                 const delegatedSP = steem.formatter.vestToSteem(VS, this.state.total_vesting_shares, this.state.total_vesting_fund_steem);
-                const picture = `https://img.busy.org/@${sponsor.account}?s=72`;
+                const picture = `https://steemitimages.com/u/${sponsor.account}/avatar`;
                 const username = sponsor.account;
                 return (
                   <div key={username} className="Sponsors__heroes-hero">
                     <div className="infoCont">
                       <Link to={`/@${username}`}>
-                        <img className="picture" src={picture} />
+                        <img style={{width:"72px",height:"72px"}} className="picture" src={picture} />
                         <b className="account">{username}</b>
                       </Link>
                     </div>
