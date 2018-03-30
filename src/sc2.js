@@ -154,6 +154,10 @@ function updateUserMetadata(metadata, cb) {
   return send('me', 'PUT', { user_metadata: metadata }, cb);
 };
 
+function me(cb) {
+  return send('me', 'POST', {}, cb);
+};
+
 function vote(voter, author, permlink, weight) {
   const params = {
     voter,
@@ -228,6 +232,7 @@ function sign(name, params, redirectUri) {
 module.exports = {
   getLoginUrl,
   send,
+  me,
   sign,
   profile,
   updateMetadata,

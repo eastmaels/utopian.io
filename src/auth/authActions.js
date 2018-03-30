@@ -3,6 +3,7 @@ import { createAction } from 'redux-actions';
 import { getAuthenticatedUserName, getIsAuthenticated } from '../reducers';
 import { getAccount } from '../helpers/apiHelpers';
 import { getFollowing } from '../user/userActions';
+import busyAPI from '../busyAPI';
 import { createAsyncActionType } from '../helpers/stateHelpers';
 import { getDrafts } from '../helpers/localStorageHelpers';
 import * as request from 'superagent';
@@ -102,11 +103,11 @@ export const logout = () => (dispatch) => {
   });
 };
 
-export const getUpdatedSCUserMetadata = () => (dispatch, getState, { steemConnectAPI }) =>
+export const getUpdatedSCUserMetadata = () => (dispatch, getState) =>
   dispatch({
     type: UPDATE_SC2_USER_METADATA.ACTION,
     payload: {
-      promise: steemConnectAPI.me(),
+      promise: sc2.me(),
     },
   });
 

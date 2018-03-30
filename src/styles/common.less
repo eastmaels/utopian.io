@@ -1,3 +1,5 @@
+@import (reference) './custom.less';
+
 body {
   overflow-y: scroll;
 }
@@ -26,6 +28,20 @@ body {
 
 .ant-layout {
   overflow: hidden;
+}
+
+.ant-popover {
+  z-index: @ant-popover-z-index !important;
+}
+
+.ant-tooltip {
+  z-index: @ant-tooltip-z-index !important;
+}
+
+.Notifications__popover-overlay {
+  top: 46px !important;
+  z-index: @ant-popover-notifications-z-index !important;
+  position: fixed;
 }
 
 .ant-tooltip {
