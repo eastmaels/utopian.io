@@ -9,6 +9,7 @@ import ProfileSettings from './app/ProfileSettings';
 import Activity from './activity/Activity';
 import Wallet from './wallet/Wallet';
 import UserWallet from './user/UserWallet';
+import Notifications from './notifications/Notifications';
 
 import Page from './feed/Page';
 import Project from './feed/Project';
@@ -144,6 +145,7 @@ export default (
           </RequireLogin>
         )}
       />
+      <Route path="/notifications" exact component={Notifications} />
       <Route
         exact
         path="/github/callback"

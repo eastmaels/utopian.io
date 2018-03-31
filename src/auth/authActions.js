@@ -103,14 +103,6 @@ export const logout = () => (dispatch) => {
   });
 };
 
-export const getUpdatedSCUserMetadata = () => (dispatch, getState) =>
-  dispatch({
-    type: UPDATE_SC2_USER_METADATA.ACTION,
-    payload: {
-      promise: sc2.me(),
-    },
-  });
-
 export const updateAuthUser = username => dispatch =>
   dispatch({
     type: UPDATE_AUTH_USER.ACTION,
@@ -119,8 +111,16 @@ export const updateAuthUser = username => dispatch =>
     },
   });
 
+export const getUpdatedSCUserMetadata = () => (dispatch, getState) =>
+  dispatch({
+    type: UPDATE_SC2_USER_METADATA.ACTION,
+    payload: {
+      promise: sc2.profile(),
+    },
+  });
+
 export const busyLogin = () => (dispatch, getState) => {
-  const accessToken = Cookie.get('access_token');
+  const accessToken = Cookie.get('session');
   const state = getState();
 
   if (!getIsAuthenticated(state)) {

@@ -53,8 +53,12 @@ class Notifications extends React.Component {
 
   componentDidMount() {
     const { notifications, lastSeenTimestamp } = this.props;
+    console.log('lastSeenTimestamp');
+    console.log(lastSeenTimestamp);
     const latestNotification = _.get(notifications, 0);
     const timestamp = _.get(latestNotification, 'timestamp');
+    console.log('timestamp');
+    console.log(timestamp);
 
     if (timestamp > lastSeenTimestamp) {
       saveNotificationsLastTimestamp(timestamp).then(() => this.props.getUpdatedSCUserMetadata());

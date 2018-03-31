@@ -60,43 +60,6 @@ function getLoginUrl(state) {
   return `${auth}?${clientId}&${response}&${redirect}&${state}&${scope}`;
 }
 
-function send(route, method, body, cb) {
-  var url = process.env.STEEMCONNECT_HOST + '/api/' + route;
-  const accessToken = Cookie.get('access_token');
-  var promise = fetch(url, {
-    method: method,
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'Content-Type': 'application/json',
-      Authorization: accessToken
-    },
-    body: JSON.stringify(body)
-  }).then(function (res) {
-    var json = res.json();
-    // If the status is something other than 200 we need
-    // to reject the result since the request is not considered as a fail
-    if (res.status !== 200) {
-      return json.then(function (result) {
-        return Promise.reject(new SDKError('sc2-sdk error', result));
-      });
-    }
-    return json;
-  }).then(function (res) {
-    if (res.error) {
-      return Promise.reject(new SDKError('sc2-sdk error', res));
-    }
-    return res;
-  });
-
-  if (!cb) return promise;
-
-  return promise.then(function (res) {
-    return cb(null, res);
-  }).catch(function (err) {
-    return cb(err, null);
-  });
-};
-
 function profile() {
   const endpoint = process.env.UTOPIAN_API + 'sc2/profile';
   const session = Cookie.get('session');
@@ -106,12 +69,16 @@ function profile() {
 }
 
 function updateMetadata(metadata) {
+  metadata = metadata !== undefined ? metadata : {};
   const endpoint = process.env.UTOPIAN_API + 'sc2/profile';
   const session = Cookie.get('session');
   return request.put(endpoint)
                 .send({user_metadata: metadata})
                 .set('session', session)
-                .then(res => res.body);
+                .then(res => {
+                  console.log(res.body);
+                  return res.body;
+                });
 }
 
 function broadcast(operations, cb) {
@@ -147,15 +114,6 @@ function claimRewardBalance(account, rewardSteem, rewardSbd, rewardVests, cb) {
     reward_vests: rewardVests
   };
   return broadcast([['claim_reward_balance', params]], cb);
-};
-
-function updateUserMetadata(metadata, cb) {
-  metadata = metadata !== undefined && metadata.length > 0 ? metadata : {};
-  return send('me', 'PUT', { user_metadata: metadata }, cb);
-};
-
-function me(cb) {
-  return send('me', 'POST', {}, cb);
 };
 
 function vote(voter, author, permlink, weight) {
@@ -229,15 +187,65 @@ function sign(name, params, redirectUri) {
   return url;
 };
 
+function send(route, method, body, cb) {
+  console.log('send body');
+  console.log(body)
+
+  var url = 'https://steemconnect.com' + '/api/' + route;
+  const session = Cookie.get('access_token');
+  console.log(url);
+  console.log('session');
+  console.log(session);
+
+  var promise = fetch(url, {
+    method: method,
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json',
+      Authorization: session
+    },
+    body: JSON.stringify(body)
+  }).then(function (res) {
+    var json = res.json();
+    // If the status is something other than 200 we need
+    // to reject the result since the request is not considered as a fail
+    if (res.status !== 200) {
+      return json.then(function (result) {
+        return Promise.reject(new SDKError('sc2-sdk error', result));
+      });
+    }
+    console.log('json');
+    console.log(json);
+    return json;
+  }).then(function (res) {
+    if (res.error) {
+      return Promise.reject(new SDKError('sc2-sdk error', res));
+    }
+    return res;
+  });
+
+  if (!cb) return promise;
+
+  return promise.then(function (res) {
+    return cb(null, res);
+  }).catch(function (err) {
+    return cb(err, null);
+  });
+};
+
+function updateUserMetadata(metadata, cb) {
+  metadata =  metadata !== undefined ? metadata : {};
+  return this.send('me', 'PUT', { user_metadata: metadata }, cb);
+};
+
 module.exports = {
   getLoginUrl,
-  send,
-  me,
   sign,
   profile,
   updateMetadata,
-  broadcast,
+  send,
   updateUserMetadata,
+  broadcast,
   claimRewardBalance,
   comment,
   vote,

@@ -253,10 +253,15 @@ class Topnav extends React.Component {
       history,
     } = this.props;
 
+//    console.log('userSCMetaData');
+//    console.log(userSCMetaData);
+
     let content;
 
     const { notificationsPopoverVisible } = this.state;
     const lastSeenTimestamp = _.get(userSCMetaData, 'notifications_last_timestamp');
+//    console.log('lastSeenTimestamp');
+//    console.log(lastSeenTimestamp);
     const notificationsCount = _.isUndefined(lastSeenTimestamp)
       ? _.size(notifications)
       : _.size(
