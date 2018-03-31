@@ -352,7 +352,7 @@ class Topnav extends React.Component {
               <Link className="Topnav__brand" to="/">
                 <img style={{height: "72px"}} id="MainLogo" src={logoSource()}/>
               </Link>
-              <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}beta</Link></span>
+              <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}omega</Link></span>
             </div>
             <div className="center">
               <div className="Topnav__input-container nomobile">
