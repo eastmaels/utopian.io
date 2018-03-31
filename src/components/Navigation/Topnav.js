@@ -350,7 +350,7 @@ class Topnav extends React.Component {
           <div className="topnav-layout container">
             <div className="left">
               <Link className="Topnav__brand" to="/">
-                <img style={{height: "72px"}} id="MainLogo" src={logoSource()}/>
+                <img style={{height: "54px"}} id="MainLogo" src={logoSource()}/>
               </Link>
               <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}omega</Link></span>
             </div>
