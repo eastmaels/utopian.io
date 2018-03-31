@@ -334,13 +334,14 @@ class Topnav extends React.Component {
     }
 
     const logoSource = () => {
-      var prefix = "https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets";
-      if (process.env.NODE_ENV === 'production') prefix = "";
-      if (window.innerWidth > 736) {
-        return `${prefix}/img/utopian-sole.png`;
-      } else {
-        return `${prefix}/img/utopian-sole.png`;
-      }
+      return "https://utopian.land";
+      // var prefix = "https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets";
+      // if (process.env.NODE_ENV === 'production') prefix = "";
+      // if (window.innerWidth > 736) {
+      //   return `${prefix}/img/utopian-sole.png`;
+      // } else {
+      //   return `${prefix}/img/utopian-sole.png`;
+      // }
     }
 
     return (
