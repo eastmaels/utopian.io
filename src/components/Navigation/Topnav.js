@@ -334,14 +334,13 @@ class Topnav extends React.Component {
     }
 
     const logoSource = () => {
-      return "https://utopian.land";
-      // var prefix = "https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets";
-      // if (process.env.NODE_ENV === 'production') prefix = "";
-      // if (window.innerWidth > 736) {
-      //   return `${prefix}/img/utopian-sole.png`;
-      // } else {
-      //   return `${prefix}/img/utopian-sole.png`;
-      // }
+      var prefix = "https://raw.githubusercontent.com/utopian-io/utopian.io/new-design/assets";
+      if (process.env.NODE_ENV === 'production') prefix = "";
+      if (window.innerWidth > 736) {
+        return `${prefix}/img/utopian-sole.png`;
+      } else {
+        return `${prefix}/img/utopian-sole.png`;
+      }
     }
 
     return (
@@ -350,9 +349,9 @@ class Topnav extends React.Component {
           <div className="topnav-layout container">
             <div className="left">
               <Link className="Topnav__brand" to="/">
-                <img style={{height: "54px"}} id="MainLogo" src={logoSource()}/>
+                <img id="MainLogo" src={logoSource()}/>
               </Link>
-              <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}omega</Link></span>
+              <span className="Topnav__version"><Link to="/" className="Topnav__version">{window.innerWidth > 736 && <span>&nbsp;&nbsp;</span>}beta</Link></span>
             </div>
             <div className="center">
               <div className="Topnav__input-container nomobile">
