@@ -7,16 +7,28 @@ import { Layout } from 'antd';
 import Cookie from 'js-cookie';
 import Loading from './components/Icon/Loading';
 
-import { getAuthenticatedUser, getLocale } from './reducers';
+import {
+  getAuthenticatedUser,
+  getAuthenticatedUserName,
+  getLocale,
+} from './reducers';
+import { login, login_v2, logout, busyLogin } from './auth/authActions';
+import { getNotifications } from './user/userActions';
 import { getReposByGithub } from './actions/projects';
 import { getUser } from './actions/user';
-
-import { login, logout } from './auth/authActions';
-import { getRate, getRewardFund, getTrendingTopics, getCurrentMedianHistoryPrice } from './app/appActions';
+import * as reblogActions from './app/Reblog/reblogActions';
+import busyAPI from './busyAPI';
+import NotificationPopup from './notifications/NotificationPopup';
+import {
+  getRate,
+  getRewardFund,
+  getTrendingTopics,
+  getCurrentMedianHistoryPrice,
+  busyAPIHandler,
+} from './app/appActions';
 import Topnav from './components/Navigation/Topnav';
 import CookiePolicyBanner from './statics/CookiePolicyBanner';
 import Transfer from './wallet/Transfer';
-import * as reblogActions from './app/Reblog/reblogActions';
 import getTranslations, { getAvailableLocale } from './translations';
 import RequireTos from "./auth/RequireTos";
 
@@ -24,15 +36,20 @@ import RequireTos from "./auth/RequireTos";
 @connect(
   state => ({
     user: getAuthenticatedUser(state),
+    username: getAuthenticatedUserName(state),
     locale: getLocale(state),
   }),
   {
     login,
+    login_v2,
     logout,
+    getNotifications,
     getRate,
     getRewardFund,
     getTrendingTopics,
+    busyLogin,
     getCurrentMedianHistoryPrice,
+    busyAPIHandler,
     getRebloggedList: reblogActions.getRebloggedList,
     getReposByGithub,
     getUser,
@@ -44,24 +61,37 @@ export default class Wrapper extends React.PureComponent {
     locale: PropTypes.string.isRequired,
     children: PropTypes.element.isRequired,
     history: PropTypes.shape().isRequired,
+    username: PropTypes.string,
     login: PropTypes.func,
+    login_v2: PropTypes.func,
     logout: PropTypes.func,
     getRebloggedList: PropTypes.func,
     getRate: PropTypes.func,
     getRewardFund: PropTypes.func,
     getTrendingTopics: PropTypes.func,
     getCurrentMedianHistoryPrice: PropTypes.func,
+    getNotifications: PropTypes.func,
+    busyLogin: PropTypes.func,
+    busyAPIHandler: PropTypes.func,
   };
 
   static defaultProps = {
     login: () => {},
+    login_v2: () => {},
     logout: () => {},
     getRebloggedList: () => {},
     getRate: () => {},
     getRewardFund: () => {},
     getTrendingTopics: () => {},
     getCurrentMedianHistoryPrice: () => {},
+    getNotifications: () => {},
+    busyLogin: () => {},
+    busyAPIHandler: () => {},
   };
+
+  static fetchData(store) {
+    return store.dispatch(login_v2());
+  }
 
   state = {
     loadedRepos: false,
@@ -71,12 +101,21 @@ export default class Wrapper extends React.PureComponent {
   componentWillMount() {
     if (Cookie.get('session')) {
       this.props.login();
+      this.props.busyLogin();
     }
     this.props.getRewardFund();
     this.props.getRebloggedList();
     this.props.getRate();
     this.props.getTrendingTopics();
     this.props.getCurrentMedianHistoryPrice();
+  }
+
+  componentDidMount() {
+    this.props.login_v2().then(() => {
+      this.props.getNotifications();
+    });
+
+    busyAPI.subscribe(this.props.busyAPIHandler);
   }
 
   componentDidUpdate () {

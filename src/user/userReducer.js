@@ -2,6 +2,7 @@ import keyBy from 'lodash/keyBy';
 import omit from 'lodash/omit';
 
 import * as actions from './userActions';
+import * as appTypes from '../app/appActions';
 
 const initialState = {
   // Map<FilePublicId, File>
@@ -17,6 +18,9 @@ const initialState = {
     pendingFollows: [],
     isFetching: false,
   },
+  notifications: [],
+  latestNotification: {},
+  loadingNotifications: false,
   repos: [],
 };
 
@@ -142,6 +146,31 @@ export default function userReducer(state = initialState, action) {
           ),
         },
       };
+    case actions.GET_NOTIFICATIONS.START:
+      return {
+        ...state,
+        loadingNotifications: true,
+      };
+
+    case actions.GET_NOTIFICATIONS.SUCCESS:
+      return {
+        ...state,
+        notifications: action.payload,
+        loadingNotifications: false,
+      };
+
+    case actions.GET_NOTIFICATIONS.ERROR:
+      return {
+        ...state,
+        loadingNotifications: false,
+      };
+
+    case appTypes.ADD_NEW_NOTIFICATION:
+      return {
+        ...state,
+        notifications: [action.payload, ...state.notifications],
+        latestNotification: action.payload,
+      };
     default: {
       return state;
     }
@@ -150,3 +179,6 @@ export default function userReducer(state = initialState, action) {
 
 export const getFollowingList = state => state.following.list;
 export const getPendingFollows = state => state.following.pendingFollows;
+export const getNotifications = state => state.notifications;
+export const getIsLoadingNotifications = state => state.loadingNotifications;
+export const getLatestNotification = state => state.latestNotification;

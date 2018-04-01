@@ -7,6 +7,9 @@ function authCallback(opts = {}) {
   return function(req, res) {
     const code = req.query.code;
     const state = req.query.state;
+    const accessToken = req.query.access_token;
+    const expiresIn = req.query.expires_in;
+
     if (!code) {
       return res.status(401).send({ error: 'missing oauth code' });
     }
@@ -21,6 +24,9 @@ function authCallback(opts = {}) {
           maxAge: loginRes.body.expiry - Date.now(),
           sameSite: true
         });
+        if (accessToken && expiresIn) {
+          res.cookie('access_token', accessToken, { maxAge: expiresIn * 1000 });
+        }
       }
       if (opts.allowAnyRedirect === true) {
         res.redirect(state ? state : '/');

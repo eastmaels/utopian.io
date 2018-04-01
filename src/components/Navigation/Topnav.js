@@ -1,31 +1,63 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Menu, Popover, Input, Select, Modal, Button } from 'antd';
+import { Menu, Popover, Tooltip, Input, Select, Modal, Button } from 'antd';
 import Action from '../Button/Action';
 
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 import sc2 from '../../sc2';
-
+import { getUpdatedSCUserMetadata } from '../../auth/authActions';
+import {
+  getAutoCompleteSearchResults,
+  getNotifications,
+  getAuthenticatedUserSCMetaData,
+  getIsLoadingNotifications,
+} from '../../reducers';
+import { PARSED_NOTIFICATIONS } from '../../../common/constants/notifications';
 import Icon from 'antd/lib/icon';
 import Avatar from '../Avatar';
 import PopoverMenu, { PopoverMenuItem } from '../PopoverMenu/PopoverMenu';
-
+import Notifications from './Notifications/Notifications';
 import CategoryIcon from '../CategoriesIcons';
 import './Topnav.less';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
 
+@injectIntl
 @connect(
   state => ({
     repos: state.repos,
+    notifications: getNotifications(state),
+    userSCMetaData: getAuthenticatedUserSCMetaData(state),
+    loadingNotifications: getIsLoadingNotifications(state),
   }),
-  { getGithubRepos, setGithubRepos },
+  {
+    getGithubRepos,
+    setGithubRepos,
+    getUpdatedSCUserMetadata,
+  },
 )
 class Topnav extends React.Component {
+  static propTypes = {
+    intl: PropTypes.shape().isRequired,
+    username: PropTypes.string,
+    notifications: PropTypes.arrayOf(PropTypes.shape()),
+    getUpdatedSCUserMetadata: PropTypes.func.isRequired,
+    userSCMetaData: PropTypes.shape(),
+    loadingNotifications: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    notifications: [],
+    username: undefined,
+    onMenuItemClick: () => {},
+    userSCMetaData: {},
+    loadingNotifications: false,
+  };
 
   state = {
     value: '',
@@ -94,8 +126,28 @@ class Topnav extends React.Component {
     this.handleChangeSearchType = this.handleChangeSearchType.bind(this);
     this.state = {
       searchSection: this.searchSelected(props.location) || 'projects',
+      notificationsPopoverVisible: false,
     };
+    this.handleNotificationsPopoverVisibleChange = this.handleNotificationsPopoverVisibleChange.bind(
+      this,
+    );
+    this.handleCloseNotificationsPopover = this.handleCloseNotificationsPopover.bind(this);
   }
+
+  handleNotificationsPopoverVisibleChange(visible) {
+    if (visible) {
+      this.setState({ notificationsPopoverVisible: visible });
+    } else {
+      this.handleCloseNotificationsPopover();
+    }
+  }
+
+  handleCloseNotificationsPopover() {
+    this.setState({
+      notificationsPopoverVisible: false,
+    });
+  }
+
 
   renderItems(items) {
     return items;
@@ -191,10 +243,10 @@ class Topnav extends React.Component {
     const {
       intl,
       username,
-      onNotificationClick,
-      onSeeAllClick,
       onMenuItemClick,
       notifications,
+      userSCMetaData,
+      loadingNotifications,
       repos,
       getGithubRepos,
       setGithubRepos,
@@ -203,8 +255,20 @@ class Topnav extends React.Component {
 
     let content;
 
-    const notificationsCount =
-      notifications && notifications.filter(notification => !notification.read).length;
+    const { notificationsPopoverVisible } = this.state;
+    const lastSeenTimestamp = _.get(userSCMetaData, 'notifications_last_timestamp');
+    const notificationsCount = _.isUndefined(lastSeenTimestamp)
+      ? _.size(notifications)
+      : _.size(
+          _.filter(
+            notifications,
+            notification =>
+              lastSeenTimestamp < notification.timestamp &&
+              _.includes(PARSED_NOTIFICATIONS, notification.type),
+          ),
+        );
+    const displayBadge = notificationsCount > 0;
+    const notificationsCountDisplay = notificationsCount > 99 ? '99+' : notificationsCount;
 
     const next = window !== undefined && window.location.pathname.length > 1 ? window.location.pathname : '';
 
@@ -220,6 +284,41 @@ class Topnav extends React.Component {
                         } />
               </Link>
             </Menu.Item>
+            <Menu.Item key="notifications" className="Topnav__item--badge">
+              <Tooltip
+                placement="bottom"
+                title={intl.formatMessage({ id: 'notifications', defaultMessage: 'Notifications' })}
+                overlayClassName="Topnav__notifications-tooltip"
+                mouseEnterDelay={1}
+              >
+                <Popover
+                  placement="bottomRight"
+                  trigger="click"
+                  content={
+                    <Notifications
+                      notifications={notifications}
+                      onNotificationClick={this.handleCloseNotificationsPopover}
+                      currentAuthUsername={username}
+                      lastSeenTimestamp={lastSeenTimestamp}
+                      loadingNotifications={loadingNotifications}
+                      getUpdatedSCUserMetadata={this.props.getUpdatedSCUserMetadata}
+                    />
+                  }
+                  visible={notificationsPopoverVisible}
+                  onVisibleChange={this.handleNotificationsPopoverVisibleChange}
+                  overlayClassName="Notifications__popover-overlay"
+                  title={intl.formatMessage({ id: 'notifications', defaultMessage: 'Notifications' })}
+                >
+                  <a className="Topnav__link Topnav__link--light Topnav__link--action">
+                    {displayBadge ? (
+                      <div className="Topnav__notifications-count">{notificationsCountDisplay}</div>
+                    ) : (
+                      <i className="iconfont icon-remind" />
+                    )}
+                  </a>
+                </Popover>
+              </Tooltip>
+            </Menu.Item>
             <Menu.Item key="user" className="Topnav__item-user">
               <Link className="Topnav__user" to={`/@${username}`}>
                 <Avatar username={username} size={36}/>
@@ -228,32 +327,6 @@ class Topnav extends React.Component {
                  </span>*/}
               </Link>
             </Menu.Item>
-            {/*<Menu.Item
-             key="notifications"
-             className="Topnav__item--badge"
-             >
-             <Tooltip placement="bottom"
-             title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}>
-             <Popover
-             placement="bottomRight"
-             trigger="click"
-             content={
-             <Notifications
-             notifications={notifications}
-             onClick={onNotificationClick}
-             onSeeAllClick={onSeeAllClick}
-             />
-             }
-             title={intl.formatMessage({id: 'notifications', defaultMessage: 'Notifications'})}
-             >
-             <a className="Topnav__link Topnav__link--light">
-             <Badge count={notificationsCount}>
-             <i className="iconfont icon-remind"/>
-             </Badge>
-             </a>
-             </Popover>
-             </Tooltip>
-             </Menu.Item>*/}
             <Menu.Item className="UWhite" key="more">
               <Popover
                 className="TopPopover"
@@ -371,22 +444,4 @@ class Topnav extends React.Component {
   }
 }
 
-Topnav.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  username: PropTypes.string,
-  onNotificationClick: PropTypes.func,
-  onSeeAllClick: PropTypes.func,
-  onMenuItemClick: PropTypes.func,
-  notifications: PropTypes.arrayOf(PropTypes.shape()),
-  history: PropTypes.shape().isRequired,
-};
-
-Topnav.defaultProps = {
-  username: undefined,
-  onNotificationClick: () => {},
-  onSeeAllClick: () => {},
-  onMenuItemClick: () => {},
-  notifications: [],
-};
-
-export default injectIntl(Topnav);
+export default Topnav;

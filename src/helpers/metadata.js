@@ -71,10 +71,6 @@ export const saveNotificationsLastTimestamp = lastTimestamp =>
         notifications_last_timestamp: lastTimestamp,
       }),
     )
-    .then(resp => {
-      console.log('saveNotificationsLastTimestamp user_metadata');
-      console.log(resp);
-      resp.user_metadata.notifications_last_timestamp;
-    });
+    .then(resp => resp.user_metadata.notifications_last_timestamp );
 
 export default getMetadata;

@@ -357,12 +357,25 @@
       line-height: 55px !important;
       margin-left: @base-spacing;
 
-      & > li {
+      & > li.ant-menu-item {
         height: 55px !important;
         padding: 0 4px !important;
+        display: flex;
+        justify-content: center;
+        border-bottom: 0 !important;
+        align-items: center;
 
-        & > a , &>span{
+        & > a {
+          color: @blue-botticelli !important;
           font-weight: 600 !important;
+
+          &.Topnav__link--action {
+            margin-top: 7px;
+          }
+
+          &:hover {
+            color: @grey-mortar !important;
+          }
         }
       }
     }
@@ -398,6 +411,14 @@
     margin: 0 10px !important;
   }
 
+  &__link {
+    &--light {
+      i {
+        font-weight: normal !important;
+      }
+    }
+  }
+
   &__item-write {
     background-color: @blue;
     &:hover {
@@ -417,6 +438,29 @@
       }
     }
   }
+
+  &__notifications-count {
+    height: 35px;
+    min-width: 35px;
+    border-radius: 50%;
+    background-color: @superblue;
+    color: @white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .icon-caretbottom {
+    font-size: 12px !important;
+  }
+
+  .icon-remind {
+    font-size: 28px !important;
+    color: @superblue;
+  }
+
   &__whitelink {
     i {
       color: rgba(255, 255, 255, 0.65);
@@ -474,6 +518,18 @@
 .Github__t {
   margin-left: 8px !important;
   color: gray;
+}
+
+.ant-popover-title {
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  color: @blue-baliHai !important;
+}
+
+.Topnav__notifications-tooltip {
+  top: 61px !important;
 }
 
 .Github__c {

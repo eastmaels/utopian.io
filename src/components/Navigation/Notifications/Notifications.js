@@ -149,6 +149,7 @@ class Notifications extends React.Component {
             const key = `${index}${notification.timestamp}`;
             const read = lastSeenTimestamp >= notification.timestamp;
             switch (notification.type) {
+              /*
               case notificationConstants.REPLY:
                 return (
                   <NotificationReply
@@ -159,6 +160,7 @@ class Notifications extends React.Component {
                     onClick={this.handleNotificationsClick}
                   />
                 );
+              */
               case notificationConstants.FOLLOW:
                 return (
                   <NotificationFollowing
@@ -168,6 +170,7 @@ class Notifications extends React.Component {
                     onClick={this.handleNotificationsClick}
                   />
                 );
+              /*
               case notificationConstants.MENTION:
                 return (
                   <NotificationMention
@@ -177,6 +180,7 @@ class Notifications extends React.Component {
                     onClick={this.handleNotificationsClick}
                   />
                 );
+              */
               case notificationConstants.VOTE:
                 return (
                   <NotificationVote

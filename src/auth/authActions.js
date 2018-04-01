@@ -1,6 +1,9 @@
 import Cookie from 'js-cookie';
+import { createAction } from 'redux-actions';
+import { getAuthenticatedUserName, getIsAuthenticated } from '../reducers';
 import { getAccount } from '../helpers/apiHelpers';
 import { getFollowing } from '../user/userActions';
+import busyAPI from '../busyAPI';
 import { createAsyncActionType } from '../helpers/stateHelpers';
 import { getDrafts } from '../helpers/localStorageHelpers';
 import * as request from 'superagent';
@@ -21,6 +24,8 @@ export const LOGOUT_START = '@auth/LOGOUT_START';
 export const LOGOUT_ERROR = '@auth/LOGOUT_ERROR';
 export const LOGOUT_SUCCESS = '@auth/LOGOUT_SUCCESS';
 
+export const UPDATE_SC2_USER_METADATA = createAsyncActionType('@auth/UPDATE_SC2_USER_METADATA');
+export const BUSY_LOGIN = createAsyncActionType('@auth/BUSY_LOGIN');
 export const UPDATE_AUTH_USER = createAsyncActionType('@auth/UPDATE_AUTH_USER');
 export const login = () => (dispatch) => {
   dispatch({
@@ -62,6 +67,19 @@ export const login = () => (dispatch) => {
   });
 };
 
+const loginError = createAction(LOGIN_ERROR);
+
+export const login_v2 = () => (dispatch) => {
+  let promise = sc2.profile().catch(() => dispatch(loginError()));
+
+  return dispatch({
+    type: LOGIN,
+    payload: {
+      promise,
+    },
+  }).catch(() => dispatch(loginError()));
+};
+
 export const reload = () => dispatch =>
   dispatch({
     type: RELOAD,
@@ -93,3 +111,29 @@ export const updateAuthUser = username => dispatch =>
     },
   });
 
+export const getUpdatedSCUserMetadata = () => (dispatch, getState) =>
+  dispatch({
+    type: UPDATE_SC2_USER_METADATA.ACTION,
+    payload: {
+      promise: sc2.profile(),
+    },
+  });
+
+export const busyLogin = () => (dispatch, getState) => {
+  const accessToken = Cookie.get('access_token');
+  const state = getState();
+
+  if (!getIsAuthenticated(state)) {
+    return dispatch({ type: BUSY_LOGIN.ERROR });
+  }
+
+  const targetUsername = getAuthenticatedUserName(state);
+
+  return dispatch({
+    type: BUSY_LOGIN.ACTION,
+    meta: targetUsername,
+    payload: {
+      promise: busyAPI.sendAsync('login', [accessToken]),
+    },
+  });
+};

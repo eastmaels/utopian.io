@@ -1,3 +1,5 @@
+@import (reference) './custom.less';
+
 body {
   overflow-y: scroll;
 }
@@ -24,15 +26,56 @@ body {
   vertical-align: -1px;
 }
 
+.text-icon-right {
+  margin-left: 4px;
+  vertical-align: -1px;
+}
+
 .ant-layout {
   overflow: hidden;
 }
 
+.ant-layout-header {
+  z-index: @ant-layout-header-z-index !important;
+}
+
+.ant-popover {
+  z-index: @ant-popover-z-index !important;
+}
+
 .ant-tooltip {
-  z-index: 999;
+  z-index: @ant-tooltip-z-index !important;
+}
+
+.Notifications__popover-overlay {
+  top: 46px !important;
+  z-index: @ant-popover-notifications-z-index !important;
+  position: fixed;
+}
+
+.ant-modal-mask,
+.ant-modal-wrap {
+  z-index: @ant-modal-z-index;
+}
+
+// for when modals are active
+body.white-bg .ant-popover {
+  z-index: @ant-modal-popover-z-index !important;
+}
+
+body.white-bg .ant-tooltip {
+  z-index: @ant-modal-tooltip-z-index !important;
+}
+
+.ant-tooltip {
+  z-index: 1060;
 
   &-content {
     font-weight: 500;
+
+    a {
+      color: @white;
+    }
   }
 }
 
