@@ -7,9 +7,9 @@ import { epochToUTC } from '../../../helpers/formatter';
 import Avatar from '../../Avatar';
 import './Notification.less';
 
-const NotificationReply = ({ notification, currentAuthUsername, read, onClick }) => {
+const NotificationReply = ({ notification, currentAuthUsername, read, onClick, isModerator }) => {
   const { permlink, parent_permlink: parentPermlink, author, timestamp } = notification;
-  const commentURL = `/@${currentAuthUsername}/${parentPermlink}/#@${author}/${permlink}`;
+  const commentURL = `/utopian-io/@${currentAuthUsername}/${parentPermlink}/#@${author}/${permlink}`;
   return (
     <Link
       to={commentURL}
@@ -28,6 +28,8 @@ const NotificationReply = ({ notification, currentAuthUsername, read, onClick })
               username: <span className="username">{author}</span>,
             }}
           />
+          {isModerator ? 'a moderator has replied to your post.' : ''}
+          {author==='utopian-io' ? 'Utopian-io has replied to your post.' : ''}
         </div>
         <div className="Notification__text__date">
           <FormattedRelative value={epochToUTC(timestamp)} />
@@ -45,6 +47,7 @@ NotificationReply.propTypes = {
     parent_permlink: PropTypes.string,
     timestamp: PropTypes.number,
   }),
+  isModerator: PropTypes.shape(),
   currentAuthUsername: PropTypes.string,
   onClick: PropTypes.func,
 };
@@ -52,6 +55,7 @@ NotificationReply.propTypes = {
 NotificationReply.defaultProps = {
   read: false,
   notification: {},
+  isModerator: {},
   currentAuthUsername: '',
   onClick: () => {},
 };

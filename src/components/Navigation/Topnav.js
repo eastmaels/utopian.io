@@ -10,6 +10,8 @@ import Action from '../Button/Action';
 import { getGithubRepos, setGithubRepos } from '../../actions/projects';
 import sc2 from '../../sc2';
 import { getUpdatedSCUserMetadata } from '../../auth/authActions';
+import { getModerators } from '../../actions/moderators';
+
 import {
   getAutoCompleteSearchResults,
   getNotifications,
@@ -34,11 +36,13 @@ const Option = Select.Option;
     notifications: getNotifications(state),
     userSCMetaData: getAuthenticatedUserSCMetaData(state),
     loadingNotifications: getIsLoadingNotifications(state),
+    moderators: state.moderators,
   }),
   {
     getGithubRepos,
     setGithubRepos,
     getUpdatedSCUserMetadata,
+    getModerators,
   },
 )
 class Topnav extends React.Component {
@@ -132,6 +136,14 @@ class Topnav extends React.Component {
       this,
     );
     this.handleCloseNotificationsPopover = this.handleCloseNotificationsPopover.bind(this);
+  }
+
+  componentWillMount() {
+    const { getModerators, moderators } = this.props;
+
+    if (!moderators || !moderators.length) {
+      getModerators();
+    }
   }
 
   handleNotificationsPopoverVisibleChange(visible) {
@@ -251,8 +263,8 @@ class Topnav extends React.Component {
       getGithubRepos,
       setGithubRepos,
       history,
+      moderators,
     } = this.props;
-
     let content;
 
     const { notificationsPopoverVisible } = this.state;
@@ -302,6 +314,7 @@ class Topnav extends React.Component {
                       lastSeenTimestamp={lastSeenTimestamp}
                       loadingNotifications={loadingNotifications}
                       getUpdatedSCUserMetadata={this.props.getUpdatedSCUserMetadata}
+                      moderators={moderators}
                     />
                   }
                   visible={notificationsPopoverVisible}

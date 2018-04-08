@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import * as R from 'ramda';
 import _ from 'lodash';
 import * as notificationConstants from '../../../../common/constants/notifications';
 import { saveNotificationsLastTimestamp } from '../../../helpers/metadata';
@@ -26,6 +27,7 @@ class Notifications extends React.Component {
     currentAuthUsername: PropTypes.string,
     onNotificationClick: PropTypes.func,
     getUpdatedSCUserMetadata: PropTypes.func,
+    moderators: PropTypes.arrayOf(PropTypes.shape()),
   };
 
   static defaultProps = {
@@ -35,6 +37,7 @@ class Notifications extends React.Component {
     currentAuthUsername: '',
     onNotificationClick: () => {},
     getUpdatedSCUserMetadata: () => {},
+    moderators: [],
   };
 
   constructor(props) {
@@ -49,6 +52,11 @@ class Notifications extends React.Component {
     this.handleLoadMore = this.handleLoadMore.bind(this);
     this.handleNotificationsClick = this.handleNotificationsClick.bind(this);
     this.onScroll = this.onScroll.bind(this);
+  }
+
+  isModerator(username) {
+    const { moderators } = this.props;
+    return R.find(R.propEq('account', username))(moderators);
   }
 
   componentDidMount() {
@@ -130,6 +138,8 @@ class Notifications extends React.Component {
     } = this.props;
     const { displayedNotifications } = this.state;
     const displayEmptyNotifications = _.isEmpty(notifications) && !loadingNotifications;
+    console.log('notifications');
+    console.log(notifications);
 
     return (
       <div className="Notifications">
@@ -144,19 +154,23 @@ class Notifications extends React.Component {
           {_.map(displayedNotifications, (notification, index) => {
             const key = `${index}${notification.timestamp}`;
             const read = lastSeenTimestamp >= notification.timestamp;
+
             switch (notification.type) {
-              /*
               case notificationConstants.REPLY:
-                return (
-                  <NotificationReply
-                    key={key}
-                    notification={notification}
-                    currentAuthUsername={currentAuthUsername}
-                    read={read}
-                    onClick={this.handleNotificationsClick}
-                  />
-                );
-              */
+                if (this.isModerator(notification.author)) {
+                  return (
+                    <NotificationReply
+                      key={key}
+                      notification={notification}
+                      currentAuthUsername={currentAuthUsername}
+                      read={read}
+                      onClick={this.handleNotificationsClick}
+                      isModerator={this.isModerator(notification.author)}
+                    />
+                  );
+                } else {
+                  return null;
+                }
               case notificationConstants.FOLLOW:
                 return (
                   <NotificationFollowing
