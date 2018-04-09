@@ -27,10 +27,10 @@ import { reblog } from '../app/Reblog/reblogActions';
 import { toggleBookmark } from '../bookmarks/bookmarksActions';
 import { followUser, unfollowUser } from '../user/userActions';
 import { getHtml } from '../components/Story/Body';
-import StoryFull from '../components/Story/StoryFull';
+import ScorePost from '../components/Story/ScorePost';
 
 import { getModerators } from '../actions/moderators';
-import { moderatorAction, staffPick } from '../actions/contribution';
+import { moderatorAction, staffPick, scoreContribution } from '../actions/contribution';
 
 @connect(
   state => ({
@@ -57,11 +57,12 @@ import { moderatorAction, staffPick } from '../actions/contribution';
     followUser,
     unfollowUser,
     moderatorAction,
+    scoreContribution,
     staffPick,
     getModerators,
   },
 )
-class PostContent extends React.Component {
+class Score extends React.Component {
   static propTypes = {
     user: PropTypes.shape().isRequired,
     content: PropTypes.shape().isRequired,
@@ -163,6 +164,7 @@ class PostContent extends React.Component {
       currentMedianHistoryPrice,
       defaultVotePercent,
       moderatorAction,
+      scoreContribution,
       staffPick,
       moderators,
       history,
@@ -194,14 +196,13 @@ class PostContent extends React.Component {
     const image = postMetaImage || getImage(`@${author}`);
     const canonicalUrl = `${canonicalHost}${content.url}`;
     const url = `${busyHost}${content.url}`;
-    const metaTitle = `${title} - Utopian`;
-
+    const metaTitle = `Review ${title} - Utopian`;
 
     return (
       <div>
         <Helmet>
           <title>
-            {title}
+            {metaTitle}
           </title>
           <link rel="canonical" href={canonicalUrl} />
           <meta property="description" content={desc} />
@@ -222,12 +223,12 @@ class PostContent extends React.Component {
             content={image || 'https://steemit.com/images/steemit-twshare.png'}
           />
         </Helmet>
-        <StoryFull
+        <ScorePost
           history={history}
           user={user}
           moderators={moderators}
           moderatorAction={moderatorAction}
-          staffPick={staffPick}
+          scoreContribution={scoreContribution}
           post={content}
           postState={postState}
           commentCount={content.children}
@@ -235,21 +236,20 @@ class PostContent extends React.Component {
           pendingFollow={pendingFollows.includes(content.author)}
           pendingBookmark={pendingBookmarks.includes(content.id)}
           saving={saving}
-          rewardFund={rewardFund}
-          currentMedianHistoryPrice={currentMedianHistoryPrice}
           sliderMode={sliderMode}
           defaultVotePercent={defaultVotePercent}
+          rewardFund={rewardFund}
+          currentMedianHistoryPrice={currentMedianHistoryPrice}
           ownPost={author === user.name}
           onLikeClick={this.handleLikeClick}
           onReportClick={this.handleReportClick}
           onShareClick={this.handleShareClick}
           onSaveClick={this.handleSaveClick}
           onFollowClick={this.handleFollowClick}
-          onEditClick={this.handleEditClick}
         />
       </div>
     );
   }
 }
 
-export default PostContent;
+export default Score;

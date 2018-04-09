@@ -90,14 +90,14 @@ class Story extends React.Component {
     if (!tagList) return <em>No Tags Provided</em>;
     var ret = "";
     for (var i = 0; i < tagList.length; ++i) {
-        if (tagList[i] === 'utopian-io') continue;
-        ret += tagList[i];
-        if (i !== tagList.length - 1) ret += ", ";
+      if (tagList[i] === 'utopian-io') continue;
+      ret += tagList[i];
+      if (i !== tagList.length - 1) ret += ", ";
     }
     return <span><b>Tags: &nbsp;&nbsp;</b>{ret}, <em>utopian-io</em></span>;
   }
 
-  tagNumber(tagList, number) { 
+  tagNumber(tagList, number) {
     if (!tagList) return <span></span>;
     const indexOfUtopian = tagList.indexOf("utopian-io");
     if (indexOfUtopian > -1) tagList.splice(indexOfUtopian, 1);
@@ -236,7 +236,7 @@ class Story extends React.Component {
             <i className="iconfont icon-unfold Story__more" />
           </Popover>
 
-           <Contribution
+          <Contribution
             type={ postType }
             repository={ repository || null}
             platform={ metaData.platform || null}
@@ -248,21 +248,21 @@ class Story extends React.Component {
             fullMode={false}
           />
 
-         {/*postType === 'blog' && <Blog
-            showVerified = {post.reviewed}
-            showPending = {post.pending}
-            showFlagged = {post.flagged}
-            showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
-            fullMode={false}
-          />*/}
+          {/*postType === 'blog' && <Blog
+           showVerified = {post.reviewed}
+           showPending = {post.pending}
+           showFlagged = {post.flagged}
+           showInProgress = { (!(post.reviewed || post.pending || post.flagged)) }
+           fullMode={false}
+           />*/}
 
           <div className="Story__content">
             <Link to={post.url} className="Story__content__title">
               <h2>
                 {post.title || (
-                <span>
+                  <span>
                     <Tag color="#4f545c">RE</Tag>
-                  {post.root_title}
+                    {post.root_title}
                   </span>
                 )}
               </h2>
@@ -295,9 +295,9 @@ class Story extends React.Component {
             <Link to={`/@${post.author}`}>
               <h4 className="Story__firstLine">
                 <Avatar username={post.author} size={30} className="Story__avatar"/> <span className="Story__author">{post.author}</span>
-                <Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
-                  <Tag className="Story__reputationTag nomobile">{formatter.reputation(post.author_reputation)}</Tag>
-                </Tooltip>
+                {/*<Tooltip title={intl.formatMessage({ id: 'reputation_score' })}>
+                 <Tag className="Story__reputationTag nomobile">{formatter.reputation(post.author_reputation)}</Tag>
+                 </Tooltip>*/}
               </h4>
             </Link>
 
@@ -310,7 +310,7 @@ class Story extends React.Component {
                   </span>
               }
             >
-                <span className="Story__date">
+              <span className="Story__date">
                   <FormattedRelative value={`${post.created}Z`} />
                 </span>
             </Tooltip>
@@ -318,19 +318,19 @@ class Story extends React.Component {
 
           <div className="Story__footer">
             {reviewed ? <StoryFooter
-              user={user}
-              post={post}
-              postState={postState}
-              pendingLike={pendingLike}
-              rewardFund={rewardFund}
-              currentMedianHistoryPrice={currentMedianHistoryPrice}
-              ownPost={ownPost}
-              sliderMode={sliderMode}
-              defaultVotePercent={defaultVotePercent}
-              onLikeClick={onLikeClick}
-              onShareClick={onShareClick}
-              fullMode={false}
-            /> : <br/>}
+                user={user}
+                post={post}
+                postState={postState}
+                pendingLike={pendingLike}
+                rewardFund={rewardFund}
+                currentMedianHistoryPrice={currentMedianHistoryPrice}
+                ownPost={ownPost}
+                sliderMode={sliderMode}
+                defaultVotePercent={defaultVotePercent}
+                onLikeClick={onLikeClick}
+                onShareClick={onShareClick}
+                fullMode={false}
+              /> : <br/>}
           </div>
         </div>
       </div>

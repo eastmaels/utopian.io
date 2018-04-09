@@ -35,14 +35,12 @@ class InlineCategoryEdit extends React.Component {
     })[0].type;
 
     const { post, user, moderatorAction } = this.props;
-    const status = null, questions = [], score = 0;
+    const status = null;
     moderatorAction(
       post.author,
       post.permlink,
       user.name,
       status,
-      questions,
-      score,
       type,
     ).then((res) => {
       this.setState({

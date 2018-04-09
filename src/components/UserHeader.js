@@ -17,8 +17,7 @@ const UserHeader = ({
   authenticated,
   username,
   handle,
-  userReputation,
-  rank,
+  reputation,
   isSameUser,
   hasCover,
   onSelect,
@@ -37,7 +36,7 @@ const UserHeader = ({
             {username}
             <Tooltip title={intl.formatMessage({ id: 'reputation_score', defaultMessage: 'Reputation Score' })}>
               <Tag>
-                {formatter.reputation(userReputation)}
+                {reputation}
               </Tag>
             </Tooltip>
           </h2>
@@ -74,9 +73,6 @@ const UserHeader = ({
         <div className="UserHeader__row UserHeader__handle">
           @{handle}
         </div>
-        <div className="UserHeader__rank">
-          <i className="iconfont icon-ranking" /> {rank}
-        </div>
       </div>
     </div>
   </div>);
@@ -86,11 +82,6 @@ UserHeader.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   username: PropTypes.string,
   handle: PropTypes.string,
-  userReputation: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  rank: PropTypes.string,
   isSameUser: PropTypes.bool,
   hasCover: PropTypes.bool,
   onSelect: PropTypes.func,
@@ -101,8 +92,6 @@ UserHeader.propTypes = {
 UserHeader.defaultProps = {
   username: '',
   handle: '',
-  userReputation: '0',
-  rank: 'Minnow',
   isSameUser: false,
   hasCover: false,
   onSelect: () => {},

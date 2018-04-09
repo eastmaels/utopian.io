@@ -1,0 +1,46 @@
+@import (reference) "../../styles/modules/variables.less";
+@import (reference) "../../styles/custom.less";
+@import (reference) "../../styles/fonts.less";
+
+.ScorePost {
+  h1 {
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 700;
+    a {
+      color: @grey-nightRider;
+    }
+  }
+
+  .ant-collapse {
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    .ant-collapse-content-box {
+      >ul>li {
+        margin-bottom: 15px;
+        h5 {
+          font-weight: 700;
+        }
+        h5,p {
+          margin-bottom: 7.5px;
+        }
+        &>ul {
+          display: flex;
+          li {
+            margin-bottom: 15px;
+            &:last-child {
+              cursor: pointer;
+              background-color: @blue-6;
+              color: @white;
+              padding-left: 7.5px;
+              padding-right: 7.5px;
+              font-size: 12px;
+              margin-left: 7.5px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -549,6 +549,8 @@ class Editor extends React.Component {
     });
   };
 
+
+
   render() {
     const { getFieldDecorator } = this.props.form;
     const { intl, loading, isUpdating, isReviewed, type, saving, getGithubRepos, repos, setGithubRepos, user, getPullRequests, pullRequests, parsedPostData } = this.props;
@@ -575,69 +577,58 @@ class Editor extends React.Component {
               }}>
                 <label>
                   <Radio value="ideas" name="type" disabled={isReviewed}/>
-                  <div className={`ideas box`}>
-                    <span>Suggestion</span>
-                  </div>
+                  <div className={`ideas box`}></div>
+                  <span>Suggestion</span>
                 </label>
                 <label>
                   <Radio value="development" name="type" disabled={isReviewed}/>
-                  <div className={`development box`}>
-                    <span>Development</span>
-                  </div>
+                  <div className={`development box`}></div>
+                  <span>Development</span>
                 </label>
                 <label>
                   <Radio value="bug-hunting" name="type" disabled={isReviewed}/>
-                  <div className={`bug-hunting box`}>
-                    <span>Bug Hunting</span>
-                  </div>
+                  <div className={`bug-hunting box`}></div>
+                  <span>Bug Hunting</span>
                 </label>
                 <label>
                   <Radio value="graphics" name="type" disabled={isReviewed}/>
-                  <div className={`graphics box`}>
-                    <span>Graphics</span>
-                  </div>
+                  <div className={`graphics box`}></div>
+                  <span>Graphics</span>
                 </label>
                 <label>
                   <Radio value="analysis" name="type" disabled={isReviewed}/>
-                  <div className={`analysis box`}>
-                    <span>Analysis</span>
-                  </div>
+                  <div className={`analysis box`}></div>
+                  <span>Analysis</span>
                 </label>
                 <label>
                   <Radio value="social" name="type" disabled={isReviewed}/>
-                  <div className={`social box`}>
-                    <span>Visibility</span>
-                  </div>
+                  <div className={`social box`}></div>
+                  <span>Visibility</span>
                 </label>
                 <label>
                   <Radio value="documentation" name="type" disabled={isReviewed}/>
-                  <div className={`documentation box`}>
-                    <span>Documentation</span>
-                  </div>
+                  <div className={`documentation box`}></div>
+                  <span>Documentation</span>
                 </label>
                 <label>
                   <Radio value="tutorials" name="type" disabled={isReviewed}/>
-                  <div className={`tutorials box`}>
-                    <span>Tutorials</span>
-                  </div>
+                  <div className={`tutorials box`}></div>
+                  <span>Tutorials</span>
                 </label>
                 <label>
                   <Radio value="video-tutorials" name="type" disabled={isReviewed}/>
-                  <div className={`video-tutorials box`}>
-                    <span>Video Tutorials</span>
-                  </div>
+                  <div className={`video-tutorials box`}></div>
+                  <span>Video Tutorials</span>
                 </label>
                 <label>
                   <Radio value="copywriting" name="type" disabled={isReviewed}/>
-                  <div className={`copywriting box`}>
-                    <span>Copywriting</span>
-                  </div>
+                  <div className={`copywriting box`}></div>
+                  <span>Copywriting</span>
                 </label>
                 <label>
                   <Radio value="blog" name="type" disabled={isReviewed}/>
-                  <div className={`blog box`}>
-                    <span>Blog Post</span>
-                  </div>
+                  <div className={`blog box`}></div>
+                  <span>Blog Post</span>
                 </label>
               </RadioGroup>
             )}

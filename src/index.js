@@ -33,7 +33,7 @@ if (process.env.SENTRY_PUBLIC_DSN) {
 }
 
 // redirect to lp if not visited before, not logged in and not accessing a subpage
-if (!Cookie.get('session') && !Cookie.get('lp_visited') && !window.location.pathname.replace('/', '')) {
+if (!Cookie.get('session') && !Cookie.get('lp_visited') && !window.location.pathname.replace('/', '') && process.env.NODE_ENV === 'production') {
   window.location.href = process.env.UTOPIAN_LANDING_URL;
 }
 
