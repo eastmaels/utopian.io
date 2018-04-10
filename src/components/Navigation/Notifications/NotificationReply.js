@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage, FormattedRelative } from 'react-intl';
+import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { epochToUTC } from '../../../helpers/formatter';
 import Avatar from '../../Avatar';
@@ -21,15 +22,24 @@ const NotificationReply = ({ notification, currentAuthUsername, read, onClick, i
       <Avatar username={author} size={40} />
       <div className="Notification__text">
         <div className="Notification__text__message">
-          <FormattedMessage
-            id="notification_reply_username_post"
-            defaultMessage="{username} commented on your post"
-            values={{
-              username: <span className="username">{author}</span>,
-            }}
-          />
-          {isModerator ? 'a moderator has replied to your post.' : ''}
-          {author==='utopian-io' ? 'Utopian-io has replied to your post.' : ''}
+          {notification.author === 'utopian-io' ?
+            <FormattedMessage
+              id="notification_reply_utopianio"
+              defaultMessage="{username} commented on your post."
+              values={{
+                username: <span className="username">{author}</span>,
+              }}
+            />
+          : null}
+          { !_.isEmpty(isModerator) ?
+            <FormattedMessage
+              id="notification_review_utopian_moderator"
+              defaultMessage="{username}, a Utopian moderator, reviewed your post."
+              values={{
+                username: <span className="username">{author}</span>,
+              }}
+            />
+          : null}
         </div>
         <div className="Notification__text__date">
           <FormattedRelative value={epochToUTC(timestamp)} />

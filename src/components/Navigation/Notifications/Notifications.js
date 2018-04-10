@@ -138,8 +138,6 @@ class Notifications extends React.Component {
     } = this.props;
     const { displayedNotifications } = this.state;
     const displayEmptyNotifications = _.isEmpty(notifications) && !loadingNotifications;
-    console.log('notifications');
-    console.log(notifications);
 
     return (
       <div className="Notifications">
@@ -157,7 +155,7 @@ class Notifications extends React.Component {
 
             switch (notification.type) {
               case notificationConstants.REPLY:
-                if (this.isModerator(notification.author)) {
+                if (this.isModerator(notification.author) || notification.author === 'utopian-io') {
                   return (
                     <NotificationReply
                       key={key}
