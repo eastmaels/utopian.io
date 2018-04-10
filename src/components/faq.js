@@ -30,7 +30,15 @@ class FAQ extends React.Component {
   };
 
 componentDidMount(){
-  fetch(process.env.UTOPIAN_API + 'faq')
+  fetch(process.env.UTOPIAN_API + 'faq', {
+    method: 'GET',
+    headers: {
+      'x-api-key-id': process.env.AWS_KEY_ID,
+      'x-api-key': process.env.AWS_KEY,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    }
+  })
   .then(results=>{
     return results.json();
   })
