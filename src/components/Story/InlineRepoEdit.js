@@ -90,8 +90,6 @@ class InlineRepoEdit extends React.Component {
             this.post.permlink,
             user.name,
             status,
-            questions,
-            score,
             type,
             this.state.repository,
           ).then((res) => {

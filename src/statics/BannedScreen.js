@@ -12,7 +12,7 @@ import {
   getIsAuthenticated,
   getAuthenticatedUser,
 } from '../reducers';
-import { getUser, banUser, getBanUser } from '../actions/user';
+import { banUser, getBanUser } from '../actions/user';
 import './BannedScreen.less';
 import Body from '../components/Story/Body';
 
@@ -22,7 +22,7 @@ import Body from '../components/Story/Body';
     authenticated: getIsAuthenticated(state),
     authenticatedUser: getAuthenticatedUser(state),
   }),
-  { banUser, getUser, getBanUser },
+  { banUser, getBanUser },
 )
 class BannedScreen extends React.Component {
   static propTypes = {
@@ -44,7 +44,7 @@ class BannedScreen extends React.Component {
   }
 
   componentWillMount() {
-    const { authenticatedUser, getBanUser, getUser } = this.props;
+    const { authenticatedUser, getBanUser } = this.props;
     getBanUser(authenticatedUser.name).then((res) => {
       if (res && res.response && res.response.banReason && (res.response.banReason != '<unknown>')) {
         // console.log("BannedScreen.js => compWillMount() => ...");

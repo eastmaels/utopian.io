@@ -11,10 +11,10 @@ import {
 } from '../reducers';
 import { getModerators } from '../actions/moderators';
 import Action from './Button/Action';
-import { getUser, banUser, createUser } from '../actions/user'
+import { getUser, banUser, createUser } from '../actions/user';
+
 import * as R from 'ramda';
 import './BanUser.less';
-
 
 @connect(
   state => ({
@@ -22,19 +22,23 @@ import './BanUser.less';
     authenticatedUser: getAuthenticatedUser(state),
     moderators: state.moderators,
   }),
-  { banUser, getUser, getModerators, createUser },
+  {
+    banUser, getUser, getModerators, createUser,
+  },
 )
 @injectIntl
-class BanUser extends React.Component {
+class BanUser extends React.PureComponent {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     authenticated: PropTypes.bool.isRequired,
     authenticatedUser: PropTypes.shape().isRequired,
     username: PropTypes.string.isRequired,
+    getUser: PropTypes.func.isRequired,
+    getModerators: PropTypes.func.isRequired,
+    banUser: PropTypes.func.isRequired,
   };
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   constructor(props) {
     super(props);
@@ -54,81 +58,68 @@ class BanUser extends React.Component {
 
   componentDidMount () {
     const { moderators, getModerators, getUser, username, banUser, createUser } = this.props;
-    if (username) {
-      console.log("banUser.js -> username: ", username);
-    } else {
-      console.log("banUser.js - username is undefined!");
-      return;
-    }
+
+
     this.setState({nowdate: new Date(Date.now())});
 
     if (!moderators || !moderators.length) {
       getModerators();
     }
 
-    getUser(username).then((res) => {
-      if (res.status === 404) {
-        console.log("USER DOES NOT EXIST, creating...", res);
-        createUser(username).then((restwo) => console.log("CREATED",restwo));
-        return;
-      }
-      console.log("USER EXISTS", res)
-    })
-      .catch((e) => {
+    if (username) {
+      /*
+      getUser(username).then((res) => {
+        console.log("USERNAME", res)
+        console.log("USERNAME RES", res)
+        if (res.status === 404) {
+          console.log("USER DOES NOT EXIST, creating...", res);
+          createUser(username).then((restwo) => console.log("CREATED",restwo));
+          return;
+        }
+        console.log("USER EXISTS", res)
+      }).catch((e) => {
         console.log("USER DOES NOT EXIST, creating...", e);
         createUser(username).then((res) => console.log("CREATED",res));
-      });
-
-    getUser(username).then((res) => {
-      const user = res.response;
-      console.log("banUser.js -> user: ", user);
-      if (user && user.banned) {
-        console.log("user", user);
-        if ((user.banned == 1) && (Date.parse(user.bannedUntil) > this.nowDate())) {
-          console.log("ban status: current");
-          this.setState({banned: 1});
-          this.setState({bannedUntil: user.bannedUntil});
-          console.log(" ==> ban-set completed");
-        } else if (user.banned == 1) {
-          console.log("ban status: closing");
-          var infDate = new Date(0);
-          banUser(username, 0, user.bannedBy, "Temporal Ban Over", infDate);
-          this.setState({banned: 0});
-          this.setState({bannedUntil: infDate});
-          console.log(" ==> close completed");
+      }); */
+      getUser(username).then((res) => {
+        console.log("USERNAME RES", res)
+        const user = res.response;
+        console.log("banUser.js -> user: ", user);
+        if (user && user.banned) {
+          console.log("user", user);
+          if ((user.banned == 1) && (Date.parse(user.bannedUntil) > this.nowDate())) {
+            console.log("ban status: current");
+            this.setState({banned: 1});
+            this.setState({bannedUntil: user.bannedUntil});
+            console.log(" ==> ban-set completed");
+          } else if (user.banned == 1) {
+            console.log("ban status: closing");
+            var infDate = new Date(0);
+            banUser(username, 0, user.bannedBy, "Temporal Ban Over", infDate);
+            this.setState({banned: 0});
+            this.setState({bannedUntil: infDate});
+            console.log(" ==> close completed");
+          } else {
+            console.log("ban status: unbanned");
+            this.setState({banned: 0});
+            var infDate = new Date(0);
+            this.setState({bannedUntil: infDate});
+            console.log(" ==> unban-set completed");
+          }
         } else {
-          console.log("ban status: unbanned");
+          console.log("ban status: empty");
           this.setState({banned: 0});
-          var infDate = new Date(0);
-          this.setState({bannedUntil: infDate});
-          console.log(" ==> unban-set completed");
+          this.setState({bannedUntil: new Date(0)});
+          banUser(username, 0, "<utopian-system>", "Ban Reason", new Date(0));
+          console.log(" ==> emptyset completed");
         }
-      } else {
-        console.log("ban status: empty");
-        this.setState({banned: 0});
-        this.setState({bannedUntil: new Date(0)});
-        banUser(username, 0, "<utopian-system>", "Ban Reason", new Date(0));
-        console.log(" ==> emptyset completed");
-      }
-      if (user && user.banReason && (user.banReason !== "<unknown>")) {
-        this.setState({banReason: user.banReason});
-      } else {
-        this.setState({banReason: "Violation of the Utopian Rules"});
-      }
-    });
-  }
-
-  handleClick = (e) => {
-
-  };
-
-//   componentDidMount() {
-//     //   console.log(this.props.username);
-//   }
-
-  user () {
-    const { getUser } = this.props;
-    return getUser(this.props.username);
+        if (user && user.banReason && (user.banReason !== "<unknown>")) {
+          this.setState({banReason: user.banReason});
+        } else {
+          this.setState({banReason: "Violation of the Utopian Rules"});
+        }
+      });
+    }
   }
 
   isPermitted () {
@@ -295,22 +286,15 @@ class BanUser extends React.Component {
             <option value={60}>60 days</option>
         </select></span>
         <br/><h4>Ban Reason:</h4><br/><center><textarea name="modInput" rows="5" cols="55" className="modInput" id="modInput" value={this.state.banReason} onChange={(e) => {this.setReason(e.target.value)}}/></center>
-
-
         </span>
-
-
       }
 
     </span>
     </Modal>
-
-
     </span>
       ); }
     else { return (
-      <span>
-            </span>
+      <span></span>
     );}
   }
 }

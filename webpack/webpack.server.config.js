@@ -107,6 +107,8 @@ module.exports = {
         UTOPIAN_APP: JSON.stringify(process.env.UTOPIAN_APP || 'utopian.app'),
         STEEMJS_URL: JSON.stringify(process.env.STEEMJS_URL),
         IS_BROWSER: JSON.stringify(false),
+        AWS_KEY: JSON.stringify(process.env.AWS_KEY || 'c5pEsMpYZY896r7USzhWdapIY7o1GEpj3QCEQZSN'),
+        AWS_KEY_ID: JSON.stringify(process.env.AWS_KEY_ID || 'kvo2x1982b'),
       },
     }),
   ],

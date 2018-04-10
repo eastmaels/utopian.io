@@ -40,7 +40,6 @@ class Sponsors extends React.PureComponent {
     getStats();
     getSponsors();
     steem.api.getDynamicGlobalProperties(function(err, result) {
-      console.log("RES", result);
       if (!err) {
         _self.setState({
           total_vesting_shares: result.total_vesting_shares,
@@ -132,7 +131,6 @@ class Sponsors extends React.PureComponent {
               </div>
             </div>}
             <div><h2>HEROES</h2></div>
-            <div style={{textAlign: "center"}}><em>20% of all the author rewards generated on Utopian are reserved for the sponsors.</em></div>
             <div className="Sponsors__heroes">
               {sponsors.map(sponsor => {
                 const VS = sponsor.vesting_shares;

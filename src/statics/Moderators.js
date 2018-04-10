@@ -35,8 +35,6 @@ class Moderators extends React.PureComponent {
           <div className="Moderators">
             <div className="Moderators__intro">
               <h1><Icon type="safety"/> The Utopian Moderators</h1>
-              <p><b>5% of the total contributor rewards generated goes to the Moderators based on the amount of contributions they have reviewed.</b></p>
-              <p>To become an Utopian Moderator you must have high reputation and often review submitted contributions.</p>
             </div>
             <br />
             {isUser && <div style={{textAlign: "center"}}>

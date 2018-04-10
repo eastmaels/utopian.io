@@ -32,12 +32,13 @@ import { getReposByGithub } from '../actions/projects';
 import * as Actions from '../actions/constants';
 
 @connect(
-  (state, ownProps) => ({
+  (state, ownProps) => {
+    return({
     authenticated: getIsAuthenticated(state),
     authenticatedUser: getAuthenticatedUser(state),
     user: getUser(state, ownProps.match.params.name),
     loading: state.loading,
-  }), {
+  })}, {
     getAccountWithFollowingCount,
     openTransfer,
     getReposByGithub,

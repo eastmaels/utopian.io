@@ -5,16 +5,9 @@ import Cookie from 'js-cookie';
 export const CALL_API = 'CALL_API';
 const API_ROOT = process.env.UTOPIAN_API;
 
-function processReq(req, session) {
-  if (session) req.set({ session });
-  return req.then(res => {
-    return res.body;
-  }).catch(err => {
-    if (err.status === 407 && session) {
-      Cookie.remove('session');
-      window.location.reload(true);
-    }
-  })
+function processReq(req, headers) {
+  req.set(headers);
+  return req;
 }
 
 const callApi = (endpoint, schema, method, payload, additionalParams, absolute?) => {
@@ -25,13 +18,21 @@ const callApi = (endpoint, schema, method, payload, additionalParams, absolute?)
     session = Cookie.get('session');
   }
 
+  const headers = absolute ? {} : {
+      session,
+      'x-api-key-id': process.env.AWS_KEY_ID,
+      'x-api-key': process.env.AWS_KEY,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
   switch (method) {
     case 'GET':
-      return processReq(get(fullUrl), session);
+      return processReq(get(fullUrl), headers);
     case 'POST':
-      return processReq(post(fullUrl).send(payload), session);
+      return processReq(post(fullUrl).send(payload), headers);
     case 'PUT':
-      return processReq(put(fullUrl).send(payload), session);
+      return processReq(put(fullUrl).send(payload), headers);
     default:
       return null;
   }
@@ -82,25 +83,46 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, schema, method, payload, additionalParams, absolute).then(
-    response => next(actionWith({
-      response,
+  let apiCall = callApi(endpoint, schema, method, payload, additionalParams, absolute);
+  let promise = apiCall.then(
+		response => next(actionWith({
+      response: response ? response.body : null,
       type: successType,
       payload,
       additionalParams,
       absolute
-    })),
-    error => {
-      const errBody = path(['response', 'text'], error)
-      const errResponse = errBody ? JSON.parse(errBody) : {}
-      return next(actionWith({
-        type: failureType,
-        status: error.status,
-        error: error.message || 'Something bad happened',
-        code: errResponse.code,
-        message: errResponse.message,
-        errMessage: errResponse.errMessage
-      }))
-    }
-  )
+		})),
+		error => {
+		const errBody = path(['response', 'text'], error)
+		const errResponse = errBody ? JSON.parse(errBody) : {}
+		return next(actionWith({
+			type: failureType,
+			status: error.status,
+			error: error.message || 'Something bad happened',
+			code: errResponse.code,
+			message: errResponse.message,
+			errMessage: errResponse.errMessage
+		}))
+		}
+	).catch(err => {
+		if (err.status === 407 && session) {
+		Cookie.remove('session');
+		window.location.reload(true);
+		}
+	})
+  
+  return {
+	  then: (resolve, reject) => {
+      promise.then( resolve, reject );
+      return apiCall;
+	  },
+	  catch: (reject) => {
+      promise.catch(reject);
+      return apiCall;
+    },
+	  abort: () => {
+      apiCall.abort();
+      return apiCall;
+	  },
+  }
 }

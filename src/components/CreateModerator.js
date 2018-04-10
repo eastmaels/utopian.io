@@ -11,7 +11,6 @@ import {
 } from '../reducers';
 import { getModerators, createModerator, removeModerator } from '../actions/moderators';
 import Action from './Button/Action';
-import { getUser } from '../actions/user'
 import * as R from 'ramda';
 import './CreateModerator.less';
 
@@ -22,7 +21,7 @@ import './CreateModerator.less';
       authenticatedUser: getAuthenticatedUser(state),
       moderators: state.moderators,
     }),
-    {  getUser, getModerators, createModerator, removeModerator },
+    {  getModerators, createModerator, removeModerator },
 )
 @injectIntl
 class CreateModerator extends React.Component {
@@ -46,7 +45,7 @@ class CreateModerator extends React.Component {
   }
 
   componentDidMount () {
-    const { getModerators, getUser, username, authenticatedUser, createModerator } = this.props;
+    const { getModerators, username, authenticatedUser, createModerator } = this.props;
     if (username) {
         console.log("createModerator.js -> username: ", username);
     } else {
@@ -82,19 +81,6 @@ class CreateModerator extends React.Component {
 
   componentWillMount() {
       this.moderatorsLoad();
-  }
-
-  handleClick = (e) => {
-
-  };
-
-//   componentDidMount() {
-//     //   console.log(this.props.username);
-//   }
-
-  user () {
-      const { getUser, username } = this.props;
-      return getUser(username);
   }
 
   isPermitted () {

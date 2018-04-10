@@ -18,6 +18,11 @@ const types = [
     'slug': 'DEVELOPMENT'
   },
   {
+    'type': 'sub-projects',
+    'slug': 'SUB-PROJECT',
+	'disabled': true,
+  },
+  {
     'type': 'graphics',
     'slug': 'GRAPHICS'
   },
@@ -102,13 +107,13 @@ function getCategorySlug(type)
 }
 
 const parsedRepoName = (author, name) => {
-  if ((author.length + name.length) < 35) {
+  if (author && name && (author.length + name.length) < 35) {
     return `${author}/${name}`;
   }
-  if (author.length > 15) {
+  if (author && name && author.length > 15) {
     author = author.substr(0, 15) + "...";
   }
-  if (name.length > 23) {
+  if (name && name.length > 23) {
     name = name.substr(0, 23) + "...";
   }
   return `${author}/${name}`;
@@ -153,7 +158,7 @@ const Contribution = ({
 
 
       {repository && platform && id ? <span>
-        {' '} <b>&middot;</b> {'  '} <a href={`https://github.com/${repository.full_name}`}><Icon type='github' /></a>
+        {' '}
         { (isModerator && !post.reviewed && !post.flagged) || (isModerator && isModerator.supermoderator === true) ? (
           <span>
             {' '} <b>&middot;</b> {'  '} <Link to={`/project/${repository.full_name}/${platform}/${id}/all`}><Icon type="folder-open" /></Link>

@@ -1,49 +1,52 @@
 import * as actions from './usersActions';
-
-const initialState = {
-  users: {},
-};
+import * as Actions from '../actions/constants';
+const initialState = {};
 
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
+    // @UTOPIAN
+
+    case Actions.GET_USER_SUCCESS: {
+      const userData = action.response;
+
+      return {
+        ...state,
+        [userData.account]: {
+          ...state[userData.account],
+          ...userData,
+          utopian_reputation: userData.reputation,
+        },
+      };
+    }
     case actions.GET_ACCOUNT.START:
       return {
         ...state,
-        users: {
-          ...state.users,
-          [action.meta.username]: {
-            ...state[action.meta.username],
-            fetching: true,
-            loaded: false,
-            failed: false,
-          },
+        [action.meta.username]: {
+          ...state[action.meta.username],
+          fetching: true,
+          loaded: false,
+          failed: false,
         },
       };
     case actions.GET_ACCOUNT.SUCCESS:
       return {
         ...state,
-        users: {
-          ...state.users,
-          [action.meta.username]: {
-            ...state[action.meta.username],
-            ...action.payload,
-            fetching: false,
-            loaded: true,
-            failed: false,
-          },
+        [action.meta.username]: {
+          ...state[action.meta.username],
+          ...action.payload,
+          fetching: false,
+          loaded: true,
+          failed: false,
         },
       };
     case actions.GET_ACCOUNT.ERROR:
       return {
         ...state,
-        users: {
-          ...state.users,
-          [action.meta.username]: {
-            ...state[action.meta.username],
-            fetching: false,
-            loaded: false,
-            failed: true,
-          },
+        [action.meta.username]: {
+          ...state[action.meta.username],
+          fetching: false,
+          loaded: false,
+          failed: true,
         },
       };
     case actions.GET_FOLLOWING_COUNT_START:

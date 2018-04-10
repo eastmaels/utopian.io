@@ -35,14 +35,12 @@ class InlineCategoryEdit extends React.Component {
     })[0].type;
 
     const { post, user, moderatorAction } = this.props;
-    const status = null, questions = [], score = 0;
+    const status = null;
     moderatorAction(
       post.author,
       post.permlink,
       user.name,
       status,
-      questions,
-      score,
       type,
     ).then((res) => {
       this.setState({
@@ -62,8 +60,11 @@ class InlineCategoryEdit extends React.Component {
   }
 
   render() {
+	// let validTypes = this.props.types.filter( type => {
+	// 	return !type.disabled;
+	// });
     const types = this.props.types.map((type, idx) => (
-      <option value={type.type} key={idx}>{type.slug}</option>
+      <option value={type.type} key={idx} disabled={type.disabled}>{type.slug}</option>
     ))
 
     return (
