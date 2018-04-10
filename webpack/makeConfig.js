@@ -67,6 +67,8 @@ function makePlugins(options) {
         IS_BROWSER: JSON.stringify(true),
         PUSHPAD_PROJECT_ID: process.env.PUSHPAD_PROJECT_ID,
         BUSYPUSH_ENDPOINT: process.env.BUSYPUSH_ENDPOINT,
+        AWS_KEY: JSON.stringify(process.env.AWS_KEY || 'c5pEsMpYZY896r7USzhWdapIY7o1GEpj3QCEQZSN'),
+        AWS_KEY_ID: JSON.stringify(process.env.AWS_KEY_ID || 'kvo2x1982b'),
       },
     }),
     new LodashModuleReplacementPlugin({

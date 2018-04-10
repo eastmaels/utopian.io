@@ -31,22 +31,22 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
     case 'ideas':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="ideas"/> Suggestion Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="ideas"/> Suggestions Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <ul>
             <li>Suggestions are minor features / enhancements to an Open Source project.</li>
             <li>Suggestions may only relate to significant technical aspects of the project (rather than processes or organisational issues).</li>
             <li>Suggestions must provide all the information and details for the requested features to be actualized.</li>
             <li><i>Images, charts, screenshots, links and examples should be included contributions to this category.</i></li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'development':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="development"/> Development Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="development"/> Development Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Acceptable submissions in the development category include (1) Bug Fixes; (2) New Features and (3) Contributor’s Own Projects.
           </p>
@@ -67,8 +67,8 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
     case 'bug-hunting':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bug Hunting Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="bug-hunting"/> Bugs Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Acceptable contributions in this category must include Bug Reports for actively maintained Open Source projects on GitHub.
           </p>
@@ -83,14 +83,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Bug Reports previously submitted as issues on GitHub (either by the contribution author or another party), will not be accepted. Approved Bug Reports will automatically be published on GitHub.</li>
             <li><i>Submissions should include screenshots, video recordings or animated GIFs if they can help to describe and understand the bug reported.</i></li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'translations':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="translations"/> Translations Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="translations"/> Translations Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Acceptable contributions in this category must include original translations created or updated for an active Open Source project.
           </p>
@@ -115,14 +115,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Translations of obviously low quality and machine-generated translations (more than 10% of the text) will be rejected immediately and the user submitting it may be banned.</li>
             <li>Proofreading is not accepted as a valid contribution.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'graphics':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="graphics"/> Graphics Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="graphics"/> Graphics Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Submissions to this category must include (1) graphics; (2) videos and/or (3) motion graphics created for an open source project by the contributor.
           </p>
@@ -142,14 +142,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>All designs should be delivered in a vector format unless otherwise specified by the project owner.</li>
             <li><i>Submissions should (ideally) be coordinated with the project owner throughout the design process.</i></li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'analysis':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="analysis"/> Analysis Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="analysis"/> Analyses Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Valid submissions to this category must include data analysis generated for an Open Source project.
           </p>
@@ -162,19 +162,19 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Submissions containing mainly data visualization without any conclusions or predictions based on the gathered data will be rejected.</li>
             <li>Analyses of social and behavioural changes of a specific group involved in the project will be rejected.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'social':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="analysis"/> Visibility Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="analysis"/> Visibility Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Submission to this category must include proof of results in online and social media engagement for an Open Source project that was driven by promotional activities on public channels online.
           </p>
           <ul>
-            <li>Visibility efforts must be explicitly requested by the project owner and meet their requirements. A link to the respective Task Request must be provided.</li>
+            <li>Visibility efforts must be explicitly requested by the project owner and meet their requirements. A link to the respective Utopian Task Request must be provided.</li>
             <li>Before you become active, you must obtain the direct permission of the project owner and clarify the details.</li>
             <li>Valid submissions to the visibility category are (1) paid search engine and display ads placement; (2) paid social media ads; (3) Thunderclap campaigns and (4) posts to social media accounts with at least  10,000 unique followers.</li>
             <li>Promotions on chat platforms (e.g. Whatsapp, Telegram and similar) will not be accepted as valid submissions.</li>
@@ -192,14 +192,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Submission of Instagram campaigns will not be accepted.</li>
             <li>Low quality ads, ads that containing obvious grammatical and/or copyrighted content will be rejected.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'documentation':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="documentation"/> Documentation Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="documentation"/> Documentation Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Submissions to this category are limited to official documentation of Open Source projects on GitHub.
           </p>
@@ -208,14 +208,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>If the submission does not include the full documentation project, public links to it must be provided.</li>
             <li>Unofficial documentation will not be accepted in this category.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'tutorials':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="tutorials"/> Tutorial Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="tutorials"/> Tutorials Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Submissions to this category must include technical instructions that use text and graphics to clearly explain and teach significant aspects of an Open Source project.
           </p>
@@ -235,14 +235,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Submissions that include a GitHub repository with additional materials (like code samples), should be linked to the repository of the original project discussed in the tutorial and not the supplementary repository created for the contribution. Links to the supplementary repository for the post should be included in the submission post.</li>
             <li>Submissions containing unexplained essential steps, codes or examples will be rejected.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'video-tutorials':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="video-tutorials"/> Video Tutorial Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="video-tutorials"/> Video Tutorials Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Submission to this category must include technical instructions that explain and teach significant aspects of an Open Source project, and must be presented in video format.
           </p>
@@ -264,14 +264,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Submissions containing unexplained essential steps, codes or examples will be rejected.</li>
             <li>Submissions addressing only circuit design and/or the build of specific electronic modules will be rejected.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'copywriting':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="copywriting"/> Copywriting Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="copywriting"/> Copywriting Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Submissions to this category are limited to copywriting of text content for Open Source projects on GitHub.
           </p>
@@ -280,14 +280,14 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Only merged Pull Requests on the official repository or on a fork will be accepted, as long as the fork is not just a mirror of the original repository.</li>
             <li>If the submission does not include the full project, public links to it must be provided.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
     case 'blog':
       return (
         <div className="Editor__rules">
-          <h2><CategoryIcon from="from-rules"  type="blog"/> Blog Post Rules</h2>
-          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules</a></small></p> : null}
+          <h2><CategoryIcon from="from-rules"  type="blog"/> Blog Guidelines</h2>
+          {inEditor ? <p><small><a href="https://utopian.io/rules" target="_blank">Read all the rules and guidelines</a></small></p> : null}
           <p>
             Submissions to this category are designated to promote open source projects and to inform about their development. The post may be one of the following: (1) Project Promotion, (2) Project Introduction, (3) Development Log. Regardless of the type of the blog post, unique and insightful editorial content in a professional format are expected, ideally with high-quality visual supplement.
           </p>
@@ -302,7 +302,7 @@ export const Rules = ({type, acceptRules, inEditor, githubSynced}) => {
             <li>Content and format of the submissions should be unique to the author. Submissions without original content will be directly rejected.</li>
             <li>In the first submission of a blog posts series, it must provide a list of the following submissions and expectations of the series. Blog posts of a series must include links to the previous parts of the series.</li>
           </ul>
-          {inEditor ? <AcceptRules acceptRules={acceptRules} />  : null}
+          {inEditor ? (githubSynced ? <AcceptRules acceptRules={acceptRules} /> : <SyncGithub />)  : null}
         </div>
       )
   }

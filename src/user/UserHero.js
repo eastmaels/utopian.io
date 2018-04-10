@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 
-import { getUserRank } from '../helpers/user';
 import UserHeader from '../components/UserHeader';
 import UserHeaderLoading from '../components/UserHeaderLoading';
 import UserMenu from '../components/UserMenu';
@@ -30,6 +29,7 @@ class UserMenuWrapper extends React.Component {
   }
 }
 
+
 const UserHero = ({
   authenticated,
   user,
@@ -52,8 +52,7 @@ const UserHero = ({
                   authenticated={authenticated}
                   username={username}
                   handle={user.name}
-                  userReputation={user.reputation}
-                  rank={getUserRank(user.vesting_shares)}
+                  reputation={user.utopian_reputation || 'Newbie'}
                   isSameUser={isSameUser}
                   hasCover={hasCover}
                   onSelect={onSelect}

@@ -11,6 +11,8 @@ import { getModerators } from '../../actions/moderators';
 import Comment from './Comment';
 import './Comments.less';
 
+import * as R from 'ramda';
+
 @connect(
   state => ({
     moderators: state.moderators,
@@ -86,7 +88,7 @@ class Comments extends React.Component {
     const formData = new FormData();
     formData.append('files', blob);
 
-    fetch(`https://busy-img.herokuapp.com/@${username}/uploads`, {
+    fetch(`https://api.utopian.io/api/upload/post`, {
       method: 'POST',
       body: formData,
     })
@@ -149,8 +151,11 @@ class Comments extends React.Component {
       rewardFund,
       currentMedianHistoryPrice,
       defaultVotePercent,
+      moderators,
     } = this.props;
     const { sort } = this.state;
+    const inModeratorsObj = R.find(R.propEq('account', user.name))(moderators);
+    const isModerator = inModeratorsObj ? inModeratorsObj : false;
 
     return (
       <div className="Comments">
@@ -181,10 +186,10 @@ class Comments extends React.Component {
             username={username}
             onSubmit={this.submitComment}
             isLoading={this.state.showCommentFormLoading}
-            inputValue={this.state.commentFormText}
             submitted={this.state.commentSubmitted}
             onImageInserted={this.handleImageInserted}
             onImageInvalid={this.handleImageInvalid}
+            inputValue={isModerator && !this.state.commentFormText ? '\n\n----------------------------------------------------------------------\nNeed help? Write a ticket on https://support.utopian.io.\nChat with us on [Discord](https://discord.gg/uTyJkNm).\n\n**[[utopian-moderator]](https://utopian.io/moderators)**' : this.state.commentFormText}
           />)}
         {loading && <Loading />}
         {!loading &&

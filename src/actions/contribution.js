@@ -54,11 +54,10 @@ export const moderatorActionRequest = (
       permlink,
       moderator,
       status,
-      questions = [],
-      score = 0,
       type,
       repository,
       tags,
+      staff_pick,
     ) => ({
       [CALL_API]: {
         types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
@@ -72,8 +71,6 @@ export const moderatorActionRequest = (
           reviewed: status === 'reviewed',
           flagged: status === 'flagged',
           pending: status === 'pending',
-          questions: questions,
-          score: score,
           type: type,
           repository: repository,
           tags: tags,
@@ -88,8 +85,6 @@ export const moderatorAction = (
       permlink,
       moderator,
       status,
-      questions = [],
-      score = 0,
       type,
       repository,
       tags,
@@ -99,13 +94,83 @@ export const moderatorAction = (
             permlink,
             moderator,
             status,
-            questions,
-            score,
             type,
             repository,
             tags,
         )
     );
+
+export const staffPickRequest = (
+  author,
+  permlink,
+  moderator,
+) => ({
+  [CALL_API]: {
+    types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
+    endpoint: `posts/${author}/${permlink}`,
+    payload: {
+      author,
+      permlink,
+      moderator,
+      staff_pick: true,
+    },
+    method: 'PUT',
+    additionalParams: {},
+    absolute: false
+  }
+});
+
+export const staffPick = (
+  author,
+  permlink,
+  moderator,
+) => dispatch => dispatch(
+  staffPickRequest(
+    author,
+    permlink,
+    moderator,
+  )
+);
+
+export const scoreContributionRequest = (
+  author,
+  permlink,
+  user,
+  owner,
+  questions = [],
+) => ({
+  [CALL_API]: {
+    types: [ Actions.MODERATOR_ACTION_REQUEST, Actions.MODERATOR_ACTION_SUCCESS, Actions.MODERATOR_ACTION_FAILURE ],
+    endpoint: `posts/${author}/${permlink}`,
+    schema: null,
+    method: 'PUT',
+    payload: {
+      author,
+      permlink,
+      user,
+      owner,
+      questions: questions,
+    },
+    additionalParams: {},
+    absolute: false
+  }
+});
+
+export const scoreContribution = (
+  author,
+  permlink,
+  user,
+  owner,
+  questions = [],
+) => dispatch => dispatch(
+  scoreContributionRequest(
+    author,
+    permlink,
+    user,
+    owner,
+    questions,
+  )
+);
 
 export const setContribution = (contribution) => ({
   type: Actions.SET_CONTRIBUTION,

@@ -7,6 +7,7 @@ import { getContent } from './postActions';
 import Comments from '../comments/Comments';
 import Loading from '../components/Icon/Loading';
 import PostContent from './PostContent';
+import Score from './Score';
 import RightSidebar from '../app/Sidebar/RightSidebar';
 import Affix from '../components/Utils/Affix';
 import ScrollToTopOnMount from '../components/Utils/ScrollToTopOnMount';
@@ -112,6 +113,7 @@ export default class Post extends React.Component {
   render() {
     const { contribution, loading, content, fetching, edited, history, match } = this.props;
     const isLoading = !Object.keys(contribution).length || loading === Actions.GET_CONTRIBUTION_REQUEST;
+    const score = match.params.score || false;
 
     return (
       <div className="main-panel">
@@ -124,14 +126,14 @@ export default class Post extends React.Component {
               </div>
             </Affix>
             <div className="center" style={{ paddingBottom: '24px' }}>
-              {!isLoading
-                ? <PostContent history={history} content={contribution} /> : <Loading />}
-              {!isLoading
-                && <VisibilitySensor onChange={this.handleCommentsVisibility} />}
-              <div id="comments">
-                {!isLoading
-                  && <Comments show={this.state.commentsVisible} post={contribution} />}
-              </div>
+              {isLoading && <Loading/>}
+              {!isLoading && score
+                ? <Score history={history} content={contribution} /> : null}
+              {!isLoading && !score
+                ? <PostContent history={history} content={contribution} /> : null}
+              {!isLoading && <div id="comments">
+                   <Comments show={!isLoading} post={contribution} />
+              </div>}
             </div>
           </div>
         </div>

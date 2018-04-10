@@ -9,12 +9,172 @@
   }
 
   &__category {
+    margin-top: 15px;
+
     .ant-radio-group {
       display: flex;
+      overflow: hidden;
+      overflow-x: visible;
       justify-content: space-between;
-      flex-wrap: wrap;
+      flex-direction: row;
+      padding-bottom: 15px;
+
+      label {
+        flex-direction: column;
+        margin-right: 15px;
+        margin-left: 15px;
+      }
+
+      span {
+        font-size: 12px;
+        user-select: none;
+        color: #444;
+        text-align: center;
+        display: inherit;
+      }
+
+      .box {
+        background-color: @white;
+        transition: all 250ms ease;
+        will-change: transition;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        font-weight: 900;
+        border-radius: 50%;
+        border: solid 1px #dfdfdf;
+        width: 80px;
+        height: 80px;
+        line-height: 75px;
+
+        &.disabled {
+          background-color: #EEE !important;
+          cursor: default;
+        }
+        &:before {
+          font-size: 2em;
+          font-family: "Material Design Icons";
+          display: block;
+          font-weight: normal;
+          color: #CCC;
+        }
+      }
+
+      input[type="radio"],
+      .ant-radio-wrapper{
+        display: none;
+      }
+      .ant-radio-wrapper-checked{
+        + .box.ideas{
+          background-color: @bg-ideas;
+        }
+        + .box.sub-projects{
+          background-color: @bg-sub-projects;
+        }
+        + .box.development{
+          background-color: @bg-development;
+        }
+        + .box.bug-hunting{
+          background-color: @bg-bug-hunting;
+        }
+        + .box.translations{
+          background-color: @bg-translations;
+        }
+        + .box.graphics{
+          background-color: @bg-graphics;
+        }
+        + .box.analysis{
+          background-color: @bg-analysis;
+        }
+        + .box.social{
+          background-color: @bg-social;
+        }
+        + .box.documentation{
+          background-color: @bg-documentation;
+        }
+        + .box.tutorials{
+          background-color: @bg-tutorials;
+        }
+        + .box.video-tutorials{
+          background-color: @bg-video-tutorials;
+        }
+        + .box.copywriting{
+          background-color: @bg-copywriting;
+        }
+        + .box.blog{
+          background-color: @bg-blog;
+        }
+        + .box {
+          position: relative;
+          &:before {
+            color: @white;
+          }
+        }
+      }
+      .ideas {
+        &:before {
+          content: @icon-ideas;
+        }
+      }
+      .development {
+        &:before {
+          content: @icon-development;
+        }
+      }
+      .bug-hunting {
+        &:before {
+          content: @icon-bug-hunting;
+        }
+      }
+      .translations {
+        &:before {
+          content: @icon-translations;
+        }
+      }
+      .graphics {
+        &:before {
+          content: @icon-graphics;
+        }
+      }
+      .analysis {
+        &:before {
+          content: @icon-analysis;
+        }
+      }
+      .social {
+        &:before {
+          content: @icon-social;
+        }
+      }
+      .documentation {
+        &:before {
+          content: @icon-documentation;
+        }
+      }
+      .tutorials {
+        &:before {
+          content: @icon-tutorials;
+        }
+      }
+      .video-tutorials {
+        &:before {
+          content: @icon-video-tutorials;
+        }
+      }
+      .copywriting {
+        &:before {
+          content: @icon-copywriting;
+        }
+      }
+      .blog {
+        &:before {
+          content: @icon-blog;
+        }
+      }
     }
 
+    /*
     @media screen and (max-width: 736px) {
       .ant-radio-group {
         justify-content: flex-start;
@@ -26,196 +186,7 @@
           font-size: 12px;
         }
       }
-    }
-
-    input[type="radio"],
-    .ant-radio-wrapper{
-      display: none;
-    }
-    .ant-radio-wrapper-checked{
-      + .box.ideas{
-        background-color: @bg-ideas;
-      }
-      + .box.sub-projects{
-        background-color: @bg-sub-projects;
-      }
-      + .box.development{
-        background-color: @bg-development;
-      }
-      + .box.bug-hunting{
-        background-color: @bg-bug-hunting;
-      }
-      + .box.translations{
-        background-color: @bg-translations;
-      }
-      + .box.graphics{
-        background-color: @bg-graphics;
-      }
-      + .box.analysis{
-        background-color: @bg-analysis;
-      }
-      + .box.social{
-        background-color: @bg-social;
-      }
-      + .box.documentation{
-        background-color: @bg-documentation;
-      }
-      + .box.tutorials{
-        background-color: @bg-tutorials;
-      }
-      + .box.video-tutorials{
-        background-color: @bg-video-tutorials;
-      }
-      + .box.copywriting{
-        background-color: @bg-copywriting;
-      }
-      + .box.blog{
-        background-color: @bg-blog;
-      }
-      + .box {
-        position: relative;
-        span {
-          color: @white;
-          transform: translateY(50px);
-          &:before {
-            color: @white;
-            transform: translateY(0px);
-            opacity: 1;
-          }
-        }
-      }
-    }
-    .box {
-      width: 150px;
-      height: 150px;
-      background-color: @white;
-      transition: all 250ms ease;
-      will-change: transition;
-      display: inline-block;
-      text-align: center;
-      cursor: pointer;
-      position: relative;
-      font-weight: 900;
-
-      &:active{
-        transform: translateY(10px);
-      }
-      &.disabled {
-        background-color: #EEE !important;
-        cursor: default;
-      }
-      span {
-        position: absolute;
-        transform: translate(0, 60px);
-        left: 0;
-        right: 0;
-        transition: all 300ms ease;
-        font-size: 1.2em;
-        user-select: none;
-        color: #CCC;
-        &:before {
-          font-size: 1.5em;
-          font-family: "Material Design Icons";
-          display: block;
-          transform: translateY(-10px);
-          opacity: 10;
-          transition: all 300ms ease-in-out;
-          font-weight: normal;
-          color: #CCC;
-        }
-      }
-    }
-    .ideas {
-      span {
-        &:before {
-          content: @icon-ideas;
-        }
-      }
-    }
-    .sub-projects {
-      span {
-        &:before {
-          content: @icon-sub-projects;
-        }
-      }
-    }
-    .development {
-      span {
-        &:before {
-          content: @icon-development;
-        }
-      }
-    }
-    .bug-hunting {
-      span {
-        &:before {
-          content: @icon-bug-hunting;
-        }
-      }
-    }
-    .translations {
-      span {
-        &:before {
-          content: @icon-translations;
-        }
-      }
-    }
-    .graphics {
-      span {
-        &:before {
-          content: @icon-graphics;
-        }
-      }
-    }
-    .analysis {
-      span {
-        &:before {
-          content: @icon-analysis;
-        }
-      }
-    }
-    .social {
-      span {
-        &:before {
-          content: @icon-social;
-        }
-      }
-    }
-    .documentation {
-      span {
-        &:before {
-          content: @icon-documentation;
-        }
-      }
-    }
-    .tutorials {
-      span {
-        &:before {
-          content: @icon-tutorials;
-        }
-      }
-    }
-    .video-tutorials {
-      span {
-        &:before {
-          content: @icon-video-tutorials;
-        }
-      }
-    }
-    .copywriting {
-      span {
-        &:before {
-          content: @icon-copywriting;
-        }
-      }
-    }
-    .blog {
-      span {
-        &:before {
-          content: @icon-blog;
-        }
-      }
-    }
+    }*/
   }
 
   &__rules {
