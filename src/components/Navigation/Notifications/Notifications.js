@@ -155,7 +155,8 @@ class Notifications extends React.Component {
 
             switch (notification.type) {
               case notificationConstants.REPLY:
-                if (this.isModerator(notification.author) || notification.author === 'utopian-io') {
+                if (!_.isEmpty(this.isModerator(notification.author))
+                    || notification.author === 'utopian-io') {
                   return (
                     <NotificationReply
                       key={key}
@@ -167,7 +168,7 @@ class Notifications extends React.Component {
                     />
                   );
                 } else {
-                  return null;
+                  break;
                 }
               case notificationConstants.FOLLOW:
                 return (
