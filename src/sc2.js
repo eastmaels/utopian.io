@@ -95,9 +95,7 @@ function updateMetadata(metadata) {
 function broadcast(operations, cb) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/broadcast';
   const session = Cookie.get('session');
-<<<<<<< HEAD
 
-=======
   const headers = {
     session,
     'x-api-key-id': process.env.AWS_KEY_ID,
@@ -105,8 +103,7 @@ function broadcast(operations, cb) {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
-  
->>>>>>> develop
+
   if (!cb) {
     return request.post(endpoint)
                   .send({ operations })
