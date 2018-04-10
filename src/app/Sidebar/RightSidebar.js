@@ -117,40 +117,42 @@ export default class RightSidebar extends React.Component {
   fixUser() {
     // console.log("AUTHUSER (RS.js:125):", [ this.props.authenticatedUser, this.props.authenticatedUser.github || false], "USER (RS:125):", [ this.props.user, this.props.user.github || false ]);
     const { getUser, getReposByGithub, authenticatedUser, user } = this.props;
-    getUser((authenticatedUser.name || user.name))
-      .then((res) => {
-        if (!res || !res.response) return;
-        const realUser = res.response;
-        // console.log("REALUSER (RS:131): ", [realUser, realUser.github || false]);
-        if (!realUser.github) return;
-        if (authenticatedUser && authenticatedUser.repos && authenticatedUser.repos.length && (authenticatedUser.repos.length >= 1)) {
-          // console.log("auth repos exist", authenticatedUser.repos);
-          this.setState({user: {
-            ...user,
-            github: realUser.github,
-          }});
-          this.setState({authenticatedUser: {
-            ...authenticatedUser,
-            github: realUser.github,
-          }});
-          return;
-        } else {
-          getReposByGithub((authenticatedUser.name || user.name), true).then(res => {
-            // console.log("Repos (RS):", res.response);
+    if (authenticatedUser.name || user.name) {
+      getUser((authenticatedUser.name || user.name))
+        .then((res) => {
+          if (!res || !res.response) return;
+          const realUser = res.response;
+          // console.log("REALUSER (RS:131): ", [realUser, realUser.github || false]);
+          if (!realUser.github) return;
+          if (authenticatedUser && authenticatedUser.repos && authenticatedUser.repos.length && (authenticatedUser.repos.length >= 1)) {
+            // console.log("auth repos exist", authenticatedUser.repos);
             this.setState({user: {
-              ...realUser,
+              ...user,
               github: realUser.github,
-              repos: res.response,
             }});
             this.setState({authenticatedUser: {
               ...authenticatedUser,
               github: realUser.github,
-              repos: res.response,
             }});
-            this.setState({repositories: res.response});
-          });
-        }
-      });
+            return;
+          } else {
+            getReposByGithub((authenticatedUser.name || user.name), true).then(res => {
+              // console.log("Repos (RS):", res.response);
+              this.setState({user: {
+                ...realUser,
+                github: realUser.github,
+                repos: res.response,
+              }});
+              this.setState({authenticatedUser: {
+                ...authenticatedUser,
+                github: realUser.github,
+                repos: res.response,
+              }});
+              this.setState({repositories: res.response});
+            });
+          }
+        });
+    }
   }
 
   componentWillMount() {

@@ -74,15 +74,13 @@ class InlineTagEdit extends React.Component {
     });
 
     const { post, user, moderatorAction } = this.props;
-    const status = null, questions = [], score = 0, type = null, repo = null;
+    const status = null, type = null, repo = null;
     this.setState({ waitModResponse: true });
     moderatorAction(
       post.author,
       post.permlink,
       user.name,
       status,
-      questions,
-      score,
       type,
       repo,
       tags,

@@ -13,6 +13,7 @@ function authCallback(opts = {}) {
     if (!code) {
       return res.status(401).send({ error: 'missing oauth code' });
     }
+    console.log(LOGIN_ENDPOINT + 'login/steemconnect');
     request.post(LOGIN_ENDPOINT + 'login/steemconnect').send({
       code
     }).then(loginRes => {

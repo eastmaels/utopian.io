@@ -163,7 +163,7 @@ export default (
       />
       <Route path="/@:name" component={User} />
       <Route path="/u/:postId" component={PostShortlink} />
-      <Route path="/:category/@:author/:permlink" component={Post} />
+      <Route path="/:category/@:author/:permlink/:score?" component={Post} />
       <Route path="/search/:searchSection?/:query?/" exact component={Page} />
       <Route path="/project/:author/:repo/:platform/:repoId/:type?" exact component={Project}/>
       <Route path="/:type?/:filterBy?/:status?" component={Page} />

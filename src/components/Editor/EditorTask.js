@@ -601,9 +601,6 @@ class EditorTask extends React.Component {
                 disableClick
                 style={{}}
                 accept="image/*"
-                onDrop={this.handleDrop}
-                onDragEnter={this.handleDragEnter}
-                onDragLeave={this.handleDragLeave}
               >
                 {this.state.dropzoneActive && (
                   <div className="Editor__dropzone">

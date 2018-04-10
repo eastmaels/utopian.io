@@ -122,7 +122,7 @@ import './Comment.less';
     const formData = new FormData();
     formData.append('files', blob);
 
-    fetch(`https://busy-img.herokuapp.com/@${user.name}/uploads`, {
+    fetch(`https://api.utopian.io/api/upload/post`, {
       method: 'POST',
       body: formData,
     })
@@ -244,7 +244,7 @@ import './Comment.less';
         <div className="Comment__text">
           <Link to={`/@${comment.author}`}>
             {comment.author}
-            <Tooltip
+            {/*<Tooltip
               title={intl.formatMessage({
                 id: 'reputation_score',
                 defaultMessage: 'Reputation score',
@@ -252,6 +252,7 @@ import './Comment.less';
             >
               <Tag>{formatter.reputation(comment.author_reputation)}</Tag>
             </Tooltip>
+            */}
             {comment.author === rootPostAuthor &&
               <Tooltip
                 title={intl.formatMessage({

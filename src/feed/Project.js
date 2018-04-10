@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { getIsAuthenticated, getAuthenticatedUser } from '../reducers';
-import { getUser } from '../actions/user';
 import { getGithubRepo, setGithubRepo } from '../actions/project';
 import { getReposByGithub } from '../actions/projects';
 import { getProject, createProjectAccount, createProjectSponsor } from '../actions/project';
@@ -38,7 +37,6 @@ import './Project.less';
     createProjectAccount,
     createProjectSponsor,
     getReposByGithub,
-    getUser,
   }
 )
 class Project extends React.Component {

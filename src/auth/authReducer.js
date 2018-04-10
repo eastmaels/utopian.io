@@ -32,15 +32,18 @@ export default (state = initialState, action) => {
     case Actions.GET_USER_SUCCESS: {
       const userData = action.response;
 
-      if (!userData || userData.account !== state.user.name) return state;
-
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          ...userData,
+      if (userData.account === state.user.name) {
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            ...userData,
+            utopian_reputation: userData.reputation,
+          }
         }
       };
+
+      return state;
     }
     case types.LOGIN_START:
       return {
