@@ -32,7 +32,14 @@ function getLoginUrl(state) {
 function profile() {
   const endpoint = process.env.UTOPIAN_API + 'sc2/profile';
   const session = Cookie.get('session');
-  return request.post(endpoint).set('session', session).then(res => {
+  const headers = {
+    session,
+    'x-api-key-id': process.env.AWS_KEY_ID,
+    'x-api-key': process.env.AWS_KEY,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+  return request.post(endpoint).set(headers).then(res => {
     return res.body;
   });
 }
@@ -40,25 +47,39 @@ function profile() {
 function updateMetadata(metadata) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/profile';
   const session = Cookie.get('session');
+  const headers = {
+    session,
+    'x-api-key-id': process.env.AWS_KEY_ID,
+    'x-api-key': process.env.AWS_KEY,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
   return request.put(endpoint)
                 .send({user_metadata: metadata})
-                .set('session', session)
+                .set(headers)
                 .then(res => res.body);
 }
 
 function broadcast(operations, cb) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/broadcast';
   const session = Cookie.get('session');
+  const headers = {
+    session,
+    'x-api-key-id': process.env.AWS_KEY_ID,
+    'x-api-key': process.env.AWS_KEY,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
   
   if (!cb) {
     return request.post(endpoint)
                   .send({ operations })
-                  .set('session', session)
+                  .set(headers)
                   .then(res => res.body);
   } else {
     return request.post(endpoint)
                   .send({ operations })
-                  .set('session', session)
+                  .set(headers)
                   .then(function (ret) {
                         if (ret.error) {
                           cb(new SDKError('sc2-sdk error', ret), null);
@@ -93,16 +114,41 @@ function vote(voter, author, permlink, weight) {
 
 function comment(parentAuthor, parentPermlink, author,
                   permlink, title, body, jsonMetadata) {
-  const params = {
-    parent_author: parentAuthor,
-    parent_permlink: parentPermlink,
+  const operations = [];
+  const commentOp = [
+    'comment',
+    {
+      parent_author: parentAuthor,
+      parent_permlink: parentPermlink,
+      author,
+      permlink,
+      title,
+      body,
+      json_metadata: JSON.stringify(jsonMetadata),
+    },
+  ];
+  const extensions = [[0, {
+    beneficiaries: [
+      {
+        account: 'utopian.pay',
+        weight: 1500
+      }
+    ]
+  }]];
+  const commentOptionsConfig = {
     author,
     permlink,
-    title,
-    body,
-    json_metadata: JSON.stringify(jsonMetadata),
+    allow_votes: true,
+    allow_curation_rewards: false,
+    extensions,
+    percent_steem_dollars: 10000,
+    max_accepted_payout: '1000000.000 SBD',
   };
-  return broadcast([['comment', params]]);
+
+  operations.push(commentOp);
+  operations.push(['comment_options', commentOptionsConfig]);
+
+  return broadcast(operations);
 };
 
 function reblog(account, author, permlink) {

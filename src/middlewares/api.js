@@ -20,8 +20,8 @@ const callApi = (endpoint, schema, method, payload, additionalParams, absolute?)
 
   const headers = absolute ? {} : {
       session,
-      'x-api-key-id': 'kvo2x1982b',
-      'x-api-key': 'c5pEsMpYZY896r7USzhWdapIY7o1GEpj3QCEQZSN',
+      'x-api-key-id': process.env.AWS_KEY_ID,
+      'x-api-key': process.env.AWS_KEY,
       'Content-Type': 'application/json',
       'Accept': 'application/json',
     };
