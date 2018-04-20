@@ -30,8 +30,6 @@ import InlineTagEdit from '../Story/InlineTagEdit';
 import * as R from 'ramda';
 import './StoryFull.less';
 
-
-
 @connect(
   state => ({
     authenticated: getIsAuthenticated(state),
@@ -110,6 +108,14 @@ class StoryFull extends React.Component {
         index: 0,
       },
     };
+  }
+
+  componentWillMount () {
+    const { post, history } = this.props;
+
+    if (post.deleted === true) {
+      history.push('/');
+    }
   }
 
   componentDidMount() {
@@ -310,7 +316,7 @@ class StoryFull extends React.Component {
             <div className="controls">
               <h4><Icon type="safety" /> Moderation Controls:</h4>
 
-              {(!isPending && !isReviewed && !wasReserved) || (isSupervisor && !isPending && !wasReserved) ? <Action
+              {(!isPending && !isReviewed && !isRejected && !wasReserved) || (isSupervisor && !isPending && !wasReserved) ? <Action
                   id="reserve"
                   text={<span><Icon type="pushpin"/>Reserve</span>}
                   onClick={() => {
