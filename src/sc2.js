@@ -60,7 +60,7 @@ function updateMetadata(metadata) {
                 .then(res => res.body);
 }
 
-function broadcast(operations, cb) {
+function broadcast(what = 'post', operations, cb) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/broadcast';
   const session = Cookie.get('session');
   const headers = {
@@ -73,12 +73,12 @@ function broadcast(operations, cb) {
   
   if (!cb) {
     return request.post(endpoint)
-                  .send({ operations })
+                  .send({ operations, type: what })
                   .set(headers)
                   .then(res => res.body);
   } else {
     return request.post(endpoint)
-                  .send({ operations })
+                  .send({ operations, type: what })
                   .set(headers)
                   .then(function (ret) {
                         if (ret.error) {
@@ -99,7 +99,7 @@ function claimRewardBalance(account, rewardSteem, rewardSbd, rewardVests, cb) {
     reward_sbd: rewardSbd,
     reward_vests: rewardVests
   };
-  return broadcast([['claim_reward_balance', params]], cb);
+  return broadcast('claim_reward_balance', [['claim_reward_balance', params]], cb);
 };
 
 function vote(voter, author, permlink, weight) {
@@ -109,11 +109,11 @@ function vote(voter, author, permlink, weight) {
     permlink,
     weight,
   };
-  return broadcast([['vote', params]]);
+  return broadcast('vote', [['vote', params]]);
 }
 
 function comment(parentAuthor, parentPermlink, author,
-                  permlink, title, body, jsonMetadata) {
+                  permlink, title, body, jsonMetadata, isUpdating = false) {
   const operations = [];
   const commentOp = [
     'comment',
@@ -127,28 +127,31 @@ function comment(parentAuthor, parentPermlink, author,
       json_metadata: JSON.stringify(jsonMetadata),
     },
   ];
-  const extensions = [[0, {
-    beneficiaries: [
-      {
-        account: 'utopian.pay',
-        weight: 1500
-      }
-    ]
-  }]];
-  const commentOptionsConfig = {
-    author,
-    permlink,
-    allow_votes: true,
-    allow_curation_rewards: false,
-    extensions,
-    percent_steem_dollars: 10000,
-    max_accepted_payout: '1000000.000 SBD',
-  };
 
   operations.push(commentOp);
-  operations.push(['comment_options', commentOptionsConfig]);
 
-  return broadcast(operations);
+  if (!isUpdating) {
+    const extensions = [[0, {
+      beneficiaries: [
+        {
+          account: 'utopian.pay',
+          weight: 1500
+        }
+      ]
+    }]];
+    const commentOptionsConfig = {
+      author,
+      permlink,
+      allow_votes: true,
+      allow_curation_rewards: false,
+      extensions,
+      percent_steem_dollars: 10000,
+      max_accepted_payout: '1000000.000 SBD',
+    };
+    operations.push(['comment_options', commentOptionsConfig]);
+  }
+
+  return broadcast('comment', operations);
 };
 
 function reblog(account, author, permlink) {
@@ -165,7 +168,7 @@ function reblog(account, author, permlink) {
       },
     ]),
   };
-  return broadcast([['custom_json', params]]);
+  return broadcast('reblog', [['custom_json', params]]);
 }
 
 function follow(follower, following) {
@@ -175,7 +178,7 @@ function follow(follower, following) {
     id: 'follow',
     json: JSON.stringify(['follow', { follower, following, what: ['blog'] }]),
   };
-  return broadcast([['custom_json', params]]);
+  return broadcast('follow', [['custom_json', params]]);
 }
 
 function unfollow(unfollower, unfollowing) {
@@ -185,7 +188,7 @@ function unfollow(unfollower, unfollowing) {
     id: 'follow',
     json: JSON.stringify(['follow', { follower: unfollower, following: unfollowing, what: [] }]),
   };
-  return broadcast([['custom_json', params]]);
+  return broadcast('unfollow', [['custom_json', params]]);
 }
 
 function sign(name, params, redirectUri) {

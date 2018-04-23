@@ -229,7 +229,7 @@ class StoryFull extends React.Component {
     const isReviewed = post.reviewed || false;
     const isRejected = post.flagged || false;
     const isPending = post.pending || false;
-    const isPendingReviewer = isModerator && isModerator.account === user.name && isPending;
+    const isPendingReviewer = isModerator && isModerator.account === user.name && isPending && post.moderator === isModerator.account;
     const isProcessing = this.state.processing;
     const isStaffPicked = post.json_metadata.staff_pick;
     const metaData = post.json_metadata;

@@ -33,6 +33,7 @@ class InlineTagEdit extends React.Component {
     this.resizeInput = this.resizeInput.bind(this);
     this.handleOnFocus = this.handleOnFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.hasDuplicate = this.hasDuplicate.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -60,7 +61,7 @@ class InlineTagEdit extends React.Component {
     const prevTags = this.props.post['json_metadata'].tags;
     const nextTags = nextProps.post['json_metadata'].tags;
 
-    if (prevTags.sort().join(',') !== nextTags.sort().join(',')) {
+    if (prevTags.slice().sort().join(',') !== nextTags.slice().sort().join(',')) {
       const tags = nextProps.post['json_metadata'].tags.map((tag) => {
         return { title: tag, selected: false };
       });
@@ -113,7 +114,6 @@ class InlineTagEdit extends React.Component {
   }
 
   handleRemoveTag(event) {
-    event.preventDefault();
     const index = parseInt(event.target.attributes['data-index'].value, 10);
     this.removeTag(index);
     setTimeout(() => {
@@ -122,7 +122,7 @@ class InlineTagEdit extends React.Component {
   }
 
   handleBlur(event) {
-    const tags = this.state.tags.filter((tag, tagIndex) => {
+    const tags = this.state.tags.map((tag, tagIndex) => {
       tag.selected = false;
       return tag;
     });
@@ -135,17 +135,24 @@ class InlineTagEdit extends React.Component {
       return tag.title;
     });
 
-    if(event.target.value === '') {
+    if(event.target.value === '' || this.hasDuplicate(newTags)) {
       // remove added tag span when value is empty
       const index = parseInt(event.target.attributes['data-index'].value, 10);
       this.removeTag(index);
-    } else if (prevTags.sort().join(',') === newTags.sort().join(',')
+    } else if (prevTags.slice().sort().join(',') === newTags.slice().sort().join(',')
         || !this.props.validation(newTags)) {
       // do nothing; do not broadcoast
     } else {
       this.resizeInput(event.target);
       this.updatePostTags();
     }
+  }
+
+  hasDuplicate(tags) {
+    const uniqueTags = tags.filter((item, pos) => {
+      return tags.indexOf(item) === pos;
+    });
+    return uniqueTags.length !== tags.length;
   }
 
   handleChange(event) {
@@ -173,6 +180,13 @@ class InlineTagEdit extends React.Component {
       return index != tagIndex;
     });
     this.setState({ tags: tags });
+
+    setTimeout(() => {
+      const tagInputs = document.getElementsByClassName('inline-tag-edit-input');
+      Array.prototype.slice.call(tagInputs).map((tagInput) => {
+        return this.resizeInput(tagInput);
+      });
+    }, 100);
   }
 
   handleKeyUp(event) {

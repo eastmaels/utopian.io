@@ -102,7 +102,7 @@ export const sendComment = (parentPost, body, isUpdating = false, originalCommen
     type: SEND_COMMENT,
     payload: {
       promise: sc2
-        .comment(parentAuthor, parentPermlink, author, permlink, '', newBody, jsonMetadata)
+        .comment(parentAuthor, parentPermlink, author, permlink, '', newBody, jsonMetadata, isUpdating)
         .then((resp) => {
           const focusedComment = {
             author: resp.result.operations[0][1].author,
