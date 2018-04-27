@@ -364,7 +364,7 @@ class StoryFull extends React.Component {
                   }}
                 /> : null}
 
-              {isPendingReviewer && isSupervisor && !isRejected && !isStaffPicked && !wasReserved ? <Action
+              {isSupervisor && !isRejected && !isStaffPicked ? <Action
                   id="staffpick"
                   text={<span><Icon type="trophy"/>Staff Pick</span>}
                   onClick={() => {
@@ -539,8 +539,8 @@ class StoryFull extends React.Component {
               validation={this.handleTagValidation.bind(this)}
             /> :
             <Tooltip title={<span><b>Tags:</b> {this.tagString(tags)}</span>}>
-              {tags && tags.map(tag =>
-                <span>
+              {tags && tags.map((tag, tagIndex) =>
+                <span key={tagIndex}>
                   <Topic key={tag} name={tag} />&nbsp;
                 </span>
               )}

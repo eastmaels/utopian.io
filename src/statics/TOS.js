@@ -27,10 +27,9 @@ export default class TermsOfService extends React.PureComponent {
           <h1>
             Terms of Service
           </h1>
-          <span className="tos-date">
-        
-        Last Updated At: {lastUpdateDate} 
-      </span>
+          <p className="tos-date">
+            Last Updated At: {lastUpdateDate}
+          </p>
           <p>
             Welcome to Utopian! These Terms of Service (“Terms”) apply to your access
             to and use of Utopian.io and any other products or services that link to
@@ -91,17 +90,8 @@ export default class TermsOfService extends React.PureComponent {
             4. Adult-Oriented Content
           </h2>
           <p>
-            Utopian is intended for a general audience and, as a result, some Utopian
-            Content may discuss or depict adult-oriented topics. We realize that this
-            content may not be appropriate or desirable for some of our readers
-            depending on their current location, age, background or personal views. As
-            a result, we mark this content as Not Safe For Work (“NSFW”).
-          </p>
-          <p>
-            Marking Utopian Content as NSFW does not prevent you from being able to
-            access this content but, instead, helps you make informed decisions about
-            the type of content you view on Utopian. You understand and agree that you
-            access content marked as NSFW at your own risk.
+            Publishing or distributing adult oriented content on Utopian is strictly prohibited as per Community Guidelines.
+            Submitting adult-oriented content to Utopian may lead to account deactivation and permanent ban from Utopian services.
           </p>
           <h2>
             5. Trademarks
@@ -171,7 +161,7 @@ export default class TermsOfService extends React.PureComponent {
           <p>
             6.5. Subject to 7.1 below, any and all indemnities, warranties, terms and
             conditions (whether express or implied) are hereby excluded to the fullest
-            extent permitted under Luxembourg law.
+            extent permitted under law.
           </p>
           <p>
             6.6. We will not be liable, in contract, or tort (including, without
@@ -351,31 +341,31 @@ export default class TermsOfService extends React.PureComponent {
             12. No Right To Cancel And/Or Reverse Steem Transactions
           </h2>
           <p>
-            14.1. If you use a Service to which Steem, Steem Dollars or Steem Power is
+            12.1. If you use a Service to which Steem, Steem Dollars or Steem Power is
             transacted, you will not be able to change your mind once you have
             confirmed that you wish to proceed with the Service or transaction.
           </p>
           <h2>
-            15. Discontinuation of Services
+            13. Discontinuation of Services
           </h2>
           <p>
-            15.1. We may, in our sole discretion and without cost to you, with or
+            13.1. We may, in our sole discretion and without cost to you, with or
             without prior notice and at any time, modify or discontinue, temporarily or
             permanently, any portion of our Services. You are solely responsible for
             storing, outside of the Services, a backup of any Account and Private Key
             pair that you maintain in your Wallet.
           </p>
           <p>
-            15.2. If you do not maintain a backup of your Account data outside of the
+            13.2. If you do not maintain a backup of your Account data outside of the
             Services, you will be may not be able to access Steem, Steem Dollars and
             Steem Power associated with any Account Name maintained in your Account in
             the event that we discontinue or deprecate the Services.
           </p>
           <h2>
-            16. Suspension or Termination of Service.
+            14. Suspension or Termination of Service.
           </h2>
           <p>
-            16.1. We may suspend or terminate your access to the Services in our sole
+            14.1. We may suspend or terminate your access to the Services in our sole
             discretion, immediately and without prior notice, and delete or deactivate
             your Account and all related information and files in such without cost to
             you, including, for instance, in the event that you breach any term of
@@ -384,59 +374,59 @@ export default class TermsOfService extends React.PureComponent {
             Name and Private Keys.
           </p>
           <h2>
-            17. User Conduct
+            15. User Conduct
           </h2>
           <p>
-            17.1. When accessing or using the Services, you agree that you will not
+            15.1. When accessing or using the Services, you agree that you will not
             commit any unlawful act, and that you are solely responsible for your
             conduct while using our Services. Without limiting the generality of the
             foregoing, you agree that you will not:
           </p>
           <p>
-            17.1.1. Use our Services in any manner that could interfere with, disrupt,
+            15.1.1. Use our Services in any manner that could interfere with, disrupt,
             negatively affect or inhibit other users from fully enjoying our Services,
             or that could damage, disable, overburden or impair the functioning of our
             Services in any manner;
           </p>
           <p>
-            17.1.2. Use our Services to pay for, support or otherwise engage in any
+            15.1.2. Use our Services to pay for, support or otherwise engage in any
             illegal activities, including, but not limited to illegal gambling, fraud,
             money- laundering, or terrorist activities.
           </p>
           <p>
-            17.1.3. Use any robot, spider, crawler, scraper or other automated means or
+            15.1.3. Use any robot, spider, crawler, scraper or other automated means or
             interface not provided by us to access our Services or to extract data;
           </p>
           <p>
             17.1.4. Use or attempt to use another user’s Wallet without authorization;
           </p>
           <p>
-            17.1.5. Attempt to circumvent any content filtering techniques we employ,
+            15.1.5. Attempt to circumvent any content filtering techniques we employ,
             or attempt to access any service or area of our Services that you are not
             authorized to access;
           </p>
           <p>
-            17.1.6. Introduce to the Services any virus, Trojan, worms, logic bombs or
+            15.1.6. Introduce to the Services any virus, Trojan, worms, logic bombs or
             other harmful material;
           </p>
           <p>
-            17.1.7. Develop any third-party applications that interact with our
+            15.1.7. Develop any third-party applications that interact with our
             Services without our prior written consent;
           </p>
           <p>
-            17.1.8. Provide false, inaccurate, or misleading information; or
+            15.1.8. Provide false, inaccurate, or misleading information; or
           </p>
           <p>
-            17.1.9. Encourage or induce any third party to engage in any of the
+            15.1.9. Encourage or induce any third party to engage in any of the
             activities prohibited under this Section.
           </p>
           <p>
-            17.1.10. Reverse engineer any aspect of Utopian or do anything that might
+            15.1.10. Reverse engineer any aspect of Utopian or do anything that might
             discover source code or bypass or circumvent measures employed to prevent
             or limit access to any Utopian Content, area or code of Utopian.
           </p>
           <h2>
-            18. Third-Party Content and Sites
+            16. Third-Party Content and Sites
           </h2>
           <p>
             Utopian may include links and other content owned or operated by third
@@ -450,7 +440,7 @@ export default class TermsOfService extends React.PureComponent {
             apply.
           </p>
           <h2>
-            19. Feedback
+            17. Feedback
           </h2>
           <p>
             You may submit questions, comments, feedback, suggestions, and other
@@ -464,7 +454,7 @@ export default class TermsOfService extends React.PureComponent {
             Utopian.
           </p>
           <h2>
-            20. Copyright Complaints
+            18. Copyright Complaints
           </h2>
           <p>
             Utopian respects the intellectual property of others by not reading
@@ -488,7 +478,7 @@ export default class TermsOfService extends React.PureComponent {
             disabling access to the material or activity claimed to be infringing.
           </p>
           <h2>
-            21. Disclaimers
+            19. Disclaimers
           </h2>
           <p>
             TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, UTOPIAN AND THE UTOPIAN
@@ -507,7 +497,7 @@ export default class TermsOfService extends React.PureComponent {
             APPLY TO YOU.
           </p>
           <h2>
-            22. Limitation of Liability
+            20. Limitation of Liability
           </h2>
           <p>
             TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
@@ -530,8 +520,14 @@ export default class TermsOfService extends React.PureComponent {
             DAMAGES, SO SOME OR ALL OF THE EXCLUSIONS AND LIMITATIONS IN THIS SECTION
             MAY NOT APPLY TO YOU.
           </p>
+
+          <p>STEEM POWER DELEGATION MADE TO UTOPIAN DOES NOT GUARANTEE ANY RETURN ON INVESTMENT, AND UTOPIAN IS NOT LIABLE FOR ANY PROFIT OR LOSSES THAT MAY BE INCURRED THROUGH ANY SUCH DELEGATIONS. NOTHING IN UTOPIAN SERVES AS ADVICE OR RECOMMENDATION TO INVEST OR DELEGATE STEEM POWER. DELEGATIONS ARE MADE AT THE OWNERS' OWN RISK, AND MAY BE SUSCEPTIBLE TO DETRIMENTAL OCCURRENCES OUT OF UTOPIAN'S CONTROL, WHICH INCLUDE BUT ARE NOT LIMITED TO MARKET PRICE FLUCTUATIONS OF STEEM, HACKING OR BLOCKCHAIN ISSUES.</p>
+
+          <p>UTOPIAN HAS NO WAY TO REJECT DELEGATION AND SO IT CANNOT TECHNICALLY PREVENT USERS FROM DOING SO. ANY POTENTIAL FUNDS DISTRIBUTED TO DELEGATORS ARE ARBITRARY AND ARE NEVER GUARANTEED.</p>
+
+          <p>ALL INFORMATION ON UTOPIAN AND PROVIDED FROM OR THROUGH USE OF ITS SERVICES DOES NOT CONSTITUTE INVESTMENT ADVICE OR RECOMMENDATION. USERS SHOULD NOT MAKE ANY DECISION, FINANCIAL OR OTHERWISE, WITHOUT UNDERTAKING INDEPENDENT DUE DILIGENCE AND SEEKING PROFESSIONAL FINANCIAL ADVICE.</p>
           <h2>
-            23. Modifications to Utopian
+            21. Modifications to Utopian
           </h2>
           <p>
             Utopian reserves the right to modify or discontinue, temporarily or
@@ -540,7 +536,7 @@ export default class TermsOfService extends React.PureComponent {
             suspension or discontinuance of Utopian, or any part of Utopian.
           </p>
           <h2>
-            24. Applicable Law and Venue
+            22. Applicable Law and Venue
           </h2>
           <p>
             These Terms and your access to and use of Utopian and the Utopian Content
@@ -552,7 +548,7 @@ export default class TermsOfService extends React.PureComponent {
             action or proceeding arising out of these Terms.
           </p>
           <h2>
-            25. Termination
+            23. Termination
           </h2>
           <p>
             Utopian reserves the right, without notice and in our sole discretion, to
@@ -560,7 +556,7 @@ export default class TermsOfService extends React.PureComponent {
             your future access to, and use of, Utopian.
           </p>
           <h2>
-            26. Severability
+            24. Severability
           </h2>
           <p>
             If any term, clause or provision of these Terms is deemed to be unlawful,
@@ -569,13 +565,19 @@ export default class TermsOfService extends React.PureComponent {
             validity and enforceability of any remaining provisions.
           </p>
           <h2>
-            27. Usage Utopian API
+            25. Usage Utopian API
           </h2>
           <p>
             Access to the Utopian API is allowed only with the use of a dedicated and personal API key. Private API keys for 3rd party developer will be provided upon request and application via support.utopian.io. Every API Key is assigned to one IP/domain, and one individual developer or organisation. The security and proper use of the API key provided is the full responsibility of the recipient. Attempts to abuse the API key assigned, or gain access to the Utopian API without an api key and may lead to your IP/domain being permanently blocked from accessing Utopian.io services.
           </p>
           <h2>
-            28. Questions &amp; Contact Information
+            26. Rules and Guidelines
+          </h2>
+          <p>
+            All rules and guidelines published by Utopian are by every effect part of the Terms and violation of them may lead to the suspension or termination of services at our sole discretion.
+          </p>
+          <h2>
+            27. Questions &amp; Contact Information
           </h2>
           <p>
             Questions or comments about Utopian may be directed to    <a href="mailto:info@utopian.io">info@utopian.io</a>
@@ -584,10 +586,8 @@ export default class TermsOfService extends React.PureComponent {
             If you wish to report abuses or copyright infrigement use    <a href="mailto:abuses@utopian.io">abuses@utopian.io</a>
           </p>
           <p>
-            If you wish to report any privacy issue use
+            If you wish to report any privacy issue use <a href="mailto:privacy@utopian.io">privacy@utopian.io</a>
           </p>
-          <a href="mailto:privacy@utopian.io">privacy@utopian.io</a>
-
         </div>
       </div>
     </div>);
