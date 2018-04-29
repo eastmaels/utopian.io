@@ -26,7 +26,7 @@ class Avatar extends Component {
 
 
     this.setState({
-      imageUrl: username.indexOf('https') !== -1 ? username : getImage(`@${username}?s=${size}`),
+      imageUrl: username && username.indexOf('https') !== -1 ? username : getImage(`@${username}?s=${size}`),
     });
   }
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import * as R from 'ramda';
-import _ from 'lodash';
 import * as notificationConstants from '../../../../common/constants/notifications';
 import { saveNotificationsLastTimestamp } from '../../../helpers/metadata';
 import NotificationFollowing from './NotificationFollowing';
@@ -16,9 +17,18 @@ import NotificationVoteWitness from './NotificationVoteWitness';
 import './Notification.less';
 import './Notifications.less';
 import Loading from '../../Icon/Loading';
+import { getModerators } from '../../../actions/moderators';
 
 const displayLimit = 6;
 
+@connect(
+  state => ({
+    moderators: state.moderators,
+  }),
+  {
+    getModerators,
+  },
+)
 class Notifications extends React.Component {
   static propTypes = {
     notifications: PropTypes.arrayOf(PropTypes.shape()),
@@ -41,6 +51,7 @@ class Notifications extends React.Component {
   };
 
   constructor(props) {
+    console.log('constructor called')
     super(props);
 
     this.state = {
@@ -59,7 +70,18 @@ class Notifications extends React.Component {
     return R.find(R.propEq('account', username))(moderators);
   }
 
+  componentWillMount() {
+    console.log('component will mount called')
+    const { getModerators, moderators } = this.props;
+
+    if (!moderators || !moderators.length) {
+      console.log('get moderators called')
+      getModerators();
+    }
+  }
+
   componentDidMount() {
+    console.log('componentDidMount called')
     const { notifications, lastSeenTimestamp } = this.props;
     const latestNotification = _.get(notifications, 0);
     const timestamp = _.get(latestNotification, 'timestamp');
@@ -70,6 +92,7 @@ class Notifications extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps called')
     const differentNotifications = !_.isEqual(
       _.size(this.props.notifications),
       _.size(nextProps.notifications),
@@ -135,6 +158,7 @@ class Notifications extends React.Component {
       lastSeenTimestamp,
       onNotificationClick,
       loadingNotifications,
+      moderators,
     } = this.props;
     const { displayedNotifications } = this.state;
     const displayEmptyNotifications = _.isEmpty(notifications) && !loadingNotifications;
@@ -168,7 +192,7 @@ class Notifications extends React.Component {
                     />
                   );
                 } else {
-                  break;
+                  return null;
                 }
               case notificationConstants.FOLLOW:
                 return (
@@ -179,17 +203,6 @@ class Notifications extends React.Component {
                     onClick={this.handleNotificationsClick}
                   />
                 );
-              /*
-              case notificationConstants.MENTION:
-                return (
-                  <NotificationMention
-                    key={key}
-                    notification={notification}
-                    read={read}
-                    onClick={this.handleNotificationsClick}
-                  />
-                );
-              */
               case notificationConstants.VOTE:
                 return (
                   <NotificationVote

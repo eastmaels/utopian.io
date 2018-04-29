@@ -5,9 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import LeftSidebar from '../app/Sidebar/LeftSidebar';
 import Affix from '../components/Utils/Affix';
+import * as R from 'ramda';
 import * as notificationConstants from '../../common/constants/notifications';
 import { getUpdatedSCUserMetadata } from '../auth/authActions';
 import { getNotifications } from '../user/userActions';
+import { getModerators } from '../actions/moderators';
 import {
   getAuthenticatedUserSCMetaData,
   getNotifications as getNotificationsState,
@@ -33,13 +35,25 @@ class Notifications extends React.Component {
     notifications: PropTypes.arrayOf(PropTypes.shape()),
     currentAuthUsername: PropTypes.string,
     userSCMetaData: PropTypes.shape(),
+    moderators: PropTypes.arrayOf(PropTypes.shape()),
   };
 
   static defaultProps = {
     notifications: [],
     currentAuthUsername: '',
     userSCMetaData: {},
+    moderators: [],
   };
+
+  componentWillMount() {
+    console.log('component will mount called')
+    const { getModerators, moderators } = this.props;
+
+    if (!moderators || !moderators.length) {
+      console.log('get moderators called')
+      this.props.getModerators();
+    }
+  }
 
   componentDidMount() {
     const { userSCMetaData, notifications } = this.props;
@@ -53,8 +67,13 @@ class Notifications extends React.Component {
     }
   }
 
+  isModerator(username) {
+    const { moderators } = this.props;
+    return R.find(R.propEq('account', username))(moderators);
+  }
+
   render() {
-    const { notifications, currentAuthUsername, userSCMetaData, loadingNotifications } = this.props;
+    const { notifications, currentAuthUsername, userSCMetaData, loadingNotifications, moderators } = this.props;
     const lastSeenTimestamp = _.get(userSCMetaData, 'notifications_last_timestamp');
 
     return (
@@ -78,25 +97,30 @@ class Notifications extends React.Component {
                 </div>
               )}
               {_.map(notifications, (notification, index) => {
+                console.log('notification');
+                console.log(notification);
                 const key = `${index}${notification.timestamp}`;
                 const read = lastSeenTimestamp >= notification.timestamp;
                 switch (notification.type) {
                   case notificationConstants.REPLY:
-                    return (
-                      <NotificationReply
-                        key={key}
-                        notification={notification}
-                        currentAuthUsername={currentAuthUsername}
-                        read={read}
-                      />
-                    );
+                    if (!_.isEmpty(this.isModerator(notification.author))
+                        || notification.author === 'utopian-io' || notification.author === 'utopian.tip') {
+
+                      return (
+                        <NotificationReply
+                          key={key}
+                          notification={notification}
+                          currentAuthUsername={currentAuthUsername}
+                          read={read}
+                          isModerator={this.isModerator(notification.author)}
+                        />
+                      );
+                    } else {
+                      return null;
+                    }
                   case notificationConstants.FOLLOW:
                     return (
                       <NotificationFollowing key={key} notification={notification} read={read} />
-                    );
-                  case notificationConstants.MENTION:
-                    return (
-                      <NotificationMention key={key} notification={notification} read={read} />
                     );
                   case notificationConstants.VOTE:
                     return (
@@ -155,5 +179,6 @@ export default connect(
   {
     getUpdatedSCUserMetadata,
     getNotifications,
+    getModerators,
   },
 )(requiresLogin(Notifications));
