@@ -4,37 +4,6 @@
  */
 import Cookie from 'js-cookie';
 import request from 'superagent';
-import fetch from 'cross-fetch';
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SDKError = function (_Error) {
-  _inherits(SDKError, _Error);
-
-  function SDKError(message, obj) {
-    _classCallCheck(this, SDKError);
-
-    var _this = _possibleConstructorReturn(this, (SDKError.__proto__ || Object.getPrototypeOf(SDKError)).call(this, message));
-
-    _this.name = 'SDKError';
-    _this.error = obj.error;
-    _this.error_description = obj.error_description;
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(_this, _this.constructor);
-    } else {
-      _this.stack = new Error(message).stack;
-    }
-    return _this;
-  }
-
-  return SDKError;
-}(Error);
 
 function getLoginUrl(state) {
   const host = process.env.STEEMCONNECT_HOST;
@@ -50,7 +19,7 @@ function getLoginUrl(state) {
   const scopes = [
     'vote',
     'comment',
-    'comment_delete',
+    'delete_comment',
     'comment_options',
     'custom_json',
     'claim_reward_balance',
@@ -76,7 +45,6 @@ function profile() {
 }
 
 function updateMetadata(metadata) {
-  metadata = metadata !== undefined ? metadata : {};
   const endpoint = process.env.UTOPIAN_API + 'sc2/profile';
   const session = Cookie.get('session');
   const headers = {
@@ -92,10 +60,9 @@ function updateMetadata(metadata) {
                 .then(res => res.body);
 }
 
-function broadcast(operations, cb) {
+function broadcast(what = 'post', operations, cb) {
   const endpoint = process.env.UTOPIAN_API + 'sc2/broadcast';
   const session = Cookie.get('session');
-
   const headers = {
     session,
     'x-api-key-id': process.env.AWS_KEY_ID,
@@ -103,15 +70,15 @@ function broadcast(operations, cb) {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   };
-
+  
   if (!cb) {
     return request.post(endpoint)
-                  .send({ operations })
+                  .send({ operations, type: what })
                   .set(headers)
                   .then(res => res.body);
   } else {
     return request.post(endpoint)
-                  .send({ operations })
+                  .send({ operations, type: what })
                   .set(headers)
                   .then(function (ret) {
                         if (ret.error) {
@@ -132,7 +99,7 @@ function claimRewardBalance(account, rewardSteem, rewardSbd, rewardVests, cb) {
     reward_sbd: rewardSbd,
     reward_vests: rewardVests
   };
-  return broadcast([['claim_reward_balance', params]], cb);
+  return broadcast('claim_reward_balance', [['claim_reward_balance', params]], cb);
 };
 
 function vote(voter, author, permlink, weight) {
@@ -142,11 +109,11 @@ function vote(voter, author, permlink, weight) {
     permlink,
     weight,
   };
-  return broadcast([['vote', params]]);
+  return broadcast('vote', [['vote', params]]);
 }
 
 function comment(parentAuthor, parentPermlink, author,
-                  permlink, title, body, jsonMetadata) {
+                  permlink, title, body, jsonMetadata, isUpdating = false) {
   const operations = [];
   const commentOp = [
     'comment',
@@ -160,28 +127,31 @@ function comment(parentAuthor, parentPermlink, author,
       json_metadata: JSON.stringify(jsonMetadata),
     },
   ];
-  const extensions = [[0, {
-    beneficiaries: [
-      {
-        account: 'utopian.pay',
-        weight: 1500
-      }
-    ]
-  }]];
-  const commentOptionsConfig = {
-    author,
-    permlink,
-    allow_votes: true,
-    allow_curation_rewards: false,
-    extensions,
-    percent_steem_dollars: 10000,
-    max_accepted_payout: '1000000.000 SBD',
-  };
 
   operations.push(commentOp);
-  operations.push(['comment_options', commentOptionsConfig]);
 
-  return broadcast(operations);
+  if (!isUpdating) {
+    const extensions = [[0, {
+      beneficiaries: [
+        {
+          account: 'utopian.pay',
+          weight: 1500
+        }
+      ]
+    }]];
+    const commentOptionsConfig = {
+      author,
+      permlink,
+      allow_votes: true,
+      allow_curation_rewards: false,
+      extensions,
+      percent_steem_dollars: 10000,
+      max_accepted_payout: '1000000.000 SBD',
+    };
+    operations.push(['comment_options', commentOptionsConfig]);
+  }
+
+  return broadcast('comment', operations);
 };
 
 function reblog(account, author, permlink) {
@@ -198,7 +168,7 @@ function reblog(account, author, permlink) {
       },
     ]),
   };
-  return broadcast([['custom_json', params]]);
+  return broadcast('reblog', [['custom_json', params]]);
 }
 
 function follow(follower, following) {
@@ -208,7 +178,7 @@ function follow(follower, following) {
     id: 'follow',
     json: JSON.stringify(['follow', { follower, following, what: ['blog'] }]),
   };
-  return broadcast([['custom_json', params]]);
+  return broadcast('follow', [['custom_json', params]]);
 }
 
 function unfollow(unfollower, unfollowing) {
@@ -218,7 +188,7 @@ function unfollow(unfollower, unfollowing) {
     id: 'follow',
     json: JSON.stringify(['follow', { follower: unfollower, following: unfollowing, what: [] }]),
   };
-  return broadcast([['custom_json', params]]);
+  return broadcast('unfollow', [['custom_json', params]]);
 }
 
 function sign(name, params, redirectUri) {

@@ -143,7 +143,7 @@ class Write extends React.Component {
         initialTitle: draftPost.title || '',
         initialTopics: tags || [],
         initialReward: draftPost.reward || '50',
-        initialType: jsonMetadata.type || 'ideas',
+        initialType: jsonMetadata.type || 'development',
         initialBody: draftPost.body || '',
         isUpdating: isUpdating || false,
         initialRepository: jsonMetadata.repository,

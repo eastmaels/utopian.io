@@ -30,8 +30,6 @@ import InlineTagEdit from '../Story/InlineTagEdit';
 import * as R from 'ramda';
 import './StoryFull.less';
 
-
-
 @connect(
   state => ({
     authenticated: getIsAuthenticated(state),
@@ -110,6 +108,14 @@ class StoryFull extends React.Component {
         index: 0,
       },
     };
+  }
+
+  componentWillMount () {
+    const { post, history } = this.props;
+
+    if (post.deleted === true) {
+      history.push('/');
+    }
   }
 
   componentDidMount() {
@@ -229,7 +235,7 @@ class StoryFull extends React.Component {
     const isReviewed = post.reviewed || false;
     const isRejected = post.flagged || false;
     const isPending = post.pending || false;
-    const isPendingReviewer = isModerator && isModerator.account === user.name && isPending;
+    const isPendingReviewer = isModerator && isModerator.account === user.name && isPending && post.moderator === isModerator.account;
     const isProcessing = this.state.processing;
     const isStaffPicked = post.json_metadata.staff_pick;
     const metaData = post.json_metadata;
@@ -310,7 +316,7 @@ class StoryFull extends React.Component {
             <div className="controls">
               <h4><Icon type="safety" /> Moderation Controls:</h4>
 
-              {(!isPending && !isReviewed && !wasReserved) || (isSupervisor && !isPending && !wasReserved) ? <Action
+              {(!isPending && !isReviewed && !isRejected && !wasReserved) || (isSupervisor && !isPending && !wasReserved) ? <Action
                   id="reserve"
                   text={<span><Icon type="pushpin"/>Reserve</span>}
                   onClick={() => {
@@ -358,7 +364,7 @@ class StoryFull extends React.Component {
                   }}
                 /> : null}
 
-              {isPendingReviewer && isSupervisor && !isRejected && !isStaffPicked && !wasReserved ? <Action
+              {isSupervisor && !isRejected && !isStaffPicked ? <Action
                   id="staffpick"
                   text={<span><Icon type="trophy"/>Staff Pick</span>}
                   onClick={() => {
@@ -533,8 +539,8 @@ class StoryFull extends React.Component {
               validation={this.handleTagValidation.bind(this)}
             /> :
             <Tooltip title={<span><b>Tags:</b> {this.tagString(tags)}</span>}>
-              {tags && tags.map(tag =>
-                <span>
+              {tags && tags.map((tag, tagIndex) =>
+                <span key={tagIndex}>
                   <Topic key={tag} name={tag} />&nbsp;
                 </span>
               )}

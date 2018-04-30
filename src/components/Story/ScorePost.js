@@ -118,11 +118,11 @@ class ScorePost extends React.Component {
 
     let questions = questionnaire.map( (question, qindex) => {
       let options = question.answers.map( (answer, aindex) => {
-        return (<option value={aindex}>{answer.answer}</option>);
+        return (<option key={aindex} value={aindex}>{answer.answer}</option>);
       });
 
       return (
-        <ul>
+        <ul key={qindex}>
           <li key={question.question_id}>
             <h5>{question.question}</h5>
           </li>

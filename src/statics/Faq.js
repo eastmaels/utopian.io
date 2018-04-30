@@ -20,9 +20,6 @@ export default () =>
       <br className="Welcome__bigbreak"/>
       </p> <br className="Welcome__bigbreak"/>
       </div>
-      <div id="update">
-        Document Last Modified <b>December 13th, 2017</b>
-      </div>
 
     </div>
   </div>);

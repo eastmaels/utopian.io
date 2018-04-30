@@ -138,7 +138,7 @@ export const broadcastComment = (
 
   console.log("OPERATIONS", operations)
 
-  return sc2.broadcast(operations).catch(e => {
+  return sc2.broadcast('post', operations).catch(e => {
     console.log(e);
     if (commentOp) console.log("ORIGINAL COMMENT OBJECT: ", commentOp);
     alert("Utopian could not connect to Steem. Please see https://utopian.io/faq#errors for more details, or try using a different browser. \n \n Your post may have been saved in Drafts: https://utopian.io/drafts");

@@ -50,7 +50,7 @@ class EditorTask extends React.Component {
     repository: null,
     topics: [],
     reward: '50',
-    type: 'task-ideas',
+    type: 'task-development',
     body: '',
     recentTopics: [],
     popularTopics: [],
@@ -186,7 +186,7 @@ class EditorTask extends React.Component {
       // @UTOPIAN filtering out utopian-io since it's always added/re-added when posting
       topics: post.topics.filter(topic => topic !== process.env.UTOPIAN_CATEGORY),
       reward: post.reward,
-      type: post.type || 'task-ideas',
+      type: post.type || 'task-development',
     });
     if (this.input && post.body !== '') {
       this.input.value = post.body;
@@ -472,7 +472,7 @@ class EditorTask extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { intl, loading, isUpdating, type, saving, repository } = this.props;
 
-    const chosenType = this.state.currentType || type || 'task-ideas';
+    const chosenType = this.state.currentType || type || 'task-development';
 
     return (
       <Form className="Editor" layout="vertical" onSubmit={this.handleSubmit}>
@@ -489,12 +489,12 @@ class EditorTask extends React.Component {
                 this.onUpdate(e);
                 this.handleChangeCategory(e);
               }}>
-                <label>
+                {/*<label>
                   <Radio value="task-ideas" name="type" />
                   <div className={`ideas box`}>
                     <span>Thinkers</span>
                   </div>
-                </label>
+                </label>*/}
                 <label>
                   <Radio value="task-development" name="type" />
                   <div className={`development box`}>
@@ -507,12 +507,12 @@ class EditorTask extends React.Component {
                     <span>Bug Hunters</span>
                   </div>
                 </label>
-                <label>
+                {/*<label>
                   <Radio value="task-translations" name="type" />
                   <div className={`translations box`}>
                     <span>Translators</span>
                   </div>
-                </label>
+                </label>*/}
                 <label>
                   <Radio value="task-graphics" name="type" />
                   <div className={`graphics box`}>
