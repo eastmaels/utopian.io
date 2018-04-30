@@ -19,7 +19,7 @@ function getLoginUrl(state) {
   const scopes = [
     'vote',
     'comment',
-    'comment_delete',
+    'delete_comment',
     'comment_options',
     'custom_json',
     'claim_reward_balance',
