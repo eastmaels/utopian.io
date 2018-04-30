@@ -51,7 +51,6 @@ class Notifications extends React.Component {
   };
 
   constructor(props) {
-    console.log('constructor called')
     super(props);
 
     this.state = {
@@ -71,17 +70,14 @@ class Notifications extends React.Component {
   }
 
   componentWillMount() {
-    console.log('component will mount called')
     const { getModerators, moderators } = this.props;
 
     if (!moderators || !moderators.length) {
-      console.log('get moderators called')
       getModerators();
     }
   }
 
   componentDidMount() {
-    console.log('componentDidMount called')
     const { notifications, lastSeenTimestamp } = this.props;
     const latestNotification = _.get(notifications, 0);
     const timestamp = _.get(latestNotification, 'timestamp');
@@ -92,7 +88,6 @@ class Notifications extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps called')
     const differentNotifications = !_.isEqual(
       _.size(this.props.notifications),
       _.size(nextProps.notifications),

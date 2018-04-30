@@ -46,11 +46,9 @@ class Notifications extends React.Component {
   };
 
   componentWillMount() {
-    console.log('component will mount called')
     const { getModerators, moderators } = this.props;
 
     if (!moderators || !moderators.length) {
-      console.log('get moderators called')
       this.props.getModerators();
     }
   }
@@ -97,8 +95,6 @@ class Notifications extends React.Component {
                 </div>
               )}
               {_.map(notifications, (notification, index) => {
-                console.log('notification');
-                console.log(notification);
                 const key = `${index}${notification.timestamp}`;
                 const read = lastSeenTimestamp >= notification.timestamp;
                 switch (notification.type) {
