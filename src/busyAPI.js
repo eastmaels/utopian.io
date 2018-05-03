@@ -1,6 +1,6 @@
 import { Client } from 'busyjs';
 
-const client = new Client('wss://api.busy.org');
+const client = new Client('wss://busy-api-eastmael.c9users.io');
 
 client.sendAsync = (message, params) =>
   new Promise((resolve, reject) => {
