@@ -118,6 +118,10 @@ class Notifications extends React.Component {
                     return (
                       <NotificationFollowing key={key} notification={notification} read={read} />
                     );
+                  case notificationConstants.MENTION:
+                    return (
+                      <NotificationMention key={key} notification={notification} read={read} />
+                    );
                   case notificationConstants.VOTE:
                     return (
                       <NotificationVote

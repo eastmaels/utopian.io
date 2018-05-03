@@ -199,6 +199,15 @@ class Notifications extends React.Component {
                     onClick={this.handleNotificationsClick}
                   />
                 );
+              case notificationConstants.MENTION:
+                return (
+                  <NotificationMention
+                    key={key}
+                    notification={notification}
+                    read={read}
+                    onClick={this.handleNotificationsClick}
+                  />
+                );
               case notificationConstants.VOTE:
                 return (
                   <NotificationVote

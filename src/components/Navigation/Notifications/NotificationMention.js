@@ -12,7 +12,7 @@ const NotificationMention = ({ notification, read, onClick }) => {
 
   return (
     <Link
-      to={`/@${author}/${permlink}`}
+      to={`/utopian-io/@${author}/${permlink}`}
       className={classNames('Notification', {
         'Notification--unread': !read,
       })}
