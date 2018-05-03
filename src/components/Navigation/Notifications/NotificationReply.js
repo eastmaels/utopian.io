@@ -34,7 +34,7 @@ const NotificationReply = ({ notification, currentAuthUsername, read, onClick, i
           { !_.isEmpty(isModerator) ?
             <FormattedMessage
               id="notification_review_utopian_moderator"
-              defaultMessage="{username}, a Utopian moderator, reviewed your post."
+              defaultMessage="{username}, a Utopian moderator, replied to your post."
               values={{
                 username: <span className="username">{author}</span>,
               }}

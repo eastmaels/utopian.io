@@ -8,7 +8,7 @@ import { epochToUTC } from '../../../helpers/formatter';
 
 const NotificationVote = ({ onClick, read, notification, currentAuthUsername }) => {
   const { voter, timestamp, permlink } = notification;
-  const postURL = `/@${currentAuthUsername}/${permlink}`;
+  const postURL = `/utopian-io/@${currentAuthUsername}/${permlink}`;
   let message = (
     <FormattedMessage
       id="notification_unvoted_username_post"
