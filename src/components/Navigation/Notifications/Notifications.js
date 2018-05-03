@@ -175,7 +175,8 @@ class Notifications extends React.Component {
             switch (notification.type) {
               case notificationConstants.REPLY:
                 if (!_.isEmpty(this.isModerator(notification.author))
-                    || notification.author === 'utopian-io') {
+                    || notification.author === 'utopian-io' || notification.author === 'utopian.tip') {
+
                   return (
                     <NotificationReply
                       key={key}

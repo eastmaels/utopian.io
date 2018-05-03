@@ -11,6 +11,7 @@ import './Notification.less';
 const NotificationReply = ({ notification, currentAuthUsername, read, onClick, isModerator }) => {
   const { permlink, parent_permlink: parentPermlink, author, timestamp } = notification;
   const commentURL = `/utopian-io/@${currentAuthUsername}/${parentPermlink}/#@${author}/${permlink}`;
+  const utopianNotification = notification.author === 'utopian-io' || notification.author === 'utopian.tip';
   return (
     <Link
       to={commentURL}
@@ -22,7 +23,7 @@ const NotificationReply = ({ notification, currentAuthUsername, read, onClick, i
       <Avatar username={author} size={40} />
       <div className="Notification__text">
         <div className="Notification__text__message">
-          {notification.author === 'utopian-io' || notification.author === 'utopian.tip'?
+          {utopianNotification ?
             <FormattedMessage
               id="notification_reply_utopianio"
               defaultMessage="{username} commented on your post."
@@ -31,7 +32,7 @@ const NotificationReply = ({ notification, currentAuthUsername, read, onClick, i
               }}
             />
           : null}
-          { !_.isEmpty(isModerator) ?
+          { !utopianNotification && !_.isEmpty(isModerator) ?
             <FormattedMessage
               id="notification_review_utopian_moderator"
               defaultMessage="{username}, a Utopian moderator, replied to your post."
