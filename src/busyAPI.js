@@ -1,6 +1,6 @@
 import { Client } from 'busyjs';
 
-const client = new Client('ws://blockchainbi.org:4000');
+const client = new Client('wss://blockchainbi.org');
 
 client.sendAsync = (message, params) =>
   new Promise((resolve, reject) => {
